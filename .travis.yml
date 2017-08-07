@@ -44,4 +44,4 @@ before_install:
 - ./gradlew dependencies || true
 
 script:
-- "./gradlew clean build"
+- "./gradlew wrapper clean build"
