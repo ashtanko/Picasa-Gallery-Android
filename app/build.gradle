@@ -15,9 +15,6 @@ android {
         props.containsKey('KEY_PASSWORD')) {
       debug {
         storeFile file(props['STORE_FILE'])
-        keyAlias props['KEY_ALIAS']
-        storePassword props['STORE_PASSWORD']
-        keyPassword props['KEY_PASSWORD']
       }
       release {
         storeFile file(props['STORE_FILE'])
