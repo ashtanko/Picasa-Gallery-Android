@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 *.iml
 .gradle
 /local.properties
@@ -22,10 +23,6 @@ gen### Gradle template
 
 # Ignore Gradle GUI config
 gradle-app.setting
-
-# Avoid ignoring Gradle wrapper jar file (.jar files are usually ignored)
-!gradle-wrapper.jar
-
 # Cache of project
 .gradletasknamecache
 
@@ -82,6 +79,8 @@ crashlytics.properties
 crashlytics-build.properties
 fabric.properties
 ### Android template
+=======
+>>>>>>> 40d72911641ca06f61f2670af46df70bb3193618
 # Built application files
 *.apk
 *.ap_
@@ -180,3 +179,6 @@ hs_err_pid*
 *.msi
 *.msm
 *.msp
+
+# Avoid ignoring Gradle wrapper jar file (.jar files are usually ignored)
+!gradle-wrapper.jar
