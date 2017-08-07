@@ -2,7 +2,52 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
+def props = new Properties()
+props.load(new FileInputStream(rootProject.file('config/release.properties')))
+
 android {
+
+  signingConfigs {
+    if (props != null &&
+        props.containsKey('STORE_FILE') &&
+        props.containsKey('STORE_PASSWORD') &&
+        props.containsKey('KEY_ALIAS') &&
+        props.containsKey('KEY_PASSWORD')) {
+      debug {
+        storeFile file(props['STORE_FILE'])
+        keyAlias props['KEY_ALIAS']
+        storePassword props['STORE_PASSWORD']
+        keyPassword props['KEY_PASSWORD']
+      }
+      release {
+        storeFile file(props['STORE_FILE'])
+        keyAlias props['KEY_ALIAS']
+        storePassword props['STORE_PASSWORD']
+        keyPassword props['KEY_PASSWORD']
+      }
+    }
+  }
+
+  buildTypes {
+    release {
+      minifyEnabled true
+      debuggable false
+      signingConfig signingConfigs.release
+      proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+    }
+
+    debug {
+      minifyEnabled false
+      debuggable true
+      signingConfig signingConfigs.debug
+    }
+
+    foss {
+      debuggable false
+      signingConfig signingConfigs.release
+    }
+  }
+
   compileSdkVersion 26
   buildToolsVersion "26.0.0"
   defaultConfig {
@@ -22,6 +67,10 @@ android {
   lintOptions {
     abortOnError false
   }
+
+  sourceSets {
+    main.java.srcDirs += 'src/main/kotlin'
+  }
 }
 
 dependencies {
@@ -29,6 +78,7 @@ dependencies {
   implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
   implementation 'com.android.support:appcompat-v7:26.0.0'
   implementation 'com.github.scribejava:scribejava-apis:4.0.0'
+  implementation 'com.squareup.okhttp3:okhttp:3.8.1'
 
   androidTestImplementation 'com.android.support.test:runner:1.0.0'
   androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.0'
