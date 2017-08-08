@@ -17,14 +17,15 @@
 
 package io.shtanko.picasagallery.ui.activities
 
-import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import io.shtanko.picasagallery.R
 
-class MainActivity : AppCompatActivity() {
+
+class SignInActivity : AppCompatActivity() {
+
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-
-    startActivity(Intent(this, SignInActivity::class.java))
+    setContentView(R.layout.activity_signin)
   }
 }

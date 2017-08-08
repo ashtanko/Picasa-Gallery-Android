@@ -15,16 +15,14 @@
  *
  */
 
-package io.shtanko.picasagallery.ui.activities
+package io.shtanko.picasagallery
 
-import android.content.Intent
-import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
+import org.junit.Assert.assertEquals
+import org.junit.Test
 
-class MainActivity : AppCompatActivity() {
-  override fun onCreate(savedInstanceState: Bundle?) {
-    super.onCreate(savedInstanceState)
-
-    startActivity(Intent(this, SignInActivity::class.java))
+class MainTest {
+  @Test
+  fun addition_isCorrect() {
+    assertEquals(4, 2 + 2)
   }
 }

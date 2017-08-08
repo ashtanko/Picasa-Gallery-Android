@@ -1,3 +1,20 @@
+/*
+ * Copyright 2017 Alexey Shtanko
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
@@ -7,64 +24,65 @@ props.load(new FileInputStream(rootProject.file('config/release.properties')))
 
 android {
 
-	buildTypes {
-		release {
-			minifyEnabled true
-			debuggable false
-			//signingConfig signingConfigs.release
-			proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-		}
+  buildTypes {
+    debug {
+      minifyEnabled false
+      debuggable true
+    }
+    release {
+      minifyEnabled false
+      debuggable true
+      proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+    }
+    dev {}
+  }
 
-		debug {
-			minifyEnabled false
-			debuggable true
-			//signingConfig signingConfigs.debug
-		}
+  compileSdkVersion 26
+  buildToolsVersion "26.0.0"
 
-		foss {
-			debuggable false
-			//signingConfig signingConfigs.release
-		}
-	}
+  defaultConfig {
+    applicationId "io.shtanko.picasagallery"
+    targetSdkVersion 26
+    minSdkVersion 14
+    versionCode 17
+    versionName "1.0"
+    testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+  }
 
-	compileSdkVersion 26
-	buildToolsVersion "26.0.0"
-	defaultConfig {
-		applicationId "io.shtanko.picasagallery"
-		targetSdkVersion 26
-		minSdkVersion 14
-		versionCode 1
-		versionName "1.0"
-		testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-	}
-	buildTypes {
-		release {
-			minifyEnabled false
-			proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-		}
-	}
-	lintOptions {
-		abortOnError false
-	}
+  lintOptions {
+    abortOnError false
+  }
 
-	sourceSets {
-		main.java.srcDirs += 'src/main/kotlin'
-	}
+  sourceSets {
+    main.java.srcDirs += 'src/main/kotlin'
+
+    main {
+      res.srcDirs = ['src/main/res/resource',
+                     'src/main/res',
+                     'src/main/res/ui',
+                     'src/main/res/ui/auth']
+    }
+  }
+
+  def build_param = "${build}"
+
+
+  if (build_param != "dev") {
+    //exclude production build
+    android.variantFilter { variant ->
+      if (variant.buildType.name == 'dev') {
+        variant.setIgnore(true);
+      }
+    }
+  } else {
+    //exclude all except production build
+    android.variantFilter { variant ->
+      if (variant.buildType.name != 'dev') {
+        variant.setIgnore(true);
+      }
+    }
+  }
 }
 
-dependencies {
-
-	implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
-	implementation 'com.android.support:appcompat-v7:26.0.0'
-	implementation 'com.github.scribejava:scribejava-apis:4.0.0'
-	implementation 'com.squareup.okhttp3:okhttp:3.8.1'
-
-	androidTestImplementation 'com.android.support.test:runner:1.0.0'
-	androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.0'
-
-	testImplementation 'junit:junit:4.12'
-	testImplementation 'org.assertj:assertj-core:3.6.1'
-	testImplementation('com.nhaarman:mockito-kotlin:1.5.0') {
-		exclude group: 'org.jetbrains.kotlin'
-	}
-}
+apply from: 'dependencies.gradle'
+apply plugin: 'com.google.gms.google-services'
