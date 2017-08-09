@@ -15,16 +15,20 @@
  *
  */
 
-package io.shtanko.picasagallery.ui.activities
+package io.shtanko.picasagallery.view.auth
 
-import android.content.Intent
-import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
+import io.shtanko.picasagallery.presenter.BasePresenter
+import io.shtanko.picasagallery.view.BaseView
 
-class MainActivity : AppCompatActivity() {
-  override fun onCreate(savedInstanceState: Bundle?) {
-    super.onCreate(savedInstanceState)
 
-    startActivity(Intent(this, SignInActivity::class.java))
+interface SignInContract {
+
+  interface View : BaseView<Presenter> {
+    fun setLoadingIndicator(active: Boolean)
   }
+
+  interface Presenter : BasePresenter {
+    fun signIn()
+  }
+
 }

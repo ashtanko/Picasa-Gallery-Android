@@ -25,20 +25,38 @@ props.load(new FileInputStream(rootProject.file('config/release.properties')))
 android {
 
   buildTypes {
+    release {
+      minifyEnabled true
+      zipAlignEnabled true
+      shrinkResources true
+      pseudoLocalesEnabled true
+      debuggable false
+      //signingConfig signingConfigs.release
+      proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+    }
+
     debug {
       minifyEnabled false
       debuggable true
+      useProguard false
+      //signingConfig signingConfigs.debug
     }
-    release {
-      minifyEnabled false
-      debuggable true
-      proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+    foss {
+      debuggable false
+      //signingConfig signingConfigs.release
     }
+  }
+  flavorDimensions "type"
+
+  productFlavors {
     dev {}
+    mock {}
+    prod {}
   }
 
   compileSdkVersion 26
-  buildToolsVersion "26.0.0"
+  buildToolsVersion "26.0.1"
 
   defaultConfig {
     applicationId "io.shtanko.picasagallery"
@@ -51,34 +69,49 @@ android {
 
   lintOptions {
     abortOnError false
+    disable 'GoogleAppIndexingWarning'
   }
 
   sourceSets {
     main.java.srcDirs += 'src/main/kotlin'
+  }
 
-    main {
-      res.srcDirs = ['src/main/res/resource',
-                     'src/main/res',
-                     'src/main/res/ui',
-                     'src/main/res/ui/auth']
+  //Remove mockRelease as it's not needed.
+  android.variantFilter { variant ->
+    if (variant.buildType.name.equals('release') && variant.getFlavors().
+        get(0).name.equals('mock')) {
+      variant.setIgnore(true)
     }
   }
 
   def build_param = "${build}"
 
-
   if (build_param != "dev") {
-    //exclude production build
+    //exclude dev
     android.variantFilter { variant ->
-      if (variant.buildType.name == 'dev') {
-        variant.setIgnore(true);
+      if (variant.getFlavors().get(0).name.equals('dev')) {
+        variant.setIgnore(true)
+      }
+      if (variant.getFlavors().get(0).name.equals('dev') && variant.buildType.name.equals(
+          'release')) {
+        variant.setIgnore(true)
+      }
+      if (variant.getFlavors().get(0).name.equals('dev') && variant.buildType.name.equals('mock')) {
+        variant.setIgnore(true)
       }
     }
   } else {
-    //exclude all except production build
+    //exclude all but dev
     android.variantFilter { variant ->
-      if (variant.buildType.name != 'dev') {
-        variant.setIgnore(true);
+      if (variant.getFlavors().get(0).name != 'dev') {
+        variant.setIgnore(true)
+      }
+      if (variant.getFlavors().get(0).name.equals('dev') && variant.buildType.name.equals(
+          'release')) {
+        variant.setIgnore(true)
+      }
+      if (variant.getFlavors().get(0).name.equals('dev') && variant.buildType.name.equals('mock')) {
+        variant.setIgnore(true)
       }
     }
   }

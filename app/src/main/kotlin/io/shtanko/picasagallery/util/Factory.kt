@@ -15,8 +15,8 @@
  *
  */
 
-package io.shtanko.picasagallery
+package io.shtanko.picasagallery.util
 
-import android.app.Application
-
-class PicasaApplication : Application()
+interface Factory<out T> {
+  fun create(): T
+}

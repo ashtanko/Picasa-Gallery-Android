@@ -15,34 +15,8 @@
  *
  */
 
-buildscript {
-  ext.kotlin_version = '1.1.3-2'
-  repositories {
-    google()
-    jcenter()
-  }
-  dependencies {
-    classpath 'com.android.tools.build:gradle:3.0.0-alpha9'
-    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-    classpath 'com.google.gms:google-services:3.1.0'
-  }
-}
+package io.shtanko.picasagallery.view
 
-allprojects {
-  repositories {
-    google()
-    jcenter()
-    maven {
-      url 'https://maven.google.com'
-    }
-  }
-}
-
-task clean(type: Delete) {
-  delete rootProject.buildDir
-}
-
-task wrapper(type: Wrapper) {
-  description 'Creates the gradle wrapper.'
-  gradleVersion = '4.1-rc-1'
+interface BaseView<T> {
+  var presenter: T?
 }

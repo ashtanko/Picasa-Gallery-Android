@@ -15,34 +15,17 @@
  *
  */
 
-buildscript {
-  ext.kotlin_version = '1.1.3-2'
-  repositories {
-    google()
-    jcenter()
-  }
-  dependencies {
-    classpath 'com.android.tools.build:gradle:3.0.0-alpha9'
-    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-    classpath 'com.google.gms:google-services:3.1.0'
-  }
-}
+package io.shtanko.picasagallery.view.activities
 
-allprojects {
-  repositories {
-    google()
-    jcenter()
-    maven {
-      url 'https://maven.google.com'
-    }
+import android.content.Intent
+import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
+import io.shtanko.picasagallery.view.auth.SignInActivity
+
+class MainActivity : AppCompatActivity() {
+  override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
+
+    startActivity(Intent(this, SignInActivity::class.java))
   }
-}
-
-task clean(type: Delete) {
-  delete rootProject.buildDir
-}
-
-task wrapper(type: Wrapper) {
-  description 'Creates the gradle wrapper.'
-  gradleVersion = '4.1-rc-1'
 }

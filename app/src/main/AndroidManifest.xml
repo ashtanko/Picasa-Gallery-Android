@@ -20,7 +20,7 @@
 
   <application
       android:name=".PicasaApplication"
-      android:allowBackup="true"
+      android:allowBackup="false"
       android:icon="@mipmap/ic_launcher"
       android:label="@string/app_name"
       android:roundIcon="@mipmap/ic_launcher_round"
@@ -28,17 +28,18 @@
       android:theme="@style/AppTheme">
 
 
-    <activity android:name=".ui.activities.MainActivity">
+    <activity android:name="io.shtanko.picasagallery.view.activities.MainActivity">
       <intent-filter>
-        <action android:name="android.intent.action.MAIN"></action>
+        <action android:name="android.intent.action.MAIN"/>
+        <action android:name="android.intent.action.VIEW"/>
 
-        <category android:name="android.intent.category.LAUNCHER"></category>
-        <category android:name="android.intent.category.DEFAULT"></category>
+        <category android:name="android.intent.category.LAUNCHER"/>
+        <category android:name="android.intent.category.DEFAULT"/>
       </intent-filter>
     </activity>
 
     <activity
-        android:name=".ui.activities.SignInActivity"
+        android:name="io.shtanko.picasagallery.view.auth.SignInActivity"
         android:label="Auth">
 
     </activity>

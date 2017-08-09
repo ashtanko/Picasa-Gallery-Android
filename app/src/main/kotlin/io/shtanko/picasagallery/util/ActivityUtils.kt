@@ -15,34 +15,17 @@
  *
  */
 
-buildscript {
-  ext.kotlin_version = '1.1.3-2'
-  repositories {
-    google()
-    jcenter()
-  }
-  dependencies {
-    classpath 'com.android.tools.build:gradle:3.0.0-alpha9'
-    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-    classpath 'com.google.gms:google-services:3.1.0'
-  }
-}
+package io.shtanko.picasagallery.util
 
-allprojects {
-  repositories {
-    google()
-    jcenter()
-    maven {
-      url 'https://maven.google.com'
-    }
+import android.support.v4.app.Fragment
+import android.support.v4.app.FragmentManager
+
+
+object ActivityUtils {
+  fun addFragmentToActivity(fragmentManager: FragmentManager,
+      fragment: Fragment, frameId: Int) {
+    val transaction = fragmentManager.beginTransaction()
+    transaction.add(frameId, fragment)
+    transaction.commit()
   }
-}
-
-task clean(type: Delete) {
-  delete rootProject.buildDir
-}
-
-task wrapper(type: Wrapper) {
-  description 'Creates the gradle wrapper.'
-  gradleVersion = '4.1-rc-1'
 }

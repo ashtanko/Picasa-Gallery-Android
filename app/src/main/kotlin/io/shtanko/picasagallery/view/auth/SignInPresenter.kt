@@ -15,17 +15,16 @@
  *
  */
 
-package io.shtanko.picasagallery.ui.activities
+package io.shtanko.picasagallery.view.auth
 
-import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
-import io.shtanko.picasagallery.R
+class SignInPresenter constructor(
+    val signInView: SignInContract.View) : SignInContract.Presenter {
 
-
-class SignInActivity : AppCompatActivity() {
-
-  override fun onCreate(savedInstanceState: Bundle?) {
-    super.onCreate(savedInstanceState)
-    setContentView(R.layout.activity_signin)
+  init {
+    signInView.presenter = this
   }
+
+  override fun signIn() {
+  }
+
 }

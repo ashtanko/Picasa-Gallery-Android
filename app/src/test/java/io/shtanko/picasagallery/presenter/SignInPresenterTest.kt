@@ -15,33 +15,32 @@
  *
  */
 
-package io.shtanko.picasagallery
+package io.shtanko.picasagallery.presenter
 
-import android.support.test.InstrumentationRegistry
-import android.support.test.rule.ActivityTestRule
-import android.support.test.runner.AndroidJUnit4
-import io.shtanko.picasagallery.view.activities.MainActivity
+import com.nhaarman.mockito_kotlin.mock
+import io.shtanko.picasagallery.view.auth.SignInContract
+import io.shtanko.picasagallery.view.auth.SignInPresenter
 import org.junit.Assert
 import org.junit.Before
-import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.mockito.MockitoAnnotations
+import org.mockito.junit.MockitoJUnitRunner
 
-@RunWith(AndroidJUnit4::class) class MainActivityTest {
+@RunWith(MockitoJUnitRunner::class) class SignInPresenterTest {
 
-  @get:Rule val main: ActivityTestRule<MainActivity> = ActivityTestRule(
-      MainActivity::class.java)
+  val view = mock<SignInContract.View>()
 
-  val context = InstrumentationRegistry.getTargetContext()
-  var mainActivity: MainActivity? = null
+  private lateinit var presenter: SignInPresenter
 
   @Before fun setUp() {
-    mainActivity = main.activity
+    MockitoAnnotations.initMocks(this)
+    presenter = SignInPresenter(view)
   }
 
-  @Test fun run() {
-    Assert.assertNotNull(mainActivity)
-    Assert.assertNotNull(context)
+  @Test
+  fun not_nullTest() {
+    Assert.assertNotNull(presenter)
   }
 
 }
