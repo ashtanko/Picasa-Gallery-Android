@@ -17,16 +17,7 @@
 
 package io.shtanko.picasagallery.view.auth
 
-import javax.inject.Inject
 
-class SignInPresenter @Inject constructor(
-    var signInView: SignInContract.View) : SignInContract.Presenter {
-
-  @Inject fun setupListeners() {
-    signInView.presenter = this
-  }
-
-  override fun signIn() {
-  }
+interface SignInRepository {
 
 }

@@ -18,15 +18,20 @@
 package io.shtanko.picasagallery
 
 import android.app.Application
+import io.shtanko.picasagallery.core.DaggerMainComponent
+import io.shtanko.picasagallery.core.MainComponent
 import kotlin.properties.Delegates
 
 class PicasaApplication : Application() {
   companion object {
+    @JvmStatic lateinit var graph: MainComponent
     var app: Application by Delegates.notNull()
   }
 
   override fun onCreate() {
     super.onCreate()
     app = this
+
+    graph = DaggerMainComponent.builder().build()
   }
 }

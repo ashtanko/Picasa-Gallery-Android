@@ -15,18 +15,11 @@
  *
  */
 
-package io.shtanko.picasagallery.view.auth
+package io.shtanko.picasagallery.core
 
-import javax.inject.Inject
+import dagger.Component
+import javax.inject.Singleton
 
-class SignInPresenter @Inject constructor(
-    var signInView: SignInContract.View) : SignInContract.Presenter {
-
-  @Inject fun setupListeners() {
-    signInView.presenter = this
-  }
-
-  override fun signIn() {
-  }
-
-}
+@Singleton
+@Component(modules = arrayOf(ApplicationModule::class))
+interface MainComponent {}

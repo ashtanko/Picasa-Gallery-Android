@@ -17,18 +17,30 @@
 
 dependencies {
   def supportVersion = '26.0.0'
+  def daggerVersion = '2.11'
+  def playServicesVersion = '11.0.4'
+
   implementation "com.android.support:appcompat-v7:${supportVersion}"
   implementation "com.android.support:design:${supportVersion}"
   implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
   implementation 'com.squareup.okhttp3:okhttp:3.8.1'
   implementation 'com.google.code.findbugs:jsr305:3.0.2'
 
-  implementation 'com.google.android.gms:play-services-auth:11.0.4'
-  implementation 'com.google.android.gms:play-services-vision:11.0.4'
+  implementation "com.google.android.gms:play-services-auth:${playServicesVersion}"
+  implementation "com.google.android.gms:play-services-vision:${playServicesVersion}"
 
   implementation 'com.android.support.constraint:constraint-layout:1.0.2'
 
+  // RX JAVA
+  implementation 'io.reactivex.rxjava2:rxjava:2.1.2'
+  implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
+
+  // DI
+  implementation "com.google.dagger:dagger:${daggerVersion}"
+  kapt "com.google.dagger:dagger-compiler:${daggerVersion}"
+
   androidTestImplementation 'com.android.support.test:runner:1.0.0'
+  androidTestImplementation 'com.android.support.test:rules:1.0.0'
   androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.0'
 
   testImplementation 'junit:junit:4.12'

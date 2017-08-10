@@ -17,16 +17,12 @@
 
 package io.shtanko.picasagallery.view.auth
 
-import javax.inject.Inject
+import dagger.Component
+import io.shtanko.picasagallery.core.MainComponent
+import io.shtanko.picasagallery.util.FragmentScoped
 
-class SignInPresenter @Inject constructor(
-    var signInView: SignInContract.View) : SignInContract.Presenter {
-
-  @Inject fun setupListeners() {
-    signInView.presenter = this
-  }
-
-  override fun signIn() {
-  }
-
+@FragmentScoped
+@Component(dependencies = arrayOf(MainComponent::class), modules = arrayOf(SignInModule::class))
+interface SignInComponent {
+  fun inject(activity: SignInActivity)
 }

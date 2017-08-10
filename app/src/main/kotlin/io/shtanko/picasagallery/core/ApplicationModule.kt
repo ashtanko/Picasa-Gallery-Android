@@ -15,18 +15,12 @@
  *
  */
 
-package io.shtanko.picasagallery.view.auth
+package io.shtanko.picasagallery.core
 
-import javax.inject.Inject
+import android.content.Context
+import dagger.Module
+import dagger.Provides
 
-class SignInPresenter @Inject constructor(
-    var signInView: SignInContract.View) : SignInContract.Presenter {
-
-  @Inject fun setupListeners() {
-    signInView.presenter = this
-  }
-
-  override fun signIn() {
-  }
-
+@Module class ApplicationModule(var context: Context) {
+  @Provides fun provideContext(): Context = context
 }

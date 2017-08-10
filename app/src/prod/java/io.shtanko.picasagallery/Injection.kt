@@ -20,6 +20,7 @@ package io.shtanko.picasagallery
 import android.content.Context
 import android.support.v4.app.FragmentActivity
 import com.google.android.gms.auth.api.Auth
+import com.google.android.gms.auth.api.signin.GoogleSignInApi
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.GoogleApiClient
 import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener
@@ -27,6 +28,10 @@ import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListe
 object Injection {
   fun provideContext(application: PicasaApplication): Context {
     return application.applicationContext
+  }
+
+  fun provideGoogleSignInApi(): GoogleSignInApi {
+    return Auth.GoogleSignInApi
   }
 
   fun provideGoogleSignInOptions(): GoogleSignInOptions {

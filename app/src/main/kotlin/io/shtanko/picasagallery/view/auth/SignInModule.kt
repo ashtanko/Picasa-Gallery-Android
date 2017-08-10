@@ -17,16 +17,14 @@
 
 package io.shtanko.picasagallery.view.auth
 
-import javax.inject.Inject
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import dagger.Module
+import dagger.Provides
 
-class SignInPresenter @Inject constructor(
-    var signInView: SignInContract.View) : SignInContract.Presenter {
-
-  @Inject fun setupListeners() {
-    signInView.presenter = this
-  }
-
-  override fun signIn() {
-  }
-
+@Module class SignInModule(var view: SignInContract.View) {
+  @Provides fun provideSignInView(): SignInContract.View = view
+  @Provides fun provideGoogleSignInOptions(): GoogleSignInOptions = GoogleSignInOptions
+      .Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+      .requestEmail()
+      .build()
 }

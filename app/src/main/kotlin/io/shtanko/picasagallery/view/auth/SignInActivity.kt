@@ -19,18 +19,20 @@ package io.shtanko.picasagallery.view.auth
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import io.shtanko.picasagallery.PicasaApplication
 import io.shtanko.picasagallery.R
 import io.shtanko.picasagallery.util.ActivityUtils
+import javax.inject.Inject
 
 
 class SignInActivity : AppCompatActivity() {
 
-  lateinit var presenter: SignInPresenter
+  @Inject lateinit var presenter: SignInPresenter
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.container_activity)
-    initPresenter()
+    initDagger()
   }
 
   private fun getFragment(): SignInFragment {
@@ -41,8 +43,11 @@ class SignInActivity : AppCompatActivity() {
     return fragment
   }
 
-  private fun initPresenter() {
-    presenter = SignInPresenter(getFragment()).apply {
-    }
+
+  private fun initDagger() {
+    DaggerSignInComponent.builder()
+        .mainComponent(PicasaApplication.graph).signInModule(SignInModule(getFragment()))
+        .build()
+        .inject(this)
   }
 }

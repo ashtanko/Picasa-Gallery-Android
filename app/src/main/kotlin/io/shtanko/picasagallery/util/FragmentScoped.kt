@@ -15,18 +15,12 @@
  *
  */
 
-package io.shtanko.picasagallery.view.auth
+package io.shtanko.picasagallery.util
 
-import javax.inject.Inject
+import javax.inject.Scope
+import kotlin.annotation.AnnotationRetention.RUNTIME
 
-class SignInPresenter @Inject constructor(
-    var signInView: SignInContract.View) : SignInContract.Presenter {
-
-  @Inject fun setupListeners() {
-    signInView.presenter = this
-  }
-
-  override fun signIn() {
-  }
-
-}
+@MustBeDocumented
+@Scope
+@Retention(RUNTIME)
+annotation class FragmentScoped

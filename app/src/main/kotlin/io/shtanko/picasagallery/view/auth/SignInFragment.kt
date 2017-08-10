@@ -22,26 +22,43 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
+import com.google.android.gms.common.SignInButton
 import io.shtanko.picasagallery.R
 
 
 class SignInFragment : Fragment(), SignInContract.View {
 
-
   override var presenter: SignInContract.Presenter? = null
-
-  override fun setLoadingIndicator(active: Boolean) {
-  }
 
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
       savedInstanceState: Bundle?): View? {
     val root = inflater.inflate(R.layout.fragment_siginin, container, false)
 
     with(root) {
-
+      addSignInButton()
     }
 
     return root
+  }
+
+  override fun setLoadingIndicator(active: Boolean) {
+    val root = view ?: return
+    with(root.findViewById<ProgressBar>(R.id.progress_bar)) {
+      post {
+        visibility = View.GONE
+      }
+    }
+  }
+
+  private fun addSignInButton() {
+    val root = view ?: return
+    with(root.findViewById<SignInButton>(R.id.sign_in_button)) {
+      setSize(SignInButton.SIZE_STANDARD)
+      setOnClickListener {
+        presenter?.signIn()
+      }
+    }
   }
 
 }
