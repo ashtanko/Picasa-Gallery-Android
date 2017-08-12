@@ -17,8 +17,10 @@
 
 package io.shtanko.picasagallery.view.auth
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import com.google.android.gms.auth.api.Auth
 import io.shtanko.picasagallery.PicasaApplication
 import io.shtanko.picasagallery.R
 import io.shtanko.picasagallery.util.ActivityUtils
@@ -32,7 +34,13 @@ class SignInActivity : AppCompatActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.container_activity)
-    initDagger()
+    val fragment = getFragment()
+    initDagger(fragment)
+  }
+
+  override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+    super.onActivityResult(requestCode, resultCode, data)
+    val result = Auth.GoogleSignInApi.getSignInResultFromIntent(data)
   }
 
   private fun getFragment(): SignInFragment {
@@ -44,9 +52,9 @@ class SignInActivity : AppCompatActivity() {
   }
 
 
-  private fun initDagger() {
+  private fun initDagger(view: SignInContract.View) {
     DaggerSignInComponent.builder()
-        .mainComponent(PicasaApplication.graph).signInModule(SignInModule(getFragment()))
+        .mainComponent(PicasaApplication.graph).signInModule(SignInModule(view))
         .build()
         .inject(this)
   }

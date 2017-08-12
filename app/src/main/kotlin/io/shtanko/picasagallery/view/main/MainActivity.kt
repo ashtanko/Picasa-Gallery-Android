@@ -15,7 +15,7 @@
  *
  */
 
-package io.shtanko.picasagallery.view.activities
+package io.shtanko.picasagallery.view.main
 
 import android.content.Intent
 import android.os.Bundle

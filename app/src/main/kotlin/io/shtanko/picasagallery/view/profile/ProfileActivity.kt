@@ -15,8 +15,8 @@
  *
  */
 
-package io.shtanko.picasagallery
+package io.shtanko.picasagallery.view.profile
 
-object Injection {
 
+class ProfileActivity {
 }

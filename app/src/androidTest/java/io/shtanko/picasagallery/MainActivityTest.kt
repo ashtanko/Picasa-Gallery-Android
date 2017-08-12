@@ -20,7 +20,7 @@ package io.shtanko.picasagallery
 import android.support.test.InstrumentationRegistry
 import android.support.test.rule.ActivityTestRule
 import android.support.test.runner.AndroidJUnit4
-import io.shtanko.picasagallery.view.activities.MainActivity
+import io.shtanko.picasagallery.view.main.MainActivity
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Rule

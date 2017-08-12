@@ -31,7 +31,6 @@ class PicasaApplication : Application() {
   override fun onCreate() {
     super.onCreate()
     app = this
-
     graph = DaggerMainComponent.builder().build()
   }
 }

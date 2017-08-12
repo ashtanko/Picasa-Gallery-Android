@@ -18,6 +18,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="io.shtanko.picasagallery">
 
+  <uses-permission android:name="android.permission.INTERNET" />
+
   <application
       android:name=".PicasaApplication"
       android:allowBackup="false"
@@ -28,7 +30,7 @@
       android:theme="@style/AppTheme">
 
 
-    <activity android:name="io.shtanko.picasagallery.view.activities.MainActivity">
+    <activity android:name="io.shtanko.picasagallery.view.main.MainActivity">
       <intent-filter>
         <action android:name="android.intent.action.MAIN"/>
         <action android:name="android.intent.action.VIEW"/>

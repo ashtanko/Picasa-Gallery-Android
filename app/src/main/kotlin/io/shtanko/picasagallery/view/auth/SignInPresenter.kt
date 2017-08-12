@@ -22,8 +22,10 @@ import javax.inject.Inject
 class SignInPresenter @Inject constructor(
     var signInView: SignInContract.View) : SignInContract.Presenter {
 
+  var view:SignInContract.View = signInView
+
   @Inject fun setupListeners() {
-    signInView.presenter = this
+    view.presenter = this
   }
 
   override fun signIn() {

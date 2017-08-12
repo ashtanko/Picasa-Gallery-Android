@@ -17,10 +17,7 @@
 
 package io.shtanko.picasagallery.view.auth
 
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import javax.inject.Inject
 
-
-class SignInUseCase @Inject constructor(var googleSignInOptions: GoogleSignInOptions) {
+class SignInUseCase {
 
 }

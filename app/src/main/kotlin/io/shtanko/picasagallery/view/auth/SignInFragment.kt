@@ -23,18 +23,22 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
+import com.google.android.gms.auth.api.Auth
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.SignInButton
+import com.google.android.gms.common.api.GoogleApiClient
 import io.shtanko.picasagallery.R
-
 
 class SignInFragment : Fragment(), SignInContract.View {
 
   override var presenter: SignInContract.Presenter? = null
 
+  lateinit var rootView: View
+
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
       savedInstanceState: Bundle?): View? {
     val root = inflater.inflate(R.layout.fragment_siginin, container, false)
-
+    rootView = root
     with(root) {
       addSignInButton()
     }
@@ -43,8 +47,7 @@ class SignInFragment : Fragment(), SignInContract.View {
   }
 
   override fun setLoadingIndicator(active: Boolean) {
-    val root = view ?: return
-    with(root.findViewById<ProgressBar>(R.id.progress_bar)) {
+    with(rootView.findViewById<ProgressBar>(R.id.progress_bar)) {
       post {
         visibility = View.GONE
       }
@@ -52,10 +55,21 @@ class SignInFragment : Fragment(), SignInContract.View {
   }
 
   private fun addSignInButton() {
-    val root = view ?: return
-    with(root.findViewById<SignInButton>(R.id.sign_in_button)) {
+    with(rootView.findViewById<SignInButton>(R.id.sign_in_button)) {
       setSize(SignInButton.SIZE_STANDARD)
       setOnClickListener {
+
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestEmail()
+            .build()
+
+        val mGoogleApiClient = GoogleApiClient.Builder(activity.applicationContext)
+            .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
+            .build()
+
+        val signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient)
+        activity.startActivityForResult(signInIntent, 1111)
+
         presenter?.signIn()
       }
     }

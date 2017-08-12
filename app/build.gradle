@@ -23,7 +23,35 @@ apply plugin: 'kotlin-kapt'
 def props = new Properties()
 props.load(new FileInputStream(rootProject.file('config/release.properties')))
 
+
 android {
+
+  signingConfigs {
+    if (props != null &&
+        props.containsKey('STORE_FILE') &&
+        !props.getProperty('STORE_FILE').isEmpty() &&
+        props.containsKey('STORE_PASSWORD') &&
+        !props.getProperty('STORE_PASSWORD').isEmpty() &&
+        props.containsKey('KEY_ALIAS') &&
+        !props.getProperty('KEY_ALIAS').isEmpty() &&
+        props.containsKey('KEY_PASSWORD') &&
+        !props.getProperty('KEY_PASSWORD').isEmpty()) {
+
+      debug {
+        storeFile file(props['STORE_FILE'])
+        keyAlias props['KEY_ALIAS']
+        storePassword props['STORE_PASSWORD']
+        keyPassword props['KEY_PASSWORD']
+      }
+
+      release {
+        storeFile file(props['STORE_FILE'])
+        keyAlias props['KEY_ALIAS']
+        storePassword props['STORE_PASSWORD']
+        keyPassword props['KEY_PASSWORD']
+      }
+    }
+  }
 
   buildTypes {
     release {
