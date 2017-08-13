@@ -17,15 +17,37 @@
 
 package io.shtanko.picasagallery.view.main
 
-import android.content.Intent
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
-import io.shtanko.picasagallery.view.auth.SignInActivity
+import io.shtanko.picasagallery.PicasaApplication
+import io.shtanko.picasagallery.R
+import io.shtanko.picasagallery.util.ActivityUtils
+import io.shtanko.picasagallery.view.base.BaseActivity
+import javax.inject.Inject
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity() {
+
+  @Inject lateinit var presenter: MainPresenter
+
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
+    setContentView(R.layout.container_activity)
 
-    startActivity(Intent(this, SignInActivity::class.java))
+    val fragment = getFragment()
+    initDagger(fragment)
+    print("")
   }
+
+  private fun initDagger(view: MainContract.View) {
+    DaggerMainComponent.builder().baseComponent(PicasaApplication.graph).mainModule(
+        MainModule(view)).build().inject(this)
+  }
+
+  private fun getFragment(): MainFragment {
+    val fragment = supportFragmentManager.findFragmentById(
+        R.id.content_frame) as MainFragment? ?: MainFragment().also {
+      ActivityUtils.addFragmentToActivity(supportFragmentManager, it, R.id.content_frame)
+    }
+    return fragment
+  }
+
 }

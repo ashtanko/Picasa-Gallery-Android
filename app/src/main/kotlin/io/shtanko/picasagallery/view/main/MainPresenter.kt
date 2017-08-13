@@ -15,22 +15,15 @@
  *
  */
 
-package io.shtanko.picasagallery
+package io.shtanko.picasagallery.view.main
 
-import android.app.Application
-import io.shtanko.picasagallery.core.DaggerBaseComponent
-import io.shtanko.picasagallery.core.BaseComponent
-import kotlin.properties.Delegates
+import javax.inject.Inject
 
-class PicasaApplication : Application() {
-  companion object {
-    @JvmStatic lateinit var graph: BaseComponent
-    var app: Application by Delegates.notNull()
+class MainPresenter @Inject constructor(
+    var view: MainContract.View) : MainContract.Presenter {
+
+  @Inject fun setupListeners() {
+    view.presenter = this
   }
 
-  override fun onCreate() {
-    super.onCreate()
-    app = this
-    graph = DaggerBaseComponent.builder().build()
-  }
 }

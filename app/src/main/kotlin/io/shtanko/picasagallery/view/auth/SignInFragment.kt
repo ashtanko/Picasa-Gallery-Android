@@ -31,6 +31,10 @@ import io.shtanko.picasagallery.R
 
 class SignInFragment : Fragment(), SignInContract.View {
 
+  companion object {
+    val SIGN_IN_REQUEST_CODE = 1111
+  }
+
   override var presenter: SignInContract.Presenter? = null
 
   lateinit var rootView: View
@@ -68,7 +72,7 @@ class SignInFragment : Fragment(), SignInContract.View {
             .build()
 
         val signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient)
-        activity.startActivityForResult(signInIntent, 1111)
+        activity.startActivityForResult(signInIntent, SignInFragment.SIGN_IN_REQUEST_CODE)
 
         presenter?.signIn()
       }

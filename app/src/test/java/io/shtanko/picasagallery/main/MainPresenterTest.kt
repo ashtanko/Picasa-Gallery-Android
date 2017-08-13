@@ -15,11 +15,11 @@
  *
  */
 
-package io.shtanko.picasagallery.presenter
+package io.shtanko.picasagallery.main
 
 import com.nhaarman.mockito_kotlin.mock
-import io.shtanko.picasagallery.view.auth.SignInContract
-import io.shtanko.picasagallery.view.auth.SignInPresenter
+import io.shtanko.picasagallery.view.main.MainContract
+import io.shtanko.picasagallery.view.main.MainPresenter
 import org.junit.Assert.assertNotNull
 import org.junit.Before
 import org.junit.Test
@@ -27,15 +27,15 @@ import org.junit.runner.RunWith
 import org.mockito.MockitoAnnotations
 import org.mockito.junit.MockitoJUnitRunner
 
-@RunWith(MockitoJUnitRunner::class) class SignInPresenterTest {
 
-  val view = mock<SignInContract.View>()
+@RunWith(MockitoJUnitRunner::class) class MainPresenterTest {
+  val view = mock<MainContract.View>()
 
-  private lateinit var presenter: SignInPresenter
+  private lateinit var presenter: MainPresenter
 
   @Before fun setUp() {
     MockitoAnnotations.initMocks(this)
-    presenter = SignInPresenter(view)
+    presenter = MainPresenter(view)
   }
 
   @Test

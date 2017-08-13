@@ -18,11 +18,11 @@
 package io.shtanko.picasagallery.view.auth
 
 import dagger.Component
-import io.shtanko.picasagallery.core.MainComponent
+import io.shtanko.picasagallery.core.BaseComponent
 import io.shtanko.picasagallery.util.FragmentScoped
 
 @FragmentScoped
-@Component(dependencies = arrayOf(MainComponent::class), modules = arrayOf(SignInModule::class))
+@Component(dependencies = arrayOf(BaseComponent::class), modules = arrayOf(SignInModule::class))
 interface SignInComponent {
   fun inject(activity: SignInActivity)
 }

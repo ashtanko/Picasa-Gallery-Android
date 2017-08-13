@@ -40,7 +40,9 @@ class SignInActivity : AppCompatActivity() {
 
   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
     super.onActivityResult(requestCode, resultCode, data)
-    val result = Auth.GoogleSignInApi.getSignInResultFromIntent(data)
+    if (requestCode == SignInFragment.SIGN_IN_REQUEST_CODE) {
+      val result = Auth.GoogleSignInApi.getSignInResultFromIntent(data)
+    }
   }
 
   private fun getFragment(): SignInFragment {
@@ -54,7 +56,7 @@ class SignInActivity : AppCompatActivity() {
 
   private fun initDagger(view: SignInContract.View) {
     DaggerSignInComponent.builder()
-        .mainComponent(PicasaApplication.graph).signInModule(SignInModule(view))
+        .baseComponent(PicasaApplication.graph).signInModule(SignInModule(view))
         .build()
         .inject(this)
   }

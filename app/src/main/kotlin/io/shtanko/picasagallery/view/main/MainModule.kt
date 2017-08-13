@@ -15,14 +15,11 @@
  *
  */
 
-package io.shtanko.picasagallery
+package io.shtanko.picasagallery.view.main
 
-import org.junit.Assert.assertEquals
-import org.junit.Test
+import dagger.Module
+import dagger.Provides
 
-class MainTest {
-  @Test
-  fun addition_isCorrect() {
-    assertEquals(4, 2 + 2)
-  }
+@Module class MainModule(var view: MainContract.View) {
+  @Provides fun provideMainView(): MainContract.View = view
 }

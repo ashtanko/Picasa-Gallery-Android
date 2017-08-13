@@ -15,11 +15,16 @@
  *
  */
 
-package io.shtanko.picasagallery.core
+package io.shtanko.picasagallery.view.main
 
-import dagger.Component
-import javax.inject.Singleton
+import io.shtanko.picasagallery.presenter.BasePresenter
+import io.shtanko.picasagallery.view.BaseView
 
-@Singleton
-@Component(modules = arrayOf(ApplicationModule::class))
-interface MainComponent {}
+
+interface MainContract {
+  interface View : BaseView<Presenter> {
+  }
+
+  interface Presenter : BasePresenter {
+  }
+}

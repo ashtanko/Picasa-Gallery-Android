@@ -15,27 +15,34 @@
  *
  */
 
-package io.shtanko.picasagallery.presenter
+package io.shtanko.picasagallery.launch
 
 import com.nhaarman.mockito_kotlin.mock
-import io.shtanko.picasagallery.view.auth.SignInContract
-import io.shtanko.picasagallery.view.auth.SignInPresenter
+import com.nhaarman.mockito_kotlin.times
+import io.shtanko.picasagallery.view.launch.LaunchContract.View
+import io.shtanko.picasagallery.view.launch.LaunchPresenter
 import org.junit.Assert.assertNotNull
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.mockito.Mockito.verify
 import org.mockito.MockitoAnnotations
 import org.mockito.junit.MockitoJUnitRunner
 
-@RunWith(MockitoJUnitRunner::class) class SignInPresenterTest {
-
-  val view = mock<SignInContract.View>()
-
-  private lateinit var presenter: SignInPresenter
+@RunWith(MockitoJUnitRunner::class) class LaunchPresenterTest {
+  val view = mock<View>()
+  private lateinit var presenter: LaunchPresenter
 
   @Before fun setUp() {
     MockitoAnnotations.initMocks(this)
-    presenter = SignInPresenter(view)
+    presenter = LaunchPresenter(view)
+  }
+
+  @Test
+  fun is_signed_idTest() {
+    presenter.isSignIn()
+    verify(view, times(1)).onSignedIn()
+    verify(view, times(1)).onSignedOut()
   }
 
   @Test

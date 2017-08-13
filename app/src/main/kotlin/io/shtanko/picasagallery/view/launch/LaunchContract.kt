@@ -15,22 +15,18 @@
  *
  */
 
-package io.shtanko.picasagallery
+package io.shtanko.picasagallery.view.launch
 
-import android.app.Application
-import io.shtanko.picasagallery.core.DaggerBaseComponent
-import io.shtanko.picasagallery.core.BaseComponent
-import kotlin.properties.Delegates
+import io.shtanko.picasagallery.presenter.BasePresenter
+import io.shtanko.picasagallery.view.BaseView
 
-class PicasaApplication : Application() {
-  companion object {
-    @JvmStatic lateinit var graph: BaseComponent
-    var app: Application by Delegates.notNull()
+
+interface LaunchContract {
+  interface View : BaseView<Presenter> {
+    fun onSignedIn()
+    fun onSignedOut()
   }
-
-  override fun onCreate() {
-    super.onCreate()
-    app = this
-    graph = DaggerBaseComponent.builder().build()
+  interface Presenter : BasePresenter {
+    fun isSignIn()
   }
 }

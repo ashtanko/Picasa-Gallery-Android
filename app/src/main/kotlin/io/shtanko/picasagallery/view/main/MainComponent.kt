@@ -15,22 +15,14 @@
  *
  */
 
-package io.shtanko.picasagallery
+package io.shtanko.picasagallery.view.main
 
-import android.app.Application
-import io.shtanko.picasagallery.core.DaggerBaseComponent
+import dagger.Component
 import io.shtanko.picasagallery.core.BaseComponent
-import kotlin.properties.Delegates
+import io.shtanko.picasagallery.util.FragmentScoped
 
-class PicasaApplication : Application() {
-  companion object {
-    @JvmStatic lateinit var graph: BaseComponent
-    var app: Application by Delegates.notNull()
-  }
-
-  override fun onCreate() {
-    super.onCreate()
-    app = this
-    graph = DaggerBaseComponent.builder().build()
-  }
+@FragmentScoped
+@Component(dependencies = arrayOf(BaseComponent::class), modules = arrayOf(MainModule::class))
+interface MainComponent {
+  fun inject(activity: MainActivity)
 }
