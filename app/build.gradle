@@ -64,7 +64,7 @@ android {
       shrinkResources true
       pseudoLocalesEnabled true
       debuggable false
-      signingConfig signingConfigs.release
+      //signingConfig signingConfigs.release
       proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
     }
 
@@ -72,12 +72,12 @@ android {
       minifyEnabled false
       debuggable true
       useProguard false
-      signingConfig signingConfigs.debug
+      //signingConfig signingConfigs.debug
     }
 
     foss {
       debuggable false
-      signingConfig signingConfigs.release
+      //signingConfig signingConfigs.release
     }
   }
   flavorDimensions "type"
