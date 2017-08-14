@@ -34,7 +34,6 @@ class MainActivity : BaseActivity() {
 
     val fragment = getFragment()
     initDagger(fragment)
-    print("")
   }
 
   private fun initDagger(view: MainContract.View) {

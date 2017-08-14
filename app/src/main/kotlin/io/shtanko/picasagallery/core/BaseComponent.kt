@@ -17,9 +17,14 @@
 
 package io.shtanko.picasagallery.core
 
+import android.content.Context
 import dagger.Component
+import io.shtanko.picasagallery.data.PreferenceHelper
 import javax.inject.Singleton
 
 @Singleton
 @Component(modules = arrayOf(ApplicationModule::class))
-interface BaseComponent {}
+interface BaseComponent {
+  fun context(): Context
+  fun preferencesManager(): PreferenceHelper
+}

@@ -17,19 +17,25 @@
 
 package io.shtanko.picasagallery.view.launch
 
+import android.text.TextUtils
+import io.shtanko.picasagallery.data.PreferenceHelper
 import javax.inject.Inject
 
 
 class LaunchPresenter @Inject constructor(
-    var view: LaunchContract.View) : LaunchContract.Presenter {
+    var view: LaunchContract.View,
+    var preferenceHelper: PreferenceHelper) : LaunchContract.Presenter {
 
   @Inject fun setupListeners() {
     view.presenter = this
   }
 
   override fun isSignIn() {
-    view.onSignedOut()
-    view.onSignedIn()
+    if (TextUtils.isEmpty(preferenceHelper.getUserId())) {
+      view.onSignedOut()
+    } else {
+      view.onSignedIn()
+    }
   }
 
 }

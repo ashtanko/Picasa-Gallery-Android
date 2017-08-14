@@ -17,12 +17,14 @@
 
 package io.shtanko.picasagallery.view.auth
 
+import io.shtanko.picasagallery.data.PreferenceHelper
 import javax.inject.Inject
 
 class SignInPresenter @Inject constructor(
-    var signInView: SignInContract.View) : SignInContract.Presenter {
+    signInView: SignInContract.View,
+    var preferenceHelper: PreferenceHelper) : SignInContract.Presenter {
 
-  var view:SignInContract.View = signInView
+  var view: SignInContract.View = signInView
 
   @Inject fun setupListeners() {
     view.presenter = this
@@ -31,4 +33,12 @@ class SignInPresenter @Inject constructor(
   override fun signIn() {
   }
 
+  override fun saveUserData(personName: String?, personGivenName: String?,
+      personFamilyName: String?,
+      personEmail: String?, personId: String?) {
+
+    preferenceHelper.saveUserData(personName, personGivenName,
+        personFamilyName,
+        personEmail, personId)
+  }
 }

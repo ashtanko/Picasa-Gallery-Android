@@ -26,6 +26,10 @@ props.load(new FileInputStream(rootProject.file('config/release.properties')))
 
 android {
 
+  testOptions {
+    unitTests.returnDefaultValues = true
+  }
+
   signingConfigs {
     if (props != null &&
         props.containsKey('STORE_FILE') &&
@@ -60,7 +64,7 @@ android {
       shrinkResources true
       pseudoLocalesEnabled true
       debuggable false
-      //signingConfig signingConfigs.release
+      signingConfig signingConfigs.release
       proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
     }
 
@@ -68,12 +72,12 @@ android {
       minifyEnabled false
       debuggable true
       useProguard false
-      //signingConfig signingConfigs.debug
+      signingConfig signingConfigs.debug
     }
 
     foss {
       debuggable false
-      //signingConfig signingConfigs.release
+      signingConfig signingConfigs.release
     }
   }
   flavorDimensions "type"
@@ -105,19 +109,17 @@ android {
     main.java.srcDirs += 'src/main/kotlin'
   }
 
-  //Remove mockRelease as it's not needed.
-  android.variantFilter { variant ->
-    if (variant.buildType.name.equals('release') && variant.getFlavors().
-        get(0).name.equals('mock')) {
-      variant.setIgnore(true)
-    }
-  }
-
   def build_param = "${build}"
 
   if (build_param != "dev") {
     //exclude dev
     android.variantFilter { variant ->
+
+      if (variant.buildType.name.equals('release') && variant.getFlavors().
+          get(0).name.equals('mock')) {
+        variant.setIgnore(true)
+      }
+
       if (variant.getFlavors().get(0).name.equals('dev')) {
         variant.setIgnore(true)
       }

@@ -42,6 +42,19 @@ class SignInActivity : AppCompatActivity() {
     super.onActivityResult(requestCode, resultCode, data)
     if (requestCode == SignInFragment.SIGN_IN_REQUEST_CODE) {
       val result = Auth.GoogleSignInApi.getSignInResultFromIntent(data)
+      if (result != null) {
+        val acct = result.signInAccount
+        if (acct != null) {
+          val personName = acct.displayName
+          val personGivenName = acct.givenName
+          val personFamilyName = acct.familyName
+          val personEmail = acct.email
+          val personId = acct.id
+          val personPhoto = acct.photoUrl
+          presenter.saveUserData(personName, personGivenName, personFamilyName, personEmail,
+              personId)
+        }
+      }
     }
   }
 

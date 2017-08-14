@@ -15,6 +15,13 @@
  *
  */
 
-package io.shtanko
+package io.shtanko.picasagallery
 
+object Config {
+  public val SAVED_PERSON_NAME_PREF = "user_name_pref"
+  public val SAVED_PERSON_GIVEN_NAME_PREF = "user_given_name_pref"
+  public val SAVED_PERSON_FAMILY_NAME_PREF = "user_family_name_pref"
+  public val SAVED_EMAIL_PREF = "user_email_pref"
+  public val SAVED_ID_PREF = "user_id_pref"
 
+}

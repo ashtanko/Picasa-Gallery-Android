@@ -21,6 +21,8 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import io.shtanko.picasagallery.PicasaApplication
+import io.shtanko.picasagallery.data.PreferenceHelper
+import io.shtanko.picasagallery.view.auth.SignInActivity
 import io.shtanko.picasagallery.view.launch.LaunchContract.Presenter
 import io.shtanko.picasagallery.view.main.MainActivity
 import javax.inject.Inject
@@ -28,6 +30,7 @@ import javax.inject.Inject
 class LaunchActivity : Activity(), LaunchContract.View {
 
   @Inject lateinit var launchPresenter: LaunchPresenter
+  @Inject lateinit var preferences: PreferenceHelper
 
   override var presenter: Presenter?
     get() = launchPresenter
@@ -40,10 +43,11 @@ class LaunchActivity : Activity(), LaunchContract.View {
   }
 
   override fun onSignedIn() {
-    showMainActivity()
+    showMainScreen()
   }
 
   override fun onSignedOut() {
+    showSignInScreen()
   }
 
   private fun initDagger() {
@@ -53,9 +57,13 @@ class LaunchActivity : Activity(), LaunchContract.View {
         .inject(this)
   }
 
-  private fun showMainActivity() {
+  private fun showMainScreen() {
     startActivity(Intent(this, MainActivity::class.java))
     finishAffinity()
   }
 
+  private fun showSignInScreen() {
+    startActivity(Intent(this, SignInActivity::class.java))
+    finishAffinity()
+  }
 }

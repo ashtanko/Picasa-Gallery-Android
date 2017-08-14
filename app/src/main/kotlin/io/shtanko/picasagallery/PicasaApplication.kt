@@ -18,8 +18,9 @@
 package io.shtanko.picasagallery
 
 import android.app.Application
-import io.shtanko.picasagallery.core.DaggerBaseComponent
+import io.shtanko.picasagallery.core.ApplicationModule
 import io.shtanko.picasagallery.core.BaseComponent
+import io.shtanko.picasagallery.core.DaggerBaseComponent
 import kotlin.properties.Delegates
 
 class PicasaApplication : Application() {
@@ -31,6 +32,8 @@ class PicasaApplication : Application() {
   override fun onCreate() {
     super.onCreate()
     app = this
-    graph = DaggerBaseComponent.builder().build()
+    graph = DaggerBaseComponent.builder()
+        .applicationModule(ApplicationModule(this))
+        .build()
   }
 }

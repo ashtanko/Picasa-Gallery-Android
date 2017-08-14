@@ -16,7 +16,7 @@
  */
 
 dependencies {
-  def supportVersion = '26.0.0'
+  def supportVersion = '26.0.1'
   def daggerVersion = '2.11'
   def playServicesVersion = '11.0.4'
 

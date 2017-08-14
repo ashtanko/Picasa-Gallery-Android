@@ -29,6 +29,9 @@ interface SignInContract {
 
   interface Presenter : BasePresenter {
     fun signIn()
+    fun saveUserData(personName: String?, personGivenName: String?, personFamilyName: String?,
+        personEmail: String?, personId: String?)
+
   }
 
 }

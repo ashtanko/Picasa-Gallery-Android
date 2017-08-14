@@ -17,8 +17,11 @@
 
 package io.shtanko.picasagallery.launch
 
+import android.content.SharedPreferences
+import android.text.TextUtils
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.times
+import io.shtanko.picasagallery.data.PreferenceHelper
 import io.shtanko.picasagallery.view.launch.LaunchContract.View
 import io.shtanko.picasagallery.view.launch.LaunchPresenter
 import org.junit.Assert.assertNotNull
@@ -29,20 +32,27 @@ import org.mockito.Mockito.verify
 import org.mockito.MockitoAnnotations
 import org.mockito.junit.MockitoJUnitRunner
 
+
 @RunWith(MockitoJUnitRunner::class) class LaunchPresenterTest {
   val view = mock<View>()
+  val sharedPreferences = mock<SharedPreferences>()
+  val preferenceHelper = PreferenceHelper(sharedPreferences)
   private lateinit var presenter: LaunchPresenter
 
   @Before fun setUp() {
     MockitoAnnotations.initMocks(this)
-    presenter = LaunchPresenter(view)
+    presenter = LaunchPresenter(view, preferenceHelper)
+    preferenceHelper.saveUserData("", "", "", "", "")
   }
 
   @Test
   fun is_signed_idTest() {
     presenter.isSignIn()
-    verify(view, times(1)).onSignedIn()
-    verify(view, times(1)).onSignedOut()
+    if (TextUtils.isEmpty(preferenceHelper.getUserId())) {
+      verify(view, times(1)).onSignedOut()
+    } else {
+      verify(view, times(1)).onSignedIn()
+    }
   }
 
   @Test

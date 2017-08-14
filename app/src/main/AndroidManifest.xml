@@ -19,6 +19,8 @@
     package="io.shtanko.picasagallery">
 
   <uses-permission android:name="android.permission.INTERNET"/>
+  <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+  <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
   <application
       android:name=".PicasaApplication"
@@ -29,7 +31,10 @@
       android:supportsRtl="true"
       android:theme="@style/PicasaGallery">
 
-    <activity android:name="io.shtanko.picasagallery.view.launch.LaunchActivity">
+    <activity
+        android:name="io.shtanko.picasagallery.view.launch.LaunchActivity"
+        android:exported="true"
+        android:launchMode="standard">
       <intent-filter>
         <action android:name="android.intent.action.MAIN"/>
         <action android:name="android.intent.action.VIEW"/>

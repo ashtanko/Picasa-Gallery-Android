@@ -62,21 +62,27 @@ class SignInFragment : Fragment(), SignInContract.View {
     with(rootView.findViewById<SignInButton>(R.id.sign_in_button)) {
       setSize(SignInButton.SIZE_STANDARD)
       setOnClickListener {
-
-        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestEmail()
-            .build()
-
-        val mGoogleApiClient = GoogleApiClient.Builder(activity.applicationContext)
-            .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
-            .build()
-
-        val signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient)
-        activity.startActivityForResult(signInIntent, SignInFragment.SIGN_IN_REQUEST_CODE)
-
-        presenter?.signIn()
+        signIn()
       }
     }
+  }
+
+  private fun signIn() {
+    val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+        .requestIdToken(getString(R.string.default_web_client_id))
+        .requestEmail()
+        .build()
+
+    val googleApiClient = GoogleApiClient.Builder(activity.applicationContext)
+        .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
+        .build()
+
+    googleApiClient.registerConnectionFailedListener {
+    }
+
+    val signInIntent = Auth.GoogleSignInApi.getSignInIntent(googleApiClient)
+
+    activity.startActivityForResult(signInIntent, SignInFragment.SIGN_IN_REQUEST_CODE)
   }
 
 }
