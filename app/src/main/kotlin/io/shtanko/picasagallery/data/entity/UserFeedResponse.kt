@@ -15,14 +15,8 @@
  *
  */
 
-package io.shtanko.picasagallery
+package io.shtanko.picasagallery.data.entity
 
-object Config {
-  val SAVED_PERSON_NAME_PREF = "user_name_pref"
-  val SAVED_PERSON_GIVEN_NAME_PREF = "user_given_name_pref"
-  val SAVED_PERSON_FAMILY_NAME_PREF = "user_family_name_pref"
-  val SAVED_EMAIL_PREF = "user_email_pref"
-  val SAVED_ID_PREF = "user_id_pref"
+import com.google.gson.annotations.SerializedName
 
-  val PICASA_BASE_API_URL = "https://picasaweb.google.com/data/feed/api"
-}
+data class UserFeedResponse(@SerializedName("version") var version: String)

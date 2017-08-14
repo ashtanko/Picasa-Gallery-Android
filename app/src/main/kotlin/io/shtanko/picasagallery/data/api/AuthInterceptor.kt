@@ -15,14 +15,15 @@
  *
  */
 
-package io.shtanko.picasagallery
+package io.shtanko.picasagallery.data.api
 
-object Config {
-  val SAVED_PERSON_NAME_PREF = "user_name_pref"
-  val SAVED_PERSON_GIVEN_NAME_PREF = "user_given_name_pref"
-  val SAVED_PERSON_FAMILY_NAME_PREF = "user_family_name_pref"
-  val SAVED_EMAIL_PREF = "user_email_pref"
-  val SAVED_ID_PREF = "user_id_pref"
+import okhttp3.Interceptor
+import okhttp3.Interceptor.Chain
+import okhttp3.Response
 
-  val PICASA_BASE_API_URL = "https://picasaweb.google.com/data/feed/api"
+class AuthInterceptor : Interceptor {
+  override fun intercept(chain: Chain?): Response {
+    TODO(
+        "not implemented") //To change body of created functions use File | Settings | File Templates.
+  }
 }

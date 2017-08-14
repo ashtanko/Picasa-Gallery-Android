@@ -20,6 +20,9 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
+def commitCount = Integer.parseInt(
+    'git rev-list --count HEAD'.execute([], project.rootDir).text.trim())
+
 def props = new Properties()
 props.load(new FileInputStream(rootProject.file('config/release.properties')))
 
@@ -95,7 +98,7 @@ android {
     applicationId "io.shtanko.picasagallery"
     targetSdkVersion 26
     minSdkVersion 14
-    versionCode 17
+    versionCode 22
     versionName "1.0"
     testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
   }

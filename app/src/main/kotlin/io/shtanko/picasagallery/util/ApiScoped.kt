@@ -15,14 +15,13 @@
  *
  */
 
-package io.shtanko.picasagallery
+package io.shtanko.picasagallery.util
 
-object Config {
-  val SAVED_PERSON_NAME_PREF = "user_name_pref"
-  val SAVED_PERSON_GIVEN_NAME_PREF = "user_given_name_pref"
-  val SAVED_PERSON_FAMILY_NAME_PREF = "user_family_name_pref"
-  val SAVED_EMAIL_PREF = "user_email_pref"
-  val SAVED_ID_PREF = "user_id_pref"
+import javax.inject.Scope
+import kotlin.annotation.AnnotationRetention.RUNTIME
 
-  val PICASA_BASE_API_URL = "https://picasaweb.google.com/data/feed/api"
-}
+
+@MustBeDocumented
+@Scope
+@Retention(RUNTIME)
+annotation class ApiScoped
