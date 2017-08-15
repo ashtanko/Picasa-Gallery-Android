@@ -15,15 +15,16 @@
  *
  */
 
-package io.shtanko.picasagallery.data.entity
+package io.shtanko.picasagallery.usecase
 
-import com.google.gson.annotations.SerializedName
+import io.reactivex.Maybe
+import io.reactivex.disposables.Disposables
 
-data class AlbumEntry(
-    @SerializedName("category") var category: List<SingleStringElement>,
-    @SerializedName("published") var published: SingleStringElement,
-    @SerializedName("title") var title: TitleType,
-    @SerializedName("summary") var summary: TitleType,
-    @SerializedName("rights") var rights: TitleType,
-    @SerializedName("link") var link: Link
-)
+
+abstract class UseCase {
+
+  protected abstract fun buildUseCaseObservable(): Maybe<*>
+
+  private var disposables = Disposables.empty()
+
+}

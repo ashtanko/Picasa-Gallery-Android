@@ -19,4 +19,8 @@ package io.shtanko.picasagallery.data.entity
 
 import com.google.gson.annotations.SerializedName
 
-data class UserFeedResponse(@SerializedName("version") var version: String)
+data class UserFeedResponse(
+    @SerializedName("feed") var feed: UserFeed,
+    @SerializedName("version") var version: String,
+    @SerializedName("encoding") var encoding: String
+)

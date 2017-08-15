@@ -17,7 +17,13 @@
 
 package io.shtanko.picasagallery.data.api
 
+import io.reactivex.Observable
+import io.shtanko.picasagallery.data.entity.UserFeedResponse
+import retrofit2.http.GET
+import retrofit2.http.Path
+
 
 interface PicasaService {
-
+  @GET("user/{userId}")
+  fun getUser(@Path("userId") userId: String): Observable<UserFeedResponse>
 }

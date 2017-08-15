@@ -17,12 +17,27 @@
 
 package io.shtanko.picasagallery.view.main
 
+import com.google.gson.Gson
+import io.shtanko.picasagallery.PicasaApplication
+import io.shtanko.picasagallery.data.PreferenceHelper
+import io.shtanko.picasagallery.data.api.DaggerApiComponent
+import io.shtanko.picasagallery.data.api.PicasaService
 import javax.inject.Inject
 
-class MainPresenter @Inject constructor(
-    var view: MainContract.View) : MainContract.Presenter {
 
-  @Inject fun setupListeners() {
-    view.presenter = this
+class MainRepository {
+
+  @Inject lateinit var gson: Gson
+  @Inject lateinit var picasaService: PicasaService
+  @Inject lateinit var preferenceHelper: PreferenceHelper
+
+
+  init {
+    DaggerApiComponent.builder().baseComponent(PicasaApplication.graph).build().inject(this)
+
+    picasaService.getUser(preferenceHelper.getUserId()).subscribe { it ->
+      it.version
+    }
+    println("")
   }
 }

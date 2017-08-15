@@ -24,6 +24,7 @@ import com.google.android.gms.auth.api.Auth
 import io.shtanko.picasagallery.PicasaApplication
 import io.shtanko.picasagallery.R
 import io.shtanko.picasagallery.util.ActivityUtils
+import io.shtanko.picasagallery.view.main.MainActivity
 import javax.inject.Inject
 
 
@@ -53,6 +54,8 @@ class SignInActivity : AppCompatActivity() {
           val personPhoto = acct.photoUrl
           presenter.saveUserData(personName, personGivenName, personFamilyName, personEmail,
               personId)
+          startActivity(Intent(this, MainActivity::class.java))
+          finishAffinity()
         }
       }
     }

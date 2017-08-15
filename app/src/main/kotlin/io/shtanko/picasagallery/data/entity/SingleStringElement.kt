@@ -21,5 +21,5 @@ import com.google.gson.annotations.SerializedName
 
 
 data class SingleStringElement(
-    @SerializedName("'$'t") var body: String
+    @SerializedName("$"+"t") var body: String
 )

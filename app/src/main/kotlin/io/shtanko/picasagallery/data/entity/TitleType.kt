@@ -19,11 +19,8 @@ package io.shtanko.picasagallery.data.entity
 
 import com.google.gson.annotations.SerializedName
 
-data class AlbumEntry(
-    @SerializedName("category") var category: List<SingleStringElement>,
-    @SerializedName("published") var published: SingleStringElement,
-    @SerializedName("title") var title: TitleType,
-    @SerializedName("summary") var summary: TitleType,
-    @SerializedName("rights") var rights: TitleType,
-    @SerializedName("link") var link: Link
+
+data class TitleType(
+    @SerializedName("$" + "t") var body: String,
+    @SerializedName("type") var type: String
 )

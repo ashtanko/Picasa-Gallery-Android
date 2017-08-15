@@ -24,5 +24,5 @@ object Config {
   val SAVED_EMAIL_PREF = "user_email_pref"
   val SAVED_ID_PREF = "user_id_pref"
 
-  val PICASA_BASE_API_URL = "https://picasaweb.google.com/data/feed/api"
+  val PICASA_BASE_API_URL = "https://picasaweb.google.com/data/feed/api/"
 }

@@ -17,9 +17,92 @@
 
 package io.shtanko.picasagallery.data.api
 
+import android.app.Application
+import com.google.gson.FieldNamingPolicy
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import dagger.Module
+import dagger.Provides
+import io.reactivex.schedulers.Schedulers
+import io.shtanko.picasagallery.Config
+import okhttp3.Cache
+import okhttp3.Interceptor
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
+import retrofit2.CallAdapter
+import retrofit2.Converter.Factory
+import retrofit2.Retrofit
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
+import retrofit2.converter.gson.GsonConverterFactory
 
+@Module
+class ApiModule {
 
-@Module class ApiModule {
+  @Provides
+  fun provideGson(): Gson {
+    val gsonBuilder = GsonBuilder()
+    gsonBuilder.setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+    gsonBuilder.setPrettyPrinting()
+    return gsonBuilder.create()
+  }
+
+  @Provides
+  fun provideOkHttpCache(app: Application): Cache {
+    val cacheSize = 10 * 1024 * 1024
+    val cache = Cache(app.cacheDir, cacheSize.toLong())
+    return cache
+  }
+
+  @Provides
+  fun provideHttpLoggingInterceptor(): HttpLoggingInterceptor {
+    val httpLoggingInterceptor = HttpLoggingInterceptor()
+    httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
+    return httpLoggingInterceptor
+  }
+
+  @Provides
+  fun providePicasaInterceptor(): Interceptor {
+    val picasaInterceptor = PicasaNetworkInterceptor()
+    return picasaInterceptor
+  }
+
+  @Provides
+  fun provideOkHttpClient(
+      httpLoggingInterceptor: HttpLoggingInterceptor, interceptor: Interceptor): OkHttpClient {
+    val client = OkHttpClient.Builder()
+        .addNetworkInterceptor(httpLoggingInterceptor)
+        .addNetworkInterceptor(interceptor)
+        .build()
+    return client
+  }
+
+  @Provides
+  fun provideCallAdapterFactory(): CallAdapter.Factory {
+    val rxAdapter = RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io())
+    return rxAdapter
+  }
+
+  @Provides
+  fun provideConvertFactory(gson: Gson): Factory {
+    return GsonConverterFactory.create(gson)
+  }
+
+  @Provides
+  fun provideRetrofit(converterFactory: Factory,
+      callAdapterFactory: CallAdapter.Factory, okHttpClient: OkHttpClient): Retrofit {
+    val retrofit = Retrofit.Builder()
+        .addConverterFactory(converterFactory)
+        .baseUrl(Config.PICASA_BASE_API_URL)
+        .addCallAdapterFactory(callAdapterFactory)
+        .client(okHttpClient)
+        .build()
+    return retrofit
+  }
+
+  @Provides
+  fun providePicasaService(retrofit: Retrofit): PicasaService {
+    return retrofit.create(PicasaService::class.java)
+  }
+
 
 }

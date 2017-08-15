@@ -15,15 +15,22 @@
  *
  */
 
-package io.shtanko.picasagallery.data.entity
+package io.shtanko.picasagallery.data.api
 
-import com.google.gson.annotations.SerializedName
+import okhttp3.Interceptor
+import okhttp3.Interceptor.Chain
+import okhttp3.Response
 
-data class AlbumEntry(
-    @SerializedName("category") var category: List<SingleStringElement>,
-    @SerializedName("published") var published: SingleStringElement,
-    @SerializedName("title") var title: TitleType,
-    @SerializedName("summary") var summary: TitleType,
-    @SerializedName("rights") var rights: TitleType,
-    @SerializedName("link") var link: Link
-)
+class PicasaNetworkInterceptor() : Interceptor {
+  override fun intercept(chain: Chain): Response {
+    val originalRequest = chain.request()
+
+    val httpUrl = originalRequest.url().newBuilder()
+        .addQueryParameter("alt", "json")
+        .build()
+
+    val authorizedRequest = originalRequest.newBuilder().url(httpUrl).build()
+
+    return chain.proceed(authorizedRequest)
+  }
+}

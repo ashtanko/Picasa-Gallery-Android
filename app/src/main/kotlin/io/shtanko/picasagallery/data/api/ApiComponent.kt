@@ -19,8 +19,11 @@ package io.shtanko.picasagallery.data.api
 
 import dagger.Component
 import io.shtanko.picasagallery.core.BaseComponent
-import io.shtanko.picasagallery.util.ApiScoped
+import io.shtanko.picasagallery.util.FragmentScoped
+import io.shtanko.picasagallery.view.main.MainRepository
 
-@ApiScoped
+@FragmentScoped
 @Component(dependencies = arrayOf(BaseComponent::class), modules = arrayOf(ApiModule::class))
-interface ApiComponent
+interface ApiComponent {
+  fun inject(repository: MainRepository)
+}
