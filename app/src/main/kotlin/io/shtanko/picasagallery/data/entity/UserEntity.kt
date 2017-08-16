@@ -17,11 +17,6 @@
 
 package io.shtanko.picasagallery.data.entity
 
-import com.google.gson.annotations.SerializedName
 
-
-data class Link(
-    @SerializedName("href") var href: String,
-    @SerializedName("type") var type: String,
-    @SerializedName("rel") var rel: String
-)
+class UserEntity {
+}

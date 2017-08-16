@@ -15,12 +15,9 @@
  *
  */
 
-package io.shtanko.picasagallery.data.entity
-
-import com.google.gson.annotations.SerializedName
+package io.shtanko.picasagallery.view.main
 
 
-data class TitleType(
-    @SerializedName("$" + "t") var body: String,
-    @SerializedName("type") var type: String
-)
+interface MainDataSource {
+
+}

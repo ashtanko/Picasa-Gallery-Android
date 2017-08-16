@@ -15,13 +15,11 @@
  *
  */
 
-package io.shtanko.picasagallery.data.entity
+package io.shtanko.picasagallery.view.main
 
-import com.google.gson.annotations.SerializedName
+import javax.inject.Inject
 
 
-open class Generator(
-    @SerializedName("'$'t") var t: String,
-    @SerializedName("version") var version: String,
-    @SerializedName("uri") var uri: String
-)
+class MainDataSourceImpl @Inject constructor() : MainDataSource {
+
+}

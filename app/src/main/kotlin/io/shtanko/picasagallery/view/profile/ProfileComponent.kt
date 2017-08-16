@@ -15,15 +15,14 @@
  *
  */
 
-package io.shtanko.picasagallery.data.api
+package io.shtanko.picasagallery.view.profile
 
-import io.reactivex.Observable
-import io.shtanko.picasagallery.data.model.UserFeedResponse
-import retrofit2.http.GET
-import retrofit2.http.Path
+import dagger.Component
+import io.shtanko.picasagallery.core.BaseComponent
+import io.shtanko.picasagallery.util.FragmentScoped
 
-
-interface PicasaService {
-  @GET("user/{userId}")
-  fun getUser(@Path("userId") userId: String): Observable<UserFeedResponse>
+@FragmentScoped
+@Component(dependencies = arrayOf(BaseComponent::class), modules = arrayOf(ProfileModule::class))
+interface ProfileComponent {
+  fun inject(activity: ProfileActivity)
 }

@@ -15,15 +15,15 @@
  *
  */
 
-package io.shtanko.picasagallery.data.api
+package io.shtanko.picasagallery.data.model
 
-import io.reactivex.Observable
-import io.shtanko.picasagallery.data.model.UserFeedResponse
-import retrofit2.http.GET
-import retrofit2.http.Path
+import com.google.gson.annotations.SerializedName
 
-
-interface PicasaService {
-  @GET("user/{userId}")
-  fun getUser(@Path("userId") userId: String): Observable<UserFeedResponse>
-}
+data class AlbumEntry(
+    @SerializedName("category") var category: List<SingleStringElement>,
+    @SerializedName("published") var published: SingleStringElement,
+    @SerializedName("title") var title: TitleType,
+    @SerializedName("summary") var summary: TitleType,
+    @SerializedName("rights") var rights: TitleType,
+    @SerializedName("link") var link: Link
+)

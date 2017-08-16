@@ -15,11 +15,13 @@
  *
  */
 
-package io.shtanko.picasagallery.data.entity
+package io.shtanko.picasagallery.data.model
 
 import com.google.gson.annotations.SerializedName
 
 
-data class SingleStringElement(
-    @SerializedName("$"+"t") var body: String
+data class Link(
+    @SerializedName("href") var href: String,
+    @SerializedName("type") var type: String,
+    @SerializedName("rel") var rel: String
 )

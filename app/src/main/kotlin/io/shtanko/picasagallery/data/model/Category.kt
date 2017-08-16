@@ -15,8 +15,12 @@
  *
  */
 
-package io.shtanko.picasagallery.data.repository
+package io.shtanko.picasagallery.data.model
+
+import com.google.gson.annotations.SerializedName
 
 
-class SignInRepository {
-}
+data class Category(
+    @SerializedName("term") var term: String,
+    @SerializedName("scheme") var scheme: String
+)

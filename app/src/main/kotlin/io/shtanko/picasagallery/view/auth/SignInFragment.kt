@@ -17,7 +17,6 @@
 
 package io.shtanko.picasagallery.view.auth
 
-import android.accounts.Account
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
@@ -28,11 +27,6 @@ import com.google.android.gms.auth.api.Auth
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.SignInButton
 import com.google.android.gms.common.api.GoogleApiClient
-import io.reactivex.Completable
-import io.reactivex.Single
-import io.reactivex.SingleOnSubscribe
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 import io.shtanko.picasagallery.R
 
 class SignInFragment : Fragment(), SignInContract.View {
@@ -42,25 +36,9 @@ class SignInFragment : Fragment(), SignInContract.View {
   }
 
   override var presenter: SignInContract.Presenter? = null
+  val ACCOUNT_TYPE_GOOGLE = "com.google"
 
   lateinit var rootView: View
-
-  fun setAccount(account: Account, additionalScopes: Array<String>): Completable {
-    return retrieveTokenInitService(additionalScopes)
-  }
-
-  private fun retrieveTokenInitService(additionalScopes: Array<String>): Completable {
-
-    return Single.create(SingleOnSubscribe<String> { it ->
-
-    }).subscribeOn(Schedulers.io())
-        .observeOn(AndroidSchedulers.mainThread())
-        .doOnError { error ->
-
-        }.doOnSuccess { it ->
-
-    }.toCompletable()
-  }
 
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
       savedInstanceState: Bundle?): View? {

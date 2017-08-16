@@ -25,7 +25,7 @@ import io.shtanko.picasagallery.data.api.PicasaService
 import javax.inject.Inject
 
 
-class MainRepository {
+class MainRepository : MainDataSource {
 
   @Inject lateinit var gson: Gson
   @Inject lateinit var picasaService: PicasaService

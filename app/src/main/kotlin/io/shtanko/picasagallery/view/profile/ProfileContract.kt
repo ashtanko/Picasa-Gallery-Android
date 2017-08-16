@@ -15,15 +15,15 @@
  *
  */
 
-package io.shtanko.picasagallery.data.api
+package io.shtanko.picasagallery.view.profile
 
-import io.reactivex.Observable
-import io.shtanko.picasagallery.data.model.UserFeedResponse
-import retrofit2.http.GET
-import retrofit2.http.Path
+import io.shtanko.picasagallery.presenter.BasePresenter
+import io.shtanko.picasagallery.view.BaseView
 
+interface ProfileContract {
+  interface View : BaseView<Presenter> {
+  }
 
-interface PicasaService {
-  @GET("user/{userId}")
-  fun getUser(@Path("userId") userId: String): Observable<UserFeedResponse>
+  interface Presenter : BasePresenter {
+  }
 }

@@ -33,7 +33,7 @@ android {
     applicationId "io.shtanko.picasagallery"
     targetSdkVersion 26
     minSdkVersion 14
-    versionCode 22
+    versionCode 23
     versionName "1.0"
     testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
   }
@@ -107,6 +107,18 @@ android {
 
   sourceSets {
     main.java.srcDirs += 'src/main/kotlin'
+
+    main {
+      res.srcDirs = [
+          'src/main/res/main',
+          'src/main/res/album',
+          'src/main/res/user',
+          'src/main/res/collection',
+          'src/main/res/about',
+          'src/main/res/auth',
+          'src/main/res/resources',
+          'src/main/res']
+    }
   }
 
   def build_param = "${build}"

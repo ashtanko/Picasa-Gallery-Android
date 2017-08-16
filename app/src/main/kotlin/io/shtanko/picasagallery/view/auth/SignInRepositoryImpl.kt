@@ -15,15 +15,8 @@
  *
  */
 
-package io.shtanko.picasagallery.data.api
-
-import io.reactivex.Observable
-import io.shtanko.picasagallery.data.model.UserFeedResponse
-import retrofit2.http.GET
-import retrofit2.http.Path
+package io.shtanko.picasagallery.view.auth
 
 
-interface PicasaService {
-  @GET("user/{userId}")
-  fun getUser(@Path("userId") userId: String): Observable<UserFeedResponse>
+class SignInRepositoryImpl {
 }

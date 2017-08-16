@@ -8,7 +8,7 @@
     @retrofit.http.* <methods>;
 }
 
--keep class io.shtanko.picasagallery.data.entity.**  { *; }
+-keep class io.shtanko.picasagallery.data.model.**  { *; }
 
 -keepattributes *Annotation*,Signature,Exceptions
 

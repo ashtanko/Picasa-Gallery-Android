@@ -17,11 +17,13 @@
 
 package io.shtanko.picasagallery.view.main
 
+import android.content.Intent
 import android.os.Bundle
 import io.shtanko.picasagallery.PicasaApplication
 import io.shtanko.picasagallery.R
 import io.shtanko.picasagallery.util.ActivityUtils
 import io.shtanko.picasagallery.view.base.BaseActivity
+import io.shtanko.picasagallery.view.profile.ProfileActivity
 import javax.inject.Inject
 
 class MainActivity : BaseActivity() {
@@ -34,11 +36,16 @@ class MainActivity : BaseActivity() {
 
     val fragment = getFragment()
     initDagger(fragment)
+
+    openProfileScreen()
   }
 
   private fun initDagger(view: MainContract.View) {
-    DaggerMainComponent.builder().baseComponent(PicasaApplication.graph).mainModule(
-        MainModule(view)).build().inject(this)
+    DaggerMainComponent.builder()
+        .baseComponent(PicasaApplication.graph)
+        .mainModule(MainModule(view))
+        .build()
+        .inject(this)
   }
 
   private fun getFragment(): MainFragment {
@@ -47,6 +54,10 @@ class MainActivity : BaseActivity() {
       ActivityUtils.addFragmentToActivity(supportFragmentManager, it, R.id.content_frame)
     }
     return fragment
+  }
+
+  private fun openProfileScreen() {
+    startActivity(Intent(this, ProfileActivity::class.java))
   }
 
 }

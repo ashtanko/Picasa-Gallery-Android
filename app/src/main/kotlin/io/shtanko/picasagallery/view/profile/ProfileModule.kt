@@ -15,15 +15,12 @@
  *
  */
 
-package io.shtanko.picasagallery.data.api
+package io.shtanko.picasagallery.view.profile
 
-import io.reactivex.Observable
-import io.shtanko.picasagallery.data.model.UserFeedResponse
-import retrofit2.http.GET
-import retrofit2.http.Path
+import dagger.Module
+import dagger.Provides
+import javax.inject.Inject
 
-
-interface PicasaService {
-  @GET("user/{userId}")
-  fun getUser(@Path("userId") userId: String): Observable<UserFeedResponse>
+@Module class ProfileModule @Inject constructor(var view: ProfileContract.View) {
+  @Provides fun provideProfileView(): ProfileContract.View = view
 }

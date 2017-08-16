@@ -29,7 +29,9 @@ class PicasaNetworkInterceptor() : Interceptor {
         .addQueryParameter("alt", "json")
         .build()
 
-    val authorizedRequest = originalRequest.newBuilder().url(httpUrl).build()
+    val authorizedRequest = originalRequest.newBuilder().url(httpUrl).header("Authorization",
+        "Bearer " + "")
+        .header("Gdata-version", "2").build()
 
     return chain.proceed(authorizedRequest)
   }

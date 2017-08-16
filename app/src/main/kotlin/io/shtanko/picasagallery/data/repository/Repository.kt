@@ -15,15 +15,8 @@
  *
  */
 
-package io.shtanko.picasagallery.data.entity
+package io.shtanko.picasagallery.data.repository
 
-import com.google.gson.annotations.SerializedName
 
-data class AlbumEntry(
-    @SerializedName("category") var category: List<SingleStringElement>,
-    @SerializedName("published") var published: SingleStringElement,
-    @SerializedName("title") var title: TitleType,
-    @SerializedName("summary") var summary: TitleType,
-    @SerializedName("rights") var rights: TitleType,
-    @SerializedName("link") var link: Link
-)
+interface Repository {
+}

@@ -15,11 +15,12 @@
  *
  */
 
-package io.shtanko.picasagallery.data.entity
+package io.shtanko.picasagallery.view.profile
 
-import com.google.gson.annotations.SerializedName
+import javax.inject.Inject
 
 
-data class SingleIntegerElement(
-    @SerializedName("'$'t") var body: Int
-)
+class ProfilePresenter @Inject constructor(
+    var view: ProfileContract.View) : ProfileContract.Presenter {
+
+}

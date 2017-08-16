@@ -15,12 +15,12 @@
  *
  */
 
-package io.shtanko.picasagallery.data.entity
+package io.shtanko.picasagallery.data.model
 
+import android.net.Uri
 import com.google.gson.annotations.SerializedName
 
-
-data class Category(
-    @SerializedName("term") var term: String,
-    @SerializedName("scheme") var scheme: String
+data class Author(
+    @SerializedName("uri") var uri: Uri,
+    @SerializedName("name") var name: SingleStringElement
 )

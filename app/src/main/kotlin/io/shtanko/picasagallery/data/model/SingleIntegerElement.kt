@@ -15,12 +15,11 @@
  *
  */
 
-package io.shtanko.picasagallery.data.entity
+package io.shtanko.picasagallery.data.model
 
 import com.google.gson.annotations.SerializedName
 
-data class UserFeedResponse(
-    @SerializedName("feed") var feed: UserFeed,
-    @SerializedName("version") var version: String,
-    @SerializedName("encoding") var encoding: String
+
+data class SingleIntegerElement(
+    @SerializedName("'$'t") var body: Int
 )
