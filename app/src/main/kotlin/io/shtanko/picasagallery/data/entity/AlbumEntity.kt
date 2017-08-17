@@ -15,14 +15,7 @@
  *
  */
 
-package io.shtanko.picasagallery.view.auth
+package io.shtanko.picasagallery.data.entity
 
-import dagger.Component
-import io.shtanko.picasagallery.core.BaseComponent
-import io.shtanko.picasagallery.util.FragmentScoped
 
-@FragmentScoped
-@Component(dependencies = arrayOf(BaseComponent::class), modules = arrayOf(SignInModule::class))
-interface SignInComponent {
-  fun inject(activity: SignInActivity)
-}
+data class AlbumEntity(var title: String)

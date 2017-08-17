@@ -17,7 +17,20 @@
 
 package io.shtanko.picasagallery.view.main
 
+import io.reactivex.annotations.NonNull
+import io.shtanko.picasagallery.data.model.AlbumEntry
+
 
 interface MainDataSource {
+  interface LoadAlbumsCallback {
+    abstract fun onAlbumsLoaded(list: List<AlbumEntry>)
+    abstract fun onDataNotAvailable()
+  }
 
+  interface GetAlbumCallback {
+    abstract fun onAlbumLoaded(entity: AlbumEntry)
+    abstract fun onDataNotAvailable()
+  }
+
+  fun getAlbums(@NonNull callback: LoadAlbumsCallback)
 }

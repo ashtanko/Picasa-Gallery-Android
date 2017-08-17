@@ -26,6 +26,8 @@ props.load(new FileInputStream(rootProject.file('config/release.properties')))
 
 android {
 
+  compileOptions.incremental = false
+
   compileSdkVersion 26
   buildToolsVersion "26.0.1"
 

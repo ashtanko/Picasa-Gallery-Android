@@ -26,7 +26,7 @@ interface LaunchContract {
     fun onSignedIn()
     fun onSignedOut()
   }
-  interface Presenter : BasePresenter {
+  interface Presenter : BasePresenter<View> {
     fun isSignIn()
   }
 }

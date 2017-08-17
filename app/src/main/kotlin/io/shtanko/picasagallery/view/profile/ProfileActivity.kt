@@ -18,7 +18,6 @@
 package io.shtanko.picasagallery.view.profile
 
 import android.os.Bundle
-import io.shtanko.picasagallery.PicasaApplication
 import io.shtanko.picasagallery.R
 import io.shtanko.picasagallery.util.ActivityUtils
 import io.shtanko.picasagallery.view.base.BaseActivity
@@ -31,14 +30,6 @@ class ProfileActivity : BaseActivity() {
     setContentView(R.layout.container_activity)
 
     val fragment = getFragment()
-    initDagger(fragment)
-  }
-
-  private fun initDagger(view: ProfileContract.View) {
-    DaggerProfileComponent.builder()
-        .baseComponent(PicasaApplication.graph)
-        .profileModule(ProfileModule(view))
-        .build()
   }
 
   private fun getFragment(): ProfileFragment {

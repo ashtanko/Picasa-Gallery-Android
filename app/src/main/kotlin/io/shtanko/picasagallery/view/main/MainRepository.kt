@@ -17,27 +17,17 @@
 
 package io.shtanko.picasagallery.view.main
 
-import com.google.gson.Gson
-import io.shtanko.picasagallery.PicasaApplication
-import io.shtanko.picasagallery.data.PreferenceHelper
-import io.shtanko.picasagallery.data.api.DaggerApiComponent
-import io.shtanko.picasagallery.data.api.PicasaService
-import javax.inject.Inject
-
+import io.shtanko.picasagallery.view.main.MainDataSource.LoadAlbumsCallback
 
 class MainRepository : MainDataSource {
-
-  @Inject lateinit var gson: Gson
-  @Inject lateinit var picasaService: PicasaService
-  @Inject lateinit var preferenceHelper: PreferenceHelper
-
-
-  init {
-    DaggerApiComponent.builder().baseComponent(PicasaApplication.graph).build().inject(this)
-
-    picasaService.getUser(preferenceHelper.getUserId()).subscribe { it ->
-      it.version
-    }
-    println("")
+  override fun getAlbums(callback: LoadAlbumsCallback) {
+    TODO(
+        "not implemented") //To change body of created functions use File | Settings | File Templates.
   }
+
+//  init {
+//    picasaService.getUser(preferenceHelper.getUserId()).subscribe { it ->
+//      it.version
+//    }
+//  }
 }

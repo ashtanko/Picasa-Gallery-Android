@@ -18,23 +18,31 @@
 package io.shtanko.picasagallery
 
 import android.app.Application
+import dagger.BindsInstance
+import dagger.Component
 import dagger.android.AndroidInjector
+import dagger.android.support.AndroidSupportInjectionModule
 import dagger.android.support.DaggerApplication
-import kotlin.properties.Delegates
+import javax.inject.Singleton
 
-class PicasaApplication : DaggerApplication() {
-  override fun applicationInjector(): AndroidInjector<out DaggerApplication> {
-    val appComponent = DaggerAppComponent.builder().application(this).build()
-    appComponent.inject(this)
-    return appComponent
+
+@Singleton
+@Component(modules = arrayOf(
+    AndroidSupportInjectionModule::class,
+    AppModule::class,
+    ActivityBindingModule::class
+))
+interface AppComponent : AndroidInjector<DaggerApplication> {
+
+  override fun inject(instance: DaggerApplication?)
+
+  @Component.Builder
+  interface Builder {
+
+    @BindsInstance
+    fun application(application: Application): AppComponent.Builder
+
+    fun build(): AppComponent
   }
 
-  companion object {
-    var app: Application by Delegates.notNull()
-  }
-
-  override fun onCreate() {
-    super.onCreate()
-    app = this
-  }
 }

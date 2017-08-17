@@ -39,7 +39,7 @@ import org.mockito.junit.MockitoJUnitRunner
 
   @Before fun setUp() {
     MockitoAnnotations.initMocks(this)
-    presenter = SignInPresenter(view, preferenceHelper)
+    presenter = SignInPresenter()
   }
 
   @Test

@@ -17,12 +17,5 @@
 
 package io.shtanko.picasagallery.view.main
 
-import dagger.Component
-import io.shtanko.picasagallery.core.BaseComponent
-import io.shtanko.picasagallery.util.FragmentScoped
 
-@FragmentScoped
-@Component(dependencies = arrayOf(BaseComponent::class), modules = arrayOf(MainModule::class))
-interface MainComponent {
-  fun inject(activity: MainActivity)
-}
+class MainAdapter

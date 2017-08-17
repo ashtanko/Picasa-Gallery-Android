@@ -25,6 +25,6 @@ interface MainContract {
   interface View : BaseView<Presenter> {
   }
 
-  interface Presenter : BasePresenter {
+  interface Presenter : BasePresenter<View> {
   }
 }

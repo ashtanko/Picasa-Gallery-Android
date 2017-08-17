@@ -18,7 +18,6 @@
 package io.shtanko.picasagallery.view.auth
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -27,15 +26,17 @@ import com.google.android.gms.auth.api.Auth
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.SignInButton
 import com.google.android.gms.common.api.GoogleApiClient
+import dagger.android.support.DaggerFragment
 import io.shtanko.picasagallery.R
+import javax.inject.Inject
 
-class SignInFragment : Fragment(), SignInContract.View {
+class SignInFragment @Inject constructor() : DaggerFragment(), SignInContract.View {
 
   companion object {
     val SIGN_IN_REQUEST_CODE = 1111
   }
 
-  override var presenter: SignInContract.Presenter? = null
+  @Inject lateinit var presenter: SignInContract.Presenter
   val ACCOUNT_TYPE_GOOGLE = "com.google"
 
   lateinit var rootView: View

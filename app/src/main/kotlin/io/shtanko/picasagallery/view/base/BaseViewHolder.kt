@@ -15,14 +15,27 @@
  *
  */
 
-package io.shtanko.picasagallery.view.profile
+package io.shtanko.picasagallery.view.base
 
-import dagger.Component
-import io.shtanko.picasagallery.core.BaseComponent
-import io.shtanko.picasagallery.util.FragmentScoped
+import android.support.annotation.NonNull
+import android.support.v7.widget.RecyclerView
+import android.view.View
 
-@FragmentScoped
-@Component(dependencies = arrayOf(BaseComponent::class), modules = arrayOf(ProfileModule::class))
-interface ProfileComponent {
-  fun inject(activity: ProfileActivity)
+
+abstract class BaseViewHolder(itemView: View?) : RecyclerView.ViewHolder(
+    itemView), View.OnClickListener {
+
+  init {
+    itemView?.setOnClickListener(this)
+  }
+
+  override fun onClick(v: View?) {
+
+  }
+
+  protected @NonNull
+  fun view(): View {
+    return itemView
+  }
+
 }

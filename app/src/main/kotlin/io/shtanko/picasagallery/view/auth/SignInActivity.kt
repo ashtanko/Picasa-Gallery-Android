@@ -19,24 +19,23 @@ package io.shtanko.picasagallery.view.auth
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import com.google.android.gms.auth.api.Auth
-import io.shtanko.picasagallery.PicasaApplication
 import io.shtanko.picasagallery.R
 import io.shtanko.picasagallery.util.ActivityUtils
+import io.shtanko.picasagallery.view.base.BaseActivity
 import io.shtanko.picasagallery.view.main.MainActivity
 import javax.inject.Inject
+import dagger.Lazy
 
-
-class SignInActivity : AppCompatActivity() {
+class SignInActivity : BaseActivity() {
 
   @Inject lateinit var presenter: SignInPresenter
+  @Inject lateinit var fragmentProvider: Lazy<SignInFragment>
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.container_activity)
-    val fragment = getFragment()
-    initDagger(fragment)
+    addFragment()
   }
 
   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -61,19 +60,12 @@ class SignInActivity : AppCompatActivity() {
     }
   }
 
-  private fun getFragment(): SignInFragment {
-    val fragment = supportFragmentManager.findFragmentById(
-        R.id.content_frame) as SignInFragment? ?: SignInFragment().also {
-      ActivityUtils.addFragmentToActivity(supportFragmentManager, it, R.id.content_frame)
+  private fun addFragment() {
+    var fragment = supportFragmentManager.findFragmentById(
+        R.id.content_frame) as SignInFragment?
+    if (fragment == null) {
+      fragment = fragmentProvider.get()
+      ActivityUtils.addFragmentToActivity(supportFragmentManager, fragment, R.id.content_frame)
     }
-    return fragment
-  }
-
-
-  private fun initDagger(view: SignInContract.View) {
-    DaggerSignInComponent.builder()
-        .baseComponent(PicasaApplication.graph).signInModule(SignInModule(view))
-        .build()
-        .inject(this)
   }
 }

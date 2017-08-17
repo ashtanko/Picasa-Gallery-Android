@@ -18,5 +18,4 @@
 package io.shtanko.picasagallery.view
 
 interface BaseView<T> {
-  var presenter: T?
 }

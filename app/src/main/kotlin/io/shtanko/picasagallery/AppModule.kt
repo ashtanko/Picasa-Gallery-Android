@@ -15,24 +15,16 @@
  *
  */
 
-package io.shtanko.picasagallery.core
+package io.shtanko.picasagallery
 
+import android.app.Application
 import android.content.Context
-import android.content.SharedPreferences
+import dagger.Binds
 import dagger.Module
-import dagger.Provides
-import io.shtanko.picasagallery.R
-import io.shtanko.picasagallery.data.PreferenceHelper
 
-@Module class ApplicationModule(var context: Context) {
-  @Provides fun provideContext(): Context = context
 
-  @Provides fun providePreferences(sharedPreferences: SharedPreferences): PreferenceHelper {
-    return PreferenceHelper(sharedPreferences)
-  }
-
-  @Provides fun provideSharedPreferences(context: Context): SharedPreferences {
-    return context.getSharedPreferences(context.getString(R.string.preference_file_key),
-        Context.MODE_PRIVATE);
-  }
+@Module
+abstract class AppModule {
+  @Binds
+  internal abstract fun bindContext(application: Application): Context
 }

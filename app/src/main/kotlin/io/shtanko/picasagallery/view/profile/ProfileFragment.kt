@@ -18,22 +18,24 @@
 package io.shtanko.picasagallery.view.profile
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.support.v7.widget.AppCompatImageView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.bumptech.glide.Glide
 import io.shtanko.picasagallery.R
+import io.shtanko.picasagallery.util.ActivityScoped
 import io.shtanko.picasagallery.util.CircleTransform
-import io.shtanko.picasagallery.view.profile.ProfileContract.Presenter
+import io.shtanko.picasagallery.view.base.BaseFragment
+import javax.inject.Inject
 
+@ActivityScoped
+class ProfileFragment @Inject constructor() : BaseFragment(), ProfileContract.View {
 
-class ProfileFragment : Fragment(), ProfileContract.View {
+  @Inject lateinit var presenter: ProfileContract.Presenter
 
   val dummyImage = "https://images-na.ssl-images-amazon.com/images/M/MV5BOTAzNTY1NjYwMl5BMl5BanBnXkFtZTgwNTIwNjMzMjI@._CR786,95,469,469_UX402_UY402._SY201_SX201_AL_.jpg"
 
-  override var presenter: Presenter? = null
 
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
       savedInstanceState: Bundle?): View? {

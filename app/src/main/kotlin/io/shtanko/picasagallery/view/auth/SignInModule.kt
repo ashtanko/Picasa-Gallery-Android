@@ -17,14 +17,24 @@
 
 package io.shtanko.picasagallery.view.auth
 
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import dagger.Binds
 import dagger.Module
-import dagger.Provides
+import dagger.android.ContributesAndroidInjector
+import io.shtanko.picasagallery.util.ActivityScoped
+import io.shtanko.picasagallery.util.FragmentScoped
 
-@Module class SignInModule(var view: SignInContract.View) {
-  @Provides fun provideSignInView(): SignInContract.View = view
-  @Provides fun provideGoogleSignInOptions(): GoogleSignInOptions = GoogleSignInOptions
-      .Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-      .requestEmail()
-      .build()
+@Module abstract class SignInModule {
+
+  @FragmentScoped
+  @ContributesAndroidInjector
+  abstract fun signInFragment():SignInFragment
+
+  @ActivityScoped
+  @Binds abstract fun signInPresenter(presenter: SignInPresenter): SignInContract.Presenter
+
+//  @Provides
+//  fun provideGoogleSignInOptions(): GoogleSignInOptions = GoogleSignInOptions
+//      .Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+//      .requestEmail()
+//      .build()
 }

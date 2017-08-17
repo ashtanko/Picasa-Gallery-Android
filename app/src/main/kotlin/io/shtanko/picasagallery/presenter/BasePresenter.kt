@@ -17,5 +17,8 @@
 
 package io.shtanko.picasagallery.presenter
 
-interface BasePresenter {
+
+interface BasePresenter<in T> {
+  fun takeView(view: T)
+  fun dropView()
 }

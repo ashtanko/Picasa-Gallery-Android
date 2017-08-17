@@ -15,16 +15,10 @@
  *
  */
 
-package io.shtanko.picasagallery.core
+package io.shtanko.picasagallery.view.base
 
-import android.content.Context
-import dagger.Component
-import io.shtanko.picasagallery.data.PreferenceHelper
-import javax.inject.Singleton
+import dagger.android.support.DaggerFragment
 
-@Singleton
-@Component(modules = arrayOf(ApplicationModule::class))
-interface BaseComponent {
-  fun context(): Context
-  fun preferencesManager(): PreferenceHelper
+
+abstract class BaseFragment : DaggerFragment() {
 }

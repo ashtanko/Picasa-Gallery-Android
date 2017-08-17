@@ -17,25 +17,31 @@
 
 package io.shtanko.picasagallery.view.launch
 
-import android.text.TextUtils
-import io.shtanko.picasagallery.data.PreferenceHelper
+import io.shtanko.picasagallery.util.ActivityScoped
+import io.shtanko.picasagallery.view.launch.LaunchContract.View
 import javax.inject.Inject
 
+@ActivityScoped
+class LaunchPresenter @Inject constructor() : LaunchContract.Presenter {
 
-class LaunchPresenter @Inject constructor(
-    var view: LaunchContract.View,
-    var preferenceHelper: PreferenceHelper) : LaunchContract.Presenter {
 
-  @Inject fun setupListeners() {
-    view.presenter = this
+  override fun takeView(view: View) {
+    TODO(
+        "not implemented") //To change body of created functions use File | Settings | File Templates.
   }
 
+  override fun dropView() {
+    TODO(
+        "not implemented") //To change body of created functions use File | Settings | File Templates.
+  }
+
+
   override fun isSignIn() {
-    if (TextUtils.isEmpty(preferenceHelper.getUserId())) {
-      view.onSignedOut()
-    } else {
-      view.onSignedIn()
-    }
+//    if (TextUtils.isEmpty(preferenceHelper.getUserId())) {
+//      view.onSignedOut()
+//    } else {
+//      view.onSignedIn()
+//    }
   }
 
 }

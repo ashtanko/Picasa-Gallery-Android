@@ -19,7 +19,7 @@ package io.shtanko.picasagallery.view.main
 
 import android.content.Intent
 import android.os.Bundle
-import io.shtanko.picasagallery.PicasaApplication
+import dagger.Lazy
 import io.shtanko.picasagallery.R
 import io.shtanko.picasagallery.util.ActivityUtils
 import io.shtanko.picasagallery.view.base.BaseActivity
@@ -29,31 +29,23 @@ import javax.inject.Inject
 class MainActivity : BaseActivity() {
 
   @Inject lateinit var presenter: MainPresenter
+  @Inject lateinit var mainFragmentProvider: Lazy<MainFragment>
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.container_activity)
-
-    val fragment = getFragment()
-    initDagger(fragment)
-
-    openProfileScreen()
+    addFragment()
   }
 
-  private fun initDagger(view: MainContract.View) {
-    DaggerMainComponent.builder()
-        .baseComponent(PicasaApplication.graph)
-        .mainModule(MainModule(view))
-        .build()
-        .inject(this)
-  }
+  private fun addFragment() {
 
-  private fun getFragment(): MainFragment {
-    val fragment = supportFragmentManager.findFragmentById(
-        R.id.content_frame) as MainFragment? ?: MainFragment().also {
-      ActivityUtils.addFragmentToActivity(supportFragmentManager, it, R.id.content_frame)
+    var mainFragment = supportFragmentManager.findFragmentById(
+        R.id.content_frame) as MainFragment?
+
+    if (mainFragment == null) {
+      mainFragment = mainFragmentProvider.get()
+      ActivityUtils.addFragmentToActivity(supportFragmentManager, mainFragment, R.id.content_frame)
     }
-    return fragment
   }
 
   private fun openProfileScreen() {

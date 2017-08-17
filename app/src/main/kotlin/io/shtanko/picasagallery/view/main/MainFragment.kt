@@ -18,22 +18,31 @@
 package io.shtanko.picasagallery.view.main
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
+import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import io.shtanko.picasagallery.R
-import io.shtanko.picasagallery.view.main.MainContract.Presenter
+import io.shtanko.picasagallery.util.ActivityScoped
+import io.shtanko.picasagallery.view.base.BaseFragment
+import javax.inject.Inject
 
+@ActivityScoped
+class MainFragment @Inject constructor() : BaseFragment(), MainContract.View {
 
-class MainFragment : Fragment(), MainContract.View {
-
-  override var presenter: Presenter? = null
+  @Inject lateinit var presenter: MainContract.Presenter
 
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
       savedInstanceState: Bundle?): View? {
-    val root = inflater.inflate(R.layout.fragment_main, container, false)
-    return root
+    val rootView = inflater.inflate(R.layout.fragment_main, container, false)
+
+    with(rootView) {
+      rootView.findViewById<RecyclerView>(R.id.albums_recycler_view).apply {
+
+      }
+    }
+
+    return rootView
   }
 
 }

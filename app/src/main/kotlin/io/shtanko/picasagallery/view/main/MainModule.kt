@@ -17,9 +17,18 @@
 
 package io.shtanko.picasagallery.view.main
 
+import dagger.Binds
 import dagger.Module
-import dagger.Provides
+import dagger.android.ContributesAndroidInjector
+import io.shtanko.picasagallery.util.ActivityScoped
+import io.shtanko.picasagallery.util.FragmentScoped
 
-@Module class MainModule(var view: MainContract.View) {
-  @Provides fun provideMainView(): MainContract.View = view
+@Module abstract class MainModule {
+
+  @FragmentScoped
+  @ContributesAndroidInjector
+  abstract fun mainFragment(): MainFragment
+
+  @ActivityScoped
+  @Binds abstract fun mainPresenter(presenter: MainPresenter): MainContract.Presenter
 }

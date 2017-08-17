@@ -15,14 +15,13 @@
  *
  */
 
-package io.shtanko.picasagallery.view.launch
+package io.shtanko.picasagallery.util
 
-import dagger.Component
-import io.shtanko.picasagallery.core.BaseComponent
-import io.shtanko.picasagallery.util.FragmentScoped
+import javax.inject.Scope
+import kotlin.annotation.AnnotationRetention.RUNTIME
 
-@FragmentScoped
-@Component(dependencies = arrayOf(BaseComponent::class), modules = arrayOf(LaunchModule::class))
-interface LaunchComponent {
-  fun inject(activity: LaunchActivity)
-}
+
+@MustBeDocumented
+@Scope
+@Retention(RUNTIME)
+annotation class ActivityScoped

@@ -12,7 +12,6 @@
 
 -keepattributes *Annotation*,Signature,Exceptions
 
--keepattributes Signature
 -keepattributes *Annotation*
 -keep class com.squareup.okhttp.** { *; }
 -keep interface com.squareup.okhttp.** { *; }
@@ -28,7 +27,6 @@
 
 -dontwarn retrofit2.**
 -keep class retrofit2.** { *; }
--keepattributes Signature
 -keepattributes Exceptions
 
 -keepclasseswithmembers class * {
@@ -36,7 +34,6 @@
 }
 
 -keepattributes Signature
--keepattributes *Annotation*
 -keep class sun.misc.Unsafe { *; }
 -keep class com.google.gson.examples.android.model.** { *; }
 
@@ -56,3 +53,10 @@
 -keep class * extends dagger.internal.Binding
 -keep class * extends dagger.internal.ModuleAdapter
 -keep class * extends dagger.internal.StaticInjection
+
+-keep class com.google.common.base.Preconditions { *; }
+-dontwarn javax.annotation.**
+-dontwarn javax.inject.**
+
+# Proguard rules that are applied to your test apk/code.
+-ignorewarnings

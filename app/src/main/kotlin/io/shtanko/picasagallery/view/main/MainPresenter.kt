@@ -17,12 +17,21 @@
 
 package io.shtanko.picasagallery.view.main
 
+import io.shtanko.picasagallery.util.ActivityScoped
+import io.shtanko.picasagallery.view.main.MainContract.View
 import javax.inject.Inject
 
-class MainPresenter @Inject constructor(
-    var view: MainContract.View) : MainContract.Presenter {
+@ActivityScoped
+class MainPresenter @Inject constructor() : MainContract.Presenter {
 
-  @Inject fun setupListeners() {
-    view.presenter = this
+  override fun takeView(view: View) {
+    TODO(
+        "not implemented") //To change body of created functions use File | Settings | File Templates.
   }
+
+  override fun dropView() {
+    TODO(
+        "not implemented") //To change body of created functions use File | Settings | File Templates.
+  }
+
 }

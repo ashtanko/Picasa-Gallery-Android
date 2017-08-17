@@ -35,7 +35,7 @@ import org.mockito.junit.MockitoJUnitRunner
 
   @Before fun setUp() {
     MockitoAnnotations.initMocks(this)
-    presenter = MainPresenter(view)
+    presenter = MainPresenter()
   }
 
   @Test

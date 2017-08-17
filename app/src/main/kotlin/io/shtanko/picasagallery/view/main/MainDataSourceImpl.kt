@@ -17,9 +17,13 @@
 
 package io.shtanko.picasagallery.view.main
 
+import io.shtanko.picasagallery.view.main.MainDataSource.LoadAlbumsCallback
 import javax.inject.Inject
 
 
 class MainDataSourceImpl @Inject constructor() : MainDataSource {
+  override fun getAlbums(callback: LoadAlbumsCallback) {
+
+  }
 
 }

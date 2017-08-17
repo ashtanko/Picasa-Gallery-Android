@@ -27,7 +27,7 @@ interface SignInContract {
     fun setLoadingIndicator(active: Boolean)
   }
 
-  interface Presenter : BasePresenter {
+  interface Presenter : BasePresenter<View> {
     fun signIn()
     fun saveUserData(personName: String?, personGivenName: String?, personFamilyName: String?,
         personEmail: String?, personId: String?)

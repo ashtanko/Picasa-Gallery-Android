@@ -17,10 +17,22 @@
 
 package io.shtanko.picasagallery.view.profile
 
+import dagger.Binds
 import dagger.Module
-import dagger.Provides
-import javax.inject.Inject
+import dagger.android.ContributesAndroidInjector
+import io.shtanko.picasagallery.util.ActivityScoped
+import io.shtanko.picasagallery.util.FragmentScoped
 
-@Module class ProfileModule @Inject constructor(var view: ProfileContract.View) {
-  @Provides fun provideProfileView(): ProfileContract.View = view
+
+@Module
+abstract class ProfileModule {
+
+  @FragmentScoped
+  @ContributesAndroidInjector
+  internal abstract fun profileFragment(): ProfileFragment
+
+  @ActivityScoped
+  @Binds
+  internal abstract fun profilePresenter(presenter: ProfilePresenter): ProfileContract.Presenter
+
 }
