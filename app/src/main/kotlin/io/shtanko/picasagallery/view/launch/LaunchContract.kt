@@ -17,7 +17,7 @@
 
 package io.shtanko.picasagallery.view.launch
 
-import io.shtanko.picasagallery.presenter.BasePresenter
+import io.shtanko.picasagallery.base.BasePresenter
 import io.shtanko.picasagallery.view.BaseView
 
 

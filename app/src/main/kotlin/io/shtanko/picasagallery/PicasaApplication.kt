@@ -19,7 +19,8 @@ package io.shtanko.picasagallery
 
 import android.app.Application
 import dagger.android.AndroidInjector
-import dagger.android.support.DaggerApplication
+import dagger.android.DaggerApplication
+import io.shtanko.picasagallery.core.DaggerAppComponent
 import kotlin.properties.Delegates
 
 class PicasaApplication : DaggerApplication() {

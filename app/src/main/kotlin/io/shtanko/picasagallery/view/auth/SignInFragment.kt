@@ -41,6 +41,16 @@ class SignInFragment @Inject constructor() : DaggerFragment(), SignInContract.Vi
 
   lateinit var rootView: View
 
+  override fun onResume() {
+    super.onResume()
+    presenter.takeView(this)
+  }
+
+  override fun onDestroy() {
+    super.onDestroy()
+    presenter.dropView()
+  }
+
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
       savedInstanceState: Bundle?): View? {
     val root = inflater.inflate(R.layout.fragment_siginin, container, false)

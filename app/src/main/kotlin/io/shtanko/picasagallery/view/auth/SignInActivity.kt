@@ -20,12 +20,14 @@ package io.shtanko.picasagallery.view.auth
 import android.content.Intent
 import android.os.Bundle
 import com.google.android.gms.auth.api.Auth
+import dagger.Lazy
 import io.shtanko.picasagallery.R
+import io.shtanko.picasagallery.data.entity.UserEntity
+import io.shtanko.picasagallery.extensions.close
 import io.shtanko.picasagallery.util.ActivityUtils
 import io.shtanko.picasagallery.view.base.BaseActivity
 import io.shtanko.picasagallery.view.main.MainActivity
 import javax.inject.Inject
-import dagger.Lazy
 
 class SignInActivity : BaseActivity() {
 
@@ -50,13 +52,20 @@ class SignInActivity : BaseActivity() {
           val personFamilyName = acct.familyName
           val personEmail = acct.email
           val personId = acct.id
-          val personPhoto = acct.photoUrl
-          presenter.saveUserData(personName, personGivenName, personFamilyName, personEmail,
+
+          val userEntity = UserEntity(personName, personGivenName, personFamilyName, personEmail,
               personId)
-          startActivity(Intent(this, MainActivity::class.java))
-          finishAffinity()
+          //val personPhoto = acct.photoUrl
+          presenter.saveUserData(userEntity)
+          openMainActivity()
         }
       }
+    }
+  }
+
+  private fun openMainActivity() {
+    startActivity(Intent(this, MainActivity::class.java)).also {
+      close()
     }
   }
 

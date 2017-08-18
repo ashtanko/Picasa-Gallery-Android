@@ -15,19 +15,13 @@
  *
  */
 
-package io.shtanko.picasagallery.view.main
+package io.shtanko.picasagallery.data.api
 
-import io.shtanko.picasagallery.view.main.MainDataSource.LoadAlbumsCallback
+import io.reactivex.Observable
+import io.shtanko.picasagallery.data.model.AlbumsResponse
+import io.shtanko.picasagallery.data.model.UserFeedResponse
 
-class MainRepository : MainDataSource {
-  override fun getAlbums(callback: LoadAlbumsCallback) {
-    TODO(
-        "not implemented") //To change body of created functions use File | Settings | File Templates.
-  }
-
-//  init {
-//    picasaService.getUser(preferenceHelper.getUserId()).subscribe { it ->
-//      it.version
-//    }
-//  }
+interface ApiManager {
+  fun getUser(userId: String): Observable<UserFeedResponse>
+  fun getAlbums(userId: String, albumId: String): Observable<AlbumsResponse>
 }

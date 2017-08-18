@@ -15,8 +15,12 @@
  *
  */
 
-package io.shtanko.picasagallery.view.auth
+package io.shtanko.picasagallery.data.model
+
+import com.google.gson.annotations.SerializedName
 
 
-class SignInRepositoryImpl {
-}
+data class AlbumsResponse(
+    @SerializedName("version") var version: String,
+    @SerializedName("encoding") var encoding: String
+)

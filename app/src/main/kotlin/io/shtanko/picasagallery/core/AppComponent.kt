@@ -15,14 +15,16 @@
  *
  */
 
-package io.shtanko.picasagallery
+package io.shtanko.picasagallery.core
 
 import android.app.Application
 import dagger.BindsInstance
 import dagger.Component
 import dagger.android.AndroidInjector
+import dagger.android.DaggerApplication
 import dagger.android.support.AndroidSupportInjectionModule
-import dagger.android.support.DaggerApplication
+import io.shtanko.picasagallery.data.PreferencesModule
+import io.shtanko.picasagallery.data.api.ApiModule
 import javax.inject.Singleton
 
 
@@ -30,7 +32,9 @@ import javax.inject.Singleton
 @Component(modules = arrayOf(
     AndroidSupportInjectionModule::class,
     AppModule::class,
-    ActivityBindingModule::class
+    ActivityBindingModule::class,
+    ApiModule::class,
+    PreferencesModule::class
 ))
 interface AppComponent : AndroidInjector<DaggerApplication> {
 
@@ -40,7 +44,7 @@ interface AppComponent : AndroidInjector<DaggerApplication> {
   interface Builder {
 
     @BindsInstance
-    fun application(application: Application): AppComponent.Builder
+    fun application(application: Application): Builder
 
     fun build(): AppComponent
   }

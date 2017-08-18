@@ -15,9 +15,19 @@
  *
  */
 
-package io.shtanko.picasagallery.view.auth
+package io.shtanko.picasagallery.view.main
 
+import io.shtanko.picasagallery.view.main.AlbumDataSource.LoadAlbumsCallback
 
-interface SignInRepository {
+class AlbumRepository : AlbumDataSource {
+  override fun getAlbums(callback: LoadAlbumsCallback) {
+    TODO(
+        "not implemented") //To change body of created functions use File | Settings | File Templates.
+  }
 
+//  init {
+//    picasaService.getUser(preferenceHelper.getUserId()).subscribe { it ->
+//      it.version
+//    }
+//  }
 }

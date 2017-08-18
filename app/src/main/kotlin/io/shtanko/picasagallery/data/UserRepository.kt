@@ -15,16 +15,24 @@
  *
  */
 
-package io.shtanko.picasagallery
+package io.shtanko.picasagallery.data
 
-import android.app.Application
-import android.content.Context
-import dagger.Binds
-import dagger.Module
+import io.shtanko.picasagallery.data.UserDataSource.SignInCallback
+import io.shtanko.picasagallery.data.entity.UserEntity
+import javax.inject.Inject
+import javax.inject.Singleton
+
+@Singleton
+class UserRepository @Inject constructor(
+    var dataSourceImpl: UserDataSourceImpl) : UserDataSource {
 
 
-@Module
-abstract class AppModule {
-  @Binds
-  internal abstract fun bindContext(application: Application): Context
+  override fun saveUser(user: UserEntity) {
+    dataSourceImpl.saveUser(user)
+  }
+
+  override fun getSignIn(callback: SignInCallback) {
+    dataSourceImpl.getSignIn(callback)
+  }
+
 }

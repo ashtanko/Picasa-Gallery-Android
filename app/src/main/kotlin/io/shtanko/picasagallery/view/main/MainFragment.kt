@@ -32,6 +32,16 @@ class MainFragment @Inject constructor() : BaseFragment(), MainContract.View {
 
   @Inject lateinit var presenter: MainContract.Presenter
 
+  override fun onResume() {
+    super.onResume()
+    presenter.takeView(this)
+  }
+
+  override fun onDestroy() {
+    super.onDestroy()
+    presenter.dropView()
+  }
+
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
       savedInstanceState: Bundle?): View? {
     val rootView = inflater.inflate(R.layout.fragment_main, container, false)

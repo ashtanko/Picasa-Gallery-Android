@@ -104,5 +104,9 @@ class ApiModule {
     return retrofit.create(PicasaService::class.java)
   }
 
+  @Provides
+  fun provideApiManagerImpl(service: PicasaService): ApiManager {
+    return ApiManagerImpl(service)
+  }
 
 }

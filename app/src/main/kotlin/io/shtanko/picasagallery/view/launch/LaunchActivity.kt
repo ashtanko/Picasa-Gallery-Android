@@ -17,20 +17,31 @@
 
 package io.shtanko.picasagallery.view.launch
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import io.shtanko.picasagallery.extensions.close
 import io.shtanko.picasagallery.view.auth.SignInActivity
+import io.shtanko.picasagallery.view.base.BaseActivity
 import io.shtanko.picasagallery.view.main.MainActivity
 import javax.inject.Inject
 
-class LaunchActivity : Activity(), LaunchContract.View {
+class LaunchActivity : BaseActivity(), LaunchContract.View {
 
   @Inject lateinit var presenter: LaunchPresenter
 
+  override fun onResume() {
+    super.onResume()
+  }
+
+  override fun onDestroy() {
+    super.onDestroy()
+    presenter.dropView()
+  }
+
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    //presenter?.isSignIn()
+    presenter.takeView(this)
+    presenter.isSignIn()
   }
 
   override fun onSignedIn() {
@@ -42,12 +53,15 @@ class LaunchActivity : Activity(), LaunchContract.View {
   }
 
   private fun showMainScreen() {
-    startActivity(Intent(this, MainActivity::class.java))
-    finishAffinity()
+    startActivity(Intent(this, MainActivity::class.java)).also {
+      close()
+    }
   }
 
   private fun showSignInScreen() {
-    startActivity(Intent(this, SignInActivity::class.java))
-    finishAffinity()
+    startActivity(Intent(this, SignInActivity::class.java)).also {
+      close()
+    }
   }
 }
+

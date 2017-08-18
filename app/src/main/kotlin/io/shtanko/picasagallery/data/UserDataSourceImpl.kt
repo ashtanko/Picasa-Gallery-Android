@@ -15,15 +15,26 @@
  *
  */
 
-package io.shtanko.picasagallery.view.main
+package io.shtanko.picasagallery.data
 
-import io.shtanko.picasagallery.view.main.MainDataSource.LoadAlbumsCallback
+import io.shtanko.picasagallery.data.UserDataSource.SignInCallback
+import io.shtanko.picasagallery.data.entity.UserEntity
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
+class UserDataSourceImpl @Inject constructor(
+    var preferencesHelper: PreferenceHelper) : UserDataSource {
 
-class MainDataSourceImpl @Inject constructor() : MainDataSource {
-  override fun getAlbums(callback: LoadAlbumsCallback) {
-
+  override fun saveUser(user: UserEntity) {
+    preferencesHelper.saveUserData(user)
   }
 
+  override fun getSignIn(callback: SignInCallback) {
+    if (!preferencesHelper.getUserId().isEmpty()) {
+      callback.onSuccess(true)
+    } else {
+      callback.onSuccess(false)
+    }
+  }
 }

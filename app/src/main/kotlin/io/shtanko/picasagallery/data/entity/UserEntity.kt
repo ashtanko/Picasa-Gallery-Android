@@ -17,6 +17,8 @@
 
 package io.shtanko.picasagallery.data.entity
 
-
-class UserEntity {
-}
+data class UserEntity(var personName: String?,
+    var personGivenName: String?,
+    var personFamilyName: String?,
+    var personEmail: String?,
+    var personId: String?)

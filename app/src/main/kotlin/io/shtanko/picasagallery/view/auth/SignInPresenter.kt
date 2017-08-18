@@ -17,13 +17,16 @@
 
 package io.shtanko.picasagallery.view.auth
 
+import io.shtanko.picasagallery.data.UserRepository
+import io.shtanko.picasagallery.data.entity.UserEntity
 import io.shtanko.picasagallery.util.ActivityScoped
 import io.shtanko.picasagallery.view.auth.SignInContract.View
 import javax.annotation.Nullable
 import javax.inject.Inject
 
 @ActivityScoped
-class SignInPresenter @Inject constructor() : SignInContract.Presenter {
+class SignInPresenter @Inject constructor(
+    var repository: UserRepository) : SignInContract.Presenter {
 
   @Nullable
   private var view: SignInContract.View? = null
@@ -36,16 +39,10 @@ class SignInPresenter @Inject constructor() : SignInContract.Presenter {
     this.view = null
   }
 
-
   override fun signIn() {
   }
 
-  override fun saveUserData(personName: String?, personGivenName: String?,
-      personFamilyName: String?,
-      personEmail: String?, personId: String?) {
-
-//    preferenceHelper.saveUserData(personName, personGivenName,
-//        personFamilyName,
-//        personEmail, personId)
+  override fun saveUserData(user: UserEntity) {
+    repository.saveUser(user)
   }
 }

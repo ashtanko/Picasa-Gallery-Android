@@ -15,10 +15,16 @@
  *
  */
 
-package io.shtanko.picasagallery.presenter
+package io.shtanko.picasagallery.core
+
+import android.app.Application
+import android.content.Context
+import dagger.Binds
+import dagger.Module
 
 
-interface BasePresenter<in T> {
-  fun takeView(view: T)
-  fun dropView()
+@Module
+abstract class AppModule {
+  @Binds
+  internal abstract fun bindContext(application: Application): Context
 }

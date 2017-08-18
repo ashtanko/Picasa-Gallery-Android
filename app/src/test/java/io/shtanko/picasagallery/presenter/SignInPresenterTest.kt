@@ -18,8 +18,11 @@
 package io.shtanko.picasagallery.presenter
 
 import android.content.SharedPreferences
+import com.nhaarman.mockito_kotlin.argumentCaptor
 import com.nhaarman.mockito_kotlin.mock
 import io.shtanko.picasagallery.data.PreferenceHelper
+import io.shtanko.picasagallery.data.UserDataSource.SignInCallback
+import io.shtanko.picasagallery.data.UserRepository
 import io.shtanko.picasagallery.view.auth.SignInContract
 import io.shtanko.picasagallery.view.auth.SignInPresenter
 import org.junit.Assert.assertNotNull
@@ -29,17 +32,22 @@ import org.junit.runner.RunWith
 import org.mockito.MockitoAnnotations
 import org.mockito.junit.MockitoJUnitRunner
 
-@RunWith(MockitoJUnitRunner::class) class SignInPresenterTest {
+@RunWith(MockitoJUnitRunner::class)
+class SignInPresenterTest {
 
+  val userRepository = mock<UserRepository>()
   val view = mock<SignInContract.View>()
+  val signInCallbackCaptor = argumentCaptor<SignInCallback>()
   val sharedPreferences = mock<SharedPreferences>()
   val preferenceHelper = PreferenceHelper(sharedPreferences)
 
   private lateinit var presenter: SignInPresenter
 
-  @Before fun setUp() {
+  @Before
+  fun setUp() {
     MockitoAnnotations.initMocks(this)
-    presenter = SignInPresenter()
+    presenter = SignInPresenter(userRepository)
+    presenter.takeView(view)
   }
 
   @Test

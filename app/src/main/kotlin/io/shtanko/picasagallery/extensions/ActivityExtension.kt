@@ -15,16 +15,15 @@
  *
  */
 
-package io.shtanko.picasagallery.usecase
+package io.shtanko.picasagallery.extensions
 
-import io.reactivex.Maybe
-import io.reactivex.disposables.Disposables
+import android.app.Activity
+import android.os.Build
 
-
-abstract class UseCase {
-
-  protected abstract fun buildUseCaseObservable(): Maybe<*>
-
-  private var disposables = Disposables.empty()
-
+fun Activity.close() {
+  if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+    finishAffinity()
+  } else {
+    finish()
+  }
 }

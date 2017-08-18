@@ -15,24 +15,18 @@
  *
  */
 
-package io.shtanko.picasagallery.view.main
+package io.shtanko.picasagallery.data
 
-import io.shtanko.picasagallery.util.ActivityScoped
-import io.shtanko.picasagallery.view.main.MainContract.View
-import javax.annotation.Nullable
-import javax.inject.Inject
+import io.reactivex.annotations.NonNull
+import io.shtanko.picasagallery.data.entity.UserEntity
 
-@ActivityScoped
-class MainPresenter @Inject constructor() : MainContract.Presenter {
 
-  @Nullable
-  private var view: MainContract.View? = null
-
-  override fun takeView(view: View) {
-    this.view = view
+interface UserDataSource {
+  interface SignInCallback {
+    fun onSuccess(value: Boolean)
+    fun onFailure()
   }
 
-  override fun dropView() {
-    this.view = null
-  }
+  fun getSignIn(@NonNull callback: SignInCallback)
+  fun saveUser(user: UserEntity)
 }

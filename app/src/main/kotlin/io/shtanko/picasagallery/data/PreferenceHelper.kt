@@ -19,20 +19,21 @@ package io.shtanko.picasagallery.data
 
 import android.content.SharedPreferences
 import io.shtanko.picasagallery.Config
+import io.shtanko.picasagallery.data.entity.UserEntity
+import javax.inject.Singleton
 
+@Singleton
 class PreferenceHelper constructor(val sharedPreferences: SharedPreferences) {
 
   val editor = sharedPreferences.edit()
 
-  fun saveUserData(personName: String?, personGivenName: String?,
-      personFamilyName: String?,
-      personEmail: String?, personId: String?) {
+  fun saveUserData(user: UserEntity) {
     if (editor != null) {
-      editor.putString(Config.SAVED_PERSON_NAME_PREF, personName)
-      editor.putString(Config.SAVED_PERSON_GIVEN_NAME_PREF, personGivenName)
-      editor.putString(Config.SAVED_PERSON_FAMILY_NAME_PREF, personFamilyName)
-      editor.putString(Config.SAVED_EMAIL_PREF, personEmail)
-      editor.putString(Config.SAVED_ID_PREF, personId)
+      editor.putString(Config.SAVED_PERSON_NAME_PREF, user.personName)
+      editor.putString(Config.SAVED_PERSON_GIVEN_NAME_PREF, user.personGivenName)
+      editor.putString(Config.SAVED_PERSON_FAMILY_NAME_PREF, user.personFamilyName)
+      editor.putString(Config.SAVED_EMAIL_PREF, user.personEmail)
+      editor.putString(Config.SAVED_ID_PREF, user.personId)
       editor.commit()
     }
   }

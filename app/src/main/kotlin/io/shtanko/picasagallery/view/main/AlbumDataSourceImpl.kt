@@ -17,22 +17,14 @@
 
 package io.shtanko.picasagallery.view.main
 
-import io.shtanko.picasagallery.util.ActivityScoped
-import io.shtanko.picasagallery.view.main.MainContract.View
-import javax.annotation.Nullable
+import io.shtanko.picasagallery.view.main.AlbumDataSource.LoadAlbumsCallback
 import javax.inject.Inject
 
-@ActivityScoped
-class MainPresenter @Inject constructor() : MainContract.Presenter {
 
-  @Nullable
-  private var view: MainContract.View? = null
+class AlbumDataSourceImpl @Inject constructor() : AlbumDataSource {
 
-  override fun takeView(view: View) {
-    this.view = view
+  override fun getAlbums(callback: LoadAlbumsCallback) {
+
   }
 
-  override fun dropView() {
-    this.view = null
-  }
 }

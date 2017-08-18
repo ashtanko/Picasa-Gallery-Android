@@ -15,7 +15,7 @@
  *
  */
 
-package io.shtanko.picasagallery
+package io.shtanko.picasagallery.core
 
 import dagger.Module
 import dagger.android.ContributesAndroidInjector

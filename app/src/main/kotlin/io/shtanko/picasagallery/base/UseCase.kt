@@ -15,24 +15,16 @@
  *
  */
 
-package io.shtanko.picasagallery.view.main
+package io.shtanko.picasagallery.base
 
-import io.shtanko.picasagallery.util.ActivityScoped
-import io.shtanko.picasagallery.view.main.MainContract.View
-import javax.annotation.Nullable
-import javax.inject.Inject
+import io.reactivex.Maybe
+import io.reactivex.disposables.Disposables
 
-@ActivityScoped
-class MainPresenter @Inject constructor() : MainContract.Presenter {
 
-  @Nullable
-  private var view: MainContract.View? = null
+abstract class UseCase {
 
-  override fun takeView(view: View) {
-    this.view = view
-  }
+  protected abstract fun buildUseCaseObservable(): Maybe<*>
 
-  override fun dropView() {
-    this.view = null
-  }
+  private var disposables = Disposables.empty()
+
 }

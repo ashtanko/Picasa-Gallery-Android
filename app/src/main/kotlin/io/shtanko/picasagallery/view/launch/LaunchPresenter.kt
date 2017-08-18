@@ -17,31 +17,43 @@
 
 package io.shtanko.picasagallery.view.launch
 
+import io.shtanko.picasagallery.data.UserDataSource
+import io.shtanko.picasagallery.data.UserRepository
 import io.shtanko.picasagallery.util.ActivityScoped
+import io.shtanko.picasagallery.util.Logger
 import io.shtanko.picasagallery.view.launch.LaunchContract.View
+import javax.annotation.Nullable
 import javax.inject.Inject
 
 @ActivityScoped
-class LaunchPresenter @Inject constructor() : LaunchContract.Presenter {
+class LaunchPresenter @Inject constructor(
+    var repository: UserRepository) : LaunchContract.Presenter {
 
+  @Nullable
+  private var view: LaunchContract.View? = null
 
   override fun takeView(view: View) {
-    TODO(
-        "not implemented") //To change body of created functions use File | Settings | File Templates.
+    this.view = view
   }
 
   override fun dropView() {
-    TODO(
-        "not implemented") //To change body of created functions use File | Settings | File Templates.
+    this.view = null
   }
 
-
   override fun isSignIn() {
-//    if (TextUtils.isEmpty(preferenceHelper.getUserId())) {
-//      view.onSignedOut()
-//    } else {
-//      view.onSignedIn()
-//    }
+    repository.getSignIn(object : UserDataSource.SignInCallback {
+      override fun onSuccess(value: Boolean) {
+        Logger.verbose(this, "TESTTSTS: " + value + " VIEW: " + view)
+        if (value) {
+          view?.onSignedIn()
+        } else {
+          view?.onSignedOut()
+        }
+      }
+
+      override fun onFailure() {
+      }
+    })
   }
 
 }

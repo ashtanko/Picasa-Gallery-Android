@@ -15,22 +15,19 @@
  *
  */
 
-package io.shtanko.picasagallery.view.main
+package io.shtanko.picasagallery.util
 
-import io.reactivex.annotations.NonNull
-import io.shtanko.picasagallery.data.model.AlbumEntry
+import android.util.Log
 
+object Logger {
+  private var TAG = javaClass.simpleName
 
-interface MainDataSource {
-  interface LoadAlbumsCallback {
-    abstract fun onAlbumsLoaded(list: List<AlbumEntry>)
-    abstract fun onDataNotAvailable()
+  fun verbose(message: String) {
+    Log.v(TAG, message)
   }
 
-  interface GetAlbumCallback {
-    abstract fun onAlbumLoaded(entity: AlbumEntry)
-    abstract fun onDataNotAvailable()
+  fun verbose(clazz: Any, message: String) {
+    Log.v(clazz.javaClass.simpleName, message)
   }
 
-  fun getAlbums(@NonNull callback: LoadAlbumsCallback)
 }

@@ -18,12 +18,15 @@
 package io.shtanko.picasagallery.launch
 
 import android.content.SharedPreferences
-import android.text.TextUtils
+import com.nhaarman.mockito_kotlin.argumentCaptor
 import com.nhaarman.mockito_kotlin.mock
+import com.nhaarman.mockito_kotlin.times
+import com.nhaarman.mockito_kotlin.verify
 import io.shtanko.picasagallery.data.PreferenceHelper
-import io.shtanko.picasagallery.view.launch.LaunchContract.View
+import io.shtanko.picasagallery.data.UserDataSource.SignInCallback
+import io.shtanko.picasagallery.data.UserRepository
+import io.shtanko.picasagallery.view.launch.LaunchContract
 import io.shtanko.picasagallery.view.launch.LaunchPresenter
-import org.junit.Assert.assertNotNull
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -31,31 +34,37 @@ import org.mockito.MockitoAnnotations
 import org.mockito.junit.MockitoJUnitRunner
 
 
-@RunWith(MockitoJUnitRunner::class) class LaunchPresenterTest {
-  val view = mock<View>()
+@RunWith(MockitoJUnitRunner::class)
+class LaunchPresenterTest {
+
+  val userRepository = mock<UserRepository>()
+  val view = mock<LaunchContract.View>()
+  val signInCallbackCaptor = argumentCaptor<SignInCallback>()
   val sharedPreferences = mock<SharedPreferences>()
   val preferenceHelper = PreferenceHelper(sharedPreferences)
   private lateinit var presenter: LaunchPresenter
 
-  @Before fun setUp() {
+  @Before
+  fun setUp() {
     MockitoAnnotations.initMocks(this)
-    presenter = LaunchPresenter()
-    preferenceHelper.saveUserData("", "", "", "", "")
+    presenter = LaunchPresenter(userRepository)
+    presenter.takeView(view)
   }
 
   @Test
   fun is_signed_idTest() {
     presenter.isSignIn()
-    if (TextUtils.isEmpty(preferenceHelper.getUserId())) {
-      //verify(view, times(1)).onSignedOut()
-    } else {
-      //verify(view, times(1)).onSignedIn()
-    }
+    verify(userRepository, times(1)).getSignIn(signInCallbackCaptor.capture())
+    signInCallbackCaptor.firstValue.onSuccess(true)
+    verify(view).onSignedIn()
   }
 
   @Test
-  fun not_nullTest() {
-    assertNotNull(presenter)
+  fun is_signed_outTest() {
+    presenter.isSignIn()
+    verify(userRepository, times(1)).getSignIn(signInCallbackCaptor.capture())
+    signInCallbackCaptor.firstValue.onSuccess(false)
+    verify(view).onSignedOut()
   }
 
 }

@@ -18,18 +18,23 @@
 package io.shtanko.picasagallery.data.api
 
 import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import io.shtanko.picasagallery.data.model.AlbumsResponse
 import io.shtanko.picasagallery.data.model.UserFeedResponse
-import retrofit2.http.GET
-import retrofit2.http.Path
+
+class ApiManagerImpl constructor(var apiService: PicasaService) : ApiManager {
+
+  override fun getUser(userId: String): Observable<UserFeedResponse> {
+    return apiService.getUser(userId).subscribeOn(AndroidSchedulers.mainThread()).observeOn(
+        Schedulers.io())
+  }
+
+  override fun getAlbums(userId: String, albumId: String): Observable<AlbumsResponse> {
+    return apiService.getAlbums(userId, albumId).subscribeOn(
+        AndroidSchedulers.mainThread()).observeOn(
+        Schedulers.io())
+  }
 
 
-interface PicasaService {
-
-  @GET("user/{userId}")
-  fun getUser(@Path("userId") userId: String): Observable<UserFeedResponse>
-
-  @GET("user/{userId}/albumid/{albumId}")
-  fun getAlbums(@Path("userId") userId: String, @Path(
-      "albumid") albumId: String): Observable<AlbumsResponse>
 }
