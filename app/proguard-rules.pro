@@ -12,7 +12,6 @@
 
 -keepattributes *Annotation*,Signature,Exceptions
 
--keepattributes *Annotation*
 -keep class com.squareup.okhttp.** { *; }
 -keep interface com.squareup.okhttp.** { *; }
 -dontwarn com.squareup.okhttp.**
@@ -55,8 +54,21 @@
 -keep class * extends dagger.internal.StaticInjection
 
 -keep class com.google.common.base.Preconditions { *; }
+-keep class android.support.v4.util.Precondition { *; }
+-keep class dagger.internal.Preconditions { *; }
 -dontwarn javax.annotation.**
 -dontwarn javax.inject.**
 
 # Proguard rules that are applied to your test apk/code.
 -ignorewarnings
+
+-keep class org.apache.http.** { *; }
+-keep class android.net.http.** { *; }
+
+-dontnote android.net.http.*
+-dontnote org.apache.http.**
+-dontwarn com.google.errorprone.annotations.*
+-dontnote sun.misc.Unsafe
+-dontnote dagger.internal.Binding
+-dontnote dagger.internal.ModuleAdapter
+-dontnote dagger.internal.StaticInjection

@@ -183,3 +183,5 @@ hs_err_pid*
 !gradle-wrapper.jar
 /config/release.properties
 !app/src/dev/google-services.json
+config/*.json
+fastlane

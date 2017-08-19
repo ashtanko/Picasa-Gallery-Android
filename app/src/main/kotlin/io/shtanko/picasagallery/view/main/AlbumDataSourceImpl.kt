@@ -17,11 +17,13 @@
 
 package io.shtanko.picasagallery.view.main
 
+import io.shtanko.picasagallery.data.api.ApiManager
 import io.shtanko.picasagallery.view.main.AlbumDataSource.LoadAlbumsCallback
 import javax.inject.Inject
+import javax.inject.Singleton
 
-
-class AlbumDataSourceImpl @Inject constructor() : AlbumDataSource {
+@Singleton
+class AlbumDataSourceImpl @Inject constructor(var apiManager: ApiManager) : AlbumDataSource {
 
   override fun getAlbums(callback: LoadAlbumsCallback) {
 

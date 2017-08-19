@@ -15,16 +15,11 @@
  *
  */
 
-package io.shtanko.picasagallery.view.main
+package io.shtanko.picasagallery.data.db
 
-import io.shtanko.picasagallery.view.main.AlbumDataSource.LoadAlbumsCallback
-import javax.inject.Inject
-import javax.inject.Singleton
+import dagger.Module
 
-@Singleton
-class AlbumRepository @Inject constructor() : AlbumDataSource {
-  override fun getAlbums(callback: LoadAlbumsCallback) {
-    TODO(
-        "not implemented") //To change body of created functions use File | Settings | File Templates.
-  }
+@Module
+class DatabaseModule {
+
 }

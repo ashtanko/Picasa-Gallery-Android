@@ -26,6 +26,7 @@ import io.reactivex.Single
 import io.reactivex.SingleOnSubscribe
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import io.shtanko.picasagallery.util.Logger
 
 class PicasaClient(val context: Context) {
 
@@ -54,7 +55,7 @@ class PicasaClient(val context: Context) {
     }).subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .doOnError { error ->
-
+          Logger.verbose(this, error.message)
         }.doOnSuccess { it ->
       token = it
     }.toCompletable()

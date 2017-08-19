@@ -19,12 +19,20 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
+apply plugin: 'realm-android'
 
 def props = new Properties()
 props.load(new FileInputStream(rootProject.file('config/release.properties')))
 
-
 android {
+  applicationVariants.all { variant ->
+    variant.outputs.all { output ->
+      def newApkName
+      newApkName = output.getOutputFile().name.replace(".apk",
+          "-${new Date().format('yyyyMMdd')}-${variant.versionName}-${variant.versionCode}.apk")
+      outputFileName = newApkName
+    }
+  }
 
   compileOptions.incremental = false
 
@@ -32,10 +40,13 @@ android {
   buildToolsVersion "26.0.1"
 
   defaultConfig {
+
+    def gitCommitCount = "git rev-list HEAD --first-parent --count".execute().text.toInteger()
+
     applicationId "io.shtanko.picasagallery"
     targetSdkVersion 26
     minSdkVersion 14
-    versionCode 23
+    versionCode gitCommitCount
     versionName "1.0"
     testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
   }
@@ -111,15 +122,14 @@ android {
     main.java.srcDirs += 'src/main/kotlin'
 
     main {
-      res.srcDirs = [
-          'src/main/res/main',
-          'src/main/res/album',
-          'src/main/res/user',
-          'src/main/res/collection',
-          'src/main/res/about',
-          'src/main/res/auth',
-          'src/main/res/resources',
-          'src/main/res']
+      res.srcDirs = ['src/main/res/main',
+                     'src/main/res/album',
+                     'src/main/res/user',
+                     'src/main/res/collection',
+                     'src/main/res/about',
+                     'src/main/res/auth',
+                     'src/main/res/resources',
+                     'src/main/res']
     }
   }
 
@@ -164,6 +174,7 @@ android {
 
 kapt {
   generateStubs = true
+  correctErrorTypes = true
 }
 
 apply from: 'dependencies.gradle'

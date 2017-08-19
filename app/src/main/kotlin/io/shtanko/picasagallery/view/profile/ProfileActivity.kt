@@ -18,26 +18,30 @@
 package io.shtanko.picasagallery.view.profile
 
 import android.os.Bundle
+import dagger.Lazy
 import io.shtanko.picasagallery.R
 import io.shtanko.picasagallery.util.ActivityUtils
 import io.shtanko.picasagallery.view.base.BaseActivity
+import javax.inject.Inject
 
 
 class ProfileActivity : BaseActivity() {
 
+  @Inject lateinit var presenter: ProfilePresenter
+  @Inject lateinit var fragmentProvider: Lazy<ProfileFragment>
+
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.container_activity)
-
-    val fragment = getFragment()
+    addFragment()
   }
 
-  private fun getFragment(): ProfileFragment {
-    val fragment = supportFragmentManager.findFragmentById(
-        R.id.content_frame) as ProfileFragment? ?: ProfileFragment().also {
-      ActivityUtils.addFragmentToActivity(supportFragmentManager, it, R.id.content_frame)
+  private fun addFragment() {
+    var fragment = supportFragmentManager.findFragmentById(
+        R.id.content_frame) as ProfileFragment?
+    if (fragment == null) {
+      fragment = fragmentProvider.get()
+      ActivityUtils.addFragmentToActivity(supportFragmentManager, fragment, R.id.content_frame)
     }
-    return fragment
   }
-
 }
