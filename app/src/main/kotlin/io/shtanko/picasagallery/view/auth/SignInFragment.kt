@@ -21,7 +21,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ProgressBar
 import com.google.android.gms.auth.api.Auth
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.SignInButton
@@ -63,11 +62,6 @@ class SignInFragment @Inject constructor() : DaggerFragment(), SignInContract.Vi
   }
 
   override fun setLoadingIndicator(active: Boolean) {
-    with(rootView.findViewById<ProgressBar>(R.id.progress_bar)) {
-      post {
-        visibility = View.GONE
-      }
-    }
   }
 
   private fun addSignInButton() {
