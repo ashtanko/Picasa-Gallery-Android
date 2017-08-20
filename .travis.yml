@@ -1,5 +1,5 @@
 language: android
-sudo: required
+os: osx
 jdk: oraclejdk8
 
 notifications:
@@ -65,7 +65,9 @@ before_install:
 - ./gradlew dependencies || true
 
 script:
+- echo "***** START SCRIPT *****"
 - echo "Travis branch is $TRAVIS_BRANCH"
+- uname -a
 #- android-wait-for-emulator
 - adb devices
 - adb shell input keyevent 82 &
