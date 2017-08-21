@@ -181,7 +181,6 @@ hs_err_pid*
 
 # Avoid ignoring Gradle wrapper jar file (.jar files are usually ignored)
 !gradle-wrapper.jar
-/config/release.properties
 !app/src/dev/google-services.json
 config/*.json
 fastlane

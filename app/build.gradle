@@ -19,10 +19,13 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
-//apply plugin: 'realm-android'
 
 def props = new Properties()
-props.load(new FileInputStream(rootProject.file('config/release.properties')))
+if (rootProject.file('config/release.properties').exists()) {
+  props.load(new FileInputStream(rootProject.file('config/release.properties')))
+} else {
+  props.load(new FileInputStream(rootProject.file('config/debug.properties')))
+}
 
 android {
   applicationVariants.all { variant ->
@@ -56,6 +59,7 @@ android {
   }
 
   signingConfigs {
+
     if (props != null &&
         props.containsKey('STORE_FILE') &&
         !props.getProperty('STORE_FILE').isEmpty() &&
@@ -89,7 +93,7 @@ android {
       shrinkResources true
       pseudoLocalesEnabled true
       debuggable false
-      //signingConfig signingConfigs.release
+      signingConfig signingConfigs.release
       proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
     }
 
@@ -97,12 +101,12 @@ android {
       minifyEnabled false
       debuggable true
       useProguard false
-      //signingConfig signingConfigs.debug
+      signingConfig signingConfigs.debug
     }
 
     foss {
       debuggable false
-      //signingConfig signingConfigs.release
+      signingConfig signingConfigs.release
     }
   }
   flavorDimensions "type"
