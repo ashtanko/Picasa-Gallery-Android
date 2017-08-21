@@ -1,5 +1,6 @@
 language: android
-os: osx
+sudo: required 
+dist: precise
 jdk: oraclejdk8
 
 notifications:
