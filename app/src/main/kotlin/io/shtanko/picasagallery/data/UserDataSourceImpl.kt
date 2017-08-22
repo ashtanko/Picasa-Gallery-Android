@@ -26,6 +26,10 @@ import javax.inject.Singleton
 class UserDataSourceImpl @Inject constructor(
     var preferencesHelper: PreferenceHelper) : UserDataSource {
 
+  override fun saveToken(token: String) {
+    preferencesHelper.saveToken(token)
+  }
+
   override fun saveUser(user: UserEntity) {
     preferencesHelper.saveUserData(user)
   }

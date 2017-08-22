@@ -21,7 +21,9 @@ import okhttp3.Interceptor
 import okhttp3.Interceptor.Chain
 import okhttp3.Response
 
-class PicasaNetworkInterceptor() : Interceptor {
+
+class PicasaNetworkInterceptor(var token: String) : Interceptor {
+
   override fun intercept(chain: Chain): Response {
     val originalRequest = chain.request()
 
@@ -29,10 +31,13 @@ class PicasaNetworkInterceptor() : Interceptor {
         .addQueryParameter("alt", "json")
         .build()
 
-    val authorizedRequest = originalRequest.newBuilder().url(httpUrl).header("Authorization",
-        "Bearer " + "")
-        .header("Gdata-version", "2").build()
+    val authorizedRequest = originalRequest
+        .newBuilder()
+        .url(httpUrl)
+        .header("Authorization",  token)
+        .header("Gdata-version", "3").build()
 
     return chain.proceed(authorizedRequest)
+
   }
 }

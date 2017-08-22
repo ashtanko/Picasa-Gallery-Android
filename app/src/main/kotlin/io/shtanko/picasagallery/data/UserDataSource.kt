@@ -29,4 +29,5 @@ interface UserDataSource {
 
   fun getSignIn(@NonNull callback: SignInCallback)
   fun saveUser(user: UserEntity)
+  fun saveToken(token: String)
 }

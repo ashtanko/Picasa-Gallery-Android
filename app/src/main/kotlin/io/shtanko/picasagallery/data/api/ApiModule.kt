@@ -25,6 +25,8 @@ import dagger.Module
 import dagger.Provides
 import io.reactivex.schedulers.Schedulers
 import io.shtanko.picasagallery.Config
+import io.shtanko.picasagallery.data.PreferenceHelper
+import io.shtanko.picasagallery.data.PreferencesModule
 import okhttp3.Cache
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -35,7 +37,7 @@ import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 
-@Module
+@Module(includes = arrayOf(PreferencesModule::class))
 class ApiModule {
 
   @Provides
@@ -61,8 +63,8 @@ class ApiModule {
   }
 
   @Provides
-  fun providePicasaInterceptor(): Interceptor {
-    val picasaInterceptor = PicasaNetworkInterceptor()
+  fun providePicasaInterceptor(token: String): Interceptor {
+    val picasaInterceptor = PicasaNetworkInterceptor(token)
     return picasaInterceptor
   }
 
@@ -107,6 +109,11 @@ class ApiModule {
   @Provides
   fun provideApiManagerImpl(service: PicasaService): ApiManager {
     return ApiManagerImpl(service)
+  }
+
+  @Provides
+  fun provideToken(preferenceHelper: PreferenceHelper): String {
+    return preferenceHelper.getToken()
   }
 
 }

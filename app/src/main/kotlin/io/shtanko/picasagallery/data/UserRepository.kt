@@ -26,6 +26,9 @@ import javax.inject.Singleton
 class UserRepository @Inject constructor(
     var dataSourceImpl: UserDataSourceImpl) : UserDataSource {
 
+  override fun saveToken(token: String) {
+    dataSourceImpl.saveToken(token)
+  }
 
   override fun saveUser(user: UserEntity) {
     dataSourceImpl.saveUser(user)
@@ -34,5 +37,4 @@ class UserRepository @Inject constructor(
   override fun getSignIn(callback: SignInCallback) {
     dataSourceImpl.getSignIn(callback)
   }
-
 }

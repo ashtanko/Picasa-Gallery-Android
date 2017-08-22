@@ -31,7 +31,7 @@ interface SignInContract {
   interface Presenter : BasePresenter<View> {
     fun signIn()
     fun saveUserData(user: UserEntity)
-
+    fun saveToken(token: String)
   }
 
 }

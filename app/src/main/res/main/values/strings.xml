@@ -16,18 +16,10 @@
   ~
   -->
 
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    >
-
-  <include
-      layout="@layout/sign_in_content"
-      app:layout_constraintBottom_toBottomOf="parent"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toTopOf="parent"
-      />
-
-</android.support.constraint.ConstraintLayout>
+<resources>
+  <string name="error">Error</string>
+  <string name="google_account_error">You may only set a Google account</string>
+  <string name="user_cancelled_error">User canceled account picker dialog</string>
+  <string name="access_goole_account_alert_title">This app needs to access your Google account (via Contacts).</string>
+  <string name="sign_in_tile">Sign in</string>
+</resources>

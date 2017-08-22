@@ -17,22 +17,37 @@
 
 package io.shtanko.picasagallery.view.auth
 
+import android.Manifest
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import com.google.android.gms.auth.api.Auth
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.AccountPicker
+import com.google.android.gms.common.ConnectionResult
+import com.google.android.gms.common.GoogleApiAvailability
 import com.google.android.gms.common.SignInButton
 import com.google.android.gms.common.api.GoogleApiClient
 import dagger.android.support.DaggerFragment
 import io.shtanko.picasagallery.R
+import pub.devrel.easypermissions.AfterPermissionGranted
+import pub.devrel.easypermissions.EasyPermissions
 import javax.inject.Inject
+
 
 class SignInFragment @Inject constructor() : DaggerFragment(), SignInContract.View {
 
+
   companion object {
     val SIGN_IN_REQUEST_CODE = 1111
+    val REQUEST_ACCOUNT_PICKER = 1000
+    val REQUEST_RECOVER_PLAY_SERVICES_ERROR = 1024
+    val REQUEST_GOOGLE_PLAY_SERVICES = 1002
+    const val REQUEST_PERMISSION_GET_ACCOUNTS = 1003
+    val ACCOUNT_TYPE_GOOGLE = "com.google"
+
   }
 
   @Inject lateinit var presenter: SignInContract.Presenter
@@ -71,6 +86,12 @@ class SignInFragment @Inject constructor() : DaggerFragment(), SignInContract.Vi
         signIn()
       }
     }
+
+    with(rootView.findViewById<Button>(R.id.sign_in_button2)) {
+      setOnClickListener {
+        getResultsFromApi()
+      }
+    }
   }
 
   private fun signIn() {
@@ -91,5 +112,59 @@ class SignInFragment @Inject constructor() : DaggerFragment(), SignInContract.Vi
     activity.startActivityForResult(signInIntent, SignInFragment.SIGN_IN_REQUEST_CODE)
   }
 
+  @AfterPermissionGranted(REQUEST_PERMISSION_GET_ACCOUNTS)
+  private fun pickAccount() {
+
+    if (EasyPermissions.hasPermissions(
+        activity, Manifest.permission.GET_ACCOUNTS)) {
+
+      val accountTypes = arrayOf(ACCOUNT_TYPE_GOOGLE)
+      val intent = AccountPicker.newChooseAccountIntent(null, null, accountTypes, false, null, null,
+          null, null)
+      activity.startActivityForResult(intent, REQUEST_ACCOUNT_PICKER)
+
+    } else {
+      EasyPermissions.requestPermissions(
+          this,
+          "This app needs to access your Google account (via Contacts).",
+          REQUEST_PERMISSION_GET_ACCOUNTS,
+          Manifest.permission.GET_ACCOUNTS);
+    }
+  }
+
+  private fun getResultsFromApi() {
+    if (!isGooglePlayServicesAvailable()) {
+      acquireGooglePlayServices()
+    } else {
+      pickAccount()
+    }
+  }
+
+  private fun isGooglePlayServicesAvailable(): Boolean {
+    val apiAvailability =
+        GoogleApiAvailability.getInstance();
+    val connectionStatusCode =
+        apiAvailability.isGooglePlayServicesAvailable(activity)
+    return connectionStatusCode == ConnectionResult.SUCCESS;
+  }
+
+  private fun acquireGooglePlayServices() {
+    val apiAvailability =
+        GoogleApiAvailability.getInstance()
+    val connectionStatusCode =
+        apiAvailability.isGooglePlayServicesAvailable(activity)
+    if (apiAvailability.isUserResolvableError(connectionStatusCode)) {
+      showGooglePlayServicesAvailabilityErrorDialog(connectionStatusCode);
+    }
+  }
+
+  private fun showGooglePlayServicesAvailabilityErrorDialog(connectionStatusCode: Int) {
+    val apiAvailability = GoogleApiAvailability.getInstance()
+    val dialog = apiAvailability.getErrorDialog(
+        activity,
+        connectionStatusCode,
+        SignInFragment.REQUEST_GOOGLE_PLAY_SERVICES)
+    dialog.show();
+  }
 }
 

@@ -25,7 +25,7 @@ import javax.inject.Singleton
 @Singleton
 class PreferenceHelper constructor(val sharedPreferences: SharedPreferences) {
 
-  val editor = sharedPreferences.edit()
+  private val editor = sharedPreferences.edit()
 
   fun saveUserData(user: UserEntity) {
     if (editor != null) {
@@ -37,6 +37,17 @@ class PreferenceHelper constructor(val sharedPreferences: SharedPreferences) {
       editor.commit()
     }
   }
+
+  fun saveToken(token: String) {
+    if (editor != null) {
+      editor.putString(Config.SAVED_TOKEN_PREF, token)
+      editor.commit()
+    }
+  }
+
+  fun getToken(): String = if (sharedPreferences.getString(Config.SAVED_TOKEN_PREF,
+      "") == null) "" else sharedPreferences.getString(Config.SAVED_TOKEN_PREF,
+      "")
 
   fun getUserId(): String = if (sharedPreferences.getString(Config.SAVED_ID_PREF,
       "") == null) "" else sharedPreferences.getString(Config.SAVED_ID_PREF,

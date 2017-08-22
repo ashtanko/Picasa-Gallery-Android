@@ -45,6 +45,8 @@ dependencies {
     exclude group: 'com.google.code.gson'
   }
 
+  implementation 'pub.devrel:easypermissions:0.3.0'
+
   // RX JAVA
   implementation 'io.reactivex.rxjava2:rxjava:2.1.2'
   implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'

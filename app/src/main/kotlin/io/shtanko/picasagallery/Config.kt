@@ -18,11 +18,12 @@
 package io.shtanko.picasagallery
 
 object Config {
+  val SAVED_TOKEN_PREF = "token_pref"
   val SAVED_PERSON_NAME_PREF = "user_name_pref"
   val SAVED_PERSON_GIVEN_NAME_PREF = "user_given_name_pref"
   val SAVED_PERSON_FAMILY_NAME_PREF = "user_family_name_pref"
   val SAVED_EMAIL_PREF = "user_email_pref"
   val SAVED_ID_PREF = "user_id_pref"
-
-  val PICASA_BASE_API_URL = "https://picasaweb.google.com/data/feed/api/"
+  val PICASA_BASE_URL = "https://picasaweb.google.com/data/"
+  val PICASA_BASE_API_URL = "$PICASA_BASE_URL/data/feed/api/"
 }

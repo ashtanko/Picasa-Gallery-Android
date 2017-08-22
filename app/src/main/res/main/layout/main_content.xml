@@ -29,6 +29,10 @@
       android:layout_height="match_parent"
       tools:layout_editor_absoluteY="63dp"
       tools:layout_editor_absoluteX="16dp"
+      app:layout_constraintTop_toTopOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
       >
   </android.support.v7.widget.RecyclerView>
 

@@ -45,4 +45,8 @@ class SignInPresenter @Inject constructor(
   override fun saveUserData(user: UserEntity) {
     repository.saveUser(user)
   }
+
+  override fun saveToken(token: String) {
+    repository.saveToken(token)
+  }
 }
