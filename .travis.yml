@@ -23,7 +23,7 @@ env:
  - ANDROID_API=26
  - EMULATOR_API_LEVEL=25
  - ANDROID_BUILD_TOOLS=26.0.0
- - ADB_INSTALL_TIMEOUT=15 # minutes
+ - ADB_INSTALL_TIMEOUT=25 # minutes
  - ANDROID_BUILD_TOOLS_VERSION=26.0.0
  - ANDROID_ABI=armeabi-v7a
  - ANDROID_TAG=google_apis
@@ -65,6 +65,7 @@ before_install:
 - echo -e "\n84831b9409646a918e30573bab4c9c91346d8abd" > "$ANDROID_HOME/licenses/android-sdk-preview-license"
 - chmod +x gradlew
 - ./gradlew dependencies || true
+- pip install --user codecov    #Install codecov
 
 script:
 - echo "***** START SCRIPT *****"
@@ -76,4 +77,4 @@ script:
 - "./gradlew clean build -Pbuild=dev -PdisablePreDex --stacktrace jacocoTestReport"
 
 after_success:
-  — bash <(curl -s https://codecov.io/bash)
+    - codecov                       #Run codecov

@@ -1,0 +1,33 @@
+codecov:
+  token: c3c594dd-b509-4ca0-9fd0-248dc1af7cf3
+  branch: master
+  disable_default_path_fixes: true
+  notify:
+    require_ci_to_pass: yes
+
+coverage:
+  status:
+    project: 
+      default:
+        target: auto  # this is default
+        if_not_found: success  # no commit found? still set a success
+  precision: 2
+  round: down
+  range: "1...100"
+  
+
+  status:
+    project: yes
+    patch: yes
+    changes: no
+
+parsers:
+  gcov:
+    branch_detection:
+      conditional: yes
+      loop: yes
+      method: no
+      macro: no
+      
+fixes:
+  - "io/shtanko/picasagallery::src/main/io/shtanko/picasagallery"
