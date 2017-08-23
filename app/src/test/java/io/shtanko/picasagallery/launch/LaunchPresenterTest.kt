@@ -37,10 +37,10 @@ import org.mockito.junit.MockitoJUnitRunner
 @RunWith(MockitoJUnitRunner::class)
 class LaunchPresenterTest {
 
-  val userRepository = mock<UserRepository>()
-  val view = mock<LaunchContract.View>()
-  val signInCallbackCaptor = argumentCaptor<SignInCallback>()
-  val sharedPreferences = mock<SharedPreferences>()
+  private val userRepository = mock<UserRepository>()
+  private val view = mock<LaunchContract.View>()
+  private val signInCallbackCaptor = argumentCaptor<SignInCallback>()
+  private val sharedPreferences = mock<SharedPreferences>()
   val preferenceHelper = PreferenceHelper(sharedPreferences)
   private lateinit var presenter: LaunchPresenter
 
@@ -52,7 +52,7 @@ class LaunchPresenterTest {
   }
 
   @Test
-  fun is_signed_idTest() {
+  fun is_signed_inTest() {
     presenter.isSignIn()
     verify(userRepository, times(1)).getSignIn(signInCallbackCaptor.capture())
     signInCallbackCaptor.firstValue.onSuccess(true)

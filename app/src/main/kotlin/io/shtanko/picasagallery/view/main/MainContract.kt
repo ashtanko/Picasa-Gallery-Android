@@ -18,13 +18,16 @@
 package io.shtanko.picasagallery.view.main
 
 import io.shtanko.picasagallery.base.BasePresenter
+import io.shtanko.picasagallery.extensions.AlbumsList
 import io.shtanko.picasagallery.view.BaseView
-
 
 interface MainContract {
   interface View : BaseView<Presenter> {
+    fun onShowAlbums(list: AlbumsList)
+    fun onShowError(message:String)
   }
 
   interface Presenter : BasePresenter<View> {
+    fun getAlbums()
   }
 }

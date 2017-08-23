@@ -17,5 +17,10 @@
 
 package io.shtanko.picasagallery.data.entity
 
+import io.shtanko.picasagallery.Config
+import io.shtanko.picasagallery.view.delegate.ViewType
 
-data class AlbumEntity(var title: String)
+
+data class AlbumEntity(var title: String):ViewType {
+  override fun getViewType() = Config.MAIN
+}

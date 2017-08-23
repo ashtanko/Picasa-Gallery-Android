@@ -17,30 +17,58 @@
 
 package io.shtanko.picasagallery.main
 
+import com.nhaarman.mockito_kotlin.argumentCaptor
 import com.nhaarman.mockito_kotlin.mock
+import com.nhaarman.mockito_kotlin.times
+import com.nhaarman.mockito_kotlin.verify
+import io.shtanko.picasagallery.data.AlbumDataSource
+import io.shtanko.picasagallery.data.AlbumRepository
+import io.shtanko.picasagallery.data.entity.AlbumEntity
+import io.shtanko.picasagallery.extensions.AlbumsList
 import io.shtanko.picasagallery.view.main.MainContract
 import io.shtanko.picasagallery.view.main.MainPresenter
-import org.junit.Assert.assertNotNull
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.MockitoAnnotations
 import org.mockito.junit.MockitoJUnitRunner
 
-
-@RunWith(MockitoJUnitRunner::class) class MainPresenterTest {
-  val view = mock<MainContract.View>()
+@RunWith(MockitoJUnitRunner::class)
+class MainPresenterTest {
+  private val albumRepository = mock<AlbumRepository>()
+  private val view = mock<MainContract.View>()
+  private val albumCallbackCaptor = argumentCaptor<AlbumDataSource.LoadAlbumsCallback>()
 
   private lateinit var presenter: MainPresenter
 
-  @Before fun setUp() {
+  @Before
+  fun setUp() {
     MockitoAnnotations.initMocks(this)
-    presenter = MainPresenter()
+    presenter = MainPresenter(albumRepository)
+    presenter.takeView(view)
   }
 
   @Test
-  fun not_nullTest() {
-    assertNotNull(presenter)
+  fun get_not_available_albumsTest() {
+    presenter.getAlbums()
+    verify(albumRepository, times(1)).getAlbums(albumCallbackCaptor.capture())
+    albumCallbackCaptor.firstValue.onDataNotAvailable("Error")
+    verify(view).onShowError("Error")
   }
 
+  @Test
+  fun get_available_albumsTest() {
+    presenter.getAlbums()
+    verify(albumRepository, times(1)).getAlbums(albumCallbackCaptor.capture())
+    albumCallbackCaptor.firstValue.onAlbumsLoaded(getDummyAlbumsList())
+    verify(view).onShowAlbums(getDummyAlbumsList())
+  }
+
+  private fun getDummyAlbumsList(): AlbumsList {
+    val dummyList = ArrayList<AlbumEntity>()
+    for (i in 1..10000) {
+      dummyList.add(AlbumEntity("Item: $i"))
+    }
+    return dummyList
+  }
 }

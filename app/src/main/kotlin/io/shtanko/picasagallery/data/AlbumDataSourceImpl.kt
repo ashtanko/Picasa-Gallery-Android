@@ -15,16 +15,32 @@
  *
  */
 
-package io.shtanko.picasagallery.view.main
+package io.shtanko.picasagallery.data
 
-import io.shtanko.picasagallery.view.main.AlbumDataSource.LoadAlbumsCallback
+import io.reactivex.observers.DefaultObserver
+import io.shtanko.picasagallery.data.AlbumDataSource.LoadAlbumsCallback
+import io.shtanko.picasagallery.data.api.ApiManager
+import io.shtanko.picasagallery.data.model.AlbumsResponse
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class AlbumRepository @Inject constructor() : AlbumDataSource {
+class AlbumDataSourceImpl @Inject constructor(var apiManager: ApiManager) : AlbumDataSource {
+
   override fun getAlbums(callback: LoadAlbumsCallback) {
-    TODO(
-        "not implemented") //To change body of created functions use File | Settings | File Templates.
+
+    apiManager.getAlbums("1", "1").subscribe(object : DefaultObserver<AlbumsResponse>() {
+      override fun onNext(albumsResponse: AlbumsResponse) {
+
+      }
+
+      override fun onError(e: Throwable) {
+
+      }
+
+      override fun onComplete() {
+
+      }
+    })
   }
 }

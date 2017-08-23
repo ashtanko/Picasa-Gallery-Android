@@ -15,8 +15,19 @@
  *
  */
 
-package io.shtanko.picasagallery
+package io.shtanko.picasagallery.view.main
 
-object Injection {
+import android.view.View
+import io.shtanko.picasagallery.data.entity.AlbumEntity
+import io.shtanko.picasagallery.view.base.BaseViewHolder
+import io.shtanko.picasagallery.view.delegate.ViewType
 
+
+class MainViewHolder(itemView: View) : BaseViewHolder(itemView) {
+
+  override fun bind(item: ViewType) {
+    if (item is AlbumEntity) {
+      item.title
+    }
+  }
 }

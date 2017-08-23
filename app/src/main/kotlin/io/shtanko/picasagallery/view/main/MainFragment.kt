@@ -18,11 +18,14 @@
 package io.shtanko.picasagallery.view.main
 
 import android.os.Bundle
+import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import io.shtanko.picasagallery.R
+import io.shtanko.picasagallery.extensions.AlbumsList
+import io.shtanko.picasagallery.extensions.shortToast
 import io.shtanko.picasagallery.util.ActivityScoped
 import io.shtanko.picasagallery.view.base.BaseFragment
 import javax.inject.Inject
@@ -32,9 +35,11 @@ class MainFragment @Inject constructor() : BaseFragment(), MainContract.View {
 
   @Inject lateinit var presenter: MainContract.Presenter
 
+  val mainAdapter = MainAdapter()
+
   override fun onResume() {
     super.onResume()
-    presenter.takeView(this)
+
   }
 
   override fun onDestroy() {
@@ -45,14 +50,27 @@ class MainFragment @Inject constructor() : BaseFragment(), MainContract.View {
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
       savedInstanceState: Bundle?): View? {
     val rootView = inflater.inflate(R.layout.fragment_main, container, false)
+    presenter.takeView(this)
+    presenter.getAlbums()
+
+    val gridLayoutManager = GridLayoutManager(activity, 15)
 
     with(rootView) {
-      rootView.findViewById<RecyclerView>(R.id.albums_recycler_view).apply {
 
+      rootView.findViewById<RecyclerView>(R.id.grid).apply {
+        layoutManager = gridLayoutManager
+        adapter = mainAdapter
       }
     }
 
     return rootView
   }
 
+  override fun onShowAlbums(list: AlbumsList) {
+    mainAdapter.addAlbums(list)
+  }
+
+  override fun onShowError(message: String) {
+    shortToast(message)
+  }
 }

@@ -17,13 +17,18 @@
 
 package io.shtanko.picasagallery.view.main
 
+import io.shtanko.picasagallery.data.AlbumDataSource
+import io.shtanko.picasagallery.data.AlbumRepository
+import io.shtanko.picasagallery.extensions.AlbumsList
 import io.shtanko.picasagallery.util.ActivityScoped
 import io.shtanko.picasagallery.view.main.MainContract.View
 import javax.annotation.Nullable
 import javax.inject.Inject
 
 @ActivityScoped
-class MainPresenter @Inject constructor() : MainContract.Presenter {
+class MainPresenter @Inject constructor(
+    var repository: AlbumRepository
+) : MainContract.Presenter {
 
   @Nullable
   private var view: MainContract.View? = null
@@ -34,5 +39,17 @@ class MainPresenter @Inject constructor() : MainContract.Presenter {
 
   override fun dropView() {
     this.view = null
+  }
+
+  override fun getAlbums() {
+    repository.getAlbums(object : AlbumDataSource.LoadAlbumsCallback {
+      override fun onAlbumsLoaded(list: AlbumsList) {
+        view?.onShowAlbums(list)
+      }
+
+      override fun onDataNotAvailable(message: String) {
+        view?.onShowError(message)
+      }
+    })
   }
 }

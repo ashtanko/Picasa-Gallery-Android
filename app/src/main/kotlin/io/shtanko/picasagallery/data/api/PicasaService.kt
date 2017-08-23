@@ -29,7 +29,7 @@ interface PicasaService {
   @GET("user/{userId}")
   fun getUser(@Path("userId") userId: String): Observable<UserFeedResponse>
 
-  @GET("user/{userId}/albumid/{albumId}")
+  @GET("user/{userId}/albumid/{albumid}")
   fun getAlbums(@Path("userId") userId: String, @Path(
       "albumid") albumId: String): Observable<AlbumsResponse>
 }

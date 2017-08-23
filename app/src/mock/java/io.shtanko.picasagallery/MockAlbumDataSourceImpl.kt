@@ -15,27 +15,23 @@
  *
  */
 
-package io.shtanko.picasagallery.data
+package io.shtanko.picasagallery
 
-import io.shtanko.picasagallery.data.UserDataSource.SignInCallback
-import io.shtanko.picasagallery.data.entity.UserEntity
-import io.shtanko.picasagallery.data.repository.Repository
+import io.shtanko.picasagallery.data.AlbumDataSource
+import io.shtanko.picasagallery.data.AlbumDataSource.LoadAlbumsCallback
+import io.shtanko.picasagallery.data.api.ApiManager
+import io.shtanko.picasagallery.data.entity.AlbumEntity
 import javax.inject.Inject
 import javax.inject.Singleton
-
+//TODO remove ApiManager injection
 @Singleton
-class UserRepository @Inject constructor(
-    var dataSourceImpl: UserDataSourceImpl) : UserDataSource, Repository {
+class MockAlbumDataSourceImpl @Inject constructor(var apiManager: ApiManager) : AlbumDataSource {
 
-  override fun saveToken(token: String) {
-    dataSourceImpl.saveToken(token)
-  }
-
-  override fun saveUser(user: UserEntity) {
-    dataSourceImpl.saveUser(user)
-  }
-
-  override fun getSignIn(callback: SignInCallback) {
-    dataSourceImpl.getSignIn(callback)
+  override fun getAlbums(callback: LoadAlbumsCallback) {
+    val dummyList = ArrayList<AlbumEntity>()
+    for (i in 1..10000) {
+      dummyList.add(AlbumEntity("Item: $i"))
+    }
+    callback.onAlbumsLoaded(dummyList)
   }
 }

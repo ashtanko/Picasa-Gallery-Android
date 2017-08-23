@@ -19,5 +19,6 @@
   <string name="app_name">Picasa-Gallery-Android</string>
   <string name="preference_file_key">picasa_gallery_prefs</string>
   <string name="saved_person_name">saved_person_name</string>
+  <string name="error_loading_data_error">Error</string>
 
 </resources>

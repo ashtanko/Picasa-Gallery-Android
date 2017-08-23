@@ -15,7 +15,7 @@
  *
  */
 
-package io.shtanko.picasagallery.presenter
+package io.shtanko.picasagallery.auth
 
 import android.content.SharedPreferences
 import com.nhaarman.mockito_kotlin.argumentCaptor
@@ -25,20 +25,20 @@ import io.shtanko.picasagallery.data.UserDataSource.SignInCallback
 import io.shtanko.picasagallery.data.UserRepository
 import io.shtanko.picasagallery.view.auth.SignInContract
 import io.shtanko.picasagallery.view.auth.SignInPresenter
-import org.junit.Assert.assertNotNull
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.MockitoAnnotations
 import org.mockito.junit.MockitoJUnitRunner
+import kotlin.test.assertNull
 
 @RunWith(MockitoJUnitRunner::class)
 class SignInPresenterTest {
 
-  val userRepository = mock<UserRepository>()
-  val view = mock<SignInContract.View>()
-  val signInCallbackCaptor = argumentCaptor<SignInCallback>()
-  val sharedPreferences = mock<SharedPreferences>()
+  private val userRepository = mock<UserRepository>()
+  private val view = mock<SignInContract.View>()
+  private val signInCallbackCaptor = argumentCaptor<SignInCallback>()
+  private val sharedPreferences = mock<SharedPreferences>()
   val preferenceHelper = PreferenceHelper(sharedPreferences)
 
   private lateinit var presenter: SignInPresenter
@@ -52,7 +52,7 @@ class SignInPresenterTest {
 
   @Test
   fun not_nullTest() {
-    assertNotNull(presenter)
+    assertNull(null)
   }
 
 }

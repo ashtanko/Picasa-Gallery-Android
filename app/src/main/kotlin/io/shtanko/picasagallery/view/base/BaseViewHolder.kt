@@ -20,6 +20,7 @@ package io.shtanko.picasagallery.view.base
 import android.support.annotation.NonNull
 import android.support.v7.widget.RecyclerView
 import android.view.View
+import io.shtanko.picasagallery.view.delegate.ViewType
 
 
 abstract class BaseViewHolder(itemView: View?) : RecyclerView.ViewHolder(
@@ -32,6 +33,8 @@ abstract class BaseViewHolder(itemView: View?) : RecyclerView.ViewHolder(
   override fun onClick(v: View?) {
 
   }
+
+  abstract fun bind(item: ViewType)
 
   protected @NonNull
   fun view(): View {

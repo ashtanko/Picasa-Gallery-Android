@@ -15,7 +15,7 @@
  *
  */
 
-package io.shtanko.picasagallery
+package io.shtanko.picasagallery.main
 
 import android.support.test.espresso.IdlingRegistry
 import android.support.test.rule.ActivityTestRule

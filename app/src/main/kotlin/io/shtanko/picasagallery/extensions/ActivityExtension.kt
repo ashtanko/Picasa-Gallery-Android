@@ -19,6 +19,8 @@ package io.shtanko.picasagallery.extensions
 
 import android.app.Activity
 import android.os.Build
+import android.support.v4.app.Fragment
+import android.widget.Toast
 
 fun Activity.close() {
   if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
@@ -26,4 +28,12 @@ fun Activity.close() {
   } else {
     finish()
   }
+}
+
+fun Activity.shortToast(message: String) {
+  Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+}
+
+fun Fragment.shortToast(message: String) {
+  Toast.makeText(activity, message, Toast.LENGTH_SHORT).show()
 }
