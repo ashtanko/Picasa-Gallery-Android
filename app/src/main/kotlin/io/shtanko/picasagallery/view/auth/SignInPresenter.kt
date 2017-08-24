@@ -40,13 +40,16 @@ class SignInPresenter @Inject constructor(
   }
 
   override fun signIn() {
+    this.view?.setLoadingIndicator(true)
   }
 
   override fun saveUserData(user: UserEntity) {
+    this.view?.setLoadingIndicator(false)
     repository.saveUser(user)
   }
 
   override fun saveToken(token: String) {
+    this.view?.setLoadingIndicator(false)
     repository.saveToken(token)
   }
 }

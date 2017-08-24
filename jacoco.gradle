@@ -1,0 +1,81 @@
+/*
+ * Copyright 2017 Alexey Shtanko
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+
+apply plugin: 'jacoco'
+
+jacoco {
+  toolVersion "0.7.1.201405082137"
+}
+
+def getFlavorFromVariant(String variantName) {
+  def flavorString = variantName.replaceAll(/(.*)([A-Z].*)/) {
+    all, flavorName, buildTypeName -> flavorName
+  }
+  return flavorString;
+}
+
+def getBuildTypeFromVariant(String variantName) {
+  def buildTypeString = variantName.replaceAll(/(.*)([A-Z].*)/) {
+    all, flavorName, buildTypeName -> "${buildTypeName.toLowerCase()}"
+  }
+  return buildTypeString;
+}
+
+def getFullTestTaskName(String variantName) {
+  return "test${variantName.capitalize()}UnitTest";
+}
+
+android.applicationVariants.all { variant ->
+  def variantName = variant.name;
+  def flavorFromVariant = getFlavorFromVariant("${variantName}");
+  def buildTypeFromVariant = getBuildTypeFromVariant("${variantName}");
+  def testTaskName = getFullTestTaskName("${variantName}")
+
+  task("jacoco${variantName.capitalize()}TestReport", type: JacocoReport, dependsOn: testTaskName) {
+    group = "Reporting"
+    description =
+        "Generate JaCoCo coverage reports after running tests for variant: ${variantName}."
+    reports {
+      xml.enabled = true
+      html.enabled = true
+    }
+
+    classDirectories =
+        fileTree(dir: "./build/intermediates/classes/${flavorFromVariant}/${buildTypeFromVariant}",
+            excludes: ['**/R*.class',
+                       '**/*$InjectAdapter.class',
+                       '**/*$ModuleAdapter.class',
+                       '**/*$ViewInjector*.class'])
+
+    logger.info(
+        "Configuring JaCoCo for flavor: ${flavorFromVariant}, buildType: ${buildTypeFromVariant}, task: ${testTaskName}");
+
+    def coverageSourceDirs = ['../app/src/main/java',
+                              "../app/src/${flavorFromVariant}/java"]
+    sourceDirectories = files(coverageSourceDirs)
+    executionData = files("$buildDir/jacoco/${testTaskName}.exec")
+    // Bit hacky but fixes https://code.google.com/p/android/issues/detail?id=69174.
+    // We iterate through the compiled .class tree and rename $$ to $.
+    doFirst {
+      new File("$buildDir/intermediates/classes/").eachFileRecurse { file ->
+        if (file.name.contains('$$')) {
+          file.renameTo(file.path.replace('$$', '$'))
+        }
+      }
+    }
+  }
+}

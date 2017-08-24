@@ -20,27 +20,38 @@ package io.shtanko.picasagallery.data
 import io.reactivex.observers.DefaultObserver
 import io.shtanko.picasagallery.data.AlbumDataSource.LoadAlbumsCallback
 import io.shtanko.picasagallery.data.api.ApiManager
+import io.shtanko.picasagallery.data.entity.AlbumEntity
+import io.shtanko.picasagallery.data.model.AlbumEntry
 import io.shtanko.picasagallery.data.model.AlbumsResponse
+import io.shtanko.picasagallery.data.model.UserFeedResponse
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class AlbumDataSourceImpl @Inject constructor(var apiManager: ApiManager) : AlbumDataSource {
+class AlbumDataSourceImpl @Inject constructor(
+    var apiManager: ApiManager,
+    var preferencesHelper: PreferenceHelper) : AlbumDataSource {
 
   override fun getAlbums(callback: LoadAlbumsCallback) {
 
-    apiManager.getAlbums("1", "1").subscribe(object : DefaultObserver<AlbumsResponse>() {
-      override fun onNext(albumsResponse: AlbumsResponse) {
+    apiManager.getUser(preferencesHelper.getUserId()).subscribe(
+        object : DefaultObserver<UserFeedResponse>() {
+          override fun onComplete() {
+          }
 
-      }
+          override fun onError(e: Throwable) {
+            callback.onDataNotAvailable(e.localizedMessage)
+          }
 
-      override fun onError(e: Throwable) {
+          override fun onNext(t: UserFeedResponse) {
+            val list = ArrayList<AlbumEntity>()
+            t.feed.entry.forEach { it ->
+              val entity = AlbumEntity(it.title.body)
+              list.add(entity)
+            }
+            callback.onAlbumsLoaded(list)
+          }
 
-      }
-
-      override fun onComplete() {
-
-      }
-    })
+        })
   }
 }

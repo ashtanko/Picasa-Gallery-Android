@@ -15,15 +15,9 @@
  *
  */
 
-package io.shtanko.picasagallery.data.model
+package io.shtanko.picasagallery.view.base
 
-import com.google.gson.annotations.SerializedName
 
-data class AlbumEntry(
-    @SerializedName("id") var id: SingleStringElement,
-    @SerializedName("title") var title: TitleType
-//    @SerializedName("published") var published: SingleStringElement,
-//    @SerializedName("summary") var summary: TitleType,
-//    @SerializedName("rights") var rights: TitleType,
-//    @SerializedName("link") var link: Link
-)
+interface BaseProgressView {
+  fun setLoadingIndicator(active: Boolean)
+}

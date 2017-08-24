@@ -33,9 +33,9 @@ class PicasaNetworkInterceptor(var token: String) : Interceptor {
 
     val authorizedRequest = originalRequest
         .newBuilder()
-        .url(httpUrl)
-        .header("Authorization",  token)
-        .header("Gdata-version", "3").build()
+        .url(httpUrl).build()
+        //.header("Authorization",  token)
+        //.header("Gdata-version", "3").build()
 
     return chain.proceed(authorizedRequest)
 

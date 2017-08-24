@@ -21,7 +21,6 @@ import com.google.gson.annotations.SerializedName
 
 
 data class UserFeed(
-
     @SerializedName("xmlns") var xmlns: String,
     @SerializedName("id") var id: SingleStringElement,
     @SerializedName("updated") var updated: SingleStringElement,

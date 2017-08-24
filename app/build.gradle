@@ -19,7 +19,6 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
-apply plugin: 'jacoco-android'
 
 def props = new Properties()
 if (rootProject.file('config/release.properties').exists()) {
@@ -185,4 +184,5 @@ kapt {
 }
 
 apply from: 'dependencies.gradle'
+apply from: '../jacoco.gradle'
 apply plugin: 'com.google.gms.google-services'

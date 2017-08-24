@@ -38,7 +38,6 @@ class MainAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
   fun addAlbums(list: AlbumsList) {
     items.addAll(list)
-    notifyDataSetChanged()
   }
 
   fun addAlbum(item: AlbumEntity) {

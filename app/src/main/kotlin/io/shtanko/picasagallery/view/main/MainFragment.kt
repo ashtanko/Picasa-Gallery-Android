@@ -23,6 +23,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import io.shtanko.picasagallery.R
 import io.shtanko.picasagallery.extensions.AlbumsList
 import io.shtanko.picasagallery.extensions.shortToast
@@ -36,6 +37,8 @@ class MainFragment @Inject constructor() : BaseFragment(), MainContract.View {
   @Inject lateinit var presenter: MainContract.Presenter
 
   val mainAdapter = MainAdapter()
+
+  var progressBar: ProgressBar? = null
 
   override fun onResume() {
     super.onResume()
@@ -53,9 +56,11 @@ class MainFragment @Inject constructor() : BaseFragment(), MainContract.View {
     presenter.takeView(this)
     presenter.getAlbums()
 
-    val gridLayoutManager = GridLayoutManager(activity, 15)
+    val gridLayoutManager = GridLayoutManager(activity, 2)
 
     with(rootView) {
+
+      progressBar = rootView.findViewById<ProgressBar>(R.id.progress_bar)
 
       rootView.findViewById<RecyclerView>(R.id.grid).apply {
         layoutManager = gridLayoutManager
@@ -68,6 +73,11 @@ class MainFragment @Inject constructor() : BaseFragment(), MainContract.View {
 
   override fun onShowAlbums(list: AlbumsList) {
     mainAdapter.addAlbums(list)
+    mainAdapter.notifyDataSetChanged()
+  }
+
+  override fun setLoadingIndicator(active: Boolean) {
+    progressBar?.visibility = if (active) View.VISIBLE else View.GONE
   }
 
   override fun onShowError(message: String) {

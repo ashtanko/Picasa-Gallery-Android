@@ -15,7 +15,7 @@
  *
  */
 
-package io.shtanko.picasagallery.view
+package io.shtanko.picasagallery.view.base
 
 interface BaseView<T> {
 }

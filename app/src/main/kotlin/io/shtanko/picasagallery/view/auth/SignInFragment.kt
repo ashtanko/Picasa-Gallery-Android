@@ -23,6 +23,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ProgressBar
 import com.google.android.gms.auth.api.Auth
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.AccountPicker
@@ -36,9 +37,7 @@ import pub.devrel.easypermissions.AfterPermissionGranted
 import pub.devrel.easypermissions.EasyPermissions
 import javax.inject.Inject
 
-
 class SignInFragment @Inject constructor() : DaggerFragment(), SignInContract.View {
-
 
   companion object {
     val SIGN_IN_REQUEST_CODE = 1111
@@ -47,11 +46,11 @@ class SignInFragment @Inject constructor() : DaggerFragment(), SignInContract.Vi
     val REQUEST_GOOGLE_PLAY_SERVICES = 1002
     const val REQUEST_PERMISSION_GET_ACCOUNTS = 1003
     val ACCOUNT_TYPE_GOOGLE = "com.google"
-
   }
 
   @Inject lateinit var presenter: SignInContract.Presenter
   val ACCOUNT_TYPE_GOOGLE = "com.google"
+  var progressBar: ProgressBar? = null
 
   lateinit var rootView: View
 
@@ -71,12 +70,14 @@ class SignInFragment @Inject constructor() : DaggerFragment(), SignInContract.Vi
     rootView = root
     with(root) {
       addSignInButton()
+      progressBar = rootView.findViewById<ProgressBar>(R.id.progress_bar)
     }
 
     return root
   }
 
   override fun setLoadingIndicator(active: Boolean) {
+    progressBar?.visibility = if (active) View.VISIBLE else View.GONE
   }
 
   private fun addSignInButton() {

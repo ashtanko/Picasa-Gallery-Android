@@ -19,7 +19,7 @@ package io.shtanko.picasagallery.view.auth
 
 import io.shtanko.picasagallery.base.BasePresenter
 import io.shtanko.picasagallery.data.entity.UserEntity
-import io.shtanko.picasagallery.view.BaseView
+import io.shtanko.picasagallery.view.base.BaseView
 
 
 interface SignInContract {

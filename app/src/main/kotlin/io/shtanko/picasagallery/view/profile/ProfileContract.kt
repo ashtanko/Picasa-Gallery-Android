@@ -18,7 +18,7 @@
 package io.shtanko.picasagallery.view.profile
 
 import io.shtanko.picasagallery.base.BasePresenter
-import io.shtanko.picasagallery.view.BaseView
+import io.shtanko.picasagallery.view.base.BaseView
 
 interface ProfileContract {
   interface View : BaseView<Presenter> {

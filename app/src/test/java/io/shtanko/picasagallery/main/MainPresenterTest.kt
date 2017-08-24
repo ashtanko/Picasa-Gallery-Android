@@ -51,17 +51,21 @@ class MainPresenterTest {
   @Test
   fun get_not_available_albumsTest() {
     presenter.getAlbums()
+    verify(view).setLoadingIndicator(true)
     verify(albumRepository, times(1)).getAlbums(albumCallbackCaptor.capture())
     albumCallbackCaptor.firstValue.onDataNotAvailable("Error")
     verify(view).onShowError("Error")
+    verify(view).setLoadingIndicator(false)
   }
 
   @Test
   fun get_available_albumsTest() {
     presenter.getAlbums()
+    verify(view).setLoadingIndicator(true)
     verify(albumRepository, times(1)).getAlbums(albumCallbackCaptor.capture())
     albumCallbackCaptor.firstValue.onAlbumsLoaded(getDummyAlbumsList())
     verify(view).onShowAlbums(getDummyAlbumsList())
+    verify(view).setLoadingIndicator(false)
   }
 
   private fun getDummyAlbumsList(): AlbumsList {

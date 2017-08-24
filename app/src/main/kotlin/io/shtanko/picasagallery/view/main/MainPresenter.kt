@@ -42,13 +42,16 @@ class MainPresenter @Inject constructor(
   }
 
   override fun getAlbums() {
+    view?.setLoadingIndicator(true)
     repository.getAlbums(object : AlbumDataSource.LoadAlbumsCallback {
       override fun onAlbumsLoaded(list: AlbumsList) {
         view?.onShowAlbums(list)
+        view?.setLoadingIndicator(false)
       }
 
       override fun onDataNotAvailable(message: String) {
         view?.onShowError(message)
+        view?.setLoadingIndicator(false)
       }
     })
   }
