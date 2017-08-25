@@ -74,7 +74,7 @@ script:
 #- android-wait-for-emulator
 - adb devices
 - adb shell input keyevent 82 &
-- "./gradlew clean build -Pbuild=dev -PdisablePreDex --stacktrace createDevDebugUnitTestCoverageReport createDevDebugUnitTestCoverageReportKotlin coveralls"
+- "./gradlew clean build -Pbuild=dev -PdisablePreDex --stacktrace copyKotlinClasses createDevDebugUnitTestCoverageReport createDevDebugUnitTestCoverageReportKotlin coveralls"
 
 after_success:
     - codecov                       #Run codecov

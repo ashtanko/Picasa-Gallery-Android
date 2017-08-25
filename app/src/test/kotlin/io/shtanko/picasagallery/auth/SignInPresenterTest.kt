@@ -25,12 +25,12 @@ import io.shtanko.picasagallery.data.UserDataSource.SignInCallback
 import io.shtanko.picasagallery.data.UserRepository
 import io.shtanko.picasagallery.view.auth.SignInContract
 import io.shtanko.picasagallery.view.auth.SignInPresenter
+import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.MockitoAnnotations
 import org.mockito.junit.MockitoJUnitRunner
-import kotlin.test.assertNull
 
 @RunWith(MockitoJUnitRunner::class)
 class SignInPresenterTest {
@@ -52,7 +52,7 @@ class SignInPresenterTest {
 
   @Test
   fun not_nullTest() {
-    assertNull(null)
+    Assert.assertNull(null)
   }
 
 }

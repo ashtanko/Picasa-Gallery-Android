@@ -30,11 +30,11 @@ if (rootProject.file('config/release.properties').exists()) {
 
 android {
   applicationVariants.all { variant ->
-    variant.outputs.all { output ->
+    variant.outputs.each { output ->
       def newApkName
-      newApkName = output.getOutputFile().name.replace(".apk",
-          "-${new Date().format('yyyyMMdd')}-${variant.versionName}-${variant.versionCode}.apk")
-      outputFileName = newApkName
+      newApkName = new File(output.outputFile.name.replace(".apk",
+          "-${new Date().format('yyyyMMdd')}-${variant.versionName}-${variant.versionCode}.apk"))
+      output.outputFile = newApkName
     }
   }
 
@@ -111,7 +111,6 @@ android {
       signingConfig signingConfigs.release
     }
   }
-  flavorDimensions "type"
 
   productFlavors {
     dev {}
