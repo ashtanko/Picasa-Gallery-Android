@@ -22,4 +22,24 @@
   <color name="colorAccent">#FF4081</color>
 
   <color name="content_placeholder">#ffe0e0e0</color>
+
+  <color name="white">@android:color/white</color>
+  <color name="black">@android:color/black</color>
+
+  <!-- basic colors -->
+  <color name="green">#27D34D</color>
+  <color name="blue">#2A91BD</color>
+  <color name="orange">#FF9D2F</color>
+  <color name="red">#FF432F</color>
+  <color name="clear">#10FFFFFF</color>
+
+  <color name="pink">#E91E63</color>
+  <color name="purple">#9C27B0</color>
+  <color name="deep_purple">#673AB7</color>
+  <color name="indigo">#3F51B5</color>
+  <color name="cyan">#00BCD4</color>
+  <color name="teal">#009688</color>
+  <color name="lime">#CDDC39</color>
+  <color name="amber">#FFC107</color>
+  <color name="deep_orange">#FF5722</color>
 </resources>

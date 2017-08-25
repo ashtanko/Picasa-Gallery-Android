@@ -19,6 +19,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
+apply plugin: 'com.github.kt3k.coveralls'
 
 def props = new Properties()
 if (rootProject.file('config/release.properties').exists()) {
@@ -126,6 +127,7 @@ android {
   sourceSets {
     main.java.srcDirs += 'src/main/kotlin'
     androidTest.java.srcDirs += 'src/androidTest/kotlin'
+    test.java.srcDirs += 'src/test/kotlin'
 
     main {
       res.srcDirs = ['src/main/res/main',

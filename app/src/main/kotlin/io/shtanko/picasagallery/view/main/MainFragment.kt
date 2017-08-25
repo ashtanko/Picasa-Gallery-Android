@@ -63,6 +63,7 @@ class MainFragment @Inject constructor() : BaseFragment(), MainContract.View {
       progressBar = rootView.findViewById<ProgressBar>(R.id.progress_bar)
 
       rootView.findViewById<RecyclerView>(R.id.grid).apply {
+        setHasFixedSize(true)
         layoutManager = gridLayoutManager
         adapter = mainAdapter
       }

@@ -35,6 +35,7 @@
         android:layout_width="@dimen/large_avatar_size"
         android:layout_height="@dimen/large_avatar_size"
         android:layout_marginTop="@dimen/spacing_micro"
+        android:elevation="@dimen/z_card"
         android:padding="@dimen/avatar_padding"
         android:src="@drawable/avatar_placeholder"
         app:layout_constraintEnd_toEndOf="parent"
