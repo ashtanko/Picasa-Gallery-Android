@@ -18,10 +18,10 @@
 package io.shtanko.picasagallery.data.api
 
 import io.reactivex.Observable
-import io.shtanko.picasagallery.data.model.AlbumsResponse
-import io.shtanko.picasagallery.data.model.UserFeedResponse
+import io.shtanko.picasagallery.data.model.AlbumsResponseEntity
+import io.shtanko.picasagallery.data.model.UserFeedResponseEntity
 
 interface ApiManager {
-  fun getUser(userId: String): Observable<UserFeedResponse>
-  fun getAlbums(userId: String, albumId: String): Observable<AlbumsResponse>
+  fun getUser(userId: String): Observable<UserFeedResponseEntity>
+  fun getAlbums(userId: String, albumId: String): Observable<AlbumsResponseEntity>
 }

@@ -15,12 +15,10 @@
  *
  */
 
-package io.shtanko.picasagallery.data.model
+package io.shtanko.picasagallery.core.executor
 
-import com.google.gson.annotations.SerializedName
+import io.reactivex.Scheduler
 
-
-data class AlbumsResponse(
-    @SerializedName("version") var version: String,
-    @SerializedName("encoding") var encoding: String
-)
+interface PostExecutionThread {
+  abstract fun getScheduler(): Scheduler
+}

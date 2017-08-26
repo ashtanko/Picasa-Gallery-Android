@@ -22,7 +22,7 @@ import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.RecyclerView.ViewHolder
 import android.view.ViewGroup
 import io.shtanko.picasagallery.Config
-import io.shtanko.picasagallery.data.entity.AlbumEntity
+import io.shtanko.picasagallery.data.entity.Album
 import io.shtanko.picasagallery.extensions.AlbumsList
 import io.shtanko.picasagallery.view.delegate.ViewType
 import io.shtanko.picasagallery.view.delegate.ViewTypeAdapterDelegate
@@ -40,7 +40,7 @@ class MainAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     items.addAll(list)
   }
 
-  fun addAlbum(item: AlbumEntity) {
+  fun addAlbum(item: Album) {
     items.add(item)
   }
 

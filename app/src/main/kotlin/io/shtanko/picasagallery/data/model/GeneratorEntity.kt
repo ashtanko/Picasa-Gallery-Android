@@ -20,6 +20,8 @@ package io.shtanko.picasagallery.data.model
 import com.google.gson.annotations.SerializedName
 
 
-data class SingleIntegerElement(
-    @SerializedName("'$'t") var body: Int
+open class GeneratorEntity(
+    @SerializedName("'$'t") var t: String,
+    @SerializedName("version") var version: String,
+    @SerializedName("uri") var uri: String
 )

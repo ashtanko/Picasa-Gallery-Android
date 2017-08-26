@@ -27,14 +27,8 @@ import io.shtanko.picasagallery.util.FragmentScoped
 
   @FragmentScoped
   @ContributesAndroidInjector
-  abstract fun signInFragment():SignInFragment
+  abstract fun signInFragment(): SignInFragment
 
   @ActivityScoped
   @Binds abstract fun signInPresenter(presenter: SignInPresenter): SignInContract.Presenter
-
-//  @Provides
-//  fun provideGoogleSignInOptions(): GoogleSignInOptions = GoogleSignInOptions
-//      .Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-//      .requestEmail()
-//      .build()
 }

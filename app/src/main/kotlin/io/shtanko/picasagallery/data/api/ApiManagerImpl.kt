@@ -20,16 +20,16 @@ package io.shtanko.picasagallery.data.api
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import io.shtanko.picasagallery.data.model.AlbumsResponse
-import io.shtanko.picasagallery.data.model.UserFeedResponse
+import io.shtanko.picasagallery.data.model.AlbumsResponseEntity
+import io.shtanko.picasagallery.data.model.UserFeedResponseEntity
 
 class ApiManagerImpl constructor(var apiService: PicasaService) : ApiManager {
 
-  override fun getUser(userId: String): Observable<UserFeedResponse> {
+  override fun getUser(userId: String): Observable<UserFeedResponseEntity> {
     return apiService.getUser(userId).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
   }
 
-  override fun getAlbums(userId: String, albumId: String): Observable<AlbumsResponse> {
+  override fun getAlbums(userId: String, albumId: String): Observable<AlbumsResponseEntity> {
     return apiService.getAlbums(userId, albumId).subscribeOn(
         AndroidSchedulers.mainThread()).observeOn(
         Schedulers.io())

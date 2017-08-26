@@ -23,7 +23,7 @@ import com.nhaarman.mockito_kotlin.times
 import com.nhaarman.mockito_kotlin.verify
 import io.shtanko.picasagallery.data.AlbumDataSource
 import io.shtanko.picasagallery.data.AlbumRepository
-import io.shtanko.picasagallery.data.entity.AlbumEntity
+import io.shtanko.picasagallery.data.entity.Album
 import io.shtanko.picasagallery.extensions.AlbumsList
 import io.shtanko.picasagallery.view.main.MainContract
 import io.shtanko.picasagallery.view.main.MainPresenter
@@ -69,9 +69,9 @@ class MainPresenterTest {
   }
 
   private fun getDummyAlbumsList(): AlbumsList {
-    val dummyList = ArrayList<AlbumEntity>()
+    val dummyList = ArrayList<Album>()
     for (i in 1..10000) {
-      dummyList.add(AlbumEntity("Item: $i"))
+      dummyList.add(Album("Item: $i"))
     }
     return dummyList
   }

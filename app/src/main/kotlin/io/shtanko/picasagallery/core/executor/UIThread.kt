@@ -15,27 +15,14 @@
  *
  */
 
-package io.shtanko.picasagallery.data
+package io.shtanko.picasagallery.core.executor
 
-import io.shtanko.picasagallery.data.UserDataSource.SignInCallback
-import io.shtanko.picasagallery.data.entity.UserEntity
-import io.shtanko.picasagallery.data.repository.Repository
+import io.reactivex.Scheduler
+import io.reactivex.android.schedulers.AndroidSchedulers
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class UserRepository @Inject constructor(
-    var dataSourceImpl: UserDataSourceImpl) : UserDataSource, Repository {
-
-  override fun saveToken(token: String) {
-    dataSourceImpl.saveToken(token)
-  }
-
-  override fun saveUser(user: UserEntity) {
-    dataSourceImpl.saveUser(user)
-  }
-
-  override fun getSignIn(callback: SignInCallback) {
-    dataSourceImpl.getSignIn(callback)
-  }
+class UIThread @Inject constructor() : PostExecutionThread {
+  override fun getScheduler(): Scheduler = AndroidSchedulers.mainThread()
 }

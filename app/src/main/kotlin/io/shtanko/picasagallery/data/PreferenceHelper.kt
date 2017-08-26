@@ -19,7 +19,7 @@ package io.shtanko.picasagallery.data
 
 import android.content.SharedPreferences
 import io.shtanko.picasagallery.Config
-import io.shtanko.picasagallery.data.entity.UserEntity
+import io.shtanko.picasagallery.data.entity.User
 import javax.inject.Singleton
 
 @Singleton
@@ -27,7 +27,7 @@ class PreferenceHelper constructor(val sharedPreferences: SharedPreferences) {
 
   private val editor = sharedPreferences.edit()
 
-  fun saveUserData(user: UserEntity) {
+  fun saveUserData(user: User) {
     if (editor != null) {
       editor.putString(Config.SAVED_PERSON_NAME_PREF, user.personName)
       editor.putString(Config.SAVED_PERSON_GIVEN_NAME_PREF, user.personGivenName)
@@ -35,7 +35,18 @@ class PreferenceHelper constructor(val sharedPreferences: SharedPreferences) {
       editor.putString(Config.SAVED_EMAIL_PREF, user.personEmail)
       editor.putString(Config.SAVED_ID_PREF, user.personId)
       editor.commit()
+      editor.apply()
     }
+  }
+
+  fun getUser(): User {
+    val personName = sharedPreferences.getString(Config.SAVED_PERSON_NAME_PREF, "")
+    val personGivenName = sharedPreferences.getString(Config.SAVED_PERSON_GIVEN_NAME_PREF, "")
+    val personFamilyName = sharedPreferences.getString(Config.SAVED_PERSON_FAMILY_NAME_PREF, "")
+    val personEmail = sharedPreferences.getString(Config.SAVED_EMAIL_PREF, "")
+    val personId = sharedPreferences.getString(Config.SAVED_ID_PREF, "")
+    val user = User(personName, personGivenName, personFamilyName, personEmail, personId)
+    return user
   }
 
   fun saveToken(token: String) {
@@ -45,12 +56,8 @@ class PreferenceHelper constructor(val sharedPreferences: SharedPreferences) {
     }
   }
 
-  fun getToken(): String = if (sharedPreferences.getString(Config.SAVED_TOKEN_PREF,
-      "") == null) "" else sharedPreferences.getString(Config.SAVED_TOKEN_PREF,
-      "")
+  fun getToken(): String = sharedPreferences.getString(Config.SAVED_TOKEN_PREF, "")
 
-  fun getUserId(): String = if (sharedPreferences.getString(Config.SAVED_ID_PREF,
-      "") == null) "" else sharedPreferences.getString(Config.SAVED_ID_PREF,
-      "")
+  fun getUserId(): String = sharedPreferences.getString(Config.SAVED_ID_PREF, "")
 
 }

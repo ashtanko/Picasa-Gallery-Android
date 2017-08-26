@@ -18,7 +18,7 @@
 package io.shtanko.picasagallery.view.main
 
 import android.view.View
-import io.shtanko.picasagallery.data.entity.AlbumEntity
+import io.shtanko.picasagallery.data.entity.Album
 import io.shtanko.picasagallery.view.base.BaseViewHolder
 import io.shtanko.picasagallery.view.delegate.ViewType
 
@@ -26,7 +26,7 @@ import io.shtanko.picasagallery.view.delegate.ViewType
 class MainViewHolder(itemView: View) : BaseViewHolder(itemView) {
 
   override fun bind(item: ViewType) {
-    if (item is AlbumEntity) {
+    if (item is Album) {
       item.title
     }
   }

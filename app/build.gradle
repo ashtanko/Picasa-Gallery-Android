@@ -15,26 +15,37 @@
  *
  */
 
+// region PLUGINS
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'com.github.kt3k.coveralls'
+// endregion
+
+// region CONSTANTS
+final RELEASE = 'release'
+final MOCK = 'mock'
+final DEV = 'dev'
+final RELEASE_PROPERTIES_FILE = 'config/release.properties'
+final DEBUG_PROPERTIES_FILE = 'config/debug.properties'
+// endregion
 
 def props = new Properties()
-if (rootProject.file('config/release.properties').exists()) {
-  props.load(new FileInputStream(rootProject.file('config/release.properties')))
+if (rootProject.file(RELEASE_PROPERTIES_FILE).exists()) {
+  props.load(new FileInputStream(rootProject.file(RELEASE_PROPERTIES_FILE)))
 } else {
-  props.load(new FileInputStream(rootProject.file('config/debug.properties')))
+  props.load(new FileInputStream(rootProject.file(DEBUG_PROPERTIES_FILE)))
 }
 
 android {
   applicationVariants.all { variant ->
     variant.outputs.each { output ->
-      def newApkName
-      newApkName = new File(output.outputFile.name.replace(".apk",
-          "-${new Date().format('yyyyMMdd')}-${variant.versionName}-${variant.versionCode}.apk"))
-      output.outputFile = newApkName
+      def newApkFileName
+      def newApkNameString = output.outputFile.name.replace(".apk",
+          "-${new Date().format('yyyyMMdd')}-${variant.versionName}-${variant.versionCode}.apk")
+      newApkFileName = new File(newApkNameString)
+      output.outputFile = newApkFileName
     }
   }
 
@@ -60,30 +71,18 @@ android {
   }
 
   signingConfigs {
+    debug {
+      storeFile file(props['STORE_FILE'])
+      keyAlias props['KEY_ALIAS']
+      storePassword props['STORE_PASSWORD']
+      keyPassword props['KEY_PASSWORD']
+    }
 
-    if (props != null &&
-        props.containsKey('STORE_FILE') &&
-        !props.getProperty('STORE_FILE').isEmpty() &&
-        props.containsKey('STORE_PASSWORD') &&
-        !props.getProperty('STORE_PASSWORD').isEmpty() &&
-        props.containsKey('KEY_ALIAS') &&
-        !props.getProperty('KEY_ALIAS').isEmpty() &&
-        props.containsKey('KEY_PASSWORD') &&
-        !props.getProperty('KEY_PASSWORD').isEmpty()) {
-
-      debug {
-        storeFile file(props['STORE_FILE'])
-        keyAlias props['KEY_ALIAS']
-        storePassword props['STORE_PASSWORD']
-        keyPassword props['KEY_PASSWORD']
-      }
-
-      release {
-        storeFile file(props['STORE_FILE'])
-        keyAlias props['KEY_ALIAS']
-        storePassword props['STORE_PASSWORD']
-        keyPassword props['KEY_PASSWORD']
-      }
+    release {
+      storeFile file(props['STORE_FILE'])
+      keyAlias props['KEY_ALIAS']
+      storePassword props['STORE_PASSWORD']
+      keyPassword props['KEY_PASSWORD']
     }
   }
 
@@ -124,6 +123,9 @@ android {
   }
 
   sourceSets {
+    mock.java.srcDirs += 'src/mock/kotlin'
+    prod.java.srcDirs += 'src/prod/kotlin'
+    dev.java.srcDirs += 'src/dev/kotlin'
     main.java.srcDirs += 'src/main/kotlin'
     androidTest.java.srcDirs += 'src/androidTest/kotlin'
     test.java.srcDirs += 'src/test/kotlin'
@@ -140,43 +142,42 @@ android {
     }
   }
 
+  // region flavor filter
   def build_param = "${build}"
+  def typeName = ''
+  def flavorName = ''
 
   if (build_param != "dev") {
     //exclude dev
     android.variantFilter { variant ->
 
-      if (variant.buildType.name.equals('release') && variant.getFlavors().
-          get(0).name.equals('mock')) {
+      typeName = variant.buildType.name
+      flavorName = variant.getFlavors().get(0).name
+
+      if ((typeName == RELEASE && flavorName == MOCK) || flavorName == DEV) {
         variant.setIgnore(true)
       }
 
-      if (variant.getFlavors().get(0).name.equals('dev')) {
-        variant.setIgnore(true)
-      }
-      if (variant.getFlavors().get(0).name.equals('dev') && variant.buildType.name.equals(
-          'release')) {
-        variant.setIgnore(true)
-      }
-      if (variant.getFlavors().get(0).name.equals('dev') && variant.buildType.name.equals('mock')) {
+      if ((flavorName == DEV && typeName == RELEASE) || (flavorName == DEV && typeName == MOCK)) {
         variant.setIgnore(true)
       }
     }
   } else {
-    //exclude all but dev
+    //exclude all but keep dev
     android.variantFilter { variant ->
-      if (variant.getFlavors().get(0).name != 'dev') {
+      typeName = variant.buildType.name
+      flavorName = variant.getFlavors().get(0).name
+
+      if ((flavorName == DEV && typeName == RELEASE) || flavorName != DEV) {
         variant.setIgnore(true)
       }
-      if (variant.getFlavors().get(0).name.equals('dev') && variant.buildType.name.equals(
-          'release')) {
-        variant.setIgnore(true)
-      }
-      if (variant.getFlavors().get(0).name.equals('dev') && variant.buildType.name.equals('mock')) {
+
+      if (flavorName == DEV && typeName == MOCK) {
         variant.setIgnore(true)
       }
     }
   }
+  // endregion
 }
 
 kapt {

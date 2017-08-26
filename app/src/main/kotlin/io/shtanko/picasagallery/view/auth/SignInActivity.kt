@@ -38,7 +38,7 @@ import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import io.shtanko.picasagallery.Config
 import io.shtanko.picasagallery.R
-import io.shtanko.picasagallery.data.entity.UserEntity
+import io.shtanko.picasagallery.data.entity.User
 import io.shtanko.picasagallery.extensions.close
 import io.shtanko.picasagallery.util.ActivityUtils
 import io.shtanko.picasagallery.util.Logger
@@ -99,7 +99,7 @@ class SignInActivity : BaseActivity() {
           val personEmail = acct.email
           val personId = acct.id
 
-          val userEntity = UserEntity(personName, personGivenName, personFamilyName, personEmail,
+          val userEntity = User(personName, personGivenName, personFamilyName, personEmail,
               personId)
           presenter.saveUserData(userEntity)
           openMainActivity()

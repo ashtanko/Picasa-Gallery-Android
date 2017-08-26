@@ -15,12 +15,17 @@
  *
  */
 
-package io.shtanko.picasagallery.data.model
+package io.shtanko.picasagallery.data.user
 
-import android.net.Uri
-import com.google.gson.annotations.SerializedName
+import io.reactivex.Observable
+import io.shtanko.picasagallery.data.entity.User
+import javax.inject.Inject
+import javax.inject.Singleton
 
-data class Author(
-    @SerializedName("uri") var uri: Uri,
-    @SerializedName("name") var name: SingleStringElement
-)
+@Singleton
+class GetUserRepositoryImpl @Inject constructor(
+    var dataSourceImpl: UserDataSourceImpl) : UserRepository {
+
+  override fun getUserData(): Observable<User> = Observable.just(dataSourceImpl.getUser())
+
+}

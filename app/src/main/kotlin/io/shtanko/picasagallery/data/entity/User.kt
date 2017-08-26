@@ -15,15 +15,10 @@
  *
  */
 
-package io.shtanko.picasagallery.data.model
+package io.shtanko.picasagallery.data.entity
 
-import com.google.gson.annotations.SerializedName
-
-data class AlbumEntry(
-    @SerializedName("id") var id: SingleStringElement,
-    @SerializedName("title") var title: TitleType
-//    @SerializedName("published") var published: SingleStringElement,
-//    @SerializedName("summary") var summary: TitleType,
-//    @SerializedName("rights") var rights: TitleType,
-//    @SerializedName("link") var link: Link
-)
+data class User(var personName: String?,
+    var personGivenName: String?,
+    var personFamilyName: String?,
+    var personEmail: String?,
+    var personId: String?)

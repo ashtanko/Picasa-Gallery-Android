@@ -18,7 +18,7 @@
 package io.shtanko.picasagallery.data
 
 import io.reactivex.annotations.NonNull
-import io.shtanko.picasagallery.data.entity.AlbumEntity
+import io.shtanko.picasagallery.data.entity.Album
 import io.shtanko.picasagallery.extensions.AlbumsList
 
 
@@ -29,7 +29,7 @@ interface AlbumDataSource {
   }
 
   interface GetAlbumCallback {
-    abstract fun onAlbumLoaded(entity: AlbumEntity)
+    abstract fun onAlbumLoaded(entity: Album)
     abstract fun onDataNotAvailable()
   }
 

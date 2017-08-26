@@ -17,8 +17,8 @@
 
 package io.shtanko.picasagallery.view.auth
 
-import io.shtanko.picasagallery.data.UserRepository
-import io.shtanko.picasagallery.data.entity.UserEntity
+import io.shtanko.picasagallery.data.user.UserRepositoryImpl
+import io.shtanko.picasagallery.data.entity.User
 import io.shtanko.picasagallery.util.ActivityScoped
 import io.shtanko.picasagallery.view.auth.SignInContract.View
 import javax.annotation.Nullable
@@ -26,7 +26,7 @@ import javax.inject.Inject
 
 @ActivityScoped
 class SignInPresenter @Inject constructor(
-    var repository: UserRepository) : SignInContract.Presenter {
+    var repository: UserRepositoryImpl) : SignInContract.Presenter {
 
   @Nullable
   private var view: SignInContract.View? = null
@@ -43,7 +43,7 @@ class SignInPresenter @Inject constructor(
     this.view?.setLoadingIndicator(true)
   }
 
-  override fun saveUserData(user: UserEntity) {
+  override fun saveUserData(user: User) {
     this.view?.setLoadingIndicator(false)
     repository.saveUser(user)
   }

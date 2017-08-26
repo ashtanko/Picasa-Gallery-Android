@@ -20,9 +20,8 @@ package io.shtanko.picasagallery.data.model
 import com.google.gson.annotations.SerializedName
 
 
-data class UserFeed(
-    @SerializedName("xmlns") var xmlns: String,
-    @SerializedName("id") var id: SingleStringElement,
-    @SerializedName("updated") var updated: SingleStringElement,
-    @SerializedName("entry") var entry: List<AlbumEntry>
+data class LinkEntity(
+    @SerializedName("href") var href: String,
+    @SerializedName("type") var type: String,
+    @SerializedName("rel") var rel: String
 )

@@ -27,5 +27,8 @@ object Config {
   val PICASA_BASE_URL = "https://picasaweb.google.com/data"
   val PICASA_BASE_API_URL = "$PICASA_BASE_URL/feed/api/"
 
+  val JOB_THREAD_NAME = "android_"
+  val APPLICATION_LOG_TAG = "PICASA_GALLERY"
+
   val MAIN = 0
 }

@@ -15,10 +15,10 @@
  *
  */
 
-package io.shtanko.picasagallery.data
+package io.shtanko.picasagallery.data.user
 
-import io.shtanko.picasagallery.data.UserDataSource.SignInCallback
-import io.shtanko.picasagallery.data.entity.UserEntity
+import io.shtanko.picasagallery.data.PreferenceHelper
+import io.shtanko.picasagallery.data.entity.User
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -26,19 +26,13 @@ import javax.inject.Singleton
 class UserDataSourceImpl @Inject constructor(
     var preferencesHelper: PreferenceHelper) : UserDataSource {
 
+  override fun getUser() = preferencesHelper.getUser()
+
   override fun saveToken(token: String) {
     preferencesHelper.saveToken(token)
   }
 
-  override fun saveUser(user: UserEntity) {
+  override fun saveUser(user: User) {
     preferencesHelper.saveUserData(user)
-  }
-
-  override fun getSignIn(callback: SignInCallback) {
-    if (!preferencesHelper.getUserId().isEmpty()) {
-      callback.onSuccess(true)
-    } else {
-      callback.onSuccess(false)
-    }
   }
 }

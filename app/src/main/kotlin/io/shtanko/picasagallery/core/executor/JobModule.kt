@@ -15,12 +15,20 @@
  *
  */
 
-package io.shtanko.picasagallery.data.model
+package io.shtanko.picasagallery.core.executor
 
-import com.google.gson.annotations.SerializedName
+import dagger.Module
+import dagger.Provides
+import javax.inject.Singleton
 
-data class UserFeedResponse(
-    @SerializedName("feed") var feed: UserFeed,
-    @SerializedName("version") var version: String,
-    @SerializedName("encoding") var encoding: String
-)
+@Module
+class JobModule {
+
+  @Singleton
+  @Provides
+  fun provideThreadExecutor(jobExecutor: JobExecutor): ThreadExecutor = jobExecutor
+
+  @Singleton
+  @Provides
+  fun providePostExecutionThread(uiThread: UIThread): PostExecutionThread = uiThread
+}

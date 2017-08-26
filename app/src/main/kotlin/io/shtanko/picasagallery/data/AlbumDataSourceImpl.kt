@@ -20,10 +20,8 @@ package io.shtanko.picasagallery.data
 import io.reactivex.observers.DefaultObserver
 import io.shtanko.picasagallery.data.AlbumDataSource.LoadAlbumsCallback
 import io.shtanko.picasagallery.data.api.ApiManager
-import io.shtanko.picasagallery.data.entity.AlbumEntity
-import io.shtanko.picasagallery.data.model.AlbumEntry
-import io.shtanko.picasagallery.data.model.AlbumsResponse
-import io.shtanko.picasagallery.data.model.UserFeedResponse
+import io.shtanko.picasagallery.data.entity.Album
+import io.shtanko.picasagallery.data.model.UserFeedResponseEntity
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -35,7 +33,7 @@ class AlbumDataSourceImpl @Inject constructor(
   override fun getAlbums(callback: LoadAlbumsCallback) {
 
     apiManager.getUser(preferencesHelper.getUserId()).subscribe(
-        object : DefaultObserver<UserFeedResponse>() {
+        object : DefaultObserver<UserFeedResponseEntity>() {
           override fun onComplete() {
           }
 
@@ -43,10 +41,10 @@ class AlbumDataSourceImpl @Inject constructor(
             callback.onDataNotAvailable(e.localizedMessage)
           }
 
-          override fun onNext(t: UserFeedResponse) {
-            val list = ArrayList<AlbumEntity>()
+          override fun onNext(t: UserFeedResponseEntity) {
+            val list = ArrayList<Album>()
             t.feed.entry.forEach { it ->
-              val entity = AlbumEntity(it.title.body)
+              val entity = Album(it.title.body)
               list.add(entity)
             }
             callback.onAlbumsLoaded(list)

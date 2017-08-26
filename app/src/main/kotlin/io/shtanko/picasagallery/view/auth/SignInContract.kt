@@ -18,7 +18,7 @@
 package io.shtanko.picasagallery.view.auth
 
 import io.shtanko.picasagallery.base.BasePresenter
-import io.shtanko.picasagallery.data.entity.UserEntity
+import io.shtanko.picasagallery.data.entity.User
 import io.shtanko.picasagallery.view.base.BaseView
 
 
@@ -30,7 +30,7 @@ interface SignInContract {
 
   interface Presenter : BasePresenter<View> {
     fun signIn()
-    fun saveUserData(user: UserEntity)
+    fun saveUserData(user: User)
     fun saveToken(token: String)
   }
 

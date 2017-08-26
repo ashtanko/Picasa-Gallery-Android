@@ -34,6 +34,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.CallAdapter
 import retrofit2.Converter.Factory
 import retrofit2.Retrofit
+import retrofit2.Retrofit.Builder
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 
@@ -51,8 +52,7 @@ class ApiModule {
   @Provides
   fun provideOkHttpCache(app: Application): Cache {
     val cacheSize = 10 * 1024 * 1024
-    val cache = Cache(app.cacheDir, cacheSize.toLong())
-    return cache
+    return Cache(app.cacheDir, cacheSize.toLong())
   }
 
   @Provides
@@ -63,57 +63,43 @@ class ApiModule {
   }
 
   @Provides
-  fun providePicasaInterceptor(token: String): Interceptor {
-    val picasaInterceptor = PicasaNetworkInterceptor(token)
-    return picasaInterceptor
-  }
+  fun providePicasaInterceptor(token: String): Interceptor = PicasaNetworkInterceptor(token)
 
   @Provides
   fun provideOkHttpClient(
       httpLoggingInterceptor: HttpLoggingInterceptor, interceptor: Interceptor): OkHttpClient {
-    val client = OkHttpClient.Builder()
+    return OkHttpClient.Builder()
         .addNetworkInterceptor(httpLoggingInterceptor)
         .addNetworkInterceptor(interceptor)
         .build()
-    return client
   }
 
   @Provides
-  fun provideCallAdapterFactory(): CallAdapter.Factory {
-    val rxAdapter = RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io())
-    return rxAdapter
-  }
+  fun provideCallAdapterFactory(): CallAdapter.Factory =
+      RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io())
 
   @Provides
-  fun provideConvertFactory(gson: Gson): Factory {
-    return GsonConverterFactory.create(gson)
-  }
+  fun provideConvertFactory(gson: Gson): Factory = GsonConverterFactory.create(gson)
 
   @Provides
   fun provideRetrofit(converterFactory: Factory,
       callAdapterFactory: CallAdapter.Factory, okHttpClient: OkHttpClient): Retrofit {
-    val retrofit = Retrofit.Builder()
+    return Builder()
         .addConverterFactory(converterFactory)
         .baseUrl(Config.PICASA_BASE_API_URL)
         .addCallAdapterFactory(callAdapterFactory)
         .client(okHttpClient)
         .build()
-    return retrofit
   }
 
   @Provides
-  fun providePicasaService(retrofit: Retrofit): PicasaService {
-    return retrofit.create(PicasaService::class.java)
-  }
+  fun providePicasaService(retrofit: Retrofit): PicasaService =
+      retrofit.create(PicasaService::class.java)
 
   @Provides
-  fun provideApiManagerImpl(service: PicasaService): ApiManager {
-    return ApiManagerImpl(service)
-  }
+  fun provideApiManagerImpl(service: PicasaService): ApiManager = ApiManagerImpl(service)
 
   @Provides
-  fun provideToken(preferenceHelper: PreferenceHelper): String {
-    return preferenceHelper.getToken()
-  }
+  fun provideToken(preferenceHelper: PreferenceHelper): String = preferenceHelper.getToken()
 
 }

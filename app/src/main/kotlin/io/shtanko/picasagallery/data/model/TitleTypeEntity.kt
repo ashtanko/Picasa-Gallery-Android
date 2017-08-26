@@ -20,8 +20,7 @@ package io.shtanko.picasagallery.data.model
 import com.google.gson.annotations.SerializedName
 
 
-open class Generator(
-    @SerializedName("'$'t") var t: String,
-    @SerializedName("version") var version: String,
-    @SerializedName("uri") var uri: String
+data class TitleTypeEntity(
+    @SerializedName("$" + "t") var body: String,
+    @SerializedName("type") var type: String
 )

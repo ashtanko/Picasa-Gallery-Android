@@ -19,8 +19,11 @@ package io.shtanko.picasagallery.data.model
 
 import com.google.gson.annotations.SerializedName
 
-
-data class Category(
-    @SerializedName("term") var term: String,
-    @SerializedName("scheme") var scheme: String
+data class AlbumEntity(
+    @SerializedName("id") var id: SingleStringElementEntity,
+    @SerializedName("title") var title: TitleTypeEntity
+//    @SerializedName("published") var published: SingleStringElementEntity,
+//    @SerializedName("summary") var summary: TitleTypeEntity,
+//    @SerializedName("rights") var rights: TitleTypeEntity,
+//    @SerializedName("link") var link: LinkEntity
 )

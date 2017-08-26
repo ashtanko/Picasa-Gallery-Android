@@ -24,6 +24,8 @@ import dagger.android.AndroidInjector
 import dagger.android.DaggerApplication
 import dagger.android.support.AndroidSupportInjectionModule
 import io.shtanko.picasagallery.AlbumsRepositoryModule
+import io.shtanko.picasagallery.UserModule
+import io.shtanko.picasagallery.core.executor.JobModule
 import io.shtanko.picasagallery.data.PreferencesModule
 import io.shtanko.picasagallery.data.api.ApiModule
 import javax.inject.Singleton
@@ -36,7 +38,9 @@ import javax.inject.Singleton
     ActivityBindingModule::class,
     ApiModule::class,
     PreferencesModule::class,
-    AlbumsRepositoryModule::class
+    AlbumsRepositoryModule::class,
+    UserModule::class,
+    JobModule::class
 ))
 interface AppComponent : AndroidInjector<DaggerApplication> {
 

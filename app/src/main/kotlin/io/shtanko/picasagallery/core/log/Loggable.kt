@@ -15,19 +15,13 @@
  *
  */
 
-package io.shtanko.picasagallery.data
+package io.shtanko.picasagallery.core.log
 
-import io.reactivex.annotations.NonNull
-import io.shtanko.picasagallery.data.entity.UserEntity
-
-
-interface UserDataSource {
-  interface SignInCallback {
-    fun onSuccess(value: Boolean)
-    fun onFailure()
-  }
-
-  fun getSignIn(@NonNull callback: SignInCallback)
-  fun saveUser(user: UserEntity)
-  fun saveToken(token: String)
+interface Loggable {
+  abstract fun e(message: String, t: Throwable)
+  abstract fun e(message: String)
+  abstract fun d(message: String)
+  abstract fun e(message: Throwable)
+  abstract fun getLogFile(): String
+  abstract fun cleanupLogs()
 }

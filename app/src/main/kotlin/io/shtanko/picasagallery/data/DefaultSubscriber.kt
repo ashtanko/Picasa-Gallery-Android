@@ -15,11 +15,18 @@
  *
  */
 
-package io.shtanko.picasagallery.data.model
+package io.shtanko.picasagallery.data
 
-import com.google.gson.annotations.SerializedName
+import io.reactivex.Observer
+import io.reactivex.disposables.Disposable
 
+abstract class DefaultSubscriber<T> : Observer<T> {
 
-data class SingleStringElement(
-    @SerializedName("$"+"t") var body: String
-)
+  override fun onComplete() {}
+
+  override fun onNext(t: T) {}
+
+  override fun onError(e: Throwable) {}
+
+  override fun onSubscribe(d: Disposable) {}
+}

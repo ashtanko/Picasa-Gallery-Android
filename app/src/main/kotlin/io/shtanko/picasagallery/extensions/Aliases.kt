@@ -17,6 +17,6 @@
 
 package io.shtanko.picasagallery.extensions
 
-import io.shtanko.picasagallery.data.entity.AlbumEntity
+import io.shtanko.picasagallery.data.entity.Album
 
-typealias AlbumsList = List<AlbumEntity>
+typealias AlbumsList = List<Album>

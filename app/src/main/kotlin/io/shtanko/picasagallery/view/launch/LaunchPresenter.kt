@@ -17,17 +17,17 @@
 
 package io.shtanko.picasagallery.view.launch
 
-import io.shtanko.picasagallery.data.UserDataSource
-import io.shtanko.picasagallery.data.UserRepository
+import io.shtanko.picasagallery.data.DefaultSubscriber
+import io.shtanko.picasagallery.data.entity.User
+import io.shtanko.picasagallery.data.user.GetUserDetails
 import io.shtanko.picasagallery.util.ActivityScoped
-import io.shtanko.picasagallery.util.Logger
 import io.shtanko.picasagallery.view.launch.LaunchContract.View
 import javax.annotation.Nullable
 import javax.inject.Inject
 
 @ActivityScoped
 class LaunchPresenter @Inject constructor(
-    var repository: UserRepository) : LaunchContract.Presenter {
+    var getUserDetails: GetUserDetails) : LaunchContract.Presenter {
 
   @Nullable
   private var view: LaunchContract.View? = null
@@ -38,22 +38,25 @@ class LaunchPresenter @Inject constructor(
 
   override fun dropView() {
     this.view = null
+    getUserDetails.unSubscribe()
   }
 
   override fun isSignIn() {
-    repository.getSignIn(object : UserDataSource.SignInCallback {
-      override fun onSuccess(value: Boolean) {
-        Logger.verbose(this, "TESTTSTS: " + value + " VIEW: " + view)
-        if (value) {
-          view?.onSignedIn()
-        } else {
-          view?.onSignedOut()
-        }
-      }
-
-      override fun onFailure() {
-      }
-    })
+    getUserDetails.execute(UserDetailsSubscriber)
   }
 
+  object UserDetailsSubscriber : DefaultSubscriber<User>() {
+
+    override fun onComplete() {
+      println("FUCK")
+    }
+
+    override fun onNext(t: User) {
+      println("FUCK")
+    }
+
+    override fun onError(e: Throwable) {
+      println("FUCK")
+    }
+  }
 }

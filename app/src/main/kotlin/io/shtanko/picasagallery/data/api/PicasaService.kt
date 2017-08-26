@@ -18,8 +18,8 @@
 package io.shtanko.picasagallery.data.api
 
 import io.reactivex.Observable
-import io.shtanko.picasagallery.data.model.AlbumsResponse
-import io.shtanko.picasagallery.data.model.UserFeedResponse
+import io.shtanko.picasagallery.data.model.AlbumsResponseEntity
+import io.shtanko.picasagallery.data.model.UserFeedResponseEntity
 import retrofit2.http.GET
 import retrofit2.http.Path
 
@@ -27,9 +27,9 @@ import retrofit2.http.Path
 interface PicasaService {
 
   @GET("user/{userId}")
-  fun getUser(@Path("userId") userId: String): Observable<UserFeedResponse>
+  fun getUser(@Path("userId") userId: String): Observable<UserFeedResponseEntity>
 
   @GET("user/{userId}/albumid/{albumid}")
   fun getAlbums(@Path("userId") userId: String, @Path(
-      "albumid") albumId: String): Observable<AlbumsResponse>
+      "albumid") albumId: String): Observable<AlbumsResponseEntity>
 }

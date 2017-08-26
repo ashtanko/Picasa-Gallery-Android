@@ -15,10 +15,23 @@
  *
  */
 
-package io.shtanko.picasagallery.data.entity
+package io.shtanko.picasagallery.data.user
 
-data class UserEntity(var personName: String?,
-    var personGivenName: String?,
-    var personFamilyName: String?,
-    var personEmail: String?,
-    var personId: String?)
+import io.shtanko.picasagallery.data.entity.User
+import javax.inject.Inject
+import javax.inject.Singleton
+
+@Singleton
+class UserRepositoryImpl @Inject constructor(
+    var dataSourceImpl: UserDataSourceImpl) : UserDataSource {
+
+  override fun getUser() = dataSourceImpl.getUser()
+
+  override fun saveToken(token: String) {
+    dataSourceImpl.saveToken(token)
+  }
+
+  override fun saveUser(user: User) {
+    dataSourceImpl.saveUser(user)
+  }
+}

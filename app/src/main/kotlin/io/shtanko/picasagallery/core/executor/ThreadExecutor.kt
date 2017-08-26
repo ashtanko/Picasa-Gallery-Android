@@ -15,13 +15,8 @@
  *
  */
 
-package io.shtanko.picasagallery.data.model
+package io.shtanko.picasagallery.core.executor
 
-import com.google.gson.annotations.SerializedName
+import java.util.concurrent.Executor
 
-
-data class Link(
-    @SerializedName("href") var href: String,
-    @SerializedName("type") var type: String,
-    @SerializedName("rel") var rel: String
-)
+interface ThreadExecutor : Executor
