@@ -17,7 +17,7 @@
 
 package io.shtanko.picasagallery.data.user
 
-import io.reactivex.Observable
+import io.reactivex.Flowable
 import io.shtanko.picasagallery.data.entity.User
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -26,6 +26,6 @@ import javax.inject.Singleton
 class GetUserRepositoryImpl @Inject constructor(
     var dataSourceImpl: UserDataSourceImpl) : UserRepository {
 
-  override fun getUserData(): Observable<User> = Observable.just(dataSourceImpl.getUser())
+  override fun getUserData(): Flowable<User> = Flowable.just(dataSourceImpl.getUser())
 
 }

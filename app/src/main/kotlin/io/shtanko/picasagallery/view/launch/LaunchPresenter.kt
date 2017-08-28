@@ -17,6 +17,8 @@
 
 package io.shtanko.picasagallery.view.launch
 
+import android.text.TextUtils
+import io.shtanko.picasagallery.core.log.FileLog
 import io.shtanko.picasagallery.data.DefaultSubscriber
 import io.shtanko.picasagallery.data.entity.User
 import io.shtanko.picasagallery.data.user.GetUserDetails
@@ -42,21 +44,22 @@ class LaunchPresenter @Inject constructor(
   }
 
   override fun isSignIn() {
-    getUserDetails.execute(UserDetailsSubscriber)
-  }
+    getUserDetails.execute(object : DefaultSubscriber<Any>() {
+      override fun onComplete() {
+        // handle stop progress
+      }
 
-  object UserDetailsSubscriber : DefaultSubscriber<User>() {
+      override fun onNext(t: Any) {
+        if (t is User) {
+          if (!TextUtils.isEmpty(t.personId)) {
+            view?.onSignedIn()
+          }
+        }
+      }
 
-    override fun onComplete() {
-      println("FUCK")
-    }
-
-    override fun onNext(t: User) {
-      println("FUCK")
-    }
-
-    override fun onError(e: Throwable) {
-      println("FUCK")
-    }
+      override fun onError(e: Throwable) {
+        FileLog.e(e)
+      }
+    })
   }
 }

@@ -17,12 +17,12 @@
 
 package io.shtanko.picasagallery.base
 
-import io.reactivex.Observable
-import io.reactivex.Observer
+import io.reactivex.Flowable
 import io.reactivex.disposables.Disposables
 import io.reactivex.schedulers.Schedulers
 import io.shtanko.picasagallery.core.executor.PostExecutionThread
 import io.shtanko.picasagallery.core.executor.ThreadExecutor
+import io.shtanko.picasagallery.data.DefaultSubscriber
 
 
 abstract class UseCase(var threadExecutor: ThreadExecutor,
@@ -31,16 +31,20 @@ abstract class UseCase(var threadExecutor: ThreadExecutor,
   /**
    * Builds an {@link rx.Observable} which will be used when executing the current {@link UseCase}.
    */
-  abstract fun buildUseCaseObservable(): Observable<*>
+  abstract fun buildUseCaseObservable(): Flowable<*>
 
   private var disposables = Disposables.empty()
 
 
-  fun execute(useCaseSubscriber: Observer<*>) {
+  fun execute(useCaseSubscriber: DefaultSubscriber<Any>) {
     this.disposables = this.buildUseCaseObservable()
         .subscribeOn(Schedulers.from(threadExecutor))
         .observeOn(postExecutionThread.getScheduler())
-        .subscribe()
+        .subscribe({ it ->
+          useCaseSubscriber.onNext(it)
+        }) { throwable ->
+          useCaseSubscriber.onError(throwable)
+        }
   }
 
   fun unSubscribe() {

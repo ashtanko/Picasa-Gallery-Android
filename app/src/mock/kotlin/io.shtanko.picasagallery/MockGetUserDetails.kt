@@ -17,7 +17,7 @@
 
 package io.shtanko.picasagallery
 
-import io.reactivex.Observable
+import io.reactivex.Flowable
 import io.shtanko.picasagallery.base.UseCase
 import io.shtanko.picasagallery.core.executor.PostExecutionThread
 import io.shtanko.picasagallery.core.executor.ThreadExecutor
@@ -32,10 +32,10 @@ class MockGetUserDetails @Inject constructor(
     threadExecutor: ThreadExecutor,
     postExecutionThread: PostExecutionThread) : UseCase(threadExecutor, postExecutionThread) {
 
-  override fun buildUseCaseObservable(): Observable<*> {
+  override fun buildUseCaseObservable(): Flowable<*> {
     val user = User("", "", "", "", "")
 
-    return Observable.just(user)
+    return Flowable.just(user)
   }
 
 }
