@@ -18,16 +18,16 @@
 package io.shtanko.picasagallery.view.main
 
 import android.support.v7.widget.RecyclerView.ViewHolder
-import android.view.LayoutInflater
 import android.view.ViewGroup
 import io.shtanko.picasagallery.R
+import io.shtanko.picasagallery.extensions.inflate
 import io.shtanko.picasagallery.view.delegate.ViewType
 import io.shtanko.picasagallery.view.delegate.ViewTypeAdapterDelegate
 
 
 class MainAdapterDelegateImpl : ViewTypeAdapterDelegate {
   override fun onCreateViewHolder(parent: ViewGroup?): ViewHolder {
-    val view = LayoutInflater.from(parent!!.context).inflate(R.layout.album_item, parent, false)
+    val view = parent?.inflate(R.layout.album_item)
     val viewHolder = MainViewHolder(view)
     return viewHolder
   }

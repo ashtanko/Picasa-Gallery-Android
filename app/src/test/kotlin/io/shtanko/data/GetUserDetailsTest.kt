@@ -18,8 +18,10 @@
 package io.shtanko.data
 
 import com.nhaarman.mockito_kotlin.mock
+import io.reactivex.Flowable
 import io.shtanko.picasagallery.core.executor.PostExecutionThread
 import io.shtanko.picasagallery.core.executor.ThreadExecutor
+import io.shtanko.picasagallery.data.entity.User
 import io.shtanko.picasagallery.data.user.GetUserDetails
 import io.shtanko.picasagallery.data.user.UserRepository
 import org.junit.Before
@@ -43,7 +45,11 @@ class GetUserDetailsTest {
 
   @Test
   fun get_userTest() {
-    getUserDetails?.buildUseCaseObservable()
+    Mockito.`when`(getUserDetails?.userRepository?.getUserData()).thenReturn(
+        Flowable.just(MockUser.create()))
+    Mockito.`when`(mockUserRepository.getUserData()).thenReturn(
+        Flowable.just(MockUser.create()))
+    getUserDetails?.buildUseCaseObservable(GetUserDetails.Params.createQuery())
     Mockito.verify(mockUserRepository).getUserData()
     Mockito.verifyNoMoreInteractions(mockUserRepository)
     Mockito.verifyZeroInteractions(mockThreadExecutor)

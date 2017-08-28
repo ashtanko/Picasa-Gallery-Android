@@ -15,28 +15,16 @@
  *
  */
 
-package io.shtanko.picasagallery.view.base
+package io.shtanko.data
 
-import android.support.annotation.NonNull
-import android.support.v7.widget.RecyclerView
-import android.view.View
-import io.shtanko.picasagallery.view.delegate.ViewType
+import io.shtanko.picasagallery.data.entity.User
+import io.shtanko.picasagallery.util.Factory
+import java.util.UUID
 
-
-abstract class BaseViewHolder(itemView: View?) : RecyclerView.ViewHolder(
-    itemView), View.OnClickListener {
-
-  init {
-    itemView?.setOnClickListener(this)
+class MockUser {
+  companion object : Factory<User> {
+    override fun create(): User = User("Mock Name", "Mock Given Name", "Mock Family Name",
+        "mock@mock.com",
+        "${UUID.randomUUID()}")
   }
-
-  override fun onClick(v: View?) {
-
-  }
-
-  abstract fun bind(item: ViewType)
-
-  protected @NonNull
-  fun view(): View = itemView
-
 }

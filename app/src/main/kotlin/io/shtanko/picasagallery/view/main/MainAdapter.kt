@@ -44,17 +44,14 @@ class MainAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     items.add(item)
   }
 
-  override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ViewHolder {
-    return delegateAdapters.get(viewType).onCreateViewHolder(parent)
-  }
+  override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ViewHolder =
+      delegateAdapters.get(viewType).onCreateViewHolder(parent)
 
   override fun onBindViewHolder(holder: ViewHolder, position: Int) {
     delegateAdapters.get(getItemViewType(position)).onBindViewHolder(holder, this.items[position])
   }
 
-  override fun getItemViewType(position: Int): Int {
-    return this.items[position].getViewType()
-  }
+  override fun getItemViewType(position: Int): Int = this.items[position].getViewType()
 
   override fun getItemCount(): Int {
     val count = items.count()

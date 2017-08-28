@@ -18,34 +18,19 @@
 package io.shtanko.picasagallery
 
 import io.reactivex.Flowable
-import io.shtanko.picasagallery.MockGetUserDetails.Params
-import io.shtanko.picasagallery.base.UseCase
-import io.shtanko.picasagallery.core.executor.PostExecutionThread
-import io.shtanko.picasagallery.core.executor.ThreadExecutor
 import io.shtanko.picasagallery.data.entity.User
+import io.shtanko.picasagallery.data.user.UserDataSource
 import io.shtanko.picasagallery.data.user.UserRepository
+import java.util.UUID
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class MockGetUserDetails @Inject constructor(
-    val userRepository: UserRepository,
-    threadExecutor: ThreadExecutor,
-    postExecutionThread: PostExecutionThread) : UseCase<User, Params>(threadExecutor,
-    postExecutionThread) {
+class MockGetUserRepositoryImpl @Inject constructor(
+    var dataSourceImpl: UserDataSource) : UserRepository {
 
-
-  override fun buildUseCaseObservable(
-      params: Params): Flowable<User> {
-    val n = String::class.java.name
-    val user = User(n, n, n, n, n)
-    return Flowable.just(user)
-  }
-
-  class Params private constructor() {
-    companion object {
-      fun createQuery() = Params()
-    }
-  }
+  override fun getUserData(): Flowable<User> = Flowable.just(
+      User("Mock Name", "Mock Given Name", "Mock Family Name", "mock@mock.com",
+          "${UUID.randomUUID()}"))
 
 }

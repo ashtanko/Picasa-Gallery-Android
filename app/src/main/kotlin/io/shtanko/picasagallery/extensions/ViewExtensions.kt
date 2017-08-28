@@ -15,18 +15,11 @@
  *
  */
 
-package io.shtanko.picasagallery.data
+package io.shtanko.picasagallery.extensions
 
-import io.reactivex.Observer
-import io.reactivex.disposables.Disposable
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 
-abstract class DefaultSubscriber<T> : Observer<T> {
-
-  override fun onComplete() {}
-
-  override fun onNext(t: T) {}
-
-  override fun onError(e: Throwable) {}
-
-  override fun onSubscribe(d: Disposable) {}
-}
+fun ViewGroup.inflate(layoutRes: Int): View =
+    LayoutInflater.from(context).inflate(layoutRes, this, false)

@@ -17,37 +17,42 @@
 
 package io.shtanko.picasagallery.base
 
+import dagger.internal.Preconditions
 import io.reactivex.Flowable
-import io.reactivex.disposables.Disposables
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.disposables.Disposable
+import io.reactivex.observers.DisposableObserver
 import io.reactivex.schedulers.Schedulers
 import io.shtanko.picasagallery.core.executor.PostExecutionThread
 import io.shtanko.picasagallery.core.executor.ThreadExecutor
-import io.shtanko.picasagallery.data.DefaultSubscriber
 
 
-abstract class UseCase(var threadExecutor: ThreadExecutor,
+abstract class UseCase<T, P>(var threadExecutor: ThreadExecutor,
     var postExecutionThread: PostExecutionThread) {
 
   /**
    * Builds an {@link rx.Observable} which will be used when executing the current {@link UseCase}.
    */
-  abstract fun buildUseCaseObservable(): Flowable<*>
+  internal abstract fun buildUseCaseObservable(params: P): Flowable<T>
 
-  private var disposables = Disposables.empty()
+  private var disposables = CompositeDisposable()
 
 
-  fun execute(useCaseSubscriber: DefaultSubscriber<Any>) {
-    this.disposables = this.buildUseCaseObservable()
+  fun execute(observer: DisposableObserver<T>, params: P) {
+    Preconditions.checkNotNull(observer)
+    val observable = this.buildUseCaseObservable(params)
         .subscribeOn(Schedulers.from(threadExecutor))
         .observeOn(postExecutionThread.getScheduler())
-        .subscribe({ it ->
-          useCaseSubscriber.onNext(it)
-        }) { throwable ->
-          useCaseSubscriber.onError(throwable)
-        }
+    addDisposable(observable.toObservable().subscribeWith(observer))
   }
 
   fun unSubscribe() {
     if (!disposables.isDisposed) disposables.dispose()
+  }
+
+  private fun addDisposable(disposable: Disposable) {
+    Preconditions.checkNotNull(disposable)
+    Preconditions.checkNotNull(disposables)
+    disposables.add(disposable)
   }
 }

@@ -15,28 +15,20 @@
  *
  */
 
-package io.shtanko.picasagallery.view.base
+package io.shtanko.picasagallery.data
 
-import android.support.annotation.NonNull
-import android.support.v7.widget.RecyclerView
-import android.view.View
-import io.shtanko.picasagallery.view.delegate.ViewType
+import io.reactivex.observers.DisposableObserver
 
-
-abstract class BaseViewHolder(itemView: View?) : RecyclerView.ViewHolder(
-    itemView), View.OnClickListener {
-
-  init {
-    itemView?.setOnClickListener(this)
+open class DefaultObserver<T> : DisposableObserver<T>() {
+  override fun onNext(t: T) {
+    // no-op by default.
   }
 
-  override fun onClick(v: View?) {
-
+  override fun onComplete() {
+    // no-op by default.
   }
 
-  abstract fun bind(item: ViewType)
-
-  protected @NonNull
-  fun view(): View = itemView
-
+  override fun onError(exception: Throwable) {
+    // no-op by default.
+  }
 }

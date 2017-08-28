@@ -23,7 +23,7 @@ import io.shtanko.picasagallery.view.base.BaseViewHolder
 import io.shtanko.picasagallery.view.delegate.ViewType
 
 
-class MainViewHolder(itemView: View) : BaseViewHolder(itemView) {
+class MainViewHolder(itemView: View?) : BaseViewHolder(itemView) {
 
   override fun bind(item: ViewType) {
     if (item is Album) {
