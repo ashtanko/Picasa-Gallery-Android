@@ -15,17 +15,8 @@
  *
  */
 
-package io.shtanko.picasagallery.launch
+package io.shtanko.picasagallery.core.log
 
-import io.shtanko.picasagallery.util.AcceptanceTest
-import io.shtanko.picasagallery.view.launch.LaunchActivity
-import org.junit.Assert
-import org.junit.Test
-
-class LaunchScreenTest : AcceptanceTest<LaunchActivity>(LaunchActivity::class.java) {
-
-  @Test
-  fun run() {
-    Assert.assertNotNull(testRule)
-  }
+enum class LogType {
+  DEBUG, ERROR
 }

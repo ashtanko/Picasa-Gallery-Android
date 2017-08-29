@@ -31,6 +31,8 @@
       android:layout_marginTop="0dp"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toTopOf="@+id/guideline2"
+      android:layout_marginRight="8dp"
+      app:layout_constraintRight_toRightOf="parent"
       />
 
   <android.support.constraint.Guideline
@@ -40,22 +42,12 @@
       android:orientation="horizontal"
       app:layout_constraintGuide_percent="0.6"
       />
-  <Button
-      android:id="@+id/sign_in_button2"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_marginEnd="0dp"
-      android:layout_marginRight="0dp"
-      android:layout_marginTop="0dp"
-      android:text="@string/sign_in_tile"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintTop_toTopOf="@+id/guideline2"
-      />
+
   <ProgressBar
       android:id="@+id/progress_bar"
-      android:visibility="gone"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
+      android:visibility="gone"
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"

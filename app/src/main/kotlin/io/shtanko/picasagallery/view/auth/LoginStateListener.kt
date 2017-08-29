@@ -15,17 +15,22 @@
  *
  */
 
-package io.shtanko.picasagallery.launch
+package io.shtanko.picasagallery.view.auth
 
-import io.shtanko.picasagallery.util.AcceptanceTest
-import io.shtanko.picasagallery.view.launch.LaunchActivity
-import org.junit.Assert
-import org.junit.Test
+interface LoginStateListener {
+  /**
+   * This is called when the user has requested to sign in. Implements showing the login UI.
+   */
+  abstract fun onSignInOrCreateAccount()
 
-class LaunchScreenTest : AcceptanceTest<LaunchActivity>(LaunchActivity::class.java) {
+  /**
+   * This is called when the user has selected another account. Implements any custom changes
+   * required in the feature based on the selected account.
+   */
+  abstract fun onAccountChangeRequested()
 
-  @Test
-  fun run() {
-    Assert.assertNotNull(testRule)
-  }
+  /**
+   * This is called when the user has selected another account. Implements login in the user.
+   */
+  abstract fun onStartLoginProcessRequested()
 }

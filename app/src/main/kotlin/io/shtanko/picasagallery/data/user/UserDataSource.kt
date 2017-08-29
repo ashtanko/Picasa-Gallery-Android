@@ -21,7 +21,8 @@ import io.shtanko.picasagallery.data.entity.User
 
 
 interface UserDataSource {
-  fun getUser():User
+  fun getUser(): User
   fun saveUser(user: User)
   fun saveToken(token: String)
+  fun markUserRefusedSignIn(refused: Boolean)
 }

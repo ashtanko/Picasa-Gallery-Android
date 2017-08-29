@@ -29,13 +29,13 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 
-
 @RunWith(AndroidJUnit4::class)
 class MainActivityTest {
 
   @get:Rule
   val mainTestRule: ActivityTestRule<MainActivity> = object : ActivityTestRule<MainActivity>(
       MainActivity::class.java) {
+
     override fun beforeActivityLaunched() {
       super.beforeActivityLaunched()
 

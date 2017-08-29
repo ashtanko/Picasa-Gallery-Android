@@ -27,6 +27,10 @@ class PreferenceHelper constructor(val sharedPreferences: SharedPreferences) {
 
   private val editor = sharedPreferences.edit()
 
+  fun markUserRefusedSignIn(refused: Boolean) {
+    editor?.putBoolean(Config.USER_REFUSED_SIGN_IN_PREF, refused)
+  }
+
   fun saveUserData(user: User) {
     if (editor != null) {
       editor.putString(Config.SAVED_PERSON_NAME_PREF, user.personName)

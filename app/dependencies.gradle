@@ -48,7 +48,6 @@ dependencies {
 
   // region OTHER
   compile 'com.google.code.findbugs:jsr305:3.0.2'
-  compile 'pub.devrel:easypermissions:0.3.0'
   // endregion
 
   // region PLAY SERVICES

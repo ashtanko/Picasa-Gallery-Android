@@ -15,17 +15,17 @@
  *
  */
 
-package io.shtanko.picasagallery.launch
+package io.shtanko.picasagallery.view.auth
 
-import io.shtanko.picasagallery.util.AcceptanceTest
-import io.shtanko.picasagallery.view.launch.LaunchActivity
-import org.junit.Assert
-import org.junit.Test
+import android.app.Activity
 
-class LaunchScreenTest : AcceptanceTest<LaunchActivity>(LaunchActivity::class.java) {
+class LoginAndAuthProvider {
 
-  @Test
-  fun run() {
-    Assert.assertNotNull(testRule)
+  companion object {
+    var stubLoginAndAuth: LoginAndAuth? = null
+
+    fun provideLoginAndAuth(activity: Activity, callback: LoginAndAuthListener,
+        accountName: String): LoginAndAuth? = if (stubLoginAndAuth != null)
+      stubLoginAndAuth else LoginAndAuthWithGoogleApi(activity, callback, accountName)
   }
 }

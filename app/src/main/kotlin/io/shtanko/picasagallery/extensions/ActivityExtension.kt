@@ -18,9 +18,14 @@
 package io.shtanko.picasagallery.extensions
 
 import android.app.Activity
+import android.content.Context
 import android.os.Build
 import android.support.v4.app.Fragment
 import android.widget.Toast
+import dagger.android.DaggerFragment
+
+fun Fragment.getSafeContext(): Context = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) this.context else activity
+fun DaggerFragment.getSafeContext(): Context = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) this.context else activity
 
 fun Activity.close() {
   if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {

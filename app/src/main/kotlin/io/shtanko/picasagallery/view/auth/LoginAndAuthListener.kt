@@ -15,17 +15,16 @@
  *
  */
 
-package io.shtanko.picasagallery.launch
+package io.shtanko.picasagallery.view.auth
 
-import io.shtanko.picasagallery.util.AcceptanceTest
-import io.shtanko.picasagallery.view.launch.LaunchActivity
-import org.junit.Assert
-import org.junit.Test
+/**
+ * Implement this to react to changes in the background login and auth tasks. The events are
+ * provided by {@link LoginAndAuthWithGoogleApi}.
+ */
+interface LoginAndAuthListener {
+  abstract fun onPlusInfoLoaded(accountName: String)
 
-class LaunchScreenTest : AcceptanceTest<LaunchActivity>(LaunchActivity::class.java) {
+  abstract fun onAuthSuccess(accountName: String, newlyAuthenticated: Boolean)
 
-  @Test
-  fun run() {
-    Assert.assertNotNull(testRule)
-  }
+  abstract fun onAuthFailure(accountName: String)
 }

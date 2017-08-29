@@ -29,6 +29,10 @@ final MOCK = 'mock'
 final DEV = 'dev'
 final RELEASE_PROPERTIES_FILE = 'config/release.properties'
 final DEBUG_PROPERTIES_FILE = 'config/debug.properties'
+final BUILD_TOOLS_VERSION = '26.0.1'
+final COMPILE_SDK_VERSION = 26
+final TARGET_SDK_VERSION = 26
+final MIN_SDK_VERSION = 14
 // endregion
 
 def props = new Properties()
@@ -44,23 +48,24 @@ android {
       def newApkFileName
       def newApkNameString = output.outputFile.name.replace(".apk",
           "-${new Date().format('yyyyMMdd')}-${variant.versionName}-${variant.versionCode}.apk")
-      newApkFileName = new File(newApkNameString)
+      def file = output.packageApplication.outputFile
+      newApkFileName = new File(file.parent, newApkNameString)
       output.outputFile = newApkFileName
     }
   }
 
   compileOptions.incremental = false
 
-  compileSdkVersion 26
-  buildToolsVersion "26.0.1"
+  compileSdkVersion COMPILE_SDK_VERSION
+  buildToolsVersion BUILD_TOOLS_VERSION
 
   defaultConfig {
 
     def gitCommitCount = "git rev-list HEAD --first-parent --count".execute().text.toInteger()
 
     applicationId "io.shtanko.picasagallery"
-    targetSdkVersion 26
-    minSdkVersion 14
+    targetSdkVersion TARGET_SDK_VERSION
+    minSdkVersion MIN_SDK_VERSION
     versionCode gitCommitCount
     versionName "1.0"
     testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -128,6 +133,7 @@ android {
     dev.java.srcDirs += 'src/dev/kotlin'
     main.java.srcDirs += 'src/main/kotlin'
     androidTest.java.srcDirs += 'src/androidTest/kotlin'
+    androidTest.java.srcDirs += 'src/androidTestMock/kotlin'
     test.java.srcDirs += 'src/test/kotlin'
 
     main {
@@ -147,7 +153,7 @@ android {
   def typeName = ''
   def flavorName = ''
 
-  if (build_param != "dev") {
+  if (build_param != DEV) {
     //exclude dev
     android.variantFilter { variant ->
 

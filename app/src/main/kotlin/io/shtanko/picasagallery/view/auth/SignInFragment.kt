@@ -17,42 +17,64 @@
 
 package io.shtanko.picasagallery.view.auth
 
-import android.Manifest
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.ProgressBar
+import android.widget.Toast
 import com.google.android.gms.auth.api.Auth
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.android.gms.common.AccountPicker
+import com.google.android.gms.auth.api.signin.GoogleSignInResult
 import com.google.android.gms.common.ConnectionResult
-import com.google.android.gms.common.GoogleApiAvailability
+import com.google.android.gms.common.Scopes
 import com.google.android.gms.common.SignInButton
 import com.google.android.gms.common.api.GoogleApiClient
+import com.google.android.gms.common.api.Scope
 import dagger.android.support.DaggerFragment
 import io.shtanko.picasagallery.R
-import pub.devrel.easypermissions.AfterPermissionGranted
-import pub.devrel.easypermissions.EasyPermissions
+import io.shtanko.picasagallery.data.entity.User
+import io.shtanko.picasagallery.extensions.close
+import io.shtanko.picasagallery.extensions.getSafeContext
+import io.shtanko.picasagallery.view.main.MainActivity
+import java.util.ArrayList
+import java.util.Arrays
 import javax.inject.Inject
 
-class SignInFragment @Inject constructor() : DaggerFragment(), SignInContract.View {
-
-  companion object {
-    val SIGN_IN_REQUEST_CODE = 1111
-    val REQUEST_ACCOUNT_PICKER = 1000
-    val REQUEST_RECOVER_PLAY_SERVICES_ERROR = 1024
-    val REQUEST_GOOGLE_PLAY_SERVICES = 1002
-    const val REQUEST_PERMISSION_GET_ACCOUNTS = 1003
-    val ACCOUNT_TYPE_GOOGLE = "com.google"
-  }
+class SignInFragment @Inject constructor() : DaggerFragment(),
+    SignInContract.View,
+    GoogleApiClient.OnConnectionFailedListener,
+    GoogleApiClient.ConnectionCallbacks {
 
   @Inject lateinit var presenter: SignInContract.Presenter
-  val ACCOUNT_TYPE_GOOGLE = "com.google"
+  lateinit var rootView: View
+
+  private var googleApiClient: GoogleApiClient? = null
+
+  companion object {
+    private val SIGN_IN_RESULT = 1
+    val SIGN_IN_REQUEST_CODE = 1111
+  }
+
   var progressBar: ProgressBar? = null
 
-  lateinit var rootView: View
+  override fun onConnectionFailed(p0: ConnectionResult) {
+    Toast.makeText(this.getSafeContext(), "Unable to connect to Google Play Services",
+        Toast.LENGTH_SHORT).show()
+  }
+
+  override fun onConnected(p0: Bundle?) {
+    with(rootView.findViewById<SignInButton>(R.id.sign_in_button)) {
+      isEnabled = true
+    }
+  }
+
+  override fun onConnectionSuspended(p0: Int) {
+    with(rootView.findViewById<SignInButton>(R.id.sign_in_button)) {
+      isEnabled = false
+    }
+  }
 
   override fun onResume() {
     super.onResume()
@@ -66,14 +88,77 @@ class SignInFragment @Inject constructor() : DaggerFragment(), SignInContract.Vi
 
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
       savedInstanceState: Bundle?): View? {
+
     val root = inflater.inflate(R.layout.fragment_siginin, container, false)
+
     rootView = root
     with(root) {
       addSignInButton()
       progressBar = rootView.findViewById<ProgressBar>(R.id.progress_bar)
     }
 
+    // Auth scopes we need
+    val AUTH_SCOPES = ArrayList(Arrays.asList(
+        Scopes.PLUS_LOGIN,
+        Scopes.DRIVE_APPFOLDER,
+        "https://www.googleapis.com/auth/plus.profile.emails.read"))
+
+    /** List of OAuth scopes to be requested from the Google sign-in API  */
+    fun getAuthScopes(): List<String> = AUTH_SCOPES
+
+    val gsoBuilder = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+
+    for (scope in getAuthScopes()) {
+      gsoBuilder.requestScopes(Scope(scope))
+    }
+
+    val gso = gsoBuilder.requestEmail()
+        .build()
+
+    googleApiClient = GoogleApiClient.Builder(getSafeContext())
+        .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
+        .addConnectionCallbacks(this)
+        .addOnConnectionFailedListener(this)
+        .build()
+
+    googleApiClient?.connect()
+
     return root
+  }
+
+  override fun onDetach() {
+    super.onDetach()
+    googleApiClient?.disconnect()
+  }
+
+  private fun login() {
+    val signInIntent = Auth.GoogleSignInApi.getSignInIntent(googleApiClient)
+    startActivityForResult(signInIntent, SIGN_IN_RESULT)
+  }
+
+  override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+    super.onActivityResult(requestCode, resultCode, data)
+    if (requestCode == SIGN_IN_RESULT) {
+      val result = Auth.GoogleSignInApi.getSignInResultFromIntent(data)
+      handleSignInResult(result)
+    }
+  }
+
+  private fun handleSignInResult(result: GoogleSignInResult) {
+    if (result.isSuccess) {
+      val acct = result.signInAccount
+      if (acct != null) {
+        val user = User(acct.displayName, acct.givenName, acct.familyName, acct.email, acct.id)
+        presenter.saveUserData(user)
+        openMainActivity()
+      }
+    }
+  }
+
+  private fun openMainActivity() {
+    startActivity(Intent(activity, MainActivity::class.java)).also {
+      activity.close()
+    }
   }
 
   override fun setLoadingIndicator(active: Boolean) {
@@ -84,88 +169,9 @@ class SignInFragment @Inject constructor() : DaggerFragment(), SignInContract.Vi
     with(rootView.findViewById<SignInButton>(R.id.sign_in_button)) {
       setSize(SignInButton.SIZE_STANDARD)
       setOnClickListener {
-        signIn()
+        login()
       }
     }
-
-    with(rootView.findViewById<Button>(R.id.sign_in_button2)) {
-      setOnClickListener {
-        getResultsFromApi()
-      }
-    }
-  }
-
-  private fun signIn() {
-    val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-        .requestIdToken(getString(R.string.default_web_client_id))
-        .requestEmail()
-        .build()
-
-    val googleApiClient = GoogleApiClient.Builder(activity.applicationContext)
-        .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
-        .build()
-
-    googleApiClient.registerConnectionFailedListener {
-    }
-
-    val signInIntent = Auth.GoogleSignInApi.getSignInIntent(googleApiClient)
-
-    activity.startActivityForResult(signInIntent, SignInFragment.SIGN_IN_REQUEST_CODE)
-  }
-
-  @AfterPermissionGranted(REQUEST_PERMISSION_GET_ACCOUNTS)
-  private fun pickAccount() {
-
-    if (EasyPermissions.hasPermissions(
-        activity, Manifest.permission.GET_ACCOUNTS)) {
-
-      val accountTypes = arrayOf(ACCOUNT_TYPE_GOOGLE)
-      val intent = AccountPicker.newChooseAccountIntent(null, null, accountTypes, false, null, null,
-          null, null)
-      activity.startActivityForResult(intent, REQUEST_ACCOUNT_PICKER)
-
-    } else {
-      EasyPermissions.requestPermissions(
-          this,
-          "This app needs to access your Google account (via Contacts).",
-          REQUEST_PERMISSION_GET_ACCOUNTS,
-          Manifest.permission.GET_ACCOUNTS);
-    }
-  }
-
-  private fun getResultsFromApi() {
-    if (!isGooglePlayServicesAvailable()) {
-      acquireGooglePlayServices()
-    } else {
-      pickAccount()
-    }
-  }
-
-  private fun isGooglePlayServicesAvailable(): Boolean {
-    val apiAvailability =
-        GoogleApiAvailability.getInstance();
-    val connectionStatusCode =
-        apiAvailability.isGooglePlayServicesAvailable(activity)
-    return connectionStatusCode == ConnectionResult.SUCCESS;
-  }
-
-  private fun acquireGooglePlayServices() {
-    val apiAvailability =
-        GoogleApiAvailability.getInstance()
-    val connectionStatusCode =
-        apiAvailability.isGooglePlayServicesAvailable(activity)
-    if (apiAvailability.isUserResolvableError(connectionStatusCode)) {
-      showGooglePlayServicesAvailabilityErrorDialog(connectionStatusCode);
-    }
-  }
-
-  private fun showGooglePlayServicesAvailabilityErrorDialog(connectionStatusCode: Int) {
-    val apiAvailability = GoogleApiAvailability.getInstance()
-    val dialog = apiAvailability.getErrorDialog(
-        activity,
-        connectionStatusCode,
-        SignInFragment.REQUEST_GOOGLE_PLAY_SERVICES)
-    dialog.show();
   }
 }
 

@@ -15,17 +15,18 @@
  *
  */
 
-package io.shtanko.picasagallery.launch
+package io.shtanko.picasagallery.data.account
 
-import io.shtanko.picasagallery.util.AcceptanceTest
-import io.shtanko.picasagallery.view.launch.LaunchActivity
-import org.junit.Assert
-import org.junit.Test
+import android.content.SharedPreferences
+import dagger.Module
+import dagger.Provides
+import javax.inject.Singleton
 
-class LaunchScreenTest : AcceptanceTest<LaunchActivity>(LaunchActivity::class.java) {
+@Module
+class AccountModule {
 
-  @Test
-  fun run() {
-    Assert.assertNotNull(testRule)
-  }
+  @Provides
+  @Singleton
+  fun provideAccountHelper(sp: SharedPreferences): Account = AccountHelper(sp)
+
 }
