@@ -23,7 +23,7 @@ import android.support.test.runner.AndroidJUnit4
 import android.test.suitebuilder.annotation.LargeTest
 import io.shtanko.picasagallery.util.LoginUtils
 import io.shtanko.picasagallery.view.auth.LoginAndAuthProvider
-import io.shtanko.picasagallery.view.auth.SignInActivity
+import io.shtanko.picasagallery.view.main.MainActivity
 import org.junit.After
 import org.junit.Assert
 import org.junit.Rule
@@ -33,14 +33,14 @@ import kotlin.properties.Delegates
 
 @RunWith(AndroidJUnit4::class)
 @LargeTest
-class LoginActivity_ActiveAccountSuccessfulLoginTest {
+class MainActivity_ActiveAccountSuccessfulLoginTest {
 
   private var accountName: String by Delegates.notNull()
   private var stubLoginAndAuth: StubLoginAndAuth by Delegates.notNull()
 
   @get:Rule
-  val loginActivityRule: ActivityTestRule<SignInActivity> = object : ActivityTestRule<SignInActivity>(
-      SignInActivity::class.java) {
+  val loginActivityRule: ActivityTestRule<MainActivity> = object : ActivityTestRule<MainActivity>(
+      MainActivity::class.java) {
 
     override fun beforeActivityLaunched() {
       super.beforeActivityLaunched()
@@ -55,7 +55,7 @@ class LoginActivity_ActiveAccountSuccessfulLoginTest {
 
     override fun afterActivityLaunched() {
       // Set up the activity as a listener of the stub login and auth
-      stubLoginAndAuth.setListener(activity)
+      //stubLoginAndAuth.setListener(activity)
     }
   }
 

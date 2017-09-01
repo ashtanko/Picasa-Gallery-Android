@@ -24,6 +24,7 @@ import android.os.Bundle
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.Scopes
 import com.google.android.gms.common.api.GoogleApiClient
+import com.google.android.gms.common.api.Scope
 import io.shtanko.picasagallery.util.Logger.verbose
 import java.lang.ref.WeakReference
 import java.util.ArrayList
@@ -109,34 +110,47 @@ class LoginAndAuthWithGoogleApi constructor(val activity: Activity,
   }
 
   override fun start() {
-    TODO(
-        "not implemented") //To change body of created functions use File | Settings | File Templates.
+    val activity = getActivity("start()") ?: return
+
+    if (started) return
+    started = true
+    if (resolving) return
+    if (googleApiClient == null) {
+      val builder = GoogleApiClient.Builder(activity)
+      for (scope in AUTH_SCOPES) {
+        builder.addScope(Scope(scope))
+      }
+
+      googleApiClient = builder
+          .addConnectionCallbacks(this)
+          .addOnConnectionFailedListener(this)
+          .setAccountName(accountName)
+          .build()
+    }
+
+    googleApiClient?.connect()
   }
+
+  override fun onConnected(bundle: Bundle?) {
+    val activity = getActivity("onConnected()") ?: return
+
+  }
+
 
   override fun stop() {
-    TODO(
-        "not implemented") //To change body of created functions use File | Settings | File Templates.
-  }
 
+  }
 
   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent): Boolean {
-    TODO(
-        "not implemented") //To change body of created functions use File | Settings | File Templates.
-  }
-
-  override fun onConnected(p0: Bundle?) {
-    TODO(
-        "not implemented") //To change body of created functions use File | Settings | File Templates.
+    return false
   }
 
   override fun onConnectionSuspended(p0: Int) {
-    TODO(
-        "not implemented") //To change body of created functions use File | Settings | File Templates.
+
   }
 
   override fun onConnectionFailed(p0: ConnectionResult) {
-    TODO(
-        "not implemented") //To change body of created functions use File | Settings | File Templates.
+
   }
 
 }

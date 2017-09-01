@@ -25,23 +25,20 @@ import javax.inject.Singleton
 @Singleton
 class PreferenceHelper constructor(val sharedPreferences: SharedPreferences) {
 
-  private val editor = sharedPreferences.edit()
-
   fun markUserRefusedSignIn(refused: Boolean) {
-    editor?.putBoolean(Config.USER_REFUSED_SIGN_IN_PREF, refused)
+    sharedPreferences.edit().putBoolean(Config.USER_REFUSED_SIGN_IN_PREF, refused).apply()
   }
 
   fun saveUserData(user: User) {
-    if (editor != null) {
-      editor.putString(Config.SAVED_PERSON_NAME_PREF, user.personName)
-      editor.putString(Config.SAVED_PERSON_GIVEN_NAME_PREF, user.personGivenName)
-      editor.putString(Config.SAVED_PERSON_FAMILY_NAME_PREF, user.personFamilyName)
-      editor.putString(Config.SAVED_EMAIL_PREF, user.personEmail)
-      editor.putString(Config.SAVED_ID_PREF, user.personId)
-      editor.commit()
-      editor.apply()
-    }
+    sharedPreferences.edit().putString(Config.SAVED_PERSON_NAME_PREF, user.personName).apply()
+    sharedPreferences.edit().putString(Config.SAVED_PERSON_GIVEN_NAME_PREF,
+        user.personGivenName).apply()
+    sharedPreferences.edit().putString(Config.SAVED_PERSON_FAMILY_NAME_PREF,
+        user.personFamilyName).apply()
+    sharedPreferences.edit().putString(Config.SAVED_EMAIL_PREF, user.personEmail).apply()
+    sharedPreferences.edit().putString(Config.SAVED_ID_PREF, user.personId).apply()
   }
+
 
   fun getUser(): User {
     val personName = sharedPreferences.getString(Config.SAVED_PERSON_NAME_PREF, "")
@@ -54,10 +51,8 @@ class PreferenceHelper constructor(val sharedPreferences: SharedPreferences) {
   }
 
   fun saveToken(token: String) {
-    if (editor != null) {
-      editor.putString(Config.SAVED_TOKEN_PREF, token)
-      editor.commit()
-    }
+    sharedPreferences.edit().putString(Config.SAVED_TOKEN_PREF, token).apply()
+
   }
 
   fun getToken(): String = sharedPreferences.getString(Config.SAVED_TOKEN_PREF, "")
