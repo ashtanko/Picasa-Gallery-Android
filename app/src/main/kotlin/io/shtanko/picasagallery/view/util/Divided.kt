@@ -15,12 +15,7 @@
  *
  */
 
-package io.shtanko.picasagallery.data.entity
+package io.shtanko.picasagallery.view.util
 
-import io.shtanko.picasagallery.Config
-import io.shtanko.picasagallery.view.delegate.ViewType
-
-
-data class Album(var title: String, var imageUrl: String) : ViewType {
-  override fun getViewType() = Config.MAIN
+interface Divided {
 }

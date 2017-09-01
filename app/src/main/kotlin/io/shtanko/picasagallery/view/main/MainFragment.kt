@@ -18,6 +18,7 @@
 package io.shtanko.picasagallery.view.main
 
 import android.os.Bundle
+import android.support.v4.content.ContextCompat
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -28,6 +29,7 @@ import io.shtanko.picasagallery.R
 import io.shtanko.picasagallery.extensions.AlbumsList
 import io.shtanko.picasagallery.extensions.shortToast
 import io.shtanko.picasagallery.util.ActivityScoped
+import io.shtanko.picasagallery.util.ItemDividerDecoration
 import io.shtanko.picasagallery.view.base.BaseFragment
 import javax.inject.Inject
 
@@ -66,6 +68,10 @@ class MainFragment @Inject constructor() : BaseFragment(), MainContract.View {
         setHasFixedSize(true)
         layoutManager = gridLayoutManager
         adapter = mainAdapter
+
+        addItemDecoration(ItemDividerDecoration(
+            activity.resources.getDimensionPixelSize(R.dimen.divider_height),
+            ContextCompat.getColor(activity, R.color.colorAccent)))
       }
     }
 

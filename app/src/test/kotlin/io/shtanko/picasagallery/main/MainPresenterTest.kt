@@ -27,6 +27,7 @@ import io.shtanko.picasagallery.data.entity.Album
 import io.shtanko.picasagallery.extensions.AlbumsList
 import io.shtanko.picasagallery.view.main.MainContract
 import io.shtanko.picasagallery.view.main.MainPresenter
+import io.shtanko.picasagallery.view.util.getImages
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -70,8 +71,9 @@ class MainPresenterTest {
 
   private fun getDummyAlbumsList(): AlbumsList {
     val dummyList = ArrayList<Album>()
-    for (i in 1..10000) {
-      dummyList.add(Album("Item: $i"))
+    for (imageURL in getImages()) {
+      val album = Album("Item", imageURL)
+      dummyList.add(album)
     }
     return dummyList
   }

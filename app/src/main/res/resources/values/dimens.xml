@@ -22,4 +22,5 @@
   <dimen name="z_card">2dp</dimen>
   <dimen name="avatar_padding">4dp</dimen>
   <dimen name="avatar_size">40dp</dimen>
+  <dimen name="divider_height">1px</dimen>
 </resources>
