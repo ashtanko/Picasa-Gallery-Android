@@ -71,7 +71,7 @@ class MainFragment @Inject constructor() : BaseFragment(), MainContract.View {
 
         addItemDecoration(ItemDividerDecoration(
             activity.resources.getDimensionPixelSize(R.dimen.divider_height),
-            ContextCompat.getColor(activity, R.color.colorAccent)))
+            ContextCompat.getColor(activity, R.color.white)))
       }
     }
 

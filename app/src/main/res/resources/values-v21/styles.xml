@@ -18,7 +18,7 @@
 
 <resources>
 
-  <style name="PicasaGallery" parent="Theme.AppCompat.Light.NoActionBar">
+  <style name="Picasa" parent="Theme.AppCompat.Light.NoActionBar">
     <!-- Customize your theme here. -->
     <item name="colorPrimary">@color/colorPrimary</item>
     <item name="colorPrimaryDark">@color/colorPrimaryDark</item>

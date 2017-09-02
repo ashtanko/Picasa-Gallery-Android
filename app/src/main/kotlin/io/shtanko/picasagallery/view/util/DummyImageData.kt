@@ -51,7 +51,15 @@ fun getImages(): Array<String> {
       "https://cdn.dribbble.com/users/12516/screenshots/3777524/kmc_illustration2_x-2.png",
       "https://cdn.dribbble.com/users/179241/screenshots/3769909/chris-fernandez-the-mountain-4.png",
       "https://cdn.dribbble.com/users/823181/screenshots/3776629/scenery_illustrations.png",
-      "https://cdn.dribbble.com/users/11867/screenshots/3775908/castle1.jpg"
+      "https://cdn.dribbble.com/users/11867/screenshots/3775908/castle1.jpg",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
   )
 
   return array

@@ -18,8 +18,9 @@
 package io.shtanko.picasagallery.view.main
 
 import android.view.View
-import com.bumptech.glide.Glide
 import io.shtanko.picasagallery.R
+import io.shtanko.picasagallery.core.image.ImageHelper
+import io.shtanko.picasagallery.core.image.ImageHelperImpl
 import io.shtanko.picasagallery.data.entity.Album
 import io.shtanko.picasagallery.view.base.BaseViewHolder
 import io.shtanko.picasagallery.view.delegate.ViewType
@@ -30,13 +31,15 @@ import io.shtanko.picasagallery.view.widget.FourThreeImageView
 class MainViewHolder(itemView: View?) : BaseViewHolder(itemView), Divided {
 
   val image = itemView?.findViewById<FourThreeImageView>(R.id.album)
+  private val imageHelper: ImageHelper
+
+  init {
+    imageHelper = ImageHelperImpl()
+  }
 
   override fun bind(item: ViewType) {
     if (item is Album) {
-      item.imageUrl
-      item.title
-
-      Glide.with(itemView.context).load(item.imageUrl).into(image)
+      imageHelper.process(itemView.context, image, item.imageUrl)
     }
   }
 }
