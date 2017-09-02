@@ -26,6 +26,8 @@ import io.shtanko.picasagallery.view.launch.LaunchActivity
 import io.shtanko.picasagallery.view.launch.LaunchModule
 import io.shtanko.picasagallery.view.main.MainActivity
 import io.shtanko.picasagallery.view.main.MainModule
+import io.shtanko.picasagallery.view.photo.PhotosActivity
+import io.shtanko.picasagallery.view.photo.PhotosModule
 import io.shtanko.picasagallery.view.profile.ProfileActivity
 import io.shtanko.picasagallery.view.profile.ProfileModule
 
@@ -35,19 +37,23 @@ abstract class ActivityBindingModule {
 
   @ActivityScoped
   @ContributesAndroidInjector(modules = arrayOf(MainModule::class))
-  abstract fun mainActivity():MainActivity
+  abstract fun mainActivity(): MainActivity
 
   @ActivityScoped
   @ContributesAndroidInjector(modules = arrayOf(SignInModule::class))
-  abstract fun signInActivity():SignInActivity
+  abstract fun signInActivity(): SignInActivity
 
   @ActivityScoped
   @ContributesAndroidInjector(modules = arrayOf(ProfileModule::class))
-  abstract fun profileActivity():ProfileActivity
+  abstract fun profileActivity(): ProfileActivity
 
 
   @ActivityScoped
   @ContributesAndroidInjector(modules = arrayOf(LaunchModule::class))
-  abstract fun launchActivity():LaunchActivity
+  abstract fun launchActivity(): LaunchActivity
+
+  @ActivityScoped
+  @ContributesAndroidInjector(modules = arrayOf(PhotosModule::class))
+  abstract fun photosActivity(): PhotosActivity
 
 }

@@ -17,13 +17,10 @@
 
 package io.shtanko.picasagallery.view.main
 
-import android.content.Intent
 import android.os.Bundle
 import dagger.Lazy
 import io.shtanko.picasagallery.R
-import io.shtanko.picasagallery.util.ActivityUtils
 import io.shtanko.picasagallery.view.base.BaseActivity
-import io.shtanko.picasagallery.view.profile.ProfileActivity
 import javax.inject.Inject
 
 class MainActivity : BaseActivity() {
@@ -34,22 +31,6 @@ class MainActivity : BaseActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.container_activity)
-    addFragment()
+    addFragment<MainFragment>(R.id.content_frame, mainFragmentProvider)
   }
-
-  private fun addFragment() {
-
-    var mainFragment = supportFragmentManager.findFragmentById(
-        R.id.content_frame) as MainFragment?
-
-    if (mainFragment == null) {
-      mainFragment = mainFragmentProvider.get()
-      ActivityUtils.addFragmentToActivity(supportFragmentManager, mainFragment, R.id.content_frame)
-    }
-  }
-
-  private fun openProfileScreen() {
-    startActivity(Intent(this, ProfileActivity::class.java))
-  }
-
 }

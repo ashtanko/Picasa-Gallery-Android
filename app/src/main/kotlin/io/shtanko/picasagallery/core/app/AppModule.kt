@@ -15,23 +15,16 @@
  *
  */
 
-package io.shtanko.picasagallery.view.base
+package io.shtanko.picasagallery.core.app
 
-import android.support.v4.app.Fragment
-import dagger.Lazy
-import dagger.android.support.DaggerAppCompatActivity
-import io.shtanko.picasagallery.util.ActivityUtils
+import android.app.Application
+import android.content.Context
+import dagger.Binds
+import dagger.Module
 
 
-abstract class BaseActivity : DaggerAppCompatActivity() {
-
-  fun <T : Fragment> addFragment(fragmentId: Int, provider: Lazy<T>) {
-    var mainFragment = supportFragmentManager.findFragmentById(
-        fragmentId)
-    if (mainFragment == null) {
-      mainFragment = provider.get()
-      ActivityUtils.addFragmentToActivity(supportFragmentManager, mainFragment, fragmentId)
-    }
-  }
-
+@Module
+abstract class AppModule {
+  @Binds
+  internal abstract fun bindContext(application: Application): Context
 }

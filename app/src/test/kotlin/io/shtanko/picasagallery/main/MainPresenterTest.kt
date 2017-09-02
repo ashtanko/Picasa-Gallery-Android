@@ -71,10 +71,7 @@ class MainPresenterTest {
 
   private fun getDummyAlbumsList(): AlbumsList {
     val dummyList = ArrayList<Album>()
-    for (imageURL in getImages()) {
-      val album = Album("Item", imageURL)
-      dummyList.add(album)
-    }
+    getImages().mapTo(dummyList) { Album("Item", it) }
     return dummyList
   }
 }

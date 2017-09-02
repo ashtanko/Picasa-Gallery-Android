@@ -15,13 +15,18 @@
  *
  */
 
-package io.shtanko.picasagallery.core
+package io.shtanko.picasagallery.view.photo
 
-import java.io.File
+import io.shtanko.picasagallery.base.BasePresenter
+import io.shtanko.picasagallery.view.base.BaseProgressView
+import io.shtanko.picasagallery.view.base.BaseView
 
-interface FileManager {
-  abstract fun writeToFile(file: File, fileContent: String)
-  abstract fun readFileContent(file: File): String
-  abstract fun exists(file: File): Boolean
-  abstract fun clearDirectory(dir: File): Boolean
+interface PhotosContract {
+  interface View : BaseView<Presenter>, BaseProgressView {
+
+  }
+
+  interface Presenter : BasePresenter<PhotosContract.View> {
+
+  }
 }

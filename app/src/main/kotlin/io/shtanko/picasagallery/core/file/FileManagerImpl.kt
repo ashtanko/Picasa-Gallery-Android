@@ -15,7 +15,7 @@
  *
  */
 
-package io.shtanko.picasagallery.core
+package io.shtanko.picasagallery.core.file
 
 import io.shtanko.picasagallery.core.log.FileLog
 import java.io.BufferedReader
@@ -26,7 +26,7 @@ import java.io.IOException
 import javax.inject.Singleton
 
 /**
- * {@link io.shtanko.picasagallery.core.FileManager} implementation.
+ * {@link io.shtanko.picasagallery.core.file.FileManager} implementation.
  */
 
 @Singleton

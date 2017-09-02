@@ -15,23 +15,7 @@
  *
  */
 
-package io.shtanko.picasagallery.view.base
+package io.shtanko.picasagallery.photo
 
-import android.support.v4.app.Fragment
-import dagger.Lazy
-import dagger.android.support.DaggerAppCompatActivity
-import io.shtanko.picasagallery.util.ActivityUtils
-
-
-abstract class BaseActivity : DaggerAppCompatActivity() {
-
-  fun <T : Fragment> addFragment(fragmentId: Int, provider: Lazy<T>) {
-    var mainFragment = supportFragmentManager.findFragmentById(
-        fragmentId)
-    if (mainFragment == null) {
-      mainFragment = provider.get()
-      ActivityUtils.addFragmentToActivity(supportFragmentManager, mainFragment, fragmentId)
-    }
-  }
-
+class PhotosActivityTest {
 }

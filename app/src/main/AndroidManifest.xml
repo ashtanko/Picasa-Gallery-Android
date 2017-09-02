@@ -55,5 +55,7 @@
 
     <activity android:name=".view.profile.ProfileActivity"/>
 
+    <activity android:name=".view.photo.PhotosActivity"/>
+
   </application>
 </manifest>

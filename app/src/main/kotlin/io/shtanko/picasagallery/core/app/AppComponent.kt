@@ -15,7 +15,7 @@
  *
  */
 
-package io.shtanko.picasagallery.core
+package io.shtanko.picasagallery.core.app
 
 import android.app.Application
 import dagger.BindsInstance
@@ -25,6 +25,7 @@ import dagger.android.DaggerApplication
 import dagger.android.support.AndroidSupportInjectionModule
 import io.shtanko.picasagallery.AlbumsRepositoryModule
 import io.shtanko.picasagallery.UserModule
+import io.shtanko.picasagallery.core.ActivityBindingModule
 import io.shtanko.picasagallery.core.executor.JobModule
 import io.shtanko.picasagallery.data.PreferencesModule
 import io.shtanko.picasagallery.data.account.AccountModule

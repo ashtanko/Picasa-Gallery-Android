@@ -15,16 +15,20 @@
  *
  */
 
-package io.shtanko.picasagallery.core
+package io.shtanko.picasagallery.view.photo
 
-import android.app.Application
-import android.content.Context
 import dagger.Binds
 import dagger.Module
+import dagger.android.ContributesAndroidInjector
+import io.shtanko.picasagallery.util.ActivityScoped
+import io.shtanko.picasagallery.util.FragmentScoped
 
+@Module abstract class PhotosModule {
 
-@Module
-abstract class AppModule {
-  @Binds
-  internal abstract fun bindContext(application: Application): Context
+  @FragmentScoped
+  @ContributesAndroidInjector
+  abstract fun photosFragment(): PhotosFragment
+
+  @ActivityScoped
+  @Binds abstract fun photosPresenter(presenter: PhotosPresenter): PhotosContract.Presenter
 }

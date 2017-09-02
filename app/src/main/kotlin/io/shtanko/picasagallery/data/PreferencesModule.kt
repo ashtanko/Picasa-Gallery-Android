@@ -21,7 +21,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import dagger.Module
 import dagger.Provides
-import io.shtanko.picasagallery.core.AppModule
+import io.shtanko.picasagallery.core.app.AppModule
 import io.shtanko.picasagallery.R
 
 @Module(includes = arrayOf(AppModule::class))

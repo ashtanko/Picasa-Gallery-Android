@@ -36,21 +36,12 @@ import javax.inject.Inject
 @ActivityScoped
 class MainFragment @Inject constructor() : BaseFragment(), MainContract.View {
 
+  // region injection
   @Inject lateinit var presenter: MainContract.Presenter
+  // endregion
 
-  val mainAdapter = MainAdapter()
-
-  var progressBar: ProgressBar? = null
-
-  override fun onResume() {
-    super.onResume()
-
-  }
-
-  override fun onDestroy() {
-    super.onDestroy()
-    presenter.dropView()
-  }
+  private val mainAdapter = MainAdapter()
+  private var progressBar: ProgressBar? = null
 
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
       savedInstanceState: Bundle?): View? {
@@ -77,6 +68,12 @@ class MainFragment @Inject constructor() : BaseFragment(), MainContract.View {
 
     return rootView
   }
+
+  override fun onDestroy() {
+    super.onDestroy()
+    presenter.dropView()
+  }
+
 
   override fun onShowAlbums(list: AlbumsList) {
     mainAdapter.addAlbums(list)
