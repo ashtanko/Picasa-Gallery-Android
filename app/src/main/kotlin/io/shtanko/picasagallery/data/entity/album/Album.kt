@@ -17,8 +17,9 @@
 
 package io.shtanko.picasagallery.data.entity
 
-data class User(var personName: String?,
-    var personGivenName: String?,
-    var personFamilyName: String?,
-    var personEmail: String?,
-    var personId: String?)
+import io.shtanko.picasagallery.Config
+
+
+data class Album(var title: String?, var imageUrl: String?) : AlbumType {
+  override fun getViewType() = Config.MAIN
+}

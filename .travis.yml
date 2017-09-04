@@ -7,6 +7,22 @@ notifications:
   email:
   - adamluissean@gmail.com
 
+before_install:
+  - mkdir "$ANDROID_HOME/licenses" || true
+  - echo -e "\n8933bad161af4178b1185d1a37fbf41ea5269c55" > "$ANDROID_HOME/licenses/android-sdk-license"
+  - echo -e "\n84831b9409646a918e30573bab4c9c91346d8abd" > "$ANDROID_HOME/licenses/android-sdk-preview-license"
+
+install:
+  - mkdir "$ANDROID_HOME/licenses" || true
+  - echo y | android update sdk -u -a -t tools
+  - echo y | android update sdk -u -a -t platform-tools
+  - echo y | android update sdk -u -a -t build-tools-26.0.1
+  - echo y | android update sdk -u -a -t android-26
+  - echo y | android update sdk -u -a -t extra-google-m2repository
+  - echo y | android update sdk -u -a -t extra-android-m2repository
+  - echo y | android update sdk -u -a -t android-sdk-preview-license
+  - echo y | android update sdk -u -a -t android-sdk-license
+
 before_cache:
  - rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
  - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
@@ -19,38 +35,118 @@ cache:
   - $HOME/.gradle/wrapper/
 
 env:
- global:
- - ANDROID_API=26
- - EMULATOR_API_LEVEL=25
- - ANDROID_BUILD_TOOLS=26.0.0
- - ADB_INSTALL_TIMEOUT=25 # minutes
- - ANDROID_BUILD_TOOLS_VERSION=26.0.0
- - ANDROID_ABI=armeabi-v7a
- - ANDROID_TAG=google_apis
- - CODECOV_TOKEN=c3c594dd-b509-4ca0-9fd0-248dc1af7cf3
+  matrix:
+    - ANDROID_TARGET=android-14  ANDROID_ABI=armeabi-v7a
+    - ANDROID_TARGET=android-15  ANDROID_ABI=armeabi-v7a
+    - ANDROID_TARGET=android-16  ANDROID_ABI=armeabi-v7a
+    - ANDROID_TARGET=android-17  ANDROID_ABI=armeabi-v7a
+    - ANDROID_TARGET=android-18  ANDROID_ABI=armeabi-v7a
+    - ANDROID_TARGET=android-19  ANDROID_ABI=armeabi-v7a
+    - ANDROID_TARGET=android-20  ANDROID_ABI=armeabi-v7a
+    - ANDROID_TARGET=android-21  ANDROID_ABI=armeabi-v7a
+    - ANDROID_TARGET=android-22  ANDROID_ABI=armeabi-v7a
+    - ANDROID_TARGET=android-23  ANDROID_ABI=armeabi-v7a
+    - ANDROID_TARGET=android-24  ANDROID_ABI=armeabi-v7a
+    - ANDROID_TARGET=android-25  ANDROID_ABI=armeabi-v7a
+
+  global:
+    - ANDROID_API=26
+    - EMULATOR_API_LEVEL=25
+    - ANDROID_BUILD_TOOLS=26.0.0
+    - ADB_INSTALL_TIMEOUT=25 # minutes
+    - ANDROID_BUILD_TOOLS_VERSION=26.0.0
+    - ANDROID_ABI=armeabi-v7a
+    - ANDROID_TAG=google_apis
+    - CODECOV_TOKEN=c3c594dd-b509-4ca0-9fd0-248dc1af7cf3
 
 before_script:
-  - chmod +x gradlew
+  # Create and start emulator
+  - echo PATH $PATH
   - android list target
-#  - echo no | android create avd --force -n Pixel -t "android-"$EMULATOR_API_LEVEL --abi $ANDROID_ABI --tag $ANDROID_TAG
-#  - android list avd
-#  - emulator -avd Pixel -no-skin -no-window & #Start emulator
+
+  - android list sdk
+  - which android-update-sdk
+  - cat `which android-update-sdk`
+  - android-update-sdk
+  - android list sdk --all --extended
+
+  - uname -a
+  - df -h
+  - mount
+  - cat /proc/cpuinfo
+  - echo $ANDROID_TARGET 
+  - echo $ANDROID_ABI
+  - echo no | android create avd --force -n test -t $ANDROID_TARGET --abi $ANDROID_ABI
+  - emulator -avd test -no-skin -no-audio -no-window &
+  - adb wait-for-device
+  - cat `which android-wait-for-emulator`
+  - android-wait-for-emulator
+  - adb shell input keyevent 82 &
+
+  - chmod +x gradlew
+
 
 android:
   components:
-  - tools
-  - platform-tools
-  - build-tools-$ANDROID_BUILD_TOOLS
-  - android-$ANDROID_API
-  - android-$EMULATOR_API_LEVEL
-  - extra-google-google_play_services
-  - extra-google-m2repository
-  - extra-android-m2repository # for design library
-  - addon-google_apis-google-19 # google play services
-  - sys-img-armeabi-v7a-addon-google_apis-google-$ANDROID_API_LEVEL
-  - sys-img-armeabi-v7a-addon-google_apis-google-$EMULATOR_API_LEVEL
-  # Emulator sys img
-  - sys-img-$ANDROID_ABI-$ANDROID_TAG-$EMULATOR_API_LEVEL
+    #  - build-tools-19.0.0
+      - build-tools-26
+      - tools
+      - platform-tools
+      - extra-google-m2repository
+      - extra-android-m2repository
+      - android-14
+      - sys-img-armeabi-v7a-android-14
+      #- sys-img-x86-android-14
+      - android-15
+      - sys-img-armeabi-v7a-android-15
+      #- sys-img-x86-android-15
+      - android-16
+      - sys-img-armeabi-v7a-android-16
+      #- sys-img-x86-android-16
+      - android-17
+      - sys-img-armeabi-v7a-android-17
+      #- sys-img-x86-android-17
+      - android-18
+      - sys-img-armeabi-v7a-android-18
+      #- sys-img-x86-android-18
+      - android-19
+      - sys-img-armeabi-v7a-android-19
+      #- sys-img-x86-android-19
+      - android-20
+      - sys-img-armeabi-v7a-android-20
+      #- sys-img-x86-android-20
+      - android-21
+      - sys-img-armeabi-v7a-android-21
+      #- sys-img-x86-android-21
+      - android-22
+      - sys-img-armeabi-v7a-android-22
+      #- sys-img-x86-android-22
+      - android-23
+      - sys-img-armeabi-v7a-android-23
+      #- sys-img-x86-android-23
+      - android-24
+      - sys-img-armeabi-v7a-android-24
+      #- sys-img-x86-android-24
+      - android-25
+      - sys-img-armeabi-v7a-android-25
+      #- sys-img-x86-android-25
+      - android-26
+      - sys-img-armeabi-v7a-android-26
+      #- sys-img-x86-android-26
+      
+      - tools
+      - platform-tools
+      - build-tools-$ANDROID_BUILD_TOOLS
+      - android-$ANDROID_API
+      - android-$EMULATOR_API_LEVEL
+      - extra-google-google_play_services
+      - extra-google-m2repository
+      - extra-android-m2repository # for design library
+      - addon-google_apis-google-19 # google play services
+      - sys-img-armeabi-v7a-addon-google_apis-google-$ANDROID_API_LEVEL
+      - sys-img-armeabi-v7a-addon-google_apis-google-$EMULATOR_API_LEVEL
+      # Emulator sys img
+      - sys-img-$ANDROID_ABI-$ANDROID_TAG-$EMULATOR_API_LEVEL
 
 
   licenses:
@@ -74,7 +170,7 @@ script:
 #- android-wait-for-emulator
 - adb devices
 - adb shell input keyevent 82 &
-- "./gradlew clean build -Pbuild=dev -PdisablePreDex --stacktrace createDevDebugUnitTestCoverageReport createDevDebugUnitTestCoverageReportKotlin coveralls"
+- "./gradlew clean build -Pbuild=dev -PdisablePreDex --stacktrace createDevDebugUnitTestCoverageReport createDevDebugUnitTestCoverageReportKotlin coveralls cAT"
 
 after_success:
-    - codecov                       #Run codecov
+    - codecov #Run codecov
