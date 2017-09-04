@@ -17,7 +17,7 @@
 
 package io.shtanko.picasagallery.data.user
 
-import io.shtanko.picasagallery.data.entity.User
+import io.shtanko.picasagallery.data.entity.user.User
 import javax.inject.Inject
 import javax.inject.Singleton
 

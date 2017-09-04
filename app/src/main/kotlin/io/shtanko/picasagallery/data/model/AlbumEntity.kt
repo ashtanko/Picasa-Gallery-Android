@@ -22,8 +22,4 @@ import com.google.gson.annotations.SerializedName
 data class AlbumEntity(
     @SerializedName("id") var id: SingleStringElementEntity,
     @SerializedName("title") var title: TitleTypeEntity
-//    @SerializedName("published") var published: SingleStringElementEntity,
-//    @SerializedName("summary") var summary: TitleTypeEntity,
-//    @SerializedName("rights") var rights: TitleTypeEntity,
-//    @SerializedName("link") var link: LinkEntity
 )

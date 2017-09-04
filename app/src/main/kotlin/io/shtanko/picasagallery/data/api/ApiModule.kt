@@ -25,8 +25,8 @@ import dagger.Module
 import dagger.Provides
 import io.reactivex.schedulers.Schedulers
 import io.shtanko.picasagallery.Config
-import io.shtanko.picasagallery.data.PreferenceHelper
-import io.shtanko.picasagallery.data.PreferencesModule
+import io.shtanko.picasagallery.core.prefs.PreferenceHelper
+import io.shtanko.picasagallery.core.prefs.PreferencesModule
 import okhttp3.Cache
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient

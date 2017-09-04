@@ -21,7 +21,7 @@ import android.view.View
 import io.shtanko.picasagallery.R
 import io.shtanko.picasagallery.core.image.ImageHelper
 import io.shtanko.picasagallery.core.image.ImageHelperImpl
-import io.shtanko.picasagallery.data.entity.Album
+import io.shtanko.picasagallery.data.entity.album.Album
 import io.shtanko.picasagallery.view.base.BaseViewHolder
 import io.shtanko.picasagallery.view.delegate.ViewType
 import io.shtanko.picasagallery.view.util.Divided

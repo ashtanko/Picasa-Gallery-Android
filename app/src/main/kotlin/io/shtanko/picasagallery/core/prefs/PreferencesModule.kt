@@ -15,7 +15,7 @@
  *
  */
 
-package io.shtanko.picasagallery.data
+package io.shtanko.picasagallery.core.prefs
 
 import android.content.Context
 import android.content.SharedPreferences

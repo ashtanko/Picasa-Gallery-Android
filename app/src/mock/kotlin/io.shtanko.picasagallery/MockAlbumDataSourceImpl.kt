@@ -17,25 +17,19 @@
 
 package io.shtanko.picasagallery
 
-import io.shtanko.picasagallery.data.AlbumDataSource
-import io.shtanko.picasagallery.data.api.ApiManager
-import io.shtanko.picasagallery.data.entity.Album
+import io.shtanko.picasagallery.data.album.AlbumDataSource
+import io.shtanko.picasagallery.data.entity.album.Album
+import io.shtanko.picasagallery.data.entity.album.AlbumType
 import io.shtanko.picasagallery.view.util.getImages
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class MockAlbumDataSourceImpl @Inject constructor(var apiManager: ApiManager) : AlbumDataSource {
+class MockAlbumDataSourceImpl @Inject constructor() : AlbumDataSource {
 
   override fun getAlbums(callback: AlbumDataSource.LoadAlbumsCallback) {
-
-    val dummyList = ArrayList<Album>()
-
-    for (imageURL in getImages()) {
-      val album = Album("Item", imageURL)
-      dummyList.add(album)
-    }
-
+    val dummyList = ArrayList<AlbumType>()
+    getImages().mapTo(dummyList) { Album("Item", it) }
     callback.onAlbumsLoaded(dummyList)
   }
 }

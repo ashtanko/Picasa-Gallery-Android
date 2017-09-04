@@ -18,33 +18,16 @@
 package io.shtanko.picasagallery.view.util
 
 import android.graphics.ColorMatrix
-import android.util.FloatProperty
-import android.util.Property
 
 object ObservableColorMatrix : ColorMatrix() {
 
   private var saturation = 1f
 
-  private fun getSaturation(): Float {
-    return saturation
-  }
+  private fun getSaturation(): Float = saturation
 
   override fun setSaturation(saturation: Float) {
     this.saturation = saturation
     super.setSaturation(saturation)
-  }
-
-
-  val SATURATION: Property<ObservableColorMatrix, Float> = object : FloatProperty<ObservableColorMatrix>(
-      "saturation") {
-
-    override fun setValue(cm: ObservableColorMatrix, value: Float) {
-      cm.setSaturation(value)
-    }
-
-    override fun get(cm: ObservableColorMatrix): Float {
-      return cm.getSaturation()
-    }
   }
 
 }

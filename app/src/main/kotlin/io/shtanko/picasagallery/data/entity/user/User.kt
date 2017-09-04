@@ -15,10 +15,15 @@
  *
  */
 
-package io.shtanko.picasagallery.data.entity
+package io.shtanko.picasagallery.data.entity.user
+
+import io.shtanko.picasagallery.Config
 
 data class User(var personName: String?,
     var personGivenName: String?,
     var personFamilyName: String?,
     var personEmail: String?,
-    var personId: String?) : UserType
+    var personId: String?) : UserType {
+
+  override fun getViewType() = Config.USER_VIEW_TYPE_ID
+}

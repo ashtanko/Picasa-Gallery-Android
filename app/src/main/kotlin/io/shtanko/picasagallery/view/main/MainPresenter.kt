@@ -17,10 +17,11 @@
 
 package io.shtanko.picasagallery.view.main
 
-import io.shtanko.picasagallery.data.AlbumDataSource
-import io.shtanko.picasagallery.data.AlbumRepository
+import io.shtanko.picasagallery.data.album.AlbumDataSource
+import io.shtanko.picasagallery.data.album.AlbumRepository
 import io.shtanko.picasagallery.extensions.AlbumsList
 import io.shtanko.picasagallery.util.ActivityScoped
+import io.shtanko.picasagallery.view.delegate.ViewType
 import io.shtanko.picasagallery.view.main.MainContract.View
 import javax.annotation.Nullable
 import javax.inject.Inject
@@ -54,5 +55,9 @@ class MainPresenter @Inject constructor(
         view?.setLoadingIndicator(false)
       }
     })
+  }
+
+  override fun onAlbumClick(model: ViewType) {
+    view?.viewAlbum(model)
   }
 }

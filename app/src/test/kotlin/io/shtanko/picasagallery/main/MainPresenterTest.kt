@@ -21,9 +21,10 @@ import com.nhaarman.mockito_kotlin.argumentCaptor
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.times
 import com.nhaarman.mockito_kotlin.verify
-import io.shtanko.picasagallery.data.AlbumDataSource
-import io.shtanko.picasagallery.data.AlbumRepository
-import io.shtanko.picasagallery.data.entity.Album
+import io.shtanko.picasagallery.data.album.AlbumDataSource
+import io.shtanko.picasagallery.data.album.AlbumRepository
+import io.shtanko.picasagallery.data.entity.album.Album
+import io.shtanko.picasagallery.data.entity.album.AlbumType
 import io.shtanko.picasagallery.extensions.AlbumsList
 import io.shtanko.picasagallery.view.main.MainContract
 import io.shtanko.picasagallery.view.main.MainPresenter
@@ -69,8 +70,15 @@ class MainPresenterTest {
     verify(view).setLoadingIndicator(false)
   }
 
+  @Test
+  fun album_clickTest() {
+    val dummyModel = Album("", "")
+    presenter.onAlbumClick(dummyModel)
+    verify(view, times(1)).viewAlbum(dummyModel)
+  }
+
   private fun getDummyAlbumsList(): AlbumsList {
-    val dummyList = ArrayList<Album>()
+    val dummyList = ArrayList<AlbumType>()
     getImages().mapTo(dummyList) { Album("Item", it) }
     return dummyList
   }

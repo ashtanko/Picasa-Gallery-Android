@@ -15,20 +15,24 @@
  *
  */
 
-package io.shtanko.picasagallery.data
+package io.shtanko.picasagallery.data.album.remote
 
 import io.reactivex.observers.DefaultObserver
-import io.shtanko.picasagallery.data.AlbumDataSource.LoadAlbumsCallback
+import io.shtanko.picasagallery.core.prefs.PreferenceHelper
+import io.shtanko.picasagallery.data.album.AlbumDataSource
+import io.shtanko.picasagallery.data.album.AlbumDataSource.LoadAlbumsCallback
+import io.shtanko.picasagallery.data.album.AlbumEntityMapper
 import io.shtanko.picasagallery.data.api.ApiManager
-import io.shtanko.picasagallery.data.entity.Album
+import io.shtanko.picasagallery.data.entity.album.AlbumType
 import io.shtanko.picasagallery.data.model.UserFeedResponseEntity
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class AlbumDataSourceImpl @Inject constructor(
+class RemoteAlbumDataSourceImpl @Inject constructor(
     var apiManager: ApiManager,
-    var preferencesHelper: PreferenceHelper) : AlbumDataSource {
+    var preferencesHelper: PreferenceHelper,
+    var albumEntityMapper: AlbumEntityMapper) : AlbumDataSource {
 
   override fun getAlbums(callback: LoadAlbumsCallback) {
 
@@ -41,11 +45,10 @@ class AlbumDataSourceImpl @Inject constructor(
             callback.onDataNotAvailable(e.localizedMessage)
           }
 
-          override fun onNext(t: UserFeedResponseEntity) {
-            val list = ArrayList<Album>()
-            t.feed.entry.forEach { it ->
-              val entity = Album(it.title.body, "")
-              list.add(entity)
+          override fun onNext(userFeedResponseEntity: UserFeedResponseEntity) {
+            val list = ArrayList<AlbumType>()
+            userFeedResponseEntity.feed.entry.forEach { it ->
+              list.add(albumEntityMapper.transform(it))
             }
             callback.onAlbumsLoaded(list)
           }

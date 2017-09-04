@@ -15,9 +15,9 @@
  *
  */
 
-package io.shtanko.picasagallery.data
+package io.shtanko.picasagallery.data.album
 
-import io.shtanko.picasagallery.data.AlbumDataSource.LoadAlbumsCallback
+import io.shtanko.picasagallery.data.album.AlbumDataSource.LoadAlbumsCallback
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -26,7 +26,5 @@ class AlbumRepository @Inject constructor(
     var dataSource: AlbumDataSource
 ) : AlbumDataSource {
 
-  override fun getAlbums(callback: LoadAlbumsCallback) {
-    return dataSource.getAlbums(callback)
-  }
+  override fun getAlbums(callback: LoadAlbumsCallback) = dataSource.getAlbums(callback)
 }

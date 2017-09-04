@@ -27,7 +27,7 @@ import io.shtanko.picasagallery.core.executor.PostExecutionThread
 import io.shtanko.picasagallery.core.executor.ThreadExecutor
 
 
-abstract class UseCase<T, P>(var threadExecutor: ThreadExecutor,
+abstract class UseCase<T, in P>(var threadExecutor: ThreadExecutor,
     var postExecutionThread: PostExecutionThread) {
 
   /**
@@ -40,9 +40,13 @@ abstract class UseCase<T, P>(var threadExecutor: ThreadExecutor,
 
   fun execute(observer: DisposableObserver<T>, params: P) {
     Preconditions.checkNotNull(observer)
+
     val observable = this.buildUseCaseObservable(params)
         .subscribeOn(Schedulers.from(threadExecutor))
-        .observeOn(postExecutionThread.getScheduler())
+
+    if (postExecutionThread.getScheduler() != null) {
+      observable.observeOn(postExecutionThread.getScheduler())
+    }
     addDisposable(observable.toObservable().subscribeWith(observer))
   }
 

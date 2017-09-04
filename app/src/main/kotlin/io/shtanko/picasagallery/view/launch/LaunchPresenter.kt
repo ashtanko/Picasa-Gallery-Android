@@ -20,7 +20,7 @@ package io.shtanko.picasagallery.view.launch
 import android.text.TextUtils
 import io.shtanko.picasagallery.core.log.FileLog
 import io.shtanko.picasagallery.data.DefaultObserver
-import io.shtanko.picasagallery.data.entity.User
+import io.shtanko.picasagallery.data.entity.user.User
 import io.shtanko.picasagallery.data.user.GetUserDetails
 import io.shtanko.picasagallery.util.ActivityScoped
 import io.shtanko.picasagallery.view.launch.LaunchContract.View

@@ -22,40 +22,48 @@ import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.RecyclerView.ViewHolder
 import android.view.ViewGroup
 import io.shtanko.picasagallery.Config
-import io.shtanko.picasagallery.data.entity.Album
+import io.shtanko.picasagallery.data.entity.album.AlbumType
 import io.shtanko.picasagallery.extensions.AlbumsList
 import io.shtanko.picasagallery.view.delegate.ViewType
 import io.shtanko.picasagallery.view.delegate.ViewTypeAdapterDelegate
+import io.shtanko.picasagallery.view.util.OnItemClickListener
 
 class MainAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
   private var items: ArrayList<ViewType> = ArrayList()
   private var delegateAdapters = SparseArrayCompat<ViewTypeAdapterDelegate>()
+  private var onItemClickListener: OnItemClickListener? = null
 
   init {
-    delegateAdapters.put(Config.MAIN, MainAdapterDelegateImpl())
+    delegateAdapters.put(Config.MAIN_VIEW_TYPE_ID, MainAdapterDelegateImpl())
   }
 
   fun addAlbums(list: AlbumsList) {
     items.addAll(list)
   }
 
-  fun addAlbum(item: Album) {
+  fun addAlbum(item: AlbumType) {
     items.add(item)
+  }
+
+  fun setOnItemClickListener(listener: OnItemClickListener) {
+    if (onItemClickListener == null)
+      this.onItemClickListener = listener
   }
 
   override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ViewHolder =
       delegateAdapters.get(viewType).onCreateViewHolder(parent)
 
   override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-    delegateAdapters.get(getItemViewType(position)).onBindViewHolder(holder, this.items[position])
+    val model = this.items[position]
+    holder.itemView.setOnClickListener {
+      onItemClickListener?.onItemClicked(model)
+    }
+    delegateAdapters.get(getItemViewType(position)).onBindViewHolder(holder, model)
   }
 
   override fun getItemViewType(position: Int): Int = this.items[position].getViewType()
 
-  override fun getItemCount(): Int {
-    val count = items.count()
-    return count
-  }
+  override fun getItemCount() = items.count()
 
 }

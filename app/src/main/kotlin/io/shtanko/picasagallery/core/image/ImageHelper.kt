@@ -25,11 +25,11 @@ import com.bumptech.glide.request.animation.ViewPropertyAnimation
 import io.shtanko.picasagallery.view.util.OnLoadImageListener
 
 interface ImageHelper {
-  fun load(context: Context?, url: String, listener: OnLoadImageListener?, imageView: ImageView?)
+  fun load(context: Context?, url: String?, listener: OnLoadImageListener?, imageView: ImageView?)
 
   fun loadImage(context: Context?,
       imageView: ImageView?,
-      url: String,
+      url: String?,
       noAnimate: Boolean,
       lowPriority: Boolean,
       thumbnail: DrawableRequestBuilder<String>?,
@@ -37,5 +37,5 @@ interface ImageHelper {
       animator: ViewPropertyAnimation.Animator?,
       listener: OnLoadImageListener?)
 
-  fun process(context: Context?, imageView: ImageView?, url: String)
+  fun process(context: Context?, imageView: ImageView?, url: String?)
 }

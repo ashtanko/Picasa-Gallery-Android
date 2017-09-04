@@ -18,7 +18,7 @@
 package io.shtanko.picasagallery
 
 import io.reactivex.Flowable
-import io.shtanko.picasagallery.data.entity.User
+import io.shtanko.picasagallery.data.entity.user.User
 import io.shtanko.picasagallery.data.user.UserDataSource
 import io.shtanko.picasagallery.data.user.UserRepository
 import java.util.UUID
@@ -30,7 +30,8 @@ class MockGetUserRepositoryImpl @Inject constructor(
     var dataSourceImpl: UserDataSource) : UserRepository {
 
   override fun getUserData(): Flowable<User> = Flowable.just(
-      User("Mock Name", "Mock Given Name", "Mock Family Name", "mock@mock.com",
+      User("Mock Name", "Mock Given Name",
+          "Mock Family Name", "mock@mock.com",
           "${UUID.randomUUID()}"))
 
 }

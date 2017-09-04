@@ -19,7 +19,7 @@ package io.shtanko.picasagallery.auth
 
 import android.content.SharedPreferences
 import com.nhaarman.mockito_kotlin.mock
-import io.shtanko.picasagallery.data.PreferenceHelper
+import io.shtanko.picasagallery.core.prefs.PreferenceHelper
 import io.shtanko.picasagallery.data.user.UserRepositoryImpl
 import io.shtanko.picasagallery.view.auth.SignInContract
 import io.shtanko.picasagallery.view.auth.SignInPresenter

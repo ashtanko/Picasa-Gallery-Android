@@ -121,3 +121,7 @@ project.afterEvaluate {
     }
   }
 }
+
+coveralls {
+  jacocoReportPath = "${buildDir}/reports/jacoco/createDevDebugUnitTestCoverageReport/createDevDebugUnitTestCoverageReport.xml"
+}

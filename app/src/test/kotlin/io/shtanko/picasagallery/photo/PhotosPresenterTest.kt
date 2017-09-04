@@ -15,7 +15,7 @@
  *
  */
 
-package io.shtanko.photo
+package io.shtanko.picasagallery.photo
 
 import com.nhaarman.mockito_kotlin.mock
 import io.shtanko.picasagallery.view.photo.PhotosContract.View

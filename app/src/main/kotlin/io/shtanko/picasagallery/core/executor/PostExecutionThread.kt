@@ -20,5 +20,5 @@ package io.shtanko.picasagallery.core.executor
 import io.reactivex.Scheduler
 
 interface PostExecutionThread {
-  abstract fun getScheduler(): Scheduler
+  abstract fun getScheduler(): Scheduler?
 }

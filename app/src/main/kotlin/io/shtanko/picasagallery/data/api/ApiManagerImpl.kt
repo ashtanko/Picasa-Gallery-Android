@@ -25,15 +25,13 @@ import io.shtanko.picasagallery.data.model.UserFeedResponseEntity
 
 class ApiManagerImpl constructor(var apiService: PicasaService) : ApiManager {
 
-  override fun getUser(userId: String): Observable<UserFeedResponseEntity> {
-    return apiService.getUser(userId).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
-  }
+  override fun getUser(userId: String): Observable<UserFeedResponseEntity> =
+      apiService.getUser(userId).subscribeOn(Schedulers.io()).observeOn(
+          AndroidSchedulers.mainThread())
 
   override fun getAlbums(userId: String, albumId: String): Observable<AlbumsResponseEntity> {
     return apiService.getAlbums(userId, albumId).subscribeOn(
         AndroidSchedulers.mainThread()).observeOn(
         Schedulers.io())
   }
-
-
 }

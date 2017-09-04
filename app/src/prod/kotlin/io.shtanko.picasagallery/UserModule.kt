@@ -22,7 +22,7 @@ import dagger.Provides
 import io.shtanko.picasagallery.base.UseCase
 import io.shtanko.picasagallery.core.executor.PostExecutionThread
 import io.shtanko.picasagallery.core.executor.ThreadExecutor
-import io.shtanko.picasagallery.data.entity.User
+import io.shtanko.picasagallery.data.entity.user.User
 import io.shtanko.picasagallery.data.user.GetUserDetails
 import io.shtanko.picasagallery.data.user.GetUserRepositoryImpl
 import io.shtanko.picasagallery.data.user.UserDataSourceImpl

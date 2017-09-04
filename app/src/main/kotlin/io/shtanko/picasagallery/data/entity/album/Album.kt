@@ -15,11 +15,11 @@
  *
  */
 
-package io.shtanko.picasagallery.data.entity
+package io.shtanko.picasagallery.data.entity.album
 
 import io.shtanko.picasagallery.Config
 
 
 data class Album(var title: String?, var imageUrl: String?) : AlbumType {
-  override fun getViewType() = Config.MAIN
+  override fun getViewType() = Config.MAIN_VIEW_TYPE_ID
 }

@@ -17,13 +17,17 @@
 
 package io.shtanko.picasagallery.view.main
 
+import android.content.Intent
 import android.os.Bundle
 import dagger.Lazy
 import io.shtanko.picasagallery.R
 import io.shtanko.picasagallery.view.base.BaseActivity
+import io.shtanko.picasagallery.view.delegate.ViewType
+import io.shtanko.picasagallery.view.main.MainFragment.AlbumClickListener
+import io.shtanko.picasagallery.view.photo.PhotosActivity
 import javax.inject.Inject
 
-class MainActivity : BaseActivity() {
+class MainActivity : BaseActivity(), AlbumClickListener {
 
   @Inject lateinit var presenter: MainPresenter
   @Inject lateinit var mainFragmentProvider: Lazy<MainFragment>
@@ -32,5 +36,9 @@ class MainActivity : BaseActivity() {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.container_activity)
     addFragment<MainFragment>(R.id.content_frame, mainFragmentProvider)
+  }
+
+  override fun onAlbumClick(model: ViewType) {
+    startActivity(Intent(this, PhotosActivity::class.java))
   }
 }

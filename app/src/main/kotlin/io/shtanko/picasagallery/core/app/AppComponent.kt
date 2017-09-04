@@ -27,7 +27,7 @@ import io.shtanko.picasagallery.AlbumsRepositoryModule
 import io.shtanko.picasagallery.UserModule
 import io.shtanko.picasagallery.core.ActivityBindingModule
 import io.shtanko.picasagallery.core.executor.JobModule
-import io.shtanko.picasagallery.data.PreferencesModule
+import io.shtanko.picasagallery.core.prefs.PreferencesModule
 import io.shtanko.picasagallery.data.account.AccountModule
 import io.shtanko.picasagallery.data.api.ApiModule
 import javax.inject.Singleton

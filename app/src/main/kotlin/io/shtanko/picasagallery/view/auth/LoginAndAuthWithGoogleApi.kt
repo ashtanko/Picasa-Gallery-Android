@@ -132,8 +132,7 @@ class LoginAndAuthWithGoogleApi constructor(val activity: Activity,
   }
 
   override fun onConnected(bundle: Bundle?) {
-    val activity = getActivity("onConnected()") ?: return
-
+    //val activity = getActivity("onConnected()") ?: return
   }
 
 

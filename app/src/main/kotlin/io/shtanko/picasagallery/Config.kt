@@ -39,6 +39,11 @@ object Config {
   val JOB_THREAD_NAME = "android_"
   val APPLICATION_LOG_TAG = "PICASA_GALLERY"
 
-  val MAIN = 0
+  val TWO_COLUMNS_GRID = 2
+  val THREE_COLUMNS_GRID = 3
+
+  val MAIN_VIEW_TYPE_ID = 0
+  val USER_VIEW_TYPE_ID = 1
+  val PHOTO_VIEW_TYPE_ID = 2
 
 }

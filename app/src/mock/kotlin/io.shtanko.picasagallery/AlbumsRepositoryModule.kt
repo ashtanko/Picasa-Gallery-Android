@@ -19,7 +19,7 @@ package io.shtanko.picasagallery
 
 import dagger.Binds
 import dagger.Module
-import io.shtanko.picasagallery.data.AlbumDataSource
+import io.shtanko.picasagallery.data.album.AlbumDataSource
 import javax.inject.Singleton
 
 @Module

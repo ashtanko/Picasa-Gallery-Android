@@ -34,7 +34,7 @@ import com.google.android.gms.common.api.GoogleApiClient
 import com.google.android.gms.common.api.Scope
 import dagger.android.support.DaggerFragment
 import io.shtanko.picasagallery.R
-import io.shtanko.picasagallery.data.entity.User
+import io.shtanko.picasagallery.data.entity.user.User
 import io.shtanko.picasagallery.extensions.close
 import io.shtanko.picasagallery.extensions.getSafeContext
 import io.shtanko.picasagallery.view.main.MainActivity
@@ -99,7 +99,8 @@ class SignInFragment @Inject constructor() : DaggerFragment(),
 
     // Auth scopes we need
     val AUTH_SCOPES = ArrayList(Arrays.asList(
-        Scopes.PLUS_LOGIN,
+        Scopes.PLUS_ME,
+        Scopes.PROFILE,
         Scopes.DRIVE_APPFOLDER,
         "https://www.googleapis.com/auth/plus.profile.emails.read"))
 
@@ -148,7 +149,8 @@ class SignInFragment @Inject constructor() : DaggerFragment(),
     if (result.isSuccess) {
       val acct = result.signInAccount
       if (acct != null) {
-        val user = User(acct.displayName, acct.givenName, acct.familyName, acct.email, acct.id)
+        val user = User(acct.displayName, acct.givenName,
+            acct.familyName, acct.email, acct.id)
         presenter.saveUserData(user)
         openMainActivity()
       }

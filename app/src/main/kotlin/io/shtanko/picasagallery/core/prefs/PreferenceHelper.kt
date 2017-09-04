@@ -15,11 +15,11 @@
  *
  */
 
-package io.shtanko.picasagallery.data
+package io.shtanko.picasagallery.core.prefs
 
 import android.content.SharedPreferences
 import io.shtanko.picasagallery.Config
-import io.shtanko.picasagallery.data.entity.User
+import io.shtanko.picasagallery.data.entity.user.User
 import javax.inject.Singleton
 
 @Singleton
@@ -46,7 +46,8 @@ class PreferenceHelper constructor(val sharedPreferences: SharedPreferences) {
     val personFamilyName = sharedPreferences.getString(Config.SAVED_PERSON_FAMILY_NAME_PREF, "")
     val personEmail = sharedPreferences.getString(Config.SAVED_EMAIL_PREF, "")
     val personId = sharedPreferences.getString(Config.SAVED_ID_PREF, "")
-    val user = User(personName, personGivenName, personFamilyName, personEmail, personId)
+    val user = User(personName, personGivenName,
+        personFamilyName, personEmail, personId)
     return user
   }
 

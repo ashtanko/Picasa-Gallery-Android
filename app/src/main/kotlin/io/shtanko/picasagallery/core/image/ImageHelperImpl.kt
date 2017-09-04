@@ -18,6 +18,7 @@
 package io.shtanko.picasagallery.core.image
 
 import android.animation.AnimatorListenerAdapter
+import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
 import android.content.Context
 import android.graphics.ColorMatrixColorFilter
@@ -44,7 +45,7 @@ import java.lang.Exception
 class ImageHelperImpl : ImageHelper {
 
 
-  override fun process(context: Context?, imageView: ImageView?, url: String) {
+  override fun process(context: Context?, imageView: ImageView?, url: String?) {
     load(context, url, object : OnLoadImageListener {
       override fun onLoadSucceed() {
 
@@ -52,7 +53,7 @@ class ImageHelperImpl : ImageHelper {
           imageView?.setHasTransientState(true)
 
           val matrix = ObservableColorMatrix
-          val saturation = ObjectAnimator.ofFloat(matrix, ObservableColorMatrix.SATURATION, 0f,
+          val saturation = ObjectAnimator.ofFloat(matrix, "saturation", 0f,
               1f)
 
           saturation.addUpdateListener { imageView?.colorFilter = ColorMatrixColorFilter(matrix) }
@@ -63,26 +64,29 @@ class ImageHelperImpl : ImageHelper {
 
           saturation.addListener(object : AnimatorListenerAdapter() {
             override fun onAnimationEnd(animation: android.animation.Animator?) {
-              imageView?.clearColorFilter()
-              if (VERSION.SDK_INT >= VERSION_CODES.JELLY_BEAN) {
-                imageView?.setHasTransientState(false)
-              }
+              clean(imageView)
             }
           })
           saturation.start()
+        } else {
+          clean(imageView)
         }
       }
 
       override fun onLoadFailed() {
-        imageView?.clearColorFilter()
-        if (VERSION.SDK_INT >= VERSION_CODES.JELLY_BEAN) {
-          imageView?.setHasTransientState(false)
-        }
+        clean(imageView)
       }
     }, imageView)
   }
 
-  override fun load(context: Context?, url: String, listener: OnLoadImageListener?,
+  private fun clean(imageView: ImageView?) {
+    imageView?.clearColorFilter()
+    if (VERSION.SDK_INT >= VERSION_CODES.JELLY_BEAN) {
+      imageView?.setHasTransientState(false)
+    }
+  }
+
+  override fun load(context: Context?, url: String?, listener: OnLoadImageListener?,
       imageView: ImageView?) {
 
     val thumbnailRequest = Glide
@@ -116,7 +120,7 @@ class ImageHelperImpl : ImageHelper {
 
   }
 
-  override fun loadImage(context: Context?, imageView: ImageView?, url: String, noAnimate: Boolean,
+  override fun loadImage(context: Context?, imageView: ImageView?, url: String?, noAnimate: Boolean,
       lowPriority: Boolean, thumbnail: DrawableRequestBuilder<String>?,
       transformation: BitmapTransformation?, animator: Animator?, listener: OnLoadImageListener?) {
 

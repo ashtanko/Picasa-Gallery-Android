@@ -35,13 +35,9 @@ class SimpleCountingIdlingResource
     this.resourceName = checkNotNull(resourceName)
   }
 
-  override fun getName(): String {
-    return resourceName
-  }
+  override fun getName(): String = resourceName
 
-  override fun isIdleNow(): Boolean {
-    return counter.get() === 0
-  }
+  override fun isIdleNow(): Boolean = counter.get() == 0
 
   override fun registerIdleTransitionCallback(resourceCallback: IdlingResource.ResourceCallback) {
     this.resourceCallback = resourceCallback
