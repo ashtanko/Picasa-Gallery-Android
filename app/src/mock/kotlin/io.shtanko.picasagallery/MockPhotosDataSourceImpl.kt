@@ -15,13 +15,22 @@
  *
  */
 
-package io.shtanko.picasagallery.data.photo.local
+package io.shtanko.picasagallery
 
+import io.reactivex.Flowable
+import io.shtanko.picasagallery.data.entity.photo.PhotoType
 import io.shtanko.picasagallery.data.photo.PhotosDataSource
+import io.shtanko.picasagallery.extensions.PhotosList
+import io.shtanko.picasagallery.view.util.getPhotosData
+import javax.inject.Inject
+import javax.inject.Singleton
 
-/**
- * {@link io.shtanko.picasagallery.data.photo.PhotosDataSource} implementation.
- */
+@Singleton
+class MockPhotosDataSourceImpl @Inject constructor() : PhotosDataSource {
 
-class LocalPhotosDataSourceImpl : PhotosDataSource {
+  override fun getPhotos(): Flowable<PhotosList> {
+    val mockList = ArrayList<PhotoType>()
+    mockList.addAll(getPhotosData())
+    return Flowable.just(mockList)
+  }
 }

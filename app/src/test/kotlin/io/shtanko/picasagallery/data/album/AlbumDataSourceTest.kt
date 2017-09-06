@@ -15,7 +15,7 @@
  *
  */
 
-package io.shtanko.picasagallery.data.album.remote
+package io.shtanko.picasagallery.data.album
 
 import com.nhaarman.mockito_kotlin.given
 import com.nhaarman.mockito_kotlin.mock
@@ -25,6 +25,7 @@ import io.reactivex.Observable
 import io.shtanko.picasagallery.core.prefs.PreferenceHelper
 import io.shtanko.picasagallery.data.album.AlbumDataSource
 import io.shtanko.picasagallery.data.album.AlbumEntityMapper
+import io.shtanko.picasagallery.data.album.AlbumDataSourceImpl
 import io.shtanko.picasagallery.data.api.ApiManager
 import io.shtanko.picasagallery.data.model.UserFeedResponseEntity
 import org.junit.Before
@@ -34,7 +35,7 @@ import org.mockito.exceptions.misusing.UnnecessaryStubbingException
 import org.mockito.junit.MockitoJUnitRunner
 
 @RunWith(MockitoJUnitRunner.Silent::class)
-class RemoteAlbumDataSourceTest {
+class AlbumDataSourceTest {
 
   private val FAKE_USER_ID = "123"
   var remoteAlbumDataSource: AlbumDataSource? = null
@@ -45,7 +46,8 @@ class RemoteAlbumDataSourceTest {
 
   @Before
   fun setUp() {
-    remoteAlbumDataSource = RemoteAlbumDataSourceImpl(mockApiManager, mockPreferenceHelper,
+    remoteAlbumDataSource = AlbumDataSourceImpl(
+        mockApiManager, mockPreferenceHelper,
         albumEntityMapper)
   }
 

@@ -15,18 +15,19 @@
  *
  */
 
-package io.shtanko.picasagallery.data.album.local
+package io.shtanko.picasagallery.data.photo
 
-import org.junit.Assert
-import org.junit.Test
-import org.junit.runner.RunWith
-import org.mockito.junit.MockitoJUnitRunner
+import dagger.Module
+import dagger.Provides
+import javax.inject.Singleton
 
-@RunWith(MockitoJUnitRunner::class)
-class LocalAlbumDataSourceTest {
+@Module
+class PhotosDataModule {
 
-  @Test
-  fun run() {
-    Assert.assertNull(null)
-  }
+
+
+  @Provides
+  @Singleton
+  fun providePhotosRepository(dataSource: PhotosDataSource): PhotosRepository =
+      PhotosRepositoryImpl(dataSource)
 }

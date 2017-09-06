@@ -17,5 +17,15 @@
 
 package io.shtanko.picasagallery.view.photo
 
-class PhotosAdapter {
+import io.shtanko.picasagallery.Config
+import io.shtanko.picasagallery.data.entity.photo.PhotoType
+import io.shtanko.picasagallery.util.ActivityScoped
+import io.shtanko.picasagallery.view.base.BaseAdapter
+import javax.inject.Inject
+
+@ActivityScoped
+class PhotosAdapter @Inject constructor() : BaseAdapter<PhotoType>() {
+  init {
+    delegateAdapters.put(Config.PHOTO_VIEW_TYPE_ID, PhotosAdapterDelegateImpl())
+  }
 }

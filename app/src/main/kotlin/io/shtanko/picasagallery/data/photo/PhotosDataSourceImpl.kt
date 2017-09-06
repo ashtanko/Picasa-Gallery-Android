@@ -15,11 +15,17 @@
  *
  */
 
-package io.shtanko.picasagallery.data.album
+package io.shtanko.picasagallery.data.photo
 
+import io.reactivex.Flowable
+import io.shtanko.picasagallery.extensions.PhotosList
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class AlbumDataSourceFactory @Inject constructor() {
+class PhotosDataSourceImpl @Inject constructor() : PhotosDataSource {
+  override fun getPhotos(): Flowable<PhotosList> {
+    TODO(
+        "not implemented") //To change body of created functions use File | Settings | File Templates.
+  }
 }

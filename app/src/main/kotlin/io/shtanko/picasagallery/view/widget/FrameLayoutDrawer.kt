@@ -18,10 +18,15 @@
 package io.shtanko.picasagallery.view.widget
 
 import android.content.Context
-import android.support.v7.widget.AppCompatImageView
+import android.graphics.Canvas
+import android.graphics.Paint
 import android.util.AttributeSet
+import android.view.View
+import android.widget.FrameLayout
 
-class FourThreeImageView : AppCompatImageView {
+class FrameLayoutDrawer : FrameLayout {
+
+  private val paint = Paint()
 
   constructor(context: Context) : super(context)
 
@@ -30,9 +35,25 @@ class FourThreeImageView : AppCompatImageView {
   constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs,
       defStyleAttr)
 
-  override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-    val fourThreeHeight = MeasureSpec.makeMeasureSpec(MeasureSpec.getSize(widthMeasureSpec) * 3 / 4,
-        MeasureSpec.EXACTLY)
-    super.onMeasure(widthMeasureSpec, fourThreeHeight)
+  init {
+    setWillNotDraw(false)
+    paint.color = 0x33000000
   }
+
+  override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
+    super.onMeasure(widthMeasureSpec, heightMeasureSpec)
+  }
+
+  override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
+    super.onLayout(changed, left, top, right, bottom)
+  }
+
+  override fun onDraw(canvas: Canvas?) {
+    super.onDraw(canvas)
+  }
+
+  override fun drawChild(canvas: Canvas?, child: View?, drawingTime: Long): Boolean {
+    return super.drawChild(canvas, child, drawingTime)
+  }
+
 }

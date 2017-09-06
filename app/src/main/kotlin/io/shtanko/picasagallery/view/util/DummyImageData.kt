@@ -17,6 +17,15 @@
 
 package io.shtanko.picasagallery.view.util
 
+import io.shtanko.picasagallery.data.entity.photo.Photo
+import io.shtanko.picasagallery.data.entity.photo.PhotoType
+
+fun getPhotosData(): ArrayList<PhotoType> {
+  val array = ArrayList<PhotoType>()
+  (0..11233).mapTo(array) { Photo(it) }
+  return array
+}
+
 fun getImages(): Array<String> {
 
   val array = arrayOf(

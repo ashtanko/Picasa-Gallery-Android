@@ -17,20 +17,23 @@
 
 package io.shtanko.picasagallery.view.photo
 
-import io.shtanko.picasagallery.base.BasePresenter
-import io.shtanko.picasagallery.extensions.PhotosList
-import io.shtanko.picasagallery.view.base.BaseProgressView
-import io.shtanko.picasagallery.view.base.BaseView
+import android.support.v7.widget.RecyclerView.ViewHolder
+import android.view.ViewGroup
+import io.shtanko.picasagallery.R
+import io.shtanko.picasagallery.extensions.inflate
 import io.shtanko.picasagallery.view.delegate.ViewType
+import io.shtanko.picasagallery.view.delegate.ViewTypeAdapterDelegate
 
-interface PhotosContract {
-  interface View : BaseView<Presenter>, BaseProgressView {
-    fun showPhotos(photos: PhotosList)
-    fun viewPhoto(model: ViewType)
+class PhotosAdapterDelegateImpl : ViewTypeAdapterDelegate {
+
+  override fun onCreateViewHolder(parent: ViewGroup?): ViewHolder {
+    val view = parent?.inflate(R.layout.album_item)
+    val viewHolder = PhotosViewHolder(view)
+    return viewHolder
   }
 
-  interface Presenter : BasePresenter<PhotosContract.View> {
-    fun getPhotos()
-    fun onPhotoClick(model: ViewType)
+  override fun onBindViewHolder(holder: ViewHolder, item: ViewType) {
+    holder as PhotosViewHolder
+    holder.bind(item)
   }
 }

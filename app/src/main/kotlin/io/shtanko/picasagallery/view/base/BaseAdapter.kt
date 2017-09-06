@@ -18,46 +18,36 @@
 package io.shtanko.picasagallery.view.base
 
 
-import android.support.annotation.LayoutRes
+import android.support.v4.util.SparseArrayCompat
 import android.support.v7.widget.RecyclerView
-import android.view.LayoutInflater
-import android.view.View
+import android.support.v7.widget.RecyclerView.ViewHolder
 import android.view.ViewGroup
+import io.shtanko.picasagallery.view.delegate.ViewType
+import io.shtanko.picasagallery.view.delegate.ViewTypeAdapterDelegate
+import io.shtanko.picasagallery.view.util.OnItemClickListener
+import kotlin.properties.Delegates
 
-abstract class BaseAdapter : RecyclerView.Adapter<BaseViewHolder>() {
+abstract class BaseAdapter<T : ViewType> : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-  private var items: MutableList<Any> = ArrayList<Any>()
+  var onItemClickListener: OnItemClickListener? = null
 
-  fun items(): List<Any> {
-    return items
+  var items: List<T> by Delegates.observable(
+      emptyList()) { _, _, _ -> notifyDataSetChanged() }
+
+  override fun getItemCount() = items.size
+
+  protected var delegateAdapters = SparseArrayCompat<ViewTypeAdapterDelegate>()
+
+  override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ViewHolder =
+      delegateAdapters.get(viewType).onCreateViewHolder(parent)
+
+  override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+    val model = this.items[position]
+    holder.itemView.setOnClickListener {
+      onItemClickListener?.onItemClicked(model)
+    }
+    delegateAdapters.get(getItemViewType(position)).onBindViewHolder(holder, model)
   }
 
-  fun clear() {
-    this.items.clear()
-  }
-
-  fun <T> addItems(items: List<T>) {
-    this.items.add(items)
-  }
-
-  override fun onBindViewHolder(holder: BaseViewHolder?, position: Int) {
-
-  }
-
-  protected fun objectFromSectionRow(index: Int): Any {
-    return items[index]
-  }
-
-  protected abstract fun viewHolder(@LayoutRes layout: Int, view: View): BaseViewHolder
-
-  override fun onCreateViewHolder(viewGroup: ViewGroup, layout: Int): BaseViewHolder {
-    val view = inflateView(viewGroup, layout)
-    val viewHolder = viewHolder(layout, view)
-    return viewHolder
-  }
-
-  private fun inflateView(viewGroup: ViewGroup, viewType: Int): View {
-    val layoutInflater = LayoutInflater.from(viewGroup.context)
-    return layoutInflater.inflate(viewType, viewGroup, false)
-  }
+  override fun getItemViewType(position: Int): Int = this.items[position].getViewType()
 }

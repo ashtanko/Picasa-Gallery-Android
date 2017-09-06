@@ -17,13 +17,29 @@
 
 package io.shtanko.picasagallery.view.photo
 
+import io.shtanko.picasagallery.data.photo.PhotosRepository
 import io.shtanko.picasagallery.util.ActivityScoped
+import io.shtanko.picasagallery.view.delegate.ViewType
 import io.shtanko.picasagallery.view.photo.PhotosContract.View
 import javax.annotation.Nullable
 import javax.inject.Inject
 
 @ActivityScoped
-class PhotosPresenter @Inject constructor() : PhotosContract.Presenter {
+class PhotosPresenter @Inject constructor(
+    var repository: PhotosRepository
+) : PhotosContract.Presenter {
+
+  override fun onPhotoClick(model: ViewType) {
+    view?.viewPhoto(model)
+  }
+
+  override fun getPhotos() {
+    view?.setLoadingIndicator(true)
+    repository.photos().subscribe { it ->
+      view?.setLoadingIndicator(false)
+      view?.showPhotos(it)
+    }
+  }
 
   @Nullable
   private var view: PhotosContract.View? = null

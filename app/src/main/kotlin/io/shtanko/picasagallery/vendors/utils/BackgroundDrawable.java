@@ -15,19 +15,31 @@
  *
  */
 
-package io.shtanko.picasagallery.view.main
+package io.shtanko.picasagallery.vendors.utils;
 
-import io.shtanko.picasagallery.Config
-import io.shtanko.picasagallery.data.entity.album.AlbumType
-import io.shtanko.picasagallery.util.ActivityScoped
-import io.shtanko.picasagallery.view.base.BaseAdapter
-import javax.inject.Inject
+import android.graphics.Canvas;
+import android.graphics.drawable.ColorDrawable;
 
-@ActivityScoped
-class MainAdapter @Inject constructor() : BaseAdapter<AlbumType>() {
+public class BackgroundDrawable extends ColorDrawable {
 
-  init {
-    delegateAdapters.put(Config.MAIN_VIEW_TYPE_ID, MainAdapterDelegateImpl())
+  private Runnable drawRunnable;
+  private boolean allowDrawContent;
+
+  public BackgroundDrawable(int color) {
+    super(color);
   }
 
+  @Override public void setAlpha(int alpha) {
+    super.setAlpha(alpha);
+  }
+
+  @Override public void draw(Canvas canvas) {
+    super.draw(canvas);
+    if (getAlpha() != 0) {
+      if (drawRunnable != null) {
+        drawRunnable.run();
+        drawRunnable = null;
+      }
+    }
+  }
 }

@@ -17,15 +17,14 @@
 
 package io.shtanko.picasagallery.data.photo
 
-import io.reactivex.Observable
-import io.shtanko.picasagallery.data.entity.photo.Photo
+import io.reactivex.Flowable
+import io.shtanko.picasagallery.extensions.PhotosList
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class PhotosRepositoryImpl @Inject constructor() : PhotosRepository {
-  override fun photos(): Observable<List<Photo>> {
-    TODO(
-        "not implemented") //To change body of created functions use File | Settings | File Templates.
-  }
+class PhotosRepositoryImpl @Inject constructor(
+    var dataSource: PhotosDataSource) : PhotosRepository {
+
+  override fun photos(): Flowable<PhotosList> = dataSource.getPhotos()
 }

@@ -17,5 +17,9 @@
 
 package io.shtanko.picasagallery.data.photo
 
+import io.reactivex.Flowable
+import io.shtanko.picasagallery.extensions.PhotosList
+
 interface PhotosDataSource {
+  fun getPhotos(): Flowable<PhotosList>
 }

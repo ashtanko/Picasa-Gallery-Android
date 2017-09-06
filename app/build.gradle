@@ -140,7 +140,6 @@ android {
       res.srcDirs = ['src/main/res/main',
                      'src/main/res/album',
                      'src/main/res/user',
-                     'src/main/res/collection',
                      'src/main/res/about',
                      'src/main/res/auth',
                      'src/main/res/resources',

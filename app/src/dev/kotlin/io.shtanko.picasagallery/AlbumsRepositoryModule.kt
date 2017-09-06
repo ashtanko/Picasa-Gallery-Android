@@ -20,12 +20,12 @@ package io.shtanko.picasagallery
 import dagger.Binds
 import dagger.Module
 import io.shtanko.picasagallery.data.album.AlbumDataSource
-import io.shtanko.picasagallery.data.album.remote.RemoteAlbumDataSourceImpl
+import io.shtanko.picasagallery.data.album.AlbumDataSourceImpl
 import javax.inject.Singleton
 
 @Module
 abstract public class AlbumsRepositoryModule {
   @Singleton
   @Binds
-  abstract fun provideAlbumDataSource(dataSourceImpl: RemoteAlbumDataSourceImpl): AlbumDataSource
+  abstract fun provideAlbumDataSource(dataSourceImpl: AlbumDataSourceImpl): AlbumDataSource
 }

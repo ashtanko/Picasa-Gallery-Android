@@ -18,9 +18,12 @@
 package io.shtanko.picasagallery.photo
 
 import com.nhaarman.mockito_kotlin.mock
+import com.nhaarman.mockito_kotlin.verify
+import io.shtanko.picasagallery.data.entity.photo.Photo
+import io.shtanko.picasagallery.data.photo.PhotosRepositoryImpl
+import io.shtanko.picasagallery.view.delegate.ViewType
 import io.shtanko.picasagallery.view.photo.PhotosContract.View
 import io.shtanko.picasagallery.view.photo.PhotosPresenter
-import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -31,18 +34,22 @@ import org.mockito.junit.MockitoJUnitRunner
 class PhotosPresenterTest {
 
   private val view = mock<View>()
+  private var mockRepository = mock<PhotosRepositoryImpl>()
   private lateinit var presenter: PhotosPresenter
 
   @Before
   fun setUp() {
     MockitoAnnotations.initMocks(this)
-    presenter = PhotosPresenter()
+    presenter = PhotosPresenter(mockRepository)
     presenter.takeView(view)
   }
 
   @Test
-  fun first_presenterTest() {
-    Assert.assertNull(null)
+  fun on_photo_clickTest() {
+    presenter.onPhotoClick(getFakePhoto())
+    verify(view).viewPhoto(getFakePhoto())
   }
+
+  private fun getFakePhoto(): ViewType = Photo(0)
 
 }

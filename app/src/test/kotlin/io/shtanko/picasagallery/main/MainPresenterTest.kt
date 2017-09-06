@@ -51,6 +51,13 @@ class MainPresenterTest {
   }
 
   @Test
+  fun on_album_clickTest() {
+    val album = getDummyAlbumsList()[0]
+    presenter.onAlbumClick(album)
+    verify(view).viewAlbum(album)
+  }
+
+  @Test
   fun get_not_available_albumsTest() {
     presenter.getAlbums()
     verify(view).setLoadingIndicator(true)

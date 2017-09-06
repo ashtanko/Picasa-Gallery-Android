@@ -15,9 +15,16 @@
  *
  */
 
-package io.shtanko.picasagallery.data.api
+package io.shtanko.picasagallery
 
+import dagger.Binds
+import dagger.Module
+import io.shtanko.picasagallery.data.photo.PhotosDataSource
+import javax.inject.Singleton
 
-interface PicasaAuthService {
-
+@Module
+abstract class PhotosDataSourceModule {
+  @Singleton
+  @Binds
+  abstract fun providePhotosDataSource(dataSource: MockPhotosDataSourceImpl): PhotosDataSource
 }

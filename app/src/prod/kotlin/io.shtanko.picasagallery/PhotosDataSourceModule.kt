@@ -15,20 +15,17 @@
  *
  */
 
-package io.shtanko.picasagallery.data.photo.remote
+package io.shtanko.picasagallery
 
-import io.shtanko.picasagallery.data.api.ApiManager
+import dagger.Binds
+import dagger.Module
 import io.shtanko.picasagallery.data.photo.PhotosDataSource
-import javax.inject.Inject
+import io.shtanko.picasagallery.data.photo.PhotosDataSourceImpl
 import javax.inject.Singleton
 
-/**
- * {@link io.shtanko.picasagallery.data.photo.PhotosDataSource} implementation.
- */
-
-@Singleton
-class RemotePhotosDataSourceImpl @Inject constructor(
-    var apiManager: ApiManager) : PhotosDataSource {
-
-
+@Module
+abstract class PhotosDataSourceModule {
+  @Singleton
+  @Binds
+  abstract fun providePhotosDataSource(dataSource: PhotosDataSourceImpl): PhotosDataSource
 }

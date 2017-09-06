@@ -15,15 +15,18 @@
  *
  */
 
-package io.shtanko.picasagallery.data.api
+package io.shtanko.picasagallery
 
-import okhttp3.Interceptor
-import okhttp3.Interceptor.Chain
-import okhttp3.Response
+import dagger.Binds
+import dagger.Module
+import io.shtanko.picasagallery.data.photo.PhotosDataSource
+import io.shtanko.picasagallery.data.photo.PhotosDataSourceImpl
+import io.shtanko.picasagallery.data.photo.PhotosRepository
+import javax.inject.Singleton
 
-class AuthInterceptor : Interceptor {
-  override fun intercept(chain: Chain?): Response {
-    TODO(
-        "not implemented") //To change body of created functions use File | Settings | File Templates.
-  }
+@Module
+abstract class PhotosDataSourceModule {
+  @Singleton
+  @Binds
+  abstract fun providePhotosDataSource(dataSource: PhotosDataSourceImpl): PhotosDataSource
 }

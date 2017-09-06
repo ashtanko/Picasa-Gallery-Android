@@ -43,9 +43,9 @@ class MainFragment @Inject constructor() : BaseFragment(), MainContract.View {
 
   // region injection
   @Inject lateinit var presenter: MainContract.Presenter
+  @Inject lateinit var mainAdapter:MainAdapter
   // endregion
 
-  private val mainAdapter = MainAdapter()
   private var progressBar: ProgressBar? = null
   private var albumClickListener: AlbumClickListener? = null
 
@@ -82,8 +82,7 @@ class MainFragment @Inject constructor() : BaseFragment(), MainContract.View {
             activity.resources.getDimensionPixelSize(R.dimen.divider_height),
             ContextCompat.getColor(activity, R.color.divider)))
       }
-
-      mainAdapter.setOnItemClickListener(onItemClickListener)
+      mainAdapter.onItemClickListener = onItemClickListener
     }
 
     return rootView
@@ -95,8 +94,7 @@ class MainFragment @Inject constructor() : BaseFragment(), MainContract.View {
   }
 
   override fun onShowAlbums(list: AlbumsList) {
-    mainAdapter.addAlbums(list)
-    mainAdapter.notifyDataSetChanged()
+    mainAdapter.items = list
   }
 
   override fun setLoadingIndicator(active: Boolean) {

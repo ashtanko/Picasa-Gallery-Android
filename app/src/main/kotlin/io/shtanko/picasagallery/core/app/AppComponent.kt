@@ -24,14 +24,15 @@ import dagger.android.AndroidInjector
 import dagger.android.DaggerApplication
 import dagger.android.support.AndroidSupportInjectionModule
 import io.shtanko.picasagallery.AlbumsRepositoryModule
+import io.shtanko.picasagallery.PhotosDataSourceModule
 import io.shtanko.picasagallery.UserModule
 import io.shtanko.picasagallery.core.ActivityBindingModule
 import io.shtanko.picasagallery.core.executor.JobModule
 import io.shtanko.picasagallery.core.prefs.PreferencesModule
 import io.shtanko.picasagallery.data.account.AccountModule
 import io.shtanko.picasagallery.data.api.ApiModule
+import io.shtanko.picasagallery.data.photo.PhotosDataModule
 import javax.inject.Singleton
-
 
 @Singleton
 @Component(modules = arrayOf(
@@ -43,7 +44,9 @@ import javax.inject.Singleton
     AlbumsRepositoryModule::class,
     UserModule::class,
     JobModule::class,
-    AccountModule::class
+    AccountModule::class,
+    PhotosDataSourceModule::class,
+    PhotosDataModule::class
 ))
 interface AppComponent : AndroidInjector<DaggerApplication> {
 
@@ -57,5 +60,4 @@ interface AppComponent : AndroidInjector<DaggerApplication> {
 
     fun build(): AppComponent
   }
-
 }

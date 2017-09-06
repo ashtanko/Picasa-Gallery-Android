@@ -15,13 +15,11 @@
  *
  */
 
-package io.shtanko.picasagallery.data.album.remote
+package io.shtanko.picasagallery.data.album
 
 import io.reactivex.observers.DefaultObserver
 import io.shtanko.picasagallery.core.prefs.PreferenceHelper
-import io.shtanko.picasagallery.data.album.AlbumDataSource
 import io.shtanko.picasagallery.data.album.AlbumDataSource.LoadAlbumsCallback
-import io.shtanko.picasagallery.data.album.AlbumEntityMapper
 import io.shtanko.picasagallery.data.api.ApiManager
 import io.shtanko.picasagallery.data.entity.album.AlbumType
 import io.shtanko.picasagallery.data.model.UserFeedResponseEntity
@@ -29,7 +27,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class RemoteAlbumDataSourceImpl @Inject constructor(
+class AlbumDataSourceImpl @Inject constructor(
     var apiManager: ApiManager,
     var preferencesHelper: PreferenceHelper,
     var albumEntityMapper: AlbumEntityMapper) : AlbumDataSource {
