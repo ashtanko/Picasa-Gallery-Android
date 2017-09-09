@@ -19,17 +19,18 @@ package io.shtanko.picasagallery.view.photo
 
 import android.content.Context
 import android.os.Bundle
-import android.support.v4.content.ContextCompat
+import android.support.v4.content.ContextCompat.getColor
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
-import io.shtanko.picasagallery.Config.THREE_COLUMNS_GRID
+import io.shtanko.picasagallery.Config
 import io.shtanko.picasagallery.R
 import io.shtanko.picasagallery.R.color
 import io.shtanko.picasagallery.R.dimen
+import io.shtanko.picasagallery.R.layout
 import io.shtanko.picasagallery.data.entity.photo.PhotoType
 import io.shtanko.picasagallery.extensions.PhotosList
 import io.shtanko.picasagallery.util.ActivityScoped
@@ -40,7 +41,7 @@ import io.shtanko.picasagallery.view.util.OnItemClickListener
 import javax.inject.Inject
 
 @ActivityScoped
-class PhotosFragment @Inject constructor() : BaseFragment(), PhotosContract.View {
+class PhotosFragment @Inject constructor() : BaseFragment(), PhotosContract.View, OnItemClickListener {
 
   // region injection
   @Inject lateinit var presenter: PhotosContract.Presenter
@@ -59,27 +60,9 @@ class PhotosFragment @Inject constructor() : BaseFragment(), PhotosContract.View
 
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
       savedInstanceState: Bundle?): View? {
-    val rootView = inflater.inflate(R.layout.container_list_fragment, container, false)
-    presenter.takeView(this)
-    presenter.getPhotos()
-
-    val gridLayoutManager = GridLayoutManager(activity, THREE_COLUMNS_GRID)
-
-    with(rootView) {
-      progressBar = rootView.findViewById(R.id.progress_bar)
-
-      rootView.findViewById<RecyclerView>(R.id.grid).apply {
-        layoutManager = gridLayoutManager
-        adapter = photosAdapter
-
-        addItemDecoration(ItemDividerDecoration(
-            activity.resources.getDimensionPixelSize(dimen.divider_height),
-            ContextCompat.getColor(activity, color.divider)))
-      }
-
-      photosAdapter.onItemClickListener = onItemClickListener
-    }
-
+    val rootView = inflater.inflate(layout.container_list_fragment, container, false)
+    presenterActions()
+    viewActions(rootView)
     return rootView
   }
 
@@ -96,11 +79,9 @@ class PhotosFragment @Inject constructor() : BaseFragment(), PhotosContract.View
   override fun setLoadingIndicator(active: Boolean) {
   }
 
-  private val onItemClickListener = object : OnItemClickListener {
-    override fun <T> onItemClicked(model: T) {
-      if (model is PhotoType) {
-        presenter.onPhotoClick(model)
-      }
+  override fun <T> onItemClicked(model: T) {
+    if (model is PhotoType) {
+      presenter.onPhotoClick(model)
     }
   }
 
@@ -109,11 +90,36 @@ class PhotosFragment @Inject constructor() : BaseFragment(), PhotosContract.View
     photosAdapter.notifyDataSetChanged()
   }
 
+  override fun viewPhoto(model: ViewType) {
+    photoClickListener?.onPhotoClick(model)
+  }
+
   interface PhotoClickListener {
     fun onPhotoClick(model: ViewType)
   }
 
-  override fun viewPhoto(model: ViewType) {
-    photoClickListener?.onPhotoClick(model)
+  private fun presenterActions() {
+    presenter.takeView(this)
+    presenter.getPhotos()
+  }
+
+  private fun viewActions(rootView: View) {
+    val gridLayoutManager = GridLayoutManager(activity, Config.THREE_COLUMNS_GRID)
+
+    with(rootView) {
+      progressBar = rootView.findViewById(R.id.progress_bar)
+
+      rootView.findViewById<RecyclerView>(R.id.grid).apply {
+        layoutManager = gridLayoutManager
+        adapter = photosAdapter
+        addItemDecoration(
+            ItemDividerDecoration(
+                activity.resources.getDimensionPixelSize(dimen.divider_height),
+                getColor(activity, color.divider)
+            ))
+      }
+
+      photosAdapter.onItemClickListener = this@PhotosFragment
+    }
   }
 }

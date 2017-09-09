@@ -17,38 +17,60 @@
 
 package io.shtanko.picasagallery.view.photo
 
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
+import android.animation.AnimatorSet
+import android.animation.ObjectAnimator
 import android.app.Activity
 import android.content.Context
 import android.graphics.BitmapFactory
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.PixelFormat.TRANSLUCENT
-import android.os.Build
 import android.os.Build.VERSION.SDK_INT
 import android.os.Build.VERSION_CODES.LOLLIPOP
 import android.os.Build.VERSION_CODES.M
 import android.view.ActionMode
 import android.view.ActionMode.Callback
+import android.view.GestureDetector
 import android.view.Gravity.START
 import android.view.Gravity.TOP
+import android.view.MotionEvent
+import android.view.MotionEvent.ACTION_DOWN
+import android.view.MotionEvent.ACTION_MOVE
+import android.view.MotionEvent.ACTION_POINTER_DOWN
 import android.view.View
+import android.view.View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+import android.view.View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.view.WindowInsets
 import android.view.WindowManager
+import android.view.WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS
+import android.view.WindowManager.LayoutParams.FLAG_LAYOUT_INSET_DECOR
+import android.view.WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN
 import android.view.WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
 import android.view.WindowManager.LayoutParams.MATCH_PARENT
+import android.view.animation.DecelerateInterpolator
 import android.widget.FrameLayout
 import android.widget.Scroller
 import io.shtanko.picasagallery.R
 import io.shtanko.picasagallery.core.log.FileLog
+import io.shtanko.picasagallery.extensions.createFrame
 import io.shtanko.picasagallery.vendors.utils.BackgroundDrawable
 import io.shtanko.picasagallery.vendors.utils.ClippingImageView
-import io.shtanko.picasagallery.vendors.utils.LayoutHelper
 import io.shtanko.picasagallery.view.util.AndroidUtils
 import io.shtanko.picasagallery.view.widget.FrameLayoutDrawer
 
-class PhotoViewer {
+class PhotoViewer : GestureDetector.OnDoubleTapListener, GestureDetector.OnGestureListener {
 
+  private var scale = 1f
+  private var translationX: Float = 0.toFloat()
+  private var translationY: Float = 0.toFloat()
+  private var canZoom = true
+  private var imageMoveAnimation: AnimatorSet? = null
+  private var gestureDetector: GestureDetector? = null
+  private var isVisible: Boolean = false
   var parentActivity: Activity? = null
   private var scroller: Scroller? = null
   var windowView: FrameLayout? = null
@@ -59,9 +81,95 @@ class PhotoViewer {
   private var windowLayoutParams: WindowManager.LayoutParams? = null
   private val backgroundDrawable = BackgroundDrawable(0xff000000.toInt())
   private val animationValues = Array(2) { FloatArray(8) }
+  private var zooming: Boolean = false
+  private var zoomAnimation: Boolean = false
+  private var animateToScale: Float = 0.toFloat()
+  private var animateToX: Float = 0.toFloat()
+  private var animateToY: Float = 0.toFloat()
+  private var animationStartTime: Long = 0
+  private val interpolator = DecelerateInterpolator(1.5f)
+
 
   init {
     blackPaint.color = 0xff000000.toInt()
+    gestureDetector = GestureDetector(containerView?.context, this)
+    gestureDetector?.setOnDoubleTapListener(this)
+
+  }
+
+
+  override fun onDoubleTap(p0: MotionEvent?): Boolean {
+
+    println("FUCK DD")
+    if (!canZoom || scale == 1.0f && (translationY != 0.toFloat() || translationX != 0.toFloat())) {
+      return false
+    }
+
+
+
+    return true
+  }
+
+  override fun onDoubleTapEvent(p0: MotionEvent?): Boolean {
+    TODO(
+        "not implemented") //To change body of created functions use File | Settings | File Templates.
+  }
+
+  override fun onSingleTapConfirmed(p0: MotionEvent?): Boolean {
+    TODO(
+        "not implemented") //To change body of created functions use File | Settings | File Templates.
+  }
+
+
+  private fun animateTo(newScale: Float, newTx: Float, newTy: Float, isZoom: Boolean) {
+    animateTo(newScale, newTx, newTy, isZoom, 250)
+  }
+
+  private fun animateTo(newScale: Float, newTx: Float, newTy: Float, isZoom: Boolean,
+      duration: Int) {
+
+    if (scale == newScale && translationX == newTx && translationY == newTy) {
+      return
+    }
+
+    zoomAnimation = isZoom
+    animateToScale = newScale
+    animateToX = newTx
+    animateToY = newTy
+    animationStartTime = System.currentTimeMillis()
+
+    imageMoveAnimation = AnimatorSet()
+
+    imageMoveAnimation?.playTogether(
+        ObjectAnimator.ofFloat(this, "animationValue", 0.toFloat(), 1.toFloat())
+    )
+
+    imageMoveAnimation?.interpolator = interpolator
+    imageMoveAnimation?.duration = duration.toLong()
+
+    imageMoveAnimation?.addListener(object : AnimatorListenerAdapter() {
+      override fun onAnimationEnd(animation: Animator) {
+        imageMoveAnimation = null
+        containerView?.invalidate()
+      }
+    })
+    imageMoveAnimation?.start()
+  }
+
+
+  private fun updateMinMax(scale: Float) {
+
+  }
+
+  private fun onTouchEvent(ev: MotionEvent?): Boolean {
+
+    if (ev?.actionMasked == ACTION_DOWN || ev?.actionMasked == ACTION_POINTER_DOWN) {
+
+    } else if (ev?.actionMasked == ACTION_MOVE) {
+
+    }
+
+    return false
   }
 
   fun initActivity(activity: Activity) {
@@ -69,6 +177,14 @@ class PhotoViewer {
     scroller = Scroller(activity)
 
     windowView = object : FrameLayout(activity) {
+
+      override fun onInterceptTouchEvent(ev: MotionEvent?): Boolean {
+        return super.onInterceptTouchEvent(ev)
+      }
+
+      override fun onTouchEvent(event: MotionEvent?): Boolean {
+        return isVisible && this@PhotoViewer.onTouchEvent(event)
+      }
 
       override fun drawChild(canvas: Canvas?, child: View?, drawingTime: Long): Boolean {
         val result = super.drawChild(canvas, child, drawingTime)
@@ -127,11 +243,10 @@ class PhotoViewer {
         animatingImageView?.layout(x, 0, x + animatingImageView!!.measuredWidth,
             animatingImageView?.measuredHeight!!)
 
-        containerView?.layout(x, 0, x + containerView?.measuredWidth!!,
-            containerView?.measuredHeight!!)
 
         if (changed) {
-
+          translationX = 0f
+          translationY = 0f
         }
       }
 
@@ -155,17 +270,19 @@ class PhotoViewer {
     windowView?.clipChildren = true
     windowView?.isFocusable = false
 
+
     animatingImageView = ClippingImageView(activity)
     animatingImageView?.setAnimationValues(animationValues)
-    windowView?.addView(animatingImageView, LayoutHelper.createFrame(40, 40F))
+
+    windowView?.addView(animatingImageView, createFrame(40, 40F))
 
 
     containerView = FrameLayoutDrawer(activity)
     containerView?.isFocusable = false
 
-    windowView?.addView(containerView,
-        LayoutHelper.createFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT,
-            TOP or START))
+    windowView?.addView(containerView, createFrame(MATCH_PARENT, MATCH_PARENT, TOP or START))
+
+
 
     if (SDK_INT >= LOLLIPOP) {
       containerView?.fitsSystemWindows = true
@@ -178,6 +295,7 @@ class PhotoViewer {
         }
         insets.consumeSystemWindowInsets()
       })
+      containerView?.systemUiVisibility = SYSTEM_UI_FLAG_LAYOUT_STABLE or SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
     }
 
     windowLayoutParams = WindowManager.LayoutParams()
@@ -186,16 +304,45 @@ class PhotoViewer {
     windowLayoutParams?.width = MATCH_PARENT
     windowLayoutParams?.gravity = TOP or START
     windowLayoutParams?.flags = FLAG_NOT_FOCUSABLE
+    //windowLayoutParams?.type = LAST_APPLICATION_WINDOW
+
+    if (SDK_INT >= LOLLIPOP) {
+      windowLayoutParams?.flags = FLAG_LAYOUT_IN_SCREEN or
+          FLAG_LAYOUT_INSET_DECOR or
+          FLAG_NOT_FOCUSABLE or
+          FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS
+    } else {
+      windowLayoutParams?.flags = FLAG_NOT_FOCUSABLE
+    }
+
   }
 
   fun openPhoto() {
+    isVisible = true
     val wm = parentActivity?.getSystemService(Context.WINDOW_SERVICE) as WindowManager
     wm.addView(windowView, windowLayoutParams)
 
+    animatingImageView?.visibility = VISIBLE
+
+    animatingImageView?.alpha = 1.0f
+    animatingImageView?.pivotX = 0.0f
+    animatingImageView?.pivotY = 0.0f
+
     val bitmap = BitmapFactory.decodeResource(parentActivity?.resources,
         R.drawable.image_placeholder)
+
+    val layoutParams = animatingImageView?.layoutParams
+    layoutParams?.width = bitmap.width
+    layoutParams?.height = bitmap.height
+    animatingImageView?.layoutParams = layoutParams
+
+
+
     animatingImageView?.setImageBitmap(bitmap)
+
+
   }
+
 
   private fun destroyPhotoViewer() {
     if (windowView?.parent != null) {
@@ -221,6 +368,36 @@ class PhotoViewer {
         FileLog.e(e)
       }
     }
+  }
+
+  override fun onShowPress(p0: MotionEvent?) {
+    TODO(
+        "not implemented") //To change body of created functions use File | Settings | File Templates.
+  }
+
+  override fun onSingleTapUp(p0: MotionEvent?): Boolean {
+    TODO(
+        "not implemented") //To change body of created functions use File | Settings | File Templates.
+  }
+
+  override fun onDown(p0: MotionEvent?): Boolean {
+    TODO(
+        "not implemented") //To change body of created functions use File | Settings | File Templates.
+  }
+
+  override fun onFling(p0: MotionEvent?, p1: MotionEvent?, p2: Float, p3: Float): Boolean {
+    TODO(
+        "not implemented") //To change body of created functions use File | Settings | File Templates.
+  }
+
+  override fun onScroll(p0: MotionEvent?, p1: MotionEvent?, p2: Float, p3: Float): Boolean {
+    TODO(
+        "not implemented") //To change body of created functions use File | Settings | File Templates.
+  }
+
+  override fun onLongPress(p0: MotionEvent?) {
+    TODO(
+        "not implemented") //To change body of created functions use File | Settings | File Templates.
   }
 
 }

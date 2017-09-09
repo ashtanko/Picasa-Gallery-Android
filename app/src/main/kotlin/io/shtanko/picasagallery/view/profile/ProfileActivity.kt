@@ -20,7 +20,6 @@ package io.shtanko.picasagallery.view.profile
 import android.os.Bundle
 import dagger.Lazy
 import io.shtanko.picasagallery.R
-import io.shtanko.picasagallery.util.ActivityUtils
 import io.shtanko.picasagallery.view.base.BaseActivity
 import javax.inject.Inject
 
@@ -33,15 +32,6 @@ class ProfileActivity : BaseActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.container_activity)
-    addFragment()
-  }
-
-  private fun addFragment() {
-    var fragment = supportFragmentManager.findFragmentById(
-        R.id.content_frame) as ProfileFragment?
-    if (fragment == null) {
-      fragment = fragmentProvider.get()
-      ActivityUtils.addFragmentToActivity(supportFragmentManager, fragment, R.id.content_frame)
-    }
+    addFragment<ProfileFragment>(R.id.content_frame, fragmentProvider)
   }
 }

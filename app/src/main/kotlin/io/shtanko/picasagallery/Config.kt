@@ -17,6 +17,10 @@
 
 package io.shtanko.picasagallery
 
+import com.google.android.gms.common.Scopes
+import java.util.ArrayList
+import java.util.Arrays
+
 object Config {
 
   val ACTIVE_ACCOUNT_PREF = "chosen_account_pref"
@@ -45,5 +49,15 @@ object Config {
   val MAIN_VIEW_TYPE_ID = 0
   val USER_VIEW_TYPE_ID = 1
   val PHOTO_VIEW_TYPE_ID = 2
+
+  val LOG_QUEUE_NAME = "LOG_QUEUE"
+  val LOG_FILE_FORMAT_NAME = ".log"
+  val NET_LOG_FILENAME = "_net$LOG_FILE_FORMAT_NAME"
+
+  val AUTH_SCOPES = ArrayList(Arrays.asList(
+      Scopes.PLUS_ME,
+      Scopes.PROFILE,
+      Scopes.DRIVE_APPFOLDER,
+      "https://www.googleapis.com/auth/plus.profile.emails.read"))
 
 }

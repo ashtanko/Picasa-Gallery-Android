@@ -32,6 +32,7 @@ import io.shtanko.picasagallery.core.prefs.PreferencesModule
 import io.shtanko.picasagallery.data.account.AccountModule
 import io.shtanko.picasagallery.data.api.ApiModule
 import io.shtanko.picasagallery.data.photo.PhotosDataModule
+import io.shtanko.picasagallery.view.auth.GoogleApiModule
 import javax.inject.Singleton
 
 @Singleton
@@ -46,7 +47,8 @@ import javax.inject.Singleton
     JobModule::class,
     AccountModule::class,
     PhotosDataSourceModule::class,
-    PhotosDataModule::class
+    PhotosDataModule::class,
+    GoogleApiModule::class
 ))
 interface AppComponent : AndroidInjector<DaggerApplication> {
 

@@ -20,6 +20,16 @@ package io.shtanko.picasagallery.extensions
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.FrameLayout
+import io.shtanko.picasagallery.view.util.AndroidUtils
+
+private fun getSize(size: Float): Int = (if (size < 0) size.toInt() else AndroidUtils.dp(size))
 
 fun ViewGroup.inflate(layoutRes: Int): View =
     LayoutInflater.from(context).inflate(layoutRes, this, false)
+
+fun createFrame(width: Int, height: Int, gravity: Int): FrameLayout.LayoutParams =
+    FrameLayout.LayoutParams(getSize(width.toFloat()), getSize(height.toFloat()), gravity)
+
+fun createFrame(width: Int, height: Float): FrameLayout.LayoutParams =
+    FrameLayout.LayoutParams(getSize(width.toFloat()), getSize(height))

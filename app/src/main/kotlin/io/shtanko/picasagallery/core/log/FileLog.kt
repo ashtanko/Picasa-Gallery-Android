@@ -18,7 +18,12 @@
 package io.shtanko.picasagallery.core.log
 
 import android.util.Log
+import android.util.Log.e
 import io.shtanko.picasagallery.Config
+import io.shtanko.picasagallery.Config.LOGS_PATH
+import io.shtanko.picasagallery.Config.LOG_FILE_FORMAT_NAME
+import io.shtanko.picasagallery.Config.LOG_QUEUE_NAME
+import io.shtanko.picasagallery.Config.NET_LOG_FILENAME
 import io.shtanko.picasagallery.PicasaApplication
 import io.shtanko.picasagallery.core.DispatchQueue
 import io.shtanko.picasagallery.core.log.LogType.DEBUG
@@ -61,15 +66,15 @@ object FileLog : Loggable {
   init {
     try {
       val sdCard = PicasaApplication.app.applicationContext.getExternalFilesDir(null)
-      val dir = File(sdCard.absolutePath + Config.LOGS_PATH)
+      val dir = File(sdCard.absolutePath + LOGS_PATH)
       dir.mkdirs()
-      currentFile = File(dir, dateFormat.format(System.currentTimeMillis()) + ".txt")
+      currentFile = File(dir, dateFormat.format(System.currentTimeMillis()) + LOG_FILE_FORMAT_NAME)
     } catch (e: Exception) {
       e.printStackTrace()
     }
 
     try {
-      logQueue = DispatchQueue("logQueue")
+      logQueue = DispatchQueue(LOG_QUEUE_NAME)
       currentFile?.createNewFile()
       val stream = FileOutputStream(currentFile)
       streamWriter = OutputStreamWriter(stream)
@@ -84,31 +89,28 @@ object FileLog : Loggable {
   override fun getLogFile(): String {
     try {
       val sdCard = PicasaApplication.app.applicationContext.getExternalFilesDir(null) ?: return ""
-      val dir = File(sdCard.absolutePath + Config.LOGS_PATH)
+      val dir = File(sdCard.absolutePath + LOGS_PATH)
       dir.mkdirs()
       getInstance()?.networkFile = File(dir,
-          getInstance()?.dateFormat?.format(System.currentTimeMillis()) + "_net.txt")
+          getInstance()?.dateFormat?.format(System.currentTimeMillis()) + NET_LOG_FILENAME)
       return getInstance()?.networkFile?.absolutePath.toString()
     } catch (e: Exception) {
-
+      e(e)
     }
     return ""
   }
 
   override fun e(message: String, t: Throwable) {
-    Log.e(Config.APPLICATION_LOG_TAG, message, t)
-    if (getInstance()?.streamWriter != null) {
-      getInstance()?.logQueue?.postRunnable(Runnable {
-        try {
-          getInstance()?.streamWriter?.write(getInstance()?.dateFormat?.format(
-              System.currentTimeMillis()) + " ${LogType.ERROR.name}/${Config.APPLICATION_LOG_TAG}: " + message + "\n")
-          getInstance()?.streamWriter?.write(t.toString())
-          getInstance()?.streamWriter?.flush()
-        } catch (e: Exception) {
-          e.printStackTrace()
-        }
-      })
-    }
+    e(Config.APPLICATION_LOG_TAG, message, t)
+    getInstance()?.logQueue?.postRunnable(Runnable {
+      try {
+        writeToError(message)
+        getInstance()?.streamWriter?.write(t.toString())
+        getInstance()?.streamWriter?.flush()
+      } catch (e: Exception) {
+        e.printStackTrace()
+      }
+    })
   }
 
   override fun e(message: String) {
@@ -120,12 +122,10 @@ object FileLog : Loggable {
     if (getInstance()?.streamWriter != null) {
       getInstance()?.logQueue?.postRunnable(Runnable {
         try {
-          getInstance()?.streamWriter?.write(getInstance()?.dateFormat?.format(
-              System.currentTimeMillis()) + " ${LogType.ERROR.name}/${Config.APPLICATION_LOG_TAG}: " + message + "\n")
+          writeToError(message)
           val stack = message.stackTrace
           for (a in stack.indices) {
-            getInstance()?.streamWriter?.write(getInstance()?.dateFormat?.format(
-                System.currentTimeMillis()) + " ${LogType.ERROR.name}/${Config.APPLICATION_LOG_TAG}: " + stack[a] + "\n")
+            writeToError(stack[a])
           }
           getInstance()?.streamWriter?.flush()
         } catch (e: Exception) {
@@ -141,44 +141,53 @@ object FileLog : Loggable {
     processLog(DEBUG, message)
   }
 
+  override fun cleanupLogs() {
+    val sdCard = PicasaApplication.app.applicationContext.getExternalFilesDir(null)
+    val dir = File(sdCard.absolutePath + LOGS_PATH)
+    val files = dir.listFiles()
+    files
+        ?.indices
+        ?.asSequence()
+        ?.map { files[it] }
+        ?.filter {
+          !(getInstance()
+              ?.currentFile != null && it.absolutePath == getInstance()
+              ?.currentFile?.absolutePath) && !(getInstance()
+              ?.networkFile != null && it.absolutePath == getInstance()
+              ?.networkFile?.absolutePath)
+        }
+        ?.forEach { it.delete() }
+  }
+
   private fun processLog(type: LogType, message: String) {
     when (type) {
       DEBUG -> {
         Log.d(Config.APPLICATION_LOG_TAG, message)
       }
       ERROR -> {
-        Log.e(Config.APPLICATION_LOG_TAG, message)
+        e(Config.APPLICATION_LOG_TAG, message)
       }
     }
-
-    if (getInstance()?.streamWriter != null) {
-      getInstance()?.logQueue?.postRunnable(Runnable {
-        try {
-          getInstance()?.streamWriter?.write(getInstance()?.dateFormat?.format(
-              System.currentTimeMillis()) + " ${type.name}/${Config.APPLICATION_LOG_TAG}: " + message + "\n")
-          getInstance()?.streamWriter?.flush()
-        } catch (e: Exception) {
-          e.printStackTrace()
-        }
-      })
-    }
-  }
-
-  override fun cleanupLogs() {
-    val sdCard = PicasaApplication.app.applicationContext.getExternalFilesDir(null)
-    val dir = File(sdCard.absolutePath + Config.LOGS_PATH)
-    val files = dir.listFiles()
-    if (files != null) {
-      for (a in files.indices) {
-        val file = files[a]
-        if (getInstance()?.currentFile != null && file.absolutePath == getInstance()?.currentFile?.absolutePath) {
-          continue
-        }
-        if (getInstance()?.networkFile != null && file.absolutePath == getInstance()?.networkFile?.absolutePath) {
-          continue
-        }
-        file.delete()
+    getInstance()?.logQueue?.postRunnable(Runnable {
+      try {
+        write(LogType.ERROR, message)
+        getInstance()?.streamWriter?.flush()
+      } catch (e: Exception) {
+        e.printStackTrace()
       }
-    }
+    })
   }
+
+
+  private fun writeToError(message: Any?) {
+    write(LogType.ERROR, message)
+  }
+
+  private fun write(type: LogType, message: Any?) {
+    getInstance()?.streamWriter?.write(getInstance()?.dateFormat?.format(
+        System.currentTimeMillis()) + formatFileName(type, message))
+  }
+
+  private fun formatFileName(type: LogType, message: Any?): String =
+      " ${type.name}/${Config.APPLICATION_LOG_TAG}: " + message + "\n"
 }

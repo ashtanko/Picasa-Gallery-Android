@@ -24,6 +24,8 @@ import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.ProgressBar
 import io.shtanko.picasagallery.Config.TWO_COLUMNS_GRID
@@ -39,11 +41,11 @@ import io.shtanko.picasagallery.view.util.OnItemClickListener
 import javax.inject.Inject
 
 @ActivityScoped
-class MainFragment @Inject constructor() : BaseFragment(), MainContract.View {
+class MainFragment @Inject constructor() : BaseFragment(), MainContract.View, OnItemClickListener {
 
   // region injection
   @Inject lateinit var presenter: MainContract.Presenter
-  @Inject lateinit var mainAdapter:MainAdapter
+  @Inject lateinit var mainAdapter: MainAdapter
   // endregion
 
   private var progressBar: ProgressBar? = null
@@ -70,7 +72,6 @@ class MainFragment @Inject constructor() : BaseFragment(), MainContract.View {
     val gridLayoutManager = GridLayoutManager(activity, TWO_COLUMNS_GRID)
 
     with(rootView) {
-
       progressBar = rootView.findViewById<ProgressBar>(R.id.progress_bar)
 
       rootView.findViewById<RecyclerView>(R.id.grid).apply {
@@ -82,7 +83,7 @@ class MainFragment @Inject constructor() : BaseFragment(), MainContract.View {
             activity.resources.getDimensionPixelSize(R.dimen.divider_height),
             ContextCompat.getColor(activity, R.color.divider)))
       }
-      mainAdapter.onItemClickListener = onItemClickListener
+      mainAdapter.onItemClickListener = this@MainFragment
     }
 
     return rootView
@@ -98,18 +99,16 @@ class MainFragment @Inject constructor() : BaseFragment(), MainContract.View {
   }
 
   override fun setLoadingIndicator(active: Boolean) {
-    progressBar?.visibility = if (active) View.VISIBLE else View.GONE
+    progressBar?.visibility = if (active) VISIBLE else GONE
   }
 
   override fun onShowError(message: String) {
     shortToast(message)
   }
 
-  private val onItemClickListener = object : OnItemClickListener {
-    override fun <T> onItemClicked(model: T) {
-      if (model is AlbumType) {
-        presenter.onAlbumClick(model)
-      }
+  override fun <T> onItemClicked(model: T) {
+    if (model is AlbumType) {
+      presenter.onAlbumClick(model)
     }
   }
 

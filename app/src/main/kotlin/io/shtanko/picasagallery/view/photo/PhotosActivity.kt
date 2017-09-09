@@ -47,13 +47,6 @@ class PhotosActivity : BaseActivity(), PhotoClickListener {
 
   override fun onDestroy() {
     super.onDestroy()
-  }
-
-  override fun onBackPressed() {
-    if(viewer.windowView != null){
-      viewer.closePhoto()
-    }else {
-      this.close()
-    }
+    viewer.closePhoto()
   }
 }

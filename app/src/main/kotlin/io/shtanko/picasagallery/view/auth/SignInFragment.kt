@@ -28,18 +28,15 @@ import com.google.android.gms.auth.api.Auth
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.auth.api.signin.GoogleSignInResult
 import com.google.android.gms.common.ConnectionResult
-import com.google.android.gms.common.Scopes
 import com.google.android.gms.common.SignInButton
+import com.google.android.gms.common.SignInButton.SIZE_STANDARD
 import com.google.android.gms.common.api.GoogleApiClient
-import com.google.android.gms.common.api.Scope
 import dagger.android.support.DaggerFragment
 import io.shtanko.picasagallery.R
 import io.shtanko.picasagallery.data.entity.user.User
 import io.shtanko.picasagallery.extensions.close
 import io.shtanko.picasagallery.extensions.getSafeContext
 import io.shtanko.picasagallery.view.main.MainActivity
-import java.util.ArrayList
-import java.util.Arrays
 import javax.inject.Inject
 
 class SignInFragment @Inject constructor() : DaggerFragment(),
@@ -48,13 +45,12 @@ class SignInFragment @Inject constructor() : DaggerFragment(),
     GoogleApiClient.ConnectionCallbacks {
 
   @Inject lateinit var presenter: SignInContract.Presenter
+  @Inject lateinit var googleSignInOptions: GoogleSignInOptions
   lateinit var rootView: View
-
   private var googleApiClient: GoogleApiClient? = null
 
   companion object {
     private val SIGN_IN_RESULT = 1
-    val SIGN_IN_REQUEST_CODE = 1111
   }
 
   var progressBar: ProgressBar? = null
@@ -64,17 +60,11 @@ class SignInFragment @Inject constructor() : DaggerFragment(),
         Toast.LENGTH_SHORT).show()
   }
 
-  override fun onConnected(p0: Bundle?) {
-    with(rootView.findViewById<SignInButton>(R.id.sign_in_button)) {
-      isEnabled = true
-    }
-  }
+  override fun onConnected(p0: Bundle?) =
+      enableButton(true)
 
-  override fun onConnectionSuspended(p0: Int) {
-    with(rootView.findViewById<SignInButton>(R.id.sign_in_button)) {
-      isEnabled = false
-    }
-  }
+  override fun onConnectionSuspended(p0: Int) =
+      enableButton(false)
 
   override fun onResume() {
     super.onResume()
@@ -97,27 +87,8 @@ class SignInFragment @Inject constructor() : DaggerFragment(),
       progressBar = rootView.findViewById<ProgressBar>(R.id.progress_bar)
     }
 
-    // Auth scopes we need
-    val AUTH_SCOPES = ArrayList(Arrays.asList(
-        Scopes.PLUS_ME,
-        Scopes.PROFILE,
-        Scopes.DRIVE_APPFOLDER,
-        "https://www.googleapis.com/auth/plus.profile.emails.read"))
-
-    /** List of OAuth scopes to be requested from the Google sign-in API  */
-    fun getAuthScopes(): List<String> = AUTH_SCOPES
-
-    val gsoBuilder = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-
-    for (scope in getAuthScopes()) {
-      gsoBuilder.requestScopes(Scope(scope))
-    }
-
-    val gso = gsoBuilder.requestEmail()
-        .build()
-
     googleApiClient = GoogleApiClient.Builder(getSafeContext())
-        .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
+        .addApi(Auth.GOOGLE_SIGN_IN_API, googleSignInOptions)
         .addConnectionCallbacks(this)
         .addOnConnectionFailedListener(this)
         .build()
@@ -169,10 +140,16 @@ class SignInFragment @Inject constructor() : DaggerFragment(),
 
   private fun addSignInButton() {
     with(rootView.findViewById<SignInButton>(R.id.sign_in_button)) {
-      setSize(SignInButton.SIZE_STANDARD)
+      setSize(SIZE_STANDARD)
       setOnClickListener {
         login()
       }
+    }
+  }
+
+  private fun enableButton(enable: Boolean) {
+    with(rootView.findViewById<SignInButton>(R.id.sign_in_button)) {
+      isEnabled = enable
     }
   }
 }

@@ -28,8 +28,7 @@ class PhotosAdapterDelegateImpl : ViewTypeAdapterDelegate {
 
   override fun onCreateViewHolder(parent: ViewGroup?): ViewHolder {
     val view = parent?.inflate(R.layout.album_item)
-    val viewHolder = PhotosViewHolder(view)
-    return viewHolder
+    return PhotosViewHolder(view)
   }
 
   override fun onBindViewHolder(holder: ViewHolder, item: ViewType) {
