@@ -15,22 +15,8 @@
  *
  */
 
-package io.shtanko.picasagallery.core.executor
+package io.shtanko.picasagallery.data.user
 
-import java.util.concurrent.LinkedBlockingQueue
-import java.util.concurrent.ThreadPoolExecutor
-import java.util.concurrent.TimeUnit
-import javax.inject.Inject
-import javax.inject.Singleton
-
-@Singleton
-class JobExecutor @Inject constructor() : ThreadExecutor {
-
-  private var threadPoolExecutor: ThreadPoolExecutor = ThreadPoolExecutor(3, 5, 10, TimeUnit.SECONDS,
-      LinkedBlockingQueue<Runnable>(), JobThreadFactory)
-
-  override fun execute(runnable: Runnable?) {
-    threadPoolExecutor.execute(runnable)
-  }
-
+class UserException(override val message: String, cause: Throwable?) : Throwable(message, cause) {
+  constructor(message: String) : this(message, null)
 }

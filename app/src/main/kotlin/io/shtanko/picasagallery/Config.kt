@@ -35,7 +35,7 @@ object Config {
   val SAVED_EMAIL_PREF = "user_email_pref"
   val SAVED_ID_PREF = "user_id_pref"
   val PICASA_BASE_URL = "https://picasaweb.google.com/data"
-  val PICASA_BASE_API_URL = "$PICASA_BASE_URL/feed/api/"
+  val PICASA_BASE_API_URL = "$PICASA_BASE_URL/feed/api"
 
   val LOGS_PATH = "/logs"
   val LOGS_DATE_FORMAT = "dd_MM_yyyy_HH_mm_ss"
@@ -59,5 +59,9 @@ object Config {
       Scopes.PROFILE,
       Scopes.DRIVE_APPFOLDER,
       "https://www.googleapis.com/auth/plus.profile.emails.read"))
+
+  internal fun configureUserPath(id: String): String = "user/$id?alt=json"
+  internal fun configureAlbumsPath(userId: String,
+      albumId: String) = "user/$userId/albumid/$albumId?alt=json"
 
 }

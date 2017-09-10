@@ -15,22 +15,12 @@
  *
  */
 
-package io.shtanko.picasagallery.core.executor
+package io.shtanko.picasagallery.data.model
 
-import java.util.concurrent.LinkedBlockingQueue
-import java.util.concurrent.ThreadPoolExecutor
-import java.util.concurrent.TimeUnit
-import javax.inject.Inject
-import javax.inject.Singleton
+import com.google.gson.annotations.SerializedName
 
-@Singleton
-class JobExecutor @Inject constructor() : ThreadExecutor {
-
-  private var threadPoolExecutor: ThreadPoolExecutor = ThreadPoolExecutor(3, 5, 10, TimeUnit.SECONDS,
-      LinkedBlockingQueue<Runnable>(), JobThreadFactory)
-
-  override fun execute(runnable: Runnable?) {
-    threadPoolExecutor.execute(runnable)
-  }
-
-}
+data class MediaContent(
+    @SerializedName("url") val url: String,
+    @SerializedName("type") val type: String,
+    @SerializedName("medium") val medium: String
+)

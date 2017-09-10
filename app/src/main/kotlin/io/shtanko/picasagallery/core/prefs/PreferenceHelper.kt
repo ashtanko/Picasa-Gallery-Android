@@ -19,6 +19,8 @@ package io.shtanko.picasagallery.core.prefs
 
 import android.content.SharedPreferences
 import io.shtanko.picasagallery.Config
+import io.shtanko.picasagallery.Config.SAVED_PERSON_NAME_PREF
+import io.shtanko.picasagallery.Config.USER_REFUSED_SIGN_IN_PREF
 import io.shtanko.picasagallery.data.entity.user.User
 import javax.inject.Singleton
 
@@ -26,17 +28,19 @@ import javax.inject.Singleton
 class PreferenceHelper constructor(val sharedPreferences: SharedPreferences) {
 
   fun markUserRefusedSignIn(refused: Boolean) {
-    sharedPreferences.edit().putBoolean(Config.USER_REFUSED_SIGN_IN_PREF, refused).apply()
+    sharedPreferences.edit().putBoolean(USER_REFUSED_SIGN_IN_PREF, refused).apply()
   }
 
   fun saveUserData(user: User) {
-    sharedPreferences.edit().putString(Config.SAVED_PERSON_NAME_PREF, user.personName).apply()
-    sharedPreferences.edit().putString(Config.SAVED_PERSON_GIVEN_NAME_PREF,
-        user.personGivenName).apply()
-    sharedPreferences.edit().putString(Config.SAVED_PERSON_FAMILY_NAME_PREF,
-        user.personFamilyName).apply()
-    sharedPreferences.edit().putString(Config.SAVED_EMAIL_PREF, user.personEmail).apply()
-    sharedPreferences.edit().putString(Config.SAVED_ID_PREF, user.personId).apply()
+    sharedPreferences.run {
+      edit().putString(SAVED_PERSON_NAME_PREF, user.personName).apply()
+      edit().putString(Config.SAVED_PERSON_GIVEN_NAME_PREF,
+          user.personGivenName).apply()
+      edit().putString(Config.SAVED_PERSON_FAMILY_NAME_PREF,
+          user.personFamilyName).apply()
+      edit().putString(Config.SAVED_EMAIL_PREF, user.personEmail).apply()
+      edit().putString(Config.SAVED_ID_PREF, user.personId).apply()
+    }
   }
 
 
@@ -51,10 +55,8 @@ class PreferenceHelper constructor(val sharedPreferences: SharedPreferences) {
     return user
   }
 
-  fun saveToken(token: String) {
-    sharedPreferences.edit().putString(Config.SAVED_TOKEN_PREF, token).apply()
-
-  }
+  fun saveToken(token: String) = sharedPreferences.edit().putString(Config.SAVED_TOKEN_PREF,
+      token).apply()
 
   fun getToken(): String = sharedPreferences.getString(Config.SAVED_TOKEN_PREF, "")
 

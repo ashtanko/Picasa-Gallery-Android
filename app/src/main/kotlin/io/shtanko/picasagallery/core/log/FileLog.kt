@@ -17,9 +17,10 @@
 
 package io.shtanko.picasagallery.core.log
 
-import android.util.Log
+import android.util.Log.d
 import android.util.Log.e
 import io.shtanko.picasagallery.Config
+import io.shtanko.picasagallery.Config.APPLICATION_LOG_TAG
 import io.shtanko.picasagallery.Config.LOGS_PATH
 import io.shtanko.picasagallery.Config.LOG_FILE_FORMAT_NAME
 import io.shtanko.picasagallery.Config.LOG_QUEUE_NAME
@@ -101,7 +102,7 @@ object FileLog : Loggable {
   }
 
   override fun e(message: String, t: Throwable) {
-    e(Config.APPLICATION_LOG_TAG, message, t)
+    e(APPLICATION_LOG_TAG, message, t)
     getInstance()?.logQueue?.postRunnable(Runnable {
       try {
         writeToError(message)
@@ -119,22 +120,16 @@ object FileLog : Loggable {
 
   override fun e(message: Throwable) {
     message.printStackTrace()
-    if (getInstance()?.streamWriter != null) {
-      getInstance()?.logQueue?.postRunnable(Runnable {
-        try {
-          writeToError(message)
-          val stack = message.stackTrace
-          for (a in stack.indices) {
-            writeToError(stack[a])
-          }
-          getInstance()?.streamWriter?.flush()
-        } catch (e: Exception) {
-          e.printStackTrace()
-        }
-      })
-    } else {
-      message.printStackTrace()
-    }
+    if (getInstance()?.streamWriter != null) getInstance()?.logQueue?.postRunnable(Runnable {
+      try {
+        writeToError(message)
+        val stack = message.stackTrace
+        stack.indices.forEach { a -> writeToError(stack[a]) }
+        getInstance()?.streamWriter?.flush()
+      } catch (e: Exception) {
+        e.printStackTrace()
+      }
+    }) else message.printStackTrace()
   }
 
   override fun d(message: String) {
@@ -161,12 +156,8 @@ object FileLog : Loggable {
 
   private fun processLog(type: LogType, message: String) {
     when (type) {
-      DEBUG -> {
-        Log.d(Config.APPLICATION_LOG_TAG, message)
-      }
-      ERROR -> {
-        e(Config.APPLICATION_LOG_TAG, message)
-      }
+      DEBUG -> d(APPLICATION_LOG_TAG, message)
+      ERROR -> e(APPLICATION_LOG_TAG, message)
     }
     getInstance()?.logQueue?.postRunnable(Runnable {
       try {
@@ -189,5 +180,5 @@ object FileLog : Loggable {
   }
 
   private fun formatFileName(type: LogType, message: Any?): String =
-      " ${type.name}/${Config.APPLICATION_LOG_TAG}: " + message + "\n"
+      " ${type.name}/${APPLICATION_LOG_TAG}: " + message + "\n"
 }

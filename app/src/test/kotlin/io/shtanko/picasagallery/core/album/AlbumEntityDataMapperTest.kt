@@ -21,6 +21,9 @@ import com.nhaarman.mockito_kotlin.mock
 import io.shtanko.picasagallery.data.album.AlbumEntityMapper
 import io.shtanko.picasagallery.data.entity.album.Album
 import io.shtanko.picasagallery.data.model.AlbumEntity
+import io.shtanko.picasagallery.data.model.MediaAndGroups
+import io.shtanko.picasagallery.data.model.MediaContent
+import io.shtanko.picasagallery.data.model.SingleIntegerElementEntity
 import io.shtanko.picasagallery.data.model.SingleStringElementEntity
 import io.shtanko.picasagallery.data.model.TitleTypeEntity
 import org.hamcrest.CoreMatchers.`is`
@@ -36,6 +39,14 @@ class AlbumEntityDataMapperTest {
 
   private val FAKE_ALBUM_ID = "0"
   private val FAKE_ALBUM_TITLE = "My awesome summer"
+  private val FAKE_ALBUM_PUBLISHED = "0"
+  private val FAKE_ALBUM_UPDATED = "0"
+  private val FAKE_ALBUM_SUMMARY = "0"
+  private val FAKE_ALBUM_RIGHTS = "0"
+
+  private val FAKE_ALBUM_URL = "0"
+  private val FAKE_ALBUM_TYPE = "0"
+  private val FAKE_ALBUM_MEDIUM = "0"
   private var albumEntityDataMapper: AlbumEntityMapper? = null
 
   @Before
@@ -71,6 +82,15 @@ class AlbumEntityDataMapperTest {
   private fun createFakeAlbumEntity(): AlbumEntity {
     val fakeAlbumId = SingleStringElementEntity(FAKE_ALBUM_ID)
     val fakeTitle = TitleTypeEntity(FAKE_ALBUM_TITLE, "")
-    return AlbumEntity(fakeAlbumId, fakeTitle)
+    val fakePublished = SingleStringElementEntity(FAKE_ALBUM_PUBLISHED)
+    val fakeUpdated = SingleStringElementEntity(FAKE_ALBUM_UPDATED)
+    val fakeSummary = TitleTypeEntity(FAKE_ALBUM_SUMMARY, "")
+    val fakeRights = TitleTypeEntity(FAKE_ALBUM_RIGHTS, "")
+
+    val mediaContent = listOf(MediaContent(FAKE_ALBUM_URL, FAKE_ALBUM_TYPE, FAKE_ALBUM_MEDIUM))
+    val credit = listOf(SingleIntegerElementEntity(0))
+    val media = MediaAndGroups(mediaContent, credit)
+    return AlbumEntity(fakeAlbumId, fakePublished, fakeUpdated, fakeTitle, fakeSummary, fakeRights,
+        media)
   }
 }

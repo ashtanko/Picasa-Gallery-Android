@@ -21,6 +21,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'com.github.kt3k.coveralls'
+apply plugin: 'org.sonarqube'
 // endregion
 
 // region CONSTANTS
@@ -200,4 +201,5 @@ kapt {
 
 apply from: 'dependencies.gradle'
 apply from: '../jacoco.gradle'
+apply from: '../sonarqube.gradle'
 apply plugin: 'com.google.gms.google-services'

@@ -35,11 +35,8 @@ class DispatchQueue constructor(threadName: String) : Thread() {
   fun sendMessage(msg: Message, delay: Int) {
     try {
       syncLatch.await()
-      if (delay <= 0) {
-        handler?.sendMessage(msg)
-      } else {
-        handler?.sendMessageDelayed(msg, delay.toLong())
-      }
+      if (delay <= 0) handler?.sendMessage(msg) else handler?.sendMessageDelayed(msg,
+          delay.toLong())
     } catch (e: Exception) {
       FileLog.e(e)
     }
@@ -61,11 +58,7 @@ class DispatchQueue constructor(threadName: String) : Thread() {
   private fun postRunnable(runnable: Runnable, delay: Long) {
     try {
       syncLatch.await()
-      if (delay <= 0) {
-        handler?.post(runnable)
-      } else {
-        handler?.postDelayed(runnable, delay)
-      }
+      if (delay <= 0) handler?.post(runnable) else handler?.postDelayed(runnable, delay)
     } catch (e: Exception) {
       FileLog.e(e)
     }
@@ -88,9 +81,7 @@ class DispatchQueue constructor(threadName: String) : Thread() {
     super.run()
     Looper.prepare()
     handler = object : Handler() {
-      override fun handleMessage(msg: Message) {
-        this@DispatchQueue.handleMessage(msg)
-      }
+      override fun handleMessage(msg: Message) = this@DispatchQueue.handleMessage(msg)
     }
     syncLatch.countDown()
     Looper.loop()

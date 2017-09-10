@@ -27,7 +27,7 @@ import javax.inject.Singleton
 class AlbumEntityMapper @Inject constructor() : SimpleMapper<AlbumEntity, Album> {
 
   override fun transform(from: AlbumEntity?): Album = Album(
-      from?.title?.body, "")
+      from?.title?.body, from?.media?.content?.get(0)?.url)
 
   override fun transform(fromCollection: Collection<AlbumEntity>): List<Album> =
       fromCollection.mapTo(ArrayList<Album>(20)) { transform(it) }

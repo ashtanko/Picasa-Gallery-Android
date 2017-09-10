@@ -20,6 +20,11 @@ package io.shtanko.picasagallery.data.model
 import com.google.gson.annotations.SerializedName
 
 data class AlbumEntity(
-    @SerializedName("id") var id: SingleStringElementEntity,
-    @SerializedName("title") var title: TitleTypeEntity
+    @SerializedName("id") val id: SingleStringElementEntity,
+    @SerializedName("published") val published: SingleStringElementEntity,
+    @SerializedName("updated") val updated: SingleStringElementEntity,
+    @SerializedName("title") val title: TitleTypeEntity,
+    @SerializedName("summary") val summary: TitleTypeEntity,
+    @SerializedName("rights") val rights: TitleTypeEntity,
+    @SerializedName("media"+"$"+"group") val media: MediaAndGroups
 )

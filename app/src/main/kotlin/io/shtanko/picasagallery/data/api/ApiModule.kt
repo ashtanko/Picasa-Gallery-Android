@@ -17,26 +17,14 @@
 
 package io.shtanko.picasagallery.data.api
 
-import android.app.Application
+import com.github.kittinunf.fuel.core.FuelManager
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
-import io.reactivex.schedulers.Schedulers
 import io.shtanko.picasagallery.Config
-import io.shtanko.picasagallery.core.prefs.PreferenceHelper
 import io.shtanko.picasagallery.core.prefs.PreferencesModule
-import okhttp3.Cache
-import okhttp3.Interceptor
-import okhttp3.OkHttpClient
-import okhttp3.logging.HttpLoggingInterceptor
-import retrofit2.CallAdapter
-import retrofit2.Converter.Factory
-import retrofit2.Retrofit
-import retrofit2.Retrofit.Builder
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
-import retrofit2.converter.gson.GsonConverterFactory
 
 @Module(includes = arrayOf(PreferencesModule::class))
 class ApiModule {
@@ -50,56 +38,9 @@ class ApiModule {
   }
 
   @Provides
-  fun provideOkHttpCache(app: Application): Cache {
-    val cacheSize = 10 * 1024 * 1024
-    return Cache(app.cacheDir, cacheSize.toLong())
-  }
-
-  @Provides
-  fun provideHttpLoggingInterceptor(): HttpLoggingInterceptor {
-    val httpLoggingInterceptor = HttpLoggingInterceptor()
-    httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
-    return httpLoggingInterceptor
-  }
-
-  @Provides
-  fun providePicasaInterceptor(token: String): Interceptor = PicasaNetworkInterceptor(token)
-
-  @Provides
-  fun provideOkHttpClient(
-      httpLoggingInterceptor: HttpLoggingInterceptor, interceptor: Interceptor): OkHttpClient {
-    return OkHttpClient.Builder()
-        .addNetworkInterceptor(httpLoggingInterceptor)
-        .addNetworkInterceptor(interceptor)
-        .build()
-  }
-
-  @Provides
-  fun provideCallAdapterFactory(): CallAdapter.Factory =
-      RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io())
-
-  @Provides
-  fun provideConvertFactory(gson: Gson): Factory = GsonConverterFactory.create(gson)
-
-  @Provides
-  fun provideRetrofit(converterFactory: Factory,
-      callAdapterFactory: CallAdapter.Factory, okHttpClient: OkHttpClient): Retrofit {
-    return Builder()
-        .addConverterFactory(converterFactory)
-        .baseUrl(Config.PICASA_BASE_API_URL)
-        .addCallAdapterFactory(callAdapterFactory)
-        .client(okHttpClient)
-        .build()
-  }
-
-  @Provides
-  fun providePicasaService(retrofit: Retrofit): PicasaService =
-      retrofit.create(PicasaService::class.java)
+  fun providePicasaService(): PicasaService =
+      Network()
 
   @Provides
   fun provideApiManagerImpl(service: PicasaService): ApiManager = ApiManagerImpl(service)
-
-  @Provides
-  fun provideToken(preferenceHelper: PreferenceHelper): String = preferenceHelper.getToken()
-
 }

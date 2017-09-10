@@ -17,10 +17,20 @@
 
 package io.shtanko.picasagallery.data.model
 
+import com.github.kittinunf.fuel.core.ResponseDeserializable
+import com.google.gson.Gson
 import com.google.gson.annotations.SerializedName
+import java.io.Reader
 
 data class UserFeedResponseEntity(
     @SerializedName("feed") var feed: UserFeedEntity,
     @SerializedName("version") var version: String,
     @SerializedName("encoding") var encoding: String
-)
+) {
+  fun asJson() = Gson().toJson(this)
+
+  object Deserializer : ResponseDeserializable<UserFeedResponseEntity> {
+    override fun deserialize(reader: Reader) = Gson().fromJson(reader,
+        UserFeedResponseEntity::class.java)
+  }
+}

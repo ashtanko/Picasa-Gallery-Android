@@ -18,14 +18,14 @@
 package io.shtanko.picasagallery.data.photo
 
 import io.reactivex.Flowable
+import io.shtanko.picasagallery.data.api.PicasaService
 import io.shtanko.picasagallery.extensions.PhotosList
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class PhotosDataSourceImpl @Inject constructor() : PhotosDataSource {
+class PhotosDataSourceImpl @Inject constructor(val api: PicasaService) : PhotosDataSource {
   override fun getPhotos(): Flowable<PhotosList> {
-    TODO(
-        "not implemented") //To change body of created functions use File | Settings | File Templates.
+    return Flowable.empty()
   }
 }
