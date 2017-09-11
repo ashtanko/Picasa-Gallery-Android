@@ -68,23 +68,6 @@ public class FastDateFormat extends Format implements DateParser, DatePrinter {
    */
   private static final long serialVersionUID = 2L;
 
-  /**
-   * FULL locale dependent date or time style.
-   */
-  public static final int FULL = DateFormat.FULL;
-  /**
-   * LONG locale dependent date or time style.
-   */
-  public static final int LONG = DateFormat.LONG;
-  /**
-   * MEDIUM locale dependent date or time style.
-   */
-  public static final int MEDIUM = DateFormat.MEDIUM;
-  /**
-   * SHORT locale dependent date or time style.
-   */
-  public static final int SHORT = DateFormat.SHORT;
-
   private static final FormatCache<FastDateFormat> cache = new FormatCache<FastDateFormat>() {
     @Override protected FastDateFormat createInstance(final String pattern, final TimeZone timeZone,
         final Locale locale) {
@@ -423,6 +406,7 @@ public class FastDateFormat extends Format implements DateParser, DatePrinter {
    * @return the formatted string
    * @since 2.1
    */
+  //TODO
   @Override public String format(final long millis) {
     return printer.format(millis);
   }

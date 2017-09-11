@@ -85,23 +85,6 @@ public class FastDatePrinter implements DatePrinter, Serializable {
   private static final long serialVersionUID = 1L;
 
   /**
-   * FULL locale dependent date or time style.
-   */
-  public static final int FULL = DateFormat.FULL;
-  /**
-   * LONG locale dependent date or time style.
-   */
-  public static final int LONG = DateFormat.LONG;
-  /**
-   * MEDIUM locale dependent date or time style.
-   */
-  public static final int MEDIUM = DateFormat.MEDIUM;
-  /**
-   * SHORT locale dependent date or time style.
-   */
-  public static final int SHORT = DateFormat.SHORT;
-
-  /**
    * The pattern.
    */
   private final String mPattern;

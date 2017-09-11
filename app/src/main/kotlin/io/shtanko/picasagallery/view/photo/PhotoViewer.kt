@@ -100,7 +100,6 @@ class PhotoViewer : GestureDetector.OnDoubleTapListener, GestureDetector.OnGestu
 
   override fun onDoubleTap(p0: MotionEvent?): Boolean {
 
-    println("FUCK DD")
     if (!canZoom || scale == 1.0f && (translationY != 0.toFloat() || translationX != 0.toFloat())) {
       return false
     }
@@ -178,13 +177,11 @@ class PhotoViewer : GestureDetector.OnDoubleTapListener, GestureDetector.OnGestu
 
     windowView = object : FrameLayout(activity) {
 
-      override fun onInterceptTouchEvent(ev: MotionEvent?): Boolean {
-        return super.onInterceptTouchEvent(ev)
-      }
+      override fun onInterceptTouchEvent(ev: MotionEvent?): Boolean =
+          super.onInterceptTouchEvent(ev)
 
-      override fun onTouchEvent(event: MotionEvent?): Boolean {
-        return isVisible && this@PhotoViewer.onTouchEvent(event)
-      }
+      override fun onTouchEvent(event: MotionEvent?): Boolean =
+          isVisible && this@PhotoViewer.onTouchEvent(event)
 
       override fun drawChild(canvas: Canvas?, child: View?, drawingTime: Long): Boolean {
         val result = super.drawChild(canvas, child, drawingTime)
@@ -283,7 +280,6 @@ class PhotoViewer : GestureDetector.OnDoubleTapListener, GestureDetector.OnGestu
     windowView?.addView(containerView, createFrame(MATCH_PARENT, MATCH_PARENT, TOP or START))
 
 
-
     if (SDK_INT >= LOLLIPOP) {
       containerView?.fitsSystemWindows = true
 
@@ -304,7 +300,6 @@ class PhotoViewer : GestureDetector.OnDoubleTapListener, GestureDetector.OnGestu
     windowLayoutParams?.width = MATCH_PARENT
     windowLayoutParams?.gravity = TOP or START
     windowLayoutParams?.flags = FLAG_NOT_FOCUSABLE
-    //windowLayoutParams?.type = LAST_APPLICATION_WINDOW
 
     if (SDK_INT >= LOLLIPOP) {
       windowLayoutParams?.flags = FLAG_LAYOUT_IN_SCREEN or

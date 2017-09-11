@@ -177,27 +177,6 @@ public class FastDateParser implements DateParser, Serializable {
 
   // Accessors
   //-----------------------------------------------------------------------
-    /* (non-Javadoc)
-     * @see org.apache.commons.lang3.time.DateParser#getPattern()
-     */
-  @Override public String getPattern() {
-    return pattern;
-  }
-
-  /* (non-Javadoc)
-   * @see org.apache.commons.lang3.time.DateParser#getTimeZone()
-   */
-  @Override public TimeZone getTimeZone() {
-    return timeZone;
-  }
-
-  /* (non-Javadoc)
-   * @see org.apache.commons.lang3.time.DateParser#getLocale()
-   */
-  @Override public Locale getLocale() {
-    return locale;
-  }
-
   /**
    * Returns the generated pattern (for testing purposes).
    *
@@ -259,13 +238,6 @@ public class FastDateParser implements DateParser, Serializable {
 
     final Calendar definingCalendar = Calendar.getInstance(timeZone, locale);
     init(definingCalendar);
-  }
-
-  /* (non-Javadoc)
-   * @see org.apache.commons.lang3.time.DateParser#parseObject(java.lang.String)
-   */
-  @Override public Object parseObject(final String source) throws ParseException {
-    return parse(source);
   }
 
   /* (non-Javadoc)
