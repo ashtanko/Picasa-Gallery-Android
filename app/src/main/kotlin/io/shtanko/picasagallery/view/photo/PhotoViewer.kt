@@ -92,9 +92,6 @@ class PhotoViewer : GestureDetector.OnDoubleTapListener, GestureDetector.OnGestu
 
   init {
     blackPaint.color = 0xff000000.toInt()
-    gestureDetector = GestureDetector(containerView?.context, this)
-    gestureDetector?.setOnDoubleTapListener(this)
-
   }
 
 
@@ -109,14 +106,10 @@ class PhotoViewer : GestureDetector.OnDoubleTapListener, GestureDetector.OnGestu
     return true
   }
 
-  override fun onDoubleTapEvent(p0: MotionEvent?): Boolean {
-    TODO(
-        "not implemented") //To change body of created functions use File | Settings | File Templates.
-  }
+  override fun onDoubleTapEvent(p0: MotionEvent?): Boolean = false
 
   override fun onSingleTapConfirmed(p0: MotionEvent?): Boolean {
-    TODO(
-        "not implemented") //To change body of created functions use File | Settings | File Templates.
+    return true
   }
 
 
@@ -309,6 +302,9 @@ class PhotoViewer : GestureDetector.OnDoubleTapListener, GestureDetector.OnGestu
     } else {
       windowLayoutParams?.flags = FLAG_NOT_FOCUSABLE
     }
+
+    gestureDetector = GestureDetector(containerView?.context, this)
+    gestureDetector?.setOnDoubleTapListener(this)
 
   }
 
