@@ -20,8 +20,12 @@ package io.shtanko.picasagallery.view.util
 import android.graphics.Matrix
 import android.graphics.Point
 import android.graphics.RectF
+import io.shtanko.picasagallery.PicasaApplication
 
 object AndroidUtils {
+
+
+  var statusBarHeight = 0
   var displaySize = Point()
   var density = 1f
 
@@ -68,6 +72,18 @@ object AndroidUtils {
     return if (value == 0f) {
       0
     } else Math.ceil((density * value).toDouble()).toInt()
+  }
+
+  fun runOnUIThread(runnable: Runnable) {
+    runOnUIThread(runnable, 0)
+  }
+
+  public fun runOnUIThread(runnable: Runnable, delay: Long) {
+    if (delay == 0.toLong()) {
+      PicasaApplication.applicationHandler.post(runnable)
+    } else {
+      PicasaApplication.applicationHandler.postDelayed(runnable, delay)
+    }
   }
 
 }

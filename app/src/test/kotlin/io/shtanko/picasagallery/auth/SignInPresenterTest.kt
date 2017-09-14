@@ -35,9 +35,6 @@ class SignInPresenterTest {
 
   private val userRepository = mock<UserRepositoryImpl>()
   private val view = mock<SignInContract.View>()
-  private val sharedPreferences = mock<SharedPreferences>()
-  val preferenceHelper = PreferenceHelper(sharedPreferences)
-
   private lateinit var presenter: SignInPresenter
 
   @Before

@@ -17,9 +17,11 @@
 
 package io.shtanko.picasagallery
 
+import io.reactivex.Flowable
 import io.shtanko.picasagallery.data.album.AlbumDataSource
 import io.shtanko.picasagallery.data.entity.album.Album
 import io.shtanko.picasagallery.data.entity.album.AlbumType
+import io.shtanko.picasagallery.extensions.AlbumsList
 import io.shtanko.picasagallery.view.util.getImages
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -27,9 +29,8 @@ import javax.inject.Singleton
 @Singleton
 class MockAlbumDataSourceImpl @Inject constructor() : AlbumDataSource {
 
-  override fun getAlbums(callback: AlbumDataSource.LoadAlbumsCallback) {
+  override fun getAlbums(): Flowable<AlbumsList> {
     val dummyList = ArrayList<AlbumType>()
-    getImages().mapTo(dummyList) { Album("Item", it) }
-    callback.onAlbumsLoaded(dummyList)
+    return Flowable.just(getImages().mapTo(dummyList) { Album("Item", it) })
   }
 }

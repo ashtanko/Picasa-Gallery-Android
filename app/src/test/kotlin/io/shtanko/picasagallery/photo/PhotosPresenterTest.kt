@@ -20,7 +20,7 @@ package io.shtanko.picasagallery.photo
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.verify
 import io.shtanko.picasagallery.data.entity.photo.Photo
-import io.shtanko.picasagallery.data.photo.PhotosRepositoryImpl
+import io.shtanko.picasagallery.data.photo.PhotosRepository
 import io.shtanko.picasagallery.view.delegate.ViewType
 import io.shtanko.picasagallery.view.photo.PhotosContract.View
 import io.shtanko.picasagallery.view.photo.PhotosPresenter
@@ -34,7 +34,7 @@ import org.mockito.junit.MockitoJUnitRunner
 class PhotosPresenterTest {
 
   private val view = mock<View>()
-  private var mockRepository = mock<PhotosRepositoryImpl>()
+  private var mockRepository = mock<PhotosRepository>()
   private lateinit var presenter: PhotosPresenter
 
   @Before

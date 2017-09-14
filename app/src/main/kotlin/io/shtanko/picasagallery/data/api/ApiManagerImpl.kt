@@ -17,13 +17,19 @@
 
 package io.shtanko.picasagallery.data.api
 
+import io.reactivex.BackpressureStrategy
+import io.reactivex.Flowable
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import io.shtanko.picasagallery.data.model.AlbumEntity
 import io.shtanko.picasagallery.data.model.AlbumsResponseEntity
 import io.shtanko.picasagallery.data.model.UserFeedResponseEntity
 
 class ApiManagerImpl constructor(var apiService: PicasaService) : ApiManager {
+
+  override fun getUserAlbums(userId: String): Flowable<List<AlbumEntity>> =
+      getUser(userId).map { it.feed.entry }.toFlowable(BackpressureStrategy.DROP)
 
   override fun getUser(userId: String): Observable<UserFeedResponseEntity> =
       apiService.getUser(userId).subscribeOn(Schedulers.io()).observeOn(

@@ -17,22 +17,21 @@
 
 package io.shtanko.picasagallery.view.main
 
-import io.shtanko.picasagallery.data.album.AlbumDataSource
-import io.shtanko.picasagallery.data.album.AlbumRepository
-import io.shtanko.picasagallery.extensions.AlbumsList
+import io.shtanko.picasagallery.data.album.AlbumRepositoryImpl
 import io.shtanko.picasagallery.util.ActivityScoped
 import io.shtanko.picasagallery.view.delegate.ViewType
+import io.shtanko.picasagallery.view.main.MainContract.Presenter
 import io.shtanko.picasagallery.view.main.MainContract.View
 import javax.annotation.Nullable
 import javax.inject.Inject
 
 @ActivityScoped
 class MainPresenter @Inject constructor(
-    var repository: AlbumRepository
-) : MainContract.Presenter {
+    var repository: AlbumRepositoryImpl
+) : Presenter {
 
   @Nullable
-  private var view: MainContract.View? = null
+  private var view: View? = null
 
   override fun takeView(view: View) {
     this.view = view
@@ -44,17 +43,10 @@ class MainPresenter @Inject constructor(
 
   override fun getAlbums() {
     view?.setLoadingIndicator(true)
-    repository.getAlbums(object : AlbumDataSource.LoadAlbumsCallback {
-      override fun onAlbumsLoaded(list: AlbumsList) {
-        view?.onShowAlbums(list)
-        view?.setLoadingIndicator(false)
-      }
-
-      override fun onDataNotAvailable(message: String) {
-        view?.onShowError(message)
-        view?.setLoadingIndicator(false)
-      }
-    })
+    repository.albums().subscribe { it ->
+      view?.setLoadingIndicator(false)
+      view?.onShowAlbums(it)
+    }
   }
 
   override fun onAlbumClick(model: ViewType) {

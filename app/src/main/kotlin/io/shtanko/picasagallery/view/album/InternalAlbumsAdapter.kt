@@ -15,11 +15,7 @@
  *
  */
 
-package io.shtanko.picasagallery.data.album
+package io.shtanko.picasagallery.view.album
 
-import io.reactivex.Flowable
-import io.shtanko.picasagallery.extensions.AlbumsList
-
-interface AlbumDataSource {
-  fun getAlbums(): Flowable<AlbumsList>
+class InternalAlbumsAdapter {
 }

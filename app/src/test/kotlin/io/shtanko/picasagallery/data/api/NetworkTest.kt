@@ -19,17 +19,10 @@ package io.shtanko.picasagallery.data.api
 
 import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.core.FuelManager
-import com.github.kittinunf.fuel.gson.GsonDeserializer
-import com.github.kittinunf.fuel.rx.rx_responseObject
 import io.shtanko.picasagallery.Config
-import io.shtanko.picasagallery.data.model.UserFeedResponseEntity
-import org.hamcrest.CoreMatchers.notNullValue
-import org.junit.Assert.assertThat
-import org.junit.Test
 
 class NetworkTest {
-
-  private val MOCK_USER_ID = "113288841856843375771"
+  private val MOCK_USER_ID = "1"
 
   init {
     FuelManager.instance.basePath = Config.PICASA_BASE_API_URL
@@ -38,20 +31,4 @@ class NetworkTest {
       timeout = 15000
     }
   }
-
-  @Test
-  fun get_user_responseTest() {
-    val (response, data) = Fuel.get(Config.configureUserPath(MOCK_USER_ID)).rx_responseObject(
-        GsonDeserializer<UserFeedResponseEntity>())
-        .test()
-        .apply { awaitTerminalEvent() }
-        .assertNoErrors()
-        .assertValueCount(1)
-        .assertComplete()
-        .values()[0]
-
-    assertThat(response, notNullValue())
-    assertThat(data, notNullValue())
-  }
-
 }

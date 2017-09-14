@@ -21,6 +21,8 @@ import android.content.Intent
 import android.os.Bundle
 import dagger.Lazy
 import io.shtanko.picasagallery.R
+import io.shtanko.picasagallery.data.entity.album.Album
+import io.shtanko.picasagallery.data.entity.album.AlbumType
 import io.shtanko.picasagallery.view.base.BaseActivity
 import io.shtanko.picasagallery.view.delegate.ViewType
 import io.shtanko.picasagallery.view.main.MainFragment.AlbumClickListener
@@ -39,6 +41,10 @@ class MainActivity : BaseActivity(), AlbumClickListener {
   }
 
   override fun onAlbumClick(model: ViewType) {
+    if (model is AlbumType) {
+      val album = model as Album
+      println()
+    }
     startActivity(Intent(this, PhotosActivity::class.java))
   }
 }

@@ -15,11 +15,9 @@
  *
  */
 
-package io.shtanko.picasagallery.data.album
+package io.shtanko.picasagallery.view.album
 
-import io.reactivex.Flowable
-import io.shtanko.picasagallery.extensions.AlbumsList
+import io.shtanko.picasagallery.view.base.BaseActivity
 
-interface AlbumDataSource {
-  fun getAlbums(): Flowable<AlbumsList>
+class InternalAlbumsActivity : BaseActivity() {
 }

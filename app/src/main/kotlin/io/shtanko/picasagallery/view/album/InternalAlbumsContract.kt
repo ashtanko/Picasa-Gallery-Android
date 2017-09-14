@@ -15,11 +15,19 @@
  *
  */
 
-package io.shtanko.picasagallery.data.album
+package io.shtanko.picasagallery.view.album
 
-import io.reactivex.Flowable
-import io.shtanko.picasagallery.extensions.AlbumsList
+import io.shtanko.picasagallery.base.BasePresenter
+import io.shtanko.picasagallery.view.base.BaseProgressView
+import io.shtanko.picasagallery.view.base.BaseView
 
-interface AlbumDataSource {
-  fun getAlbums(): Flowable<AlbumsList>
+interface InternalAlbumsContract {
+  abstract interface View : BaseView<Presenter>, BaseProgressView {
+
+  }
+
+  abstract interface Presenter : BasePresenter<InternalAlbumsContract.View> {
+
+  }
+
 }

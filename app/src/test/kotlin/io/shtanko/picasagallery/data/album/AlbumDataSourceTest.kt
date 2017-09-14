@@ -22,10 +22,6 @@ import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.times
 import com.nhaarman.mockito_kotlin.verify
 import io.reactivex.Observable
-import io.shtanko.picasagallery.core.prefs.PreferenceHelper
-import io.shtanko.picasagallery.data.album.AlbumDataSource
-import io.shtanko.picasagallery.data.album.AlbumEntityMapper
-import io.shtanko.picasagallery.data.album.AlbumDataSourceImpl
 import io.shtanko.picasagallery.data.api.ApiManager
 import io.shtanko.picasagallery.data.model.UserFeedResponseEntity
 import org.junit.Before
@@ -38,17 +34,12 @@ import org.mockito.junit.MockitoJUnitRunner
 class AlbumDataSourceTest {
 
   private val FAKE_USER_ID = "123"
-  var remoteAlbumDataSource: AlbumDataSource? = null
 
   private val mockApiManager = mock<ApiManager>()
-  private val mockPreferenceHelper = mock<PreferenceHelper>()
   private val albumEntityMapper = mock<AlbumEntityMapper>()
 
   @Before
   fun setUp() {
-    remoteAlbumDataSource = AlbumDataSourceImpl(
-        mockApiManager, mockPreferenceHelper,
-        albumEntityMapper)
   }
 
   @Test

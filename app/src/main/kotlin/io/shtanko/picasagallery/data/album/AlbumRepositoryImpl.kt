@@ -19,7 +19,12 @@ package io.shtanko.picasagallery.data.album
 
 import io.reactivex.Flowable
 import io.shtanko.picasagallery.extensions.AlbumsList
+import javax.inject.Inject
+import javax.inject.Singleton
 
-interface AlbumDataSource {
-  fun getAlbums(): Flowable<AlbumsList>
+@Singleton
+class AlbumRepositoryImpl @Inject constructor(
+    var dataSource: AlbumDataSource
+) : AlbumRepository {
+  override fun albums(): Flowable<AlbumsList> = dataSource.getAlbums()
 }

@@ -60,8 +60,25 @@ object Config {
       Scopes.DRIVE_APPFOLDER,
       "https://www.googleapis.com/auth/plus.profile.emails.read"))
 
-  internal fun configureUserPath(id: String): String = "user/$id?alt=json"
+  //https://picasaweb.google.com/data/feed/api/user/113288841856843375771?alt=json&start-index=1&max-results=1
+
+  val jsonParams = object : ArrayList<Pair<String, String>>() {
+    init {
+      add(Pair("alt", "json"))
+    }
+  }
+
+  private val params = object : ArrayList<Pair<String, String>>() {
+    init {
+      add(Pair("alt", "json"))
+      add(Pair("start-index", "json"))
+      add(Pair("max-results", "json"))
+    }
+  }
+
+  internal fun configureUserPath(id: String): String = "user/$id"
+
   internal fun configureAlbumsPath(userId: String,
-      albumId: String) = "user/$userId/albumid/$albumId?alt=json"
+      albumId: String) = "user/$userId/albumid/$albumId"
 
 }

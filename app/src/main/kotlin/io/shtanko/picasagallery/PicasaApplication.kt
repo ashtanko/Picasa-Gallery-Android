@@ -18,12 +18,14 @@
 package io.shtanko.picasagallery
 
 import android.app.Application
+import android.os.Handler
 import dagger.android.AndroidInjector
 import dagger.android.DaggerApplication
 import io.shtanko.picasagallery.core.app.DaggerAppComponent
 import kotlin.properties.Delegates
 
 class PicasaApplication : DaggerApplication() {
+
   override fun applicationInjector(): AndroidInjector<out DaggerApplication> {
     val appComponent = DaggerAppComponent.builder().application(this).build()
     appComponent.inject(this)
@@ -32,10 +34,12 @@ class PicasaApplication : DaggerApplication() {
 
   companion object {
     var app: Application by Delegates.notNull()
+    @Volatile lateinit var applicationHandler: Handler
   }
 
   override fun onCreate() {
     super.onCreate()
     app = this
+    applicationHandler = Handler(mainLooper)
   }
 }

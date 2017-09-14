@@ -57,5 +57,7 @@
 
     <activity android:name=".view.photo.PhotosActivity"/>
 
+    <activity android:name=".view.album.InternalAlbumsActivity"/>
+
   </application>
 </manifest>

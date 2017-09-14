@@ -17,11 +17,10 @@
 
 package io.shtanko.picasagallery.launch
 
-import android.content.SharedPreferences
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.never
-import io.shtanko.picasagallery.data.DefaultObserver
 import io.shtanko.picasagallery.core.prefs.PreferenceHelper
+import io.shtanko.picasagallery.data.DefaultObserver
 import io.shtanko.picasagallery.data.entity.user.User
 import io.shtanko.picasagallery.data.user.GetUserDetails
 import io.shtanko.picasagallery.view.launch.LaunchContract
@@ -34,13 +33,11 @@ import org.mockito.MockitoAnnotations
 import org.mockito.junit.MockitoJUnitRunner
 
 
-@RunWith(MockitoJUnitRunner::class)
+@RunWith(MockitoJUnitRunner.Silent::class)
 class LaunchPresenterTest {
 
   private val getUserDetails = mock<GetUserDetails>()
   private val view = mock<LaunchContract.View>()
-  private val sharedPreferences = mock<SharedPreferences>()
-  val preferenceHelper = PreferenceHelper(sharedPreferences)
   private lateinit var presenter: LaunchPresenter
 
   @Before

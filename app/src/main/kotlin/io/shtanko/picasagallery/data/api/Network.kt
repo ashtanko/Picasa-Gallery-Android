@@ -22,9 +22,11 @@ import com.github.kittinunf.fuel.httpGet
 import com.github.kittinunf.fuel.rx.rx_object
 import com.github.kittinunf.result.Result
 import com.google.gson.Gson
+import io.reactivex.Flowable
 import io.reactivex.Maybe
 import io.reactivex.Observable
 import io.shtanko.picasagallery.Config
+import io.shtanko.picasagallery.data.model.AlbumEntity
 import io.shtanko.picasagallery.data.model.AlbumsResponseEntity
 import io.shtanko.picasagallery.data.model.UserFeedResponseEntity
 import io.shtanko.picasagallery.data.user.UserException
@@ -34,12 +36,16 @@ import javax.inject.Singleton
 @Singleton
 class Network @Inject constructor() : PicasaService {
 
+  override fun getUserAlbums(userId: String): Flowable<List<AlbumEntity>> {
+    return Flowable.empty()
+  }
+
   init {
     FuelManager.instance.basePath = Config.PICASA_BASE_API_URL
   }
 
   override fun getUser(userId: String): Observable<UserFeedResponseEntity> {
-    return Config.configureUserPath(userId).httpGet().rx_object(
+    return Config.configureUserPath(userId).httpGet(Config.jsonParams).rx_object(
         UserFeedResponseEntity.Deserializer)
         .flatMapMaybe {
           when (it) {

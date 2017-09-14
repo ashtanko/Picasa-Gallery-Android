@@ -15,11 +15,27 @@
  *
  */
 
-package io.shtanko.picasagallery.data.album
+package io.shtanko.picasagallery.view.album
 
-import io.reactivex.Flowable
-import io.shtanko.picasagallery.extensions.AlbumsList
+import io.shtanko.picasagallery.util.ActivityScoped
+import io.shtanko.picasagallery.view.album.InternalAlbumsContract.Presenter
+import io.shtanko.picasagallery.view.album.InternalAlbumsContract.View
+import javax.annotation.Nullable
+import javax.inject.Inject
 
-interface AlbumDataSource {
-  fun getAlbums(): Flowable<AlbumsList>
+@ActivityScoped
+class InternalAlbumsPresenter @Inject constructor() : Presenter {
+
+  @Nullable
+  private var view: View? = null
+
+  override fun takeView(view: View) {
+    this.view = view
+  }
+
+  override fun dropView() {
+    view = null
+  }
+
+
 }

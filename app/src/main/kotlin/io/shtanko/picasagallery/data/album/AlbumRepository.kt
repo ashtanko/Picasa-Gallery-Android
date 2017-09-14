@@ -17,14 +17,9 @@
 
 package io.shtanko.picasagallery.data.album
 
-import io.shtanko.picasagallery.data.album.AlbumDataSource.LoadAlbumsCallback
-import javax.inject.Inject
-import javax.inject.Singleton
+import io.reactivex.Flowable
+import io.shtanko.picasagallery.extensions.AlbumsList
 
-@Singleton
-class AlbumRepository @Inject constructor(
-    var dataSource: AlbumDataSource
-) : AlbumDataSource {
-
-  override fun getAlbums(callback: LoadAlbumsCallback) = dataSource.getAlbums(callback)
+interface AlbumRepository {
+  abstract fun albums(): Flowable<AlbumsList>
 }

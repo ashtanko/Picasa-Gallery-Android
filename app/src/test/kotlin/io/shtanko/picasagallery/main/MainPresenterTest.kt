@@ -17,16 +17,14 @@
 
 package io.shtanko.picasagallery.main
 
-import com.nhaarman.mockito_kotlin.argumentCaptor
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.times
 import com.nhaarman.mockito_kotlin.verify
-import io.shtanko.picasagallery.data.album.AlbumDataSource
-import io.shtanko.picasagallery.data.album.AlbumRepository
+import io.shtanko.picasagallery.data.album.AlbumRepositoryImpl
 import io.shtanko.picasagallery.data.entity.album.Album
 import io.shtanko.picasagallery.data.entity.album.AlbumType
 import io.shtanko.picasagallery.extensions.AlbumsList
-import io.shtanko.picasagallery.view.main.MainContract
+import io.shtanko.picasagallery.view.main.MainContract.View
 import io.shtanko.picasagallery.view.main.MainPresenter
 import io.shtanko.picasagallery.view.util.getImages
 import org.junit.Before
@@ -37,9 +35,9 @@ import org.mockito.junit.MockitoJUnitRunner
 
 @RunWith(MockitoJUnitRunner::class)
 class MainPresenterTest {
-  private val albumRepository = mock<AlbumRepository>()
-  private val view = mock<MainContract.View>()
-  private val albumCallbackCaptor = argumentCaptor<AlbumDataSource.LoadAlbumsCallback>()
+
+  private val albumRepository = mock<AlbumRepositoryImpl>()
+  private val view = mock<View>()
 
   private lateinit var presenter: MainPresenter
 
@@ -55,26 +53,6 @@ class MainPresenterTest {
     val album = getDummyAlbumsList()[0]
     presenter.onAlbumClick(album)
     verify(view).viewAlbum(album)
-  }
-
-  @Test
-  fun get_not_available_albumsTest() {
-    presenter.getAlbums()
-    verify(view).setLoadingIndicator(true)
-    verify(albumRepository, times(1)).getAlbums(albumCallbackCaptor.capture())
-    albumCallbackCaptor.firstValue.onDataNotAvailable("Error")
-    verify(view).onShowError("Error")
-    verify(view).setLoadingIndicator(false)
-  }
-
-  @Test
-  fun get_available_albumsTest() {
-    presenter.getAlbums()
-    verify(view).setLoadingIndicator(true)
-    verify(albumRepository, times(1)).getAlbums(albumCallbackCaptor.capture())
-    albumCallbackCaptor.firstValue.onAlbumsLoaded(getDummyAlbumsList())
-    verify(view).onShowAlbums(getDummyAlbumsList())
-    verify(view).setLoadingIndicator(false)
   }
 
   @Test

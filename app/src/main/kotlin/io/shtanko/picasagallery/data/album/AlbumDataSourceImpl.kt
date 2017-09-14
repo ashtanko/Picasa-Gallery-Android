@@ -17,12 +17,10 @@
 
 package io.shtanko.picasagallery.data.album
 
-import io.reactivex.observers.DefaultObserver
+import io.reactivex.Flowable
 import io.shtanko.picasagallery.core.prefs.PreferenceHelper
-import io.shtanko.picasagallery.data.album.AlbumDataSource.LoadAlbumsCallback
 import io.shtanko.picasagallery.data.api.ApiManager
-import io.shtanko.picasagallery.data.entity.album.AlbumType
-import io.shtanko.picasagallery.data.model.UserFeedResponseEntity
+import io.shtanko.picasagallery.extensions.AlbumsList
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -32,25 +30,10 @@ class AlbumDataSourceImpl @Inject constructor(
     var preferencesHelper: PreferenceHelper,
     var albumEntityMapper: AlbumEntityMapper) : AlbumDataSource {
 
-  override fun getAlbums(callback: LoadAlbumsCallback) {
 
-    apiManager.getUser(preferencesHelper.getUserId()).subscribe(
-        object : DefaultObserver<UserFeedResponseEntity>() {
-          override fun onComplete() {
-          }
-
-          override fun onError(e: Throwable) {
-            callback.onDataNotAvailable(e.localizedMessage)
-          }
-
-          override fun onNext(userFeedResponseEntity: UserFeedResponseEntity) {
-            val list = ArrayList<AlbumType>()
-            userFeedResponseEntity.feed.entry.forEach { it ->
-              list.add(albumEntityMapper.transform(it))
-            }
-            callback.onAlbumsLoaded(list)
-          }
-
-        })
+  override fun getAlbums(): Flowable<AlbumsList> {
+    return apiManager.getUserAlbums(
+        preferencesHelper.getUserId()).map { albumEntityMapper.transform(it) }
   }
+
 }
