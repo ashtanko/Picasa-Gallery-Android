@@ -30,4 +30,12 @@ object Logger {
     Log.v(clazz.javaClass.simpleName, message)
   }
 
+  fun error(clazz: Any, message: String?) {
+    Log.e(clazz.javaClass.simpleName, message)
+  }
+
+  fun error(e: Throwable) {
+    Log.e(TAG, e.localizedMessage)
+  }
+
 }

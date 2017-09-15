@@ -76,6 +76,10 @@ class PhotosFragment @Inject constructor() : BaseFragment(), PhotosContract.View
     presenter.dropView()
   }
 
+  override fun showError(message: String) {
+
+  }
+
   override fun setLoadingIndicator(active: Boolean) {
   }
 

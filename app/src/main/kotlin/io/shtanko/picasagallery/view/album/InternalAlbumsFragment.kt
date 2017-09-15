@@ -27,6 +27,7 @@ import io.shtanko.picasagallery.Config
 import io.shtanko.picasagallery.R
 import io.shtanko.picasagallery.R.color
 import io.shtanko.picasagallery.R.dimen
+import io.shtanko.picasagallery.extensions.ContentList
 import io.shtanko.picasagallery.util.ActivityScoped
 import io.shtanko.picasagallery.util.ItemDividerDecoration
 import io.shtanko.picasagallery.view.album.InternalAlbumsContract.View
@@ -63,6 +64,12 @@ class InternalAlbumsFragment @Inject constructor() : BaseFragment(), View {
 
     return rootView
 
+  }
+
+  override fun showError(message: String) {
+  }
+
+  override fun showData(data: ContentList) {
   }
 
   override fun setLoadingIndicator(active: Boolean) {

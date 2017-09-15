@@ -23,7 +23,6 @@ import android.support.v4.content.ContextCompat
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
-import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
@@ -65,7 +64,7 @@ class MainFragment @Inject constructor() : BaseFragment(), MainContract.View, On
   }
 
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-      savedInstanceState: Bundle?): View? {
+      savedInstanceState: Bundle?): android.view.View? {
     val rootView = inflater.inflate(R.layout.container_list_fragment, container, false)
     presenter.takeView(this)
     presenter.getAlbums()
@@ -95,16 +94,16 @@ class MainFragment @Inject constructor() : BaseFragment(), MainContract.View, On
     presenter.dropView()
   }
 
+  override fun showError(message: String) {
+    shortToast(message)
+  }
+
   override fun onShowAlbums(list: AlbumsList) {
     mainAdapter.items = list
   }
 
   override fun setLoadingIndicator(active: Boolean) {
     progressBar?.visibility = if (active) VISIBLE else GONE
-  }
-
-  override fun onShowError(message: String) {
-    shortToast(message)
   }
 
   override fun <T> onItemClicked(model: T) {

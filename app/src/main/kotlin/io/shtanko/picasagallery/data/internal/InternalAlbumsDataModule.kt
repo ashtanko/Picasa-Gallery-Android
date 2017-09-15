@@ -17,9 +17,15 @@
 
 package io.shtanko.picasagallery.data.internal
 
-import io.reactivex.Flowable
-import io.shtanko.picasagallery.extensions.ContentList
+import dagger.Binds
+import dagger.Module
+import javax.inject.Singleton
 
-interface InternalAlbumsRepository {
-  abstract fun content(): Flowable<ContentList>
+@Module
+abstract class InternalAlbumsDataModule {
+
+  @Singleton
+  @Binds
+  abstract fun provideInternalAlbumsRepository(
+      albumRepository: InternalAlbumsRepositoryImpl): InternalAlbumsRepository
 }

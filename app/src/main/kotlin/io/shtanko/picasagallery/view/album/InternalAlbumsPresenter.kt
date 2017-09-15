@@ -26,7 +26,8 @@ import javax.inject.Inject
 
 @ActivityScoped
 class InternalAlbumsPresenter @Inject constructor(
-    ) : Presenter {
+    var repository: InternalAlbumsRepository
+) : Presenter {
 
   @Nullable
   private var view: View? = null
@@ -41,9 +42,15 @@ class InternalAlbumsPresenter @Inject constructor(
 
   override fun getContent() {
     view?.setLoadingIndicator(true)
-
-
+    repository.content().subscribe(
+        { it ->
+          view?.setLoadingIndicator(false)
+          view?.showData(it)
+        },
+        { e ->
+          view?.setLoadingIndicator(false)
+          view?.showError(e.localizedMessage)
+        }
+    )
   }
-
-
 }

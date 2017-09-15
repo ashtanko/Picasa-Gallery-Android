@@ -15,11 +15,8 @@
  *
  */
 
-package io.shtanko.picasagallery.data.internal
+package io.shtanko.picasagallery.view.base
 
-import io.reactivex.Flowable
-import io.shtanko.picasagallery.extensions.ContentList
-
-interface InternalAlbumsRepository {
-  abstract fun content(): Flowable<ContentList>
+interface BaseContentView<in T> {
+  fun showData(data: T)
 }

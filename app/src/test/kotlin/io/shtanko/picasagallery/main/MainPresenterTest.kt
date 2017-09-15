@@ -20,7 +20,8 @@ package io.shtanko.picasagallery.main
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.times
 import com.nhaarman.mockito_kotlin.verify
-import io.shtanko.picasagallery.data.album.AlbumRepositoryImpl
+import io.reactivex.Flowable
+import io.shtanko.picasagallery.data.album.AlbumRepository
 import io.shtanko.picasagallery.data.entity.album.Album
 import io.shtanko.picasagallery.data.entity.album.AlbumType
 import io.shtanko.picasagallery.extensions.AlbumsList
@@ -28,23 +29,25 @@ import io.shtanko.picasagallery.view.main.MainContract.View
 import io.shtanko.picasagallery.view.main.MainPresenter
 import io.shtanko.picasagallery.view.util.getImages
 import org.junit.Before
+import org.junit.FixMethodOrder
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.junit.runners.MethodSorters
 import org.mockito.MockitoAnnotations
 import org.mockito.junit.MockitoJUnitRunner
 
 @RunWith(MockitoJUnitRunner::class)
+@FixMethodOrder(MethodSorters.JVM)
 class MainPresenterTest {
 
-  private val albumRepository = mock<AlbumRepositoryImpl>()
   private val view = mock<View>()
-
   private lateinit var presenter: MainPresenter
+  private val exception = RuntimeException("Error")
 
   @Before
   fun setUp() {
     MockitoAnnotations.initMocks(this)
-    presenter = MainPresenter(albumRepository)
+    presenter = MainPresenter(FakeAlbumRepository())
     presenter.takeView(view)
   }
 
@@ -60,6 +63,32 @@ class MainPresenterTest {
     val dummyModel = Album("", "")
     presenter.onAlbumClick(dummyModel)
     verify(view, times(1)).viewAlbum(dummyModel)
+  }
+
+  @Test
+  fun success_get_albumsTest() {
+    presenter.getAlbums()
+    verify(view, times(1)).onShowAlbums(getDummyAlbumsList())
+    verify(view, times(1)).setLoadingIndicator(false)
+  }
+
+  @Test
+  fun error_get_albumsTest() {
+    presenter = MainPresenter(FakeAlbumRepositoryWithException())
+    presenter.takeView(view)
+    presenter.getAlbums()
+    verify(view, times(1)).showError(exception.localizedMessage)
+    verify(view, times(1)).setLoadingIndicator(false)
+  }
+
+  inner class FakeAlbumRepository : AlbumRepository {
+    override fun albums(): Flowable<AlbumsList> = Flowable.just(getDummyAlbumsList())
+  }
+
+  inner class FakeAlbumRepositoryWithException : AlbumRepository {
+    override fun albums(): Flowable<AlbumsList> = Flowable.fromIterable(
+        getDummyAlbumsList()).concatWith(
+        Flowable.error { exception }).toList().toFlowable()
   }
 
   private fun getDummyAlbumsList(): AlbumsList {

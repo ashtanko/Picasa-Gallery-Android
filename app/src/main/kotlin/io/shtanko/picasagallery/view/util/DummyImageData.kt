@@ -17,8 +17,16 @@
 
 package io.shtanko.picasagallery.view.util
 
+import io.shtanko.picasagallery.data.entity.internal.Content
+import io.shtanko.picasagallery.data.entity.internal.ContentType
 import io.shtanko.picasagallery.data.entity.photo.Photo
 import io.shtanko.picasagallery.data.entity.photo.PhotoType
+
+fun getContentData(): ArrayList<ContentType> {
+  val array = ArrayList<ContentType>()
+  (0..100).mapTo(array) { Content("$it", "$it") }
+  return array
+}
 
 fun getPhotosData(): ArrayList<PhotoType> {
   val array = ArrayList<PhotoType>()
@@ -27,8 +35,7 @@ fun getPhotosData(): ArrayList<PhotoType> {
 }
 
 fun getImages(): Array<String> {
-
-  val array = arrayOf(
+  return arrayOf(
       "https://cdn.dribbble.com/users/334782/screenshots/3776132/gatefold-dribbs.jpg",
       "https://cdn.dribbble.com/users/2738/screenshots/3778113/happy_moon.jpg",
       "https://cdn.dribbble.com/users/1291181/screenshots/3775427/image.png",
@@ -70,6 +77,4 @@ fun getImages(): Array<String> {
       "",
       ""
   )
-
-  return array
 }

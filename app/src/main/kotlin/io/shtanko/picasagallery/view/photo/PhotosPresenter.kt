@@ -35,10 +35,17 @@ class PhotosPresenter @Inject constructor(
 
   override fun getPhotos() {
     view?.setLoadingIndicator(true)
-    repository.photos().subscribe { it ->
-      view?.setLoadingIndicator(false)
-      view?.showPhotos(it)
-    }
+
+    repository.photos().subscribe(
+        { it ->
+          view?.setLoadingIndicator(false)
+          view?.showPhotos(it)
+        },
+        { e ->
+          view?.setLoadingIndicator(false)
+          view?.showError(e.localizedMessage)
+        }
+    )
   }
 
   @Nullable

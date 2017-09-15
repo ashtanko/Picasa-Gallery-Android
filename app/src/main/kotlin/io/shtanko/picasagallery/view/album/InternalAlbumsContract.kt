@@ -18,16 +18,16 @@
 package io.shtanko.picasagallery.view.album
 
 import io.shtanko.picasagallery.base.BasePresenter
+import io.shtanko.picasagallery.extensions.ContentList
+import io.shtanko.picasagallery.view.base.BaseContentView
+import io.shtanko.picasagallery.view.base.BaseErrorView
 import io.shtanko.picasagallery.view.base.BaseProgressView
 import io.shtanko.picasagallery.view.base.BaseView
 
 interface InternalAlbumsContract {
-  abstract interface View : BaseView<Presenter>, BaseProgressView {
+  abstract interface View : BaseView<Presenter>, BaseProgressView, BaseErrorView, BaseContentView<ContentList>
 
-  }
-
-  abstract interface Presenter : BasePresenter<InternalAlbumsContract.View> {
+  abstract interface Presenter : BasePresenter<View> {
     fun getContent()
   }
-
 }

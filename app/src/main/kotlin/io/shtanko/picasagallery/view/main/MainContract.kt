@@ -19,14 +19,14 @@ package io.shtanko.picasagallery.view.main
 
 import io.shtanko.picasagallery.base.BasePresenter
 import io.shtanko.picasagallery.extensions.AlbumsList
+import io.shtanko.picasagallery.view.base.BaseErrorView
 import io.shtanko.picasagallery.view.base.BaseProgressView
 import io.shtanko.picasagallery.view.base.BaseView
 import io.shtanko.picasagallery.view.delegate.ViewType
 
 interface MainContract {
-  interface View : BaseView<Presenter>, BaseProgressView {
+  interface View : BaseView<Presenter>, BaseProgressView, BaseErrorView {
     fun onShowAlbums(list: AlbumsList)
-    fun onShowError(message: String)
     fun viewAlbum(model: ViewType)
   }
 

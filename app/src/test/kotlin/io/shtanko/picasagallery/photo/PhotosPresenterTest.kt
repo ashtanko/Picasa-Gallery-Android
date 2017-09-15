@@ -18,12 +18,16 @@
 package io.shtanko.picasagallery.photo
 
 import com.nhaarman.mockito_kotlin.mock
+import com.nhaarman.mockito_kotlin.times
 import com.nhaarman.mockito_kotlin.verify
+import io.reactivex.Flowable
 import io.shtanko.picasagallery.data.entity.photo.Photo
 import io.shtanko.picasagallery.data.photo.PhotosRepository
+import io.shtanko.picasagallery.extensions.PhotosList
 import io.shtanko.picasagallery.view.delegate.ViewType
 import io.shtanko.picasagallery.view.photo.PhotosContract.View
 import io.shtanko.picasagallery.view.photo.PhotosPresenter
+import io.shtanko.picasagallery.view.util.getPhotosData
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -34,22 +38,48 @@ import org.mockito.junit.MockitoJUnitRunner
 class PhotosPresenterTest {
 
   private val view = mock<View>()
-  private var mockRepository = mock<PhotosRepository>()
   private lateinit var presenter: PhotosPresenter
+  private val exception = RuntimeException("Error")
 
   @Before
   fun setUp() {
     MockitoAnnotations.initMocks(this)
-    presenter = PhotosPresenter(mockRepository)
+    presenter = PhotosPresenter(FakePhotosRepository())
     presenter.takeView(view)
   }
 
   @Test
   fun on_photo_clickTest() {
     presenter.onPhotoClick(getFakePhoto())
-    verify(view).viewPhoto(getFakePhoto())
+    verify(view, times(1)).viewPhoto(getFakePhoto())
+  }
+
+  @Test
+  fun on_success_get_photosTest() {
+    presenter.getPhotos()
+    verify(view, times(1)).showPhotos(getFakePhotos())
+  }
+
+  @Test
+  fun on_error_get_photosTest() {
+    presenter = PhotosPresenter(FakePhotosRepositoryWithException())
+    presenter.takeView(view)
+    presenter.getPhotos()
+    verify(view, times(1)).showError(exception.localizedMessage)
+  }
+
+  inner class FakePhotosRepository : PhotosRepository {
+    override fun photos(): Flowable<PhotosList> =
+        Flowable.fromIterable(getFakePhotos()).toList().toFlowable()
+  }
+
+  inner class FakePhotosRepositoryWithException : PhotosRepository {
+    override fun photos(): Flowable<PhotosList> =
+        Flowable.fromIterable(getFakePhotos()).concatWith(
+            Flowable.error { exception }).toList().toFlowable()
   }
 
   private fun getFakePhoto(): ViewType = Photo(0)
+  private fun getFakePhotos() = getPhotosData()
 
 }

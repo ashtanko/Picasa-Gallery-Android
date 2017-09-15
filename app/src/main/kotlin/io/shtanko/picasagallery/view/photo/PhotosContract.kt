@@ -19,12 +19,13 @@ package io.shtanko.picasagallery.view.photo
 
 import io.shtanko.picasagallery.base.BasePresenter
 import io.shtanko.picasagallery.extensions.PhotosList
+import io.shtanko.picasagallery.view.base.BaseErrorView
 import io.shtanko.picasagallery.view.base.BaseProgressView
 import io.shtanko.picasagallery.view.base.BaseView
 import io.shtanko.picasagallery.view.delegate.ViewType
 
 interface PhotosContract {
-  interface View : BaseView<Presenter>, BaseProgressView {
+  interface View : BaseView<Presenter>, BaseProgressView, BaseErrorView {
     fun showPhotos(photos: PhotosList)
     fun viewPhoto(model: ViewType)
   }

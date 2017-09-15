@@ -17,8 +17,9 @@
 
 package io.shtanko.picasagallery.view.main
 
-import io.shtanko.picasagallery.data.album.AlbumRepositoryImpl
+import io.shtanko.picasagallery.data.album.AlbumRepository
 import io.shtanko.picasagallery.util.ActivityScoped
+import io.shtanko.picasagallery.util.Logger
 import io.shtanko.picasagallery.view.delegate.ViewType
 import io.shtanko.picasagallery.view.main.MainContract.Presenter
 import io.shtanko.picasagallery.view.main.MainContract.View
@@ -27,7 +28,7 @@ import javax.inject.Inject
 
 @ActivityScoped
 class MainPresenter @Inject constructor(
-    var repository: AlbumRepositoryImpl
+    var repository: AlbumRepository
 ) : Presenter {
 
   @Nullable
@@ -43,10 +44,17 @@ class MainPresenter @Inject constructor(
 
   override fun getAlbums() {
     view?.setLoadingIndicator(true)
-    repository.albums().subscribe { it ->
-      view?.setLoadingIndicator(false)
-      view?.onShowAlbums(it)
-    }
+    repository.albums().subscribe(
+        { it ->
+          view?.setLoadingIndicator(false)
+          view?.onShowAlbums(it)
+        },
+        { e ->
+          view?.setLoadingIndicator(false)
+          view?.showError(e.localizedMessage)
+          Logger.error(e)
+        })
+
   }
 
   override fun onAlbumClick(model: ViewType) {
