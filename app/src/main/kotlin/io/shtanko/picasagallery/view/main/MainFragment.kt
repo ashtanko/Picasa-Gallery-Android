@@ -37,6 +37,7 @@ import io.shtanko.picasagallery.util.ActivityScoped
 import io.shtanko.picasagallery.util.ItemDividerDecoration
 import io.shtanko.picasagallery.view.base.BaseFragment
 import io.shtanko.picasagallery.view.delegate.ViewType
+import io.shtanko.picasagallery.view.main.MainContract.Presenter
 import io.shtanko.picasagallery.view.util.OnItemClickListener
 import javax.inject.Inject
 
@@ -44,7 +45,7 @@ import javax.inject.Inject
 class MainFragment @Inject constructor() : BaseFragment(), MainContract.View, OnItemClickListener {
 
   // region injection
-  @Inject lateinit var presenter: MainContract.Presenter
+  @Inject lateinit var presenter: Presenter
   @Inject lateinit var mainAdapter: MainAdapter
   // endregion
 

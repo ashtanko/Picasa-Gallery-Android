@@ -49,6 +49,7 @@ object Config {
   val MAIN_VIEW_TYPE_ID = 0
   val USER_VIEW_TYPE_ID = 1
   val PHOTO_VIEW_TYPE_ID = 2
+  val CONTENT_VIEW_TYPE_ID = 3
 
   val LOG_QUEUE_NAME = "LOG_QUEUE"
   val LOG_FILE_FORMAT_NAME = ".log"

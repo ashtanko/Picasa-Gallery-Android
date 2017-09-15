@@ -23,10 +23,10 @@ import dagger.Lazy
 import io.shtanko.picasagallery.R
 import io.shtanko.picasagallery.data.entity.album.Album
 import io.shtanko.picasagallery.data.entity.album.AlbumType
+import io.shtanko.picasagallery.view.album.InternalAlbumsActivity
 import io.shtanko.picasagallery.view.base.BaseActivity
 import io.shtanko.picasagallery.view.delegate.ViewType
 import io.shtanko.picasagallery.view.main.MainFragment.AlbumClickListener
-import io.shtanko.picasagallery.view.photo.PhotosActivity
 import javax.inject.Inject
 
 class MainActivity : BaseActivity(), AlbumClickListener {
@@ -37,7 +37,7 @@ class MainActivity : BaseActivity(), AlbumClickListener {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.container_activity)
-    addFragment<MainFragment>(R.id.content_frame, mainFragmentProvider)
+    addFragment(R.id.content_frame, mainFragmentProvider)
   }
 
   override fun onAlbumClick(model: ViewType) {
@@ -45,6 +45,6 @@ class MainActivity : BaseActivity(), AlbumClickListener {
       val album = model as Album
       println()
     }
-    startActivity(Intent(this, PhotosActivity::class.java))
+    startActivity(Intent(this, InternalAlbumsActivity::class.java))
   }
 }

@@ -17,21 +17,22 @@
 
 package io.shtanko.picasagallery.view.album
 
-import android.os.Bundle
-import dagger.Lazy
+import android.support.v7.widget.RecyclerView.ViewHolder
+import android.view.ViewGroup
 import io.shtanko.picasagallery.R
-import io.shtanko.picasagallery.view.base.BaseActivity
-import javax.inject.Inject
+import io.shtanko.picasagallery.extensions.inflate
+import io.shtanko.picasagallery.view.delegate.ViewType
+import io.shtanko.picasagallery.view.delegate.ViewTypeAdapterDelegate
+import io.shtanko.picasagallery.view.main.MainViewHolder
 
-class InternalAlbumsActivity : BaseActivity() {
-
-  @Inject lateinit var internalAlbumsPresenter: InternalAlbumsPresenter
-  @Inject lateinit var internalAlbumsFragmentProvider: Lazy<InternalAlbumsFragment>
-
-  override fun onCreate(savedInstanceState: Bundle?) {
-    super.onCreate(savedInstanceState)
-    setContentView(R.layout.container_activity)
-    addFragment(R.id.content_frame, internalAlbumsFragmentProvider)
+class InternalAlbumsDelegateImpl : ViewTypeAdapterDelegate {
+  override fun onCreateViewHolder(parent: ViewGroup?): ViewHolder {
+    val view = parent?.inflate(R.layout.album_item)
+    return MainViewHolder(view)
   }
 
+  override fun onBindViewHolder(holder: ViewHolder, item: ViewType) {
+    holder as MainViewHolder
+    holder.bind(item)
+  }
 }

@@ -27,7 +27,7 @@ interface InternalAlbumsContract {
   }
 
   abstract interface Presenter : BasePresenter<InternalAlbumsContract.View> {
-
+    fun getContent()
   }
 
 }

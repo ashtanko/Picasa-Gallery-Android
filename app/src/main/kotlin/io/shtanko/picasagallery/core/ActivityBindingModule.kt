@@ -20,6 +20,8 @@ package io.shtanko.picasagallery.core
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 import io.shtanko.picasagallery.util.ActivityScoped
+import io.shtanko.picasagallery.view.album.InternalAlbumsActivity
+import io.shtanko.picasagallery.view.album.InternalAlbumsModule
 import io.shtanko.picasagallery.view.auth.SignInActivity
 import io.shtanko.picasagallery.view.auth.SignInModule
 import io.shtanko.picasagallery.view.launch.LaunchActivity
@@ -55,5 +57,10 @@ abstract class ActivityBindingModule {
   @ActivityScoped
   @ContributesAndroidInjector(modules = arrayOf(PhotosModule::class))
   abstract fun photosActivity(): PhotosActivity
+
+  @ActivityScoped
+  @ContributesAndroidInjector(modules = arrayOf(InternalAlbumsModule::class))
+  abstract fun internalAlbumsActivity(): InternalAlbumsActivity
+
 
 }

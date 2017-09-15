@@ -15,19 +15,12 @@
  *
  */
 
-package io.shtanko.picasagallery.view.album
+package io.shtanko.picasagallery.data.entity.internal
 
 import io.shtanko.picasagallery.Config
-import io.shtanko.picasagallery.data.entity.internal.ContentType
-import io.shtanko.picasagallery.util.ActivityScoped
-import io.shtanko.picasagallery.view.base.BaseAdapter
-import javax.inject.Inject
 
-@ActivityScoped
-class InternalAlbumsAdapter @Inject constructor() : BaseAdapter<ContentType>() {
-
-  init {
-    delegateAdapters.put(Config.CONTENT_VIEW_TYPE_ID, InternalAlbumsDelegateImpl())
-  }
-
+data class Content(
+    val type: String,
+    val src: String) : ContentType {
+  override fun getViewType(): Int = Config.CONTENT_VIEW_TYPE_ID
 }

@@ -37,7 +37,7 @@ class PhotosActivity : BaseActivity(), PhotoClickListener {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.container_activity)
-    addFragment<PhotosFragment>(R.id.content_frame, fragmentProvider)
+    addFragment(R.id.content_frame, fragmentProvider)
   }
 
   override fun onPhotoClick(model: ViewType) {

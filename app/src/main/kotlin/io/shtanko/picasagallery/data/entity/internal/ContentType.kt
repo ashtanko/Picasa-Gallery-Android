@@ -15,19 +15,9 @@
  *
  */
 
-package io.shtanko.picasagallery.view.album
+package io.shtanko.picasagallery.data.entity.internal
 
-import io.shtanko.picasagallery.Config
-import io.shtanko.picasagallery.data.entity.internal.ContentType
-import io.shtanko.picasagallery.util.ActivityScoped
-import io.shtanko.picasagallery.view.base.BaseAdapter
-import javax.inject.Inject
+import io.shtanko.picasagallery.view.delegate.ViewType
 
-@ActivityScoped
-class InternalAlbumsAdapter @Inject constructor() : BaseAdapter<ContentType>() {
-
-  init {
-    delegateAdapters.put(Config.CONTENT_VIEW_TYPE_ID, InternalAlbumsDelegateImpl())
-  }
-
+interface ContentType : ViewType {
 }

@@ -17,33 +17,19 @@
 
 package io.shtanko.picasagallery.view.album
 
-import io.shtanko.picasagallery.data.internal.InternalAlbumsRepository
+import dagger.Binds
+import dagger.Module
+import dagger.android.ContributesAndroidInjector
 import io.shtanko.picasagallery.util.ActivityScoped
-import io.shtanko.picasagallery.view.album.InternalAlbumsContract.Presenter
-import io.shtanko.picasagallery.view.album.InternalAlbumsContract.View
-import javax.annotation.Nullable
-import javax.inject.Inject
+import io.shtanko.picasagallery.util.FragmentScoped
 
-@ActivityScoped
-class InternalAlbumsPresenter @Inject constructor(
-    ) : Presenter {
+@Module abstract class InternalAlbumsModule {
 
-  @Nullable
-  private var view: View? = null
+  @FragmentScoped
+  @ContributesAndroidInjector
+  abstract fun internalAlbumsFragment(): InternalAlbumsFragment
 
-  override fun takeView(view: View) {
-    this.view = view
-  }
-
-  override fun dropView() {
-    view = null
-  }
-
-  override fun getContent() {
-    view?.setLoadingIndicator(true)
-
-
-  }
-
-
+  @ActivityScoped
+  @Binds abstract fun internalAlbumsPresenter(
+      presenter: InternalAlbumsPresenter): InternalAlbumsContract.Presenter
 }
