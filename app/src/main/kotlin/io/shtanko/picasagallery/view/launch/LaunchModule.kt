@@ -20,13 +20,13 @@ package io.shtanko.picasagallery.view.launch
 import dagger.Binds
 import dagger.Module
 import io.shtanko.picasagallery.util.ActivityScoped
-
+import io.shtanko.picasagallery.view.launch.LaunchContract.Presenter
 
 @Module
 abstract class LaunchModule {
 
   @ActivityScoped
   @Binds
-  abstract fun launchPresenter(presenter: LaunchPresenter): LaunchContract.Presenter
+  abstract fun launchPresenter(presenter: LaunchPresenter): Presenter
 
 }

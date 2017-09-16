@@ -18,6 +18,7 @@
 package io.shtanko.picasagallery.core.prefs
 
 import android.content.Context
+import android.content.Context.MODE_PRIVATE
 import android.content.SharedPreferences
 import dagger.Module
 import dagger.Provides
@@ -30,7 +31,7 @@ class PreferencesModule {
   @Provides
   fun provideSharedPreferences(context: Context): SharedPreferences =
       context.getSharedPreferences(context.getString(R.string.preference_file_key),
-          Context.MODE_PRIVATE)
+          MODE_PRIVATE)
 
   @Provides
   fun providePreferencesHelper(sharedPreferences: SharedPreferences): PreferenceHelper =

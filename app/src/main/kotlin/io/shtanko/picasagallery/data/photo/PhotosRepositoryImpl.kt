@@ -24,7 +24,7 @@ import javax.inject.Singleton
 
 @Singleton
 class PhotosRepositoryImpl @Inject constructor(
-    var dataSource: PhotosDataSource) : PhotosRepository {
+    private val dataSource: PhotosDataSource) : PhotosRepository {
 
   override fun photos(): Flowable<PhotosList> = dataSource.getPhotos()
 }

@@ -22,10 +22,11 @@ import android.os.Bundle
 import io.shtanko.picasagallery.extensions.close
 import io.shtanko.picasagallery.view.auth.SignInActivity
 import io.shtanko.picasagallery.view.base.BaseActivity
+import io.shtanko.picasagallery.view.launch.LaunchContract.View
 import io.shtanko.picasagallery.view.main.MainActivity
 import javax.inject.Inject
 
-class LaunchActivity : BaseActivity(), LaunchContract.View {
+class LaunchActivity : BaseActivity(), View {
 
   @Inject lateinit var presenter: LaunchPresenter
 

@@ -22,6 +22,7 @@ import dagger.Module
 import dagger.android.ContributesAndroidInjector
 import io.shtanko.picasagallery.util.ActivityScoped
 import io.shtanko.picasagallery.util.FragmentScoped
+import io.shtanko.picasagallery.view.profile.ProfileContract.Presenter
 
 
 @Module
@@ -33,6 +34,6 @@ abstract class ProfileModule {
 
   @ActivityScoped
   @Binds
-  internal abstract fun profilePresenter(presenter: ProfilePresenter): ProfileContract.Presenter
+  internal abstract fun profilePresenter(presenter: ProfilePresenter): Presenter
 
 }

@@ -15,18 +15,10 @@
  *
  */
 
-package io.shtanko.picasagallery.view.launch
-
-import io.shtanko.picasagallery.view.base.BasePresenter
-import io.shtanko.picasagallery.view.base.BaseView
+package io.shtanko.picasagallery.view.base
 
 
-interface LaunchContract {
-  interface View : BaseView<Presenter> {
-    fun onSignedIn()
-    fun onSignedOut()
-  }
-  interface Presenter : BasePresenter<View> {
-    fun isSignIn()
-  }
+interface BasePresenter<in T> {
+  fun takeView(view: T)
+  fun dropView()
 }

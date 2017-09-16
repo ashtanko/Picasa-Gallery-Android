@@ -34,6 +34,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.MethodSorters
 import org.mockito.MockitoAnnotations
+import org.mockito.MockitoAnnotations.*
 import org.mockito.junit.MockitoJUnitRunner
 
 @RunWith(MockitoJUnitRunner::class)
@@ -46,7 +47,7 @@ class MainPresenterTest {
 
   @Before
   fun setUp() {
-    MockitoAnnotations.initMocks(this)
+    initMocks(this)
     presenter = MainPresenter(FakeAlbumRepository())
     presenter.takeView(view)
   }

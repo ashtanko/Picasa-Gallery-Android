@@ -24,6 +24,7 @@ import dagger.android.AndroidInjector
 import dagger.android.DaggerApplication
 import dagger.android.support.AndroidSupportInjectionModule
 import io.shtanko.picasagallery.AlbumsRepositoryModule
+import io.shtanko.picasagallery.InternalAlbumsDataModule
 import io.shtanko.picasagallery.PhotosDataSourceModule
 import io.shtanko.picasagallery.UserModule
 import io.shtanko.picasagallery.core.ActivityBindingModule
@@ -31,7 +32,6 @@ import io.shtanko.picasagallery.core.executor.JobModule
 import io.shtanko.picasagallery.core.prefs.PreferencesModule
 import io.shtanko.picasagallery.data.account.AccountModule
 import io.shtanko.picasagallery.data.api.ApiModule
-import io.shtanko.picasagallery.data.internal.InternalAlbumsDataModule
 import io.shtanko.picasagallery.data.photo.PhotosDataModule
 import io.shtanko.picasagallery.view.auth.GoogleApiModule
 import javax.inject.Singleton

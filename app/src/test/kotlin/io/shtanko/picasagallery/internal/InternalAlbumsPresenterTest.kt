@@ -31,7 +31,7 @@ import org.junit.FixMethodOrder
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.MethodSorters
-import org.mockito.MockitoAnnotations
+import org.mockito.MockitoAnnotations.initMocks
 import org.mockito.junit.MockitoJUnitRunner
 
 @RunWith(MockitoJUnitRunner::class)
@@ -44,7 +44,7 @@ class InternalAlbumsPresenterTest {
 
   @Before
   fun setUp() {
-    MockitoAnnotations.initMocks(this)
+    initMocks(this)
     presenter = InternalAlbumsPresenter(FakeInternalAlbumsRepository())
     presenter.takeView(view)
   }

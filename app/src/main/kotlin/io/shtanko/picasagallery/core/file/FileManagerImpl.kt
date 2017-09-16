@@ -33,7 +33,7 @@ import javax.inject.Singleton
 class FileManagerImpl : FileManager {
 
   override fun writeToFile(file: File, fileContent: String) {
-    if (!file.exists()) {
+    if (file.exists()) {
       try {
         val writer = FileWriter(file)
         writer.write(fileContent)
@@ -50,9 +50,11 @@ class FileManagerImpl : FileManager {
       try {
         val fileReader = FileReader(file)
         val bufferedReader = BufferedReader(fileReader)
-        val stringLine = bufferedReader.readLine()
+        var stringLine = bufferedReader.readLine()
+
         while (stringLine != null) {
           fileContentBuilder.append(stringLine).append("\n")
+          stringLine = bufferedReader.readLine()
         }
         bufferedReader.close()
         fileReader.close()
@@ -72,6 +74,16 @@ class FileManagerImpl : FileManager {
       for (file in dir.listFiles()) {
         result = file.delete()
       }
+    }
+    return result
+  }
+
+  private fun isEOF(br: BufferedReader): Boolean {
+    var result = false
+    try {
+      result = br.ready()
+    } catch (e: IOException) {
+      System.err.println(e)
     }
     return result
   }

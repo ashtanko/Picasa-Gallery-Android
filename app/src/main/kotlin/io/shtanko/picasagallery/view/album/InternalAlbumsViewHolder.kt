@@ -38,7 +38,7 @@ class InternalAlbumsViewHolder(itemView: View?) : BaseViewHolder(itemView), Divi
 
   override fun bind(item: ViewType) {
     if (item is Content) {
-
+      imageHelper.process(itemView.context, image, item.src)
     }
   }
 }

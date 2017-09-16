@@ -32,6 +32,6 @@ class ProfileActivity : BaseActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.container_activity)
-    addFragment<ProfileFragment>(R.id.content_frame, fragmentProvider)
+    addFragment(R.id.content_frame, fragmentProvider)
   }
 }

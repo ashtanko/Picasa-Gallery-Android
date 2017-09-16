@@ -24,7 +24,7 @@ import javax.inject.Singleton
 
 @Singleton
 class UserDataSourceImpl @Inject constructor(
-    var preferencesHelper: PreferenceHelper) : UserDataSource {
+    private val preferencesHelper: PreferenceHelper) : UserDataSource {
 
   override fun markUserRefusedSignIn(refused: Boolean) {
     preferencesHelper.markUserRefusedSignIn(refused)

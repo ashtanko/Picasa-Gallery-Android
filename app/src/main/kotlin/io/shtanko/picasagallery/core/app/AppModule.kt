@@ -22,7 +22,6 @@ import android.content.Context
 import dagger.Binds
 import dagger.Module
 
-
 @Module
 abstract class AppModule {
   @Binds

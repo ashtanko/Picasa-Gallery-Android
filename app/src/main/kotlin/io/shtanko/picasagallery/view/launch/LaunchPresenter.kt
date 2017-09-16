@@ -23,16 +23,17 @@ import io.shtanko.picasagallery.data.DefaultObserver
 import io.shtanko.picasagallery.data.entity.user.User
 import io.shtanko.picasagallery.data.user.GetUserDetails
 import io.shtanko.picasagallery.util.ActivityScoped
+import io.shtanko.picasagallery.view.launch.LaunchContract.Presenter
 import io.shtanko.picasagallery.view.launch.LaunchContract.View
 import javax.annotation.Nullable
 import javax.inject.Inject
 
 @ActivityScoped
 class LaunchPresenter @Inject constructor(
-    var getUserDetails: GetUserDetails) : LaunchContract.Presenter {
+    private val getUserDetails: GetUserDetails) : Presenter {
 
   @Nullable
-  private var view: LaunchContract.View? = null
+  private var view: View? = null
 
   override fun takeView(view: View) {
     this.view = view

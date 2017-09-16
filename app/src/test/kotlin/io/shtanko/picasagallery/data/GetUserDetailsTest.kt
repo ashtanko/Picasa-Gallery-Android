@@ -26,7 +26,10 @@ import io.shtanko.picasagallery.data.user.UserRepository
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mockito.Mockito
+import org.mockito.Mockito.`when`
+import org.mockito.Mockito.verify
+import org.mockito.Mockito.verifyNoMoreInteractions
+import org.mockito.Mockito.verifyZeroInteractions
 import org.mockito.junit.MockitoJUnitRunner
 
 @RunWith(MockitoJUnitRunner::class)
@@ -44,14 +47,14 @@ class GetUserDetailsTest {
 
   @Test
   fun get_userTest() {
-    Mockito.`when`(getUserDetails?.userRepository?.getUserData()).thenReturn(
+    `when`(getUserDetails?.userRepository?.getUserData()).thenReturn(
         Flowable.just(MockUser.create()))
-    Mockito.`when`(mockUserRepository.getUserData()).thenReturn(
+    `when`(mockUserRepository.getUserData()).thenReturn(
         Flowable.just(MockUser.create()))
     getUserDetails?.buildUseCaseObservable(GetUserDetails.Params.createQuery())
-    Mockito.verify(mockUserRepository).getUserData()
-    Mockito.verifyNoMoreInteractions(mockUserRepository)
-    Mockito.verifyZeroInteractions(mockThreadExecutor)
-    Mockito.verifyZeroInteractions(mockPostExecutionThread)
+    verify(mockUserRepository).getUserData()
+    verifyNoMoreInteractions(mockUserRepository)
+    verifyZeroInteractions(mockThreadExecutor)
+    verifyZeroInteractions(mockPostExecutionThread)
   }
 }

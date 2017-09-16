@@ -30,10 +30,11 @@ import io.shtanko.picasagallery.core.DispatchQueue
 import io.shtanko.picasagallery.core.log.LogType.DEBUG
 import io.shtanko.picasagallery.core.log.LogType.ERROR
 import io.shtanko.picasagallery.vendors.utils.time.FastDateFormat
+import io.shtanko.picasagallery.vendors.utils.time.FastDateFormat.getInstance
 import java.io.File
 import java.io.FileOutputStream
 import java.io.OutputStreamWriter
-import java.util.Locale
+import java.util.Locale.US
 
 /**
  * {@link io.shtanko.picasagallery.core.log.Loggable} implementation.
@@ -42,8 +43,8 @@ object FileLog : Loggable {
 
 
   private var streamWriter: OutputStreamWriter? = null
-  private val dateFormat: FastDateFormat = FastDateFormat.getInstance(Config.LOGS_DATE_FORMAT,
-      Locale.US)
+  private val dateFormat: FastDateFormat = getInstance(Config.LOGS_DATE_FORMAT,
+      US)
 
   private var logQueue: DispatchQueue? = null
   private var currentFile: File? = null
@@ -180,5 +181,5 @@ object FileLog : Loggable {
   }
 
   private fun formatFileName(type: LogType, message: Any?): String =
-      " ${type.name}/${APPLICATION_LOG_TAG}: " + message + "\n"
+      " ${type.name}/$APPLICATION_LOG_TAG: " + message + "\n"
 }

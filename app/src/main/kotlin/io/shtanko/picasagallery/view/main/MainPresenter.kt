@@ -28,7 +28,7 @@ import javax.inject.Inject
 
 @ActivityScoped
 class MainPresenter @Inject constructor(
-    var repository: AlbumRepository
+    private val repository: AlbumRepository
 ) : Presenter {
 
   @Nullable

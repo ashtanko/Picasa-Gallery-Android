@@ -23,16 +23,15 @@ import io.shtanko.picasagallery.R
 import io.shtanko.picasagallery.extensions.inflate
 import io.shtanko.picasagallery.view.delegate.ViewType
 import io.shtanko.picasagallery.view.delegate.ViewTypeAdapterDelegate
-import io.shtanko.picasagallery.view.main.MainViewHolder
 
 class InternalAlbumsDelegateImpl : ViewTypeAdapterDelegate {
   override fun onCreateViewHolder(parent: ViewGroup?): ViewHolder {
     val view = parent?.inflate(R.layout.album_item)
-    return MainViewHolder(view)
+    return InternalAlbumsViewHolder(view)
   }
 
   override fun onBindViewHolder(holder: ViewHolder, item: ViewType) {
-    holder as MainViewHolder
+    holder as InternalAlbumsViewHolder
     holder.bind(item)
   }
 }

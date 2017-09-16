@@ -18,7 +18,7 @@
 package io.shtanko.picasagallery.data.user
 
 import io.reactivex.Flowable
-import io.shtanko.picasagallery.base.UseCase
+import io.shtanko.picasagallery.view.base.UseCase
 import io.shtanko.picasagallery.core.executor.PostExecutionThread
 import io.shtanko.picasagallery.core.executor.ThreadExecutor
 import io.shtanko.picasagallery.data.entity.user.User

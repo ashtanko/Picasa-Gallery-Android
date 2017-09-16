@@ -25,7 +25,7 @@ import io.shtanko.picasagallery.data.album.AlbumRepositoryImpl
 import javax.inject.Singleton
 
 @Module
-abstract public class AlbumsRepositoryModule {
+abstract class AlbumsRepositoryModule {
   @Singleton
   @Binds
   abstract fun provideAlbumDataSource(dataSourceImpl: MockAlbumDataSourceImpl): AlbumDataSource

@@ -15,18 +15,9 @@
  *
  */
 
-package io.shtanko.picasagallery.view.launch
+package io.shtanko.picasagallery.data.entity.base
 
-import io.shtanko.picasagallery.view.base.BasePresenter
-import io.shtanko.picasagallery.view.base.BaseView
-
-
-interface LaunchContract {
-  interface View : BaseView<Presenter> {
-    fun onSignedIn()
-    fun onSignedOut()
-  }
-  interface Presenter : BasePresenter<View> {
-    fun isSignIn()
-  }
+data class BaseAnimationEntity(
+    val isAnimationShown: Boolean
+) {
 }

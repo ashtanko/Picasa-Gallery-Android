@@ -17,7 +17,7 @@
 
 package io.shtanko.picasagallery.view.auth
 
-import io.shtanko.picasagallery.base.BasePresenter
+import io.shtanko.picasagallery.view.base.BasePresenter
 import io.shtanko.picasagallery.data.entity.user.User
 import io.shtanko.picasagallery.view.base.BaseView
 

@@ -19,17 +19,16 @@ package io.shtanko.picasagallery.launch
 
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.never
-import io.shtanko.picasagallery.core.prefs.PreferenceHelper
 import io.shtanko.picasagallery.data.DefaultObserver
 import io.shtanko.picasagallery.data.entity.user.User
 import io.shtanko.picasagallery.data.user.GetUserDetails
-import io.shtanko.picasagallery.view.launch.LaunchContract
+import io.shtanko.picasagallery.view.launch.LaunchContract.View
 import io.shtanko.picasagallery.view.launch.LaunchPresenter
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mockito.Mockito
-import org.mockito.MockitoAnnotations
+import org.mockito.Mockito.verify
+import org.mockito.MockitoAnnotations.initMocks
 import org.mockito.junit.MockitoJUnitRunner
 
 
@@ -37,12 +36,12 @@ import org.mockito.junit.MockitoJUnitRunner
 class LaunchPresenterTest {
 
   private val getUserDetails = mock<GetUserDetails>()
-  private val view = mock<LaunchContract.View>()
+  private val view = mock<View>()
   private lateinit var presenter: LaunchPresenter
 
   @Before
   fun setUp() {
-    MockitoAnnotations.initMocks(this)
+    initMocks(this)
     presenter = LaunchPresenter(getUserDetails)
     presenter.takeView(view)
   }
@@ -50,13 +49,13 @@ class LaunchPresenterTest {
   @Test
   fun is_signed_inTest() {
     presenter.isSignIn()
-    Mockito.verify(view, never()).onSignedIn()
+    verify(view, never()).onSignedIn()
   }
 
   @Test
   fun is_signed_outTest() {
     presenter.isSignIn()
-    Mockito.verify(view, never()).onSignedOut()
+    verify(view, never()).onSignedOut()
   }
 
   inner class UserListObserver : DefaultObserver<User>() {

@@ -19,7 +19,8 @@ package io.shtanko.picasagallery
 
 import dagger.Module
 import dagger.Provides
-import io.shtanko.picasagallery.base.UseCase
+import io.shtanko.picasagallery.MockGetUserDetails.Params
+import io.shtanko.picasagallery.view.base.UseCase
 import io.shtanko.picasagallery.core.executor.PostExecutionThread
 import io.shtanko.picasagallery.core.executor.ThreadExecutor
 import io.shtanko.picasagallery.data.entity.user.User
@@ -41,7 +42,7 @@ class UserModule {
   @Named("UserDetails")
   fun provideUserDetails(userRepository: UserRepository,
       threadExecutor: ThreadExecutor,
-      postExecutionThread: PostExecutionThread): UseCase<User, io.shtanko.picasagallery.MockGetUserDetails.Params> =
+      postExecutionThread: PostExecutionThread): UseCase<User, Params> =
       MockGetUserDetails(userRepository, threadExecutor, postExecutionThread)
 
 }

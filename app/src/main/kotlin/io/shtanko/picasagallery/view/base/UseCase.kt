@@ -15,7 +15,7 @@
  *
  */
 
-package io.shtanko.picasagallery.base
+package io.shtanko.picasagallery.view.base
 
 import dagger.internal.Preconditions
 import io.reactivex.Flowable
@@ -27,8 +27,8 @@ import io.shtanko.picasagallery.core.executor.PostExecutionThread
 import io.shtanko.picasagallery.core.executor.ThreadExecutor
 
 
-abstract class UseCase<T, in P>(var threadExecutor: ThreadExecutor,
-    var postExecutionThread: PostExecutionThread) {
+abstract class UseCase<T, in P>(private val threadExecutor: ThreadExecutor,
+    private val postExecutionThread: PostExecutionThread) {
 
   /**
    * Builds an {@link rx.Observable} which will be used when executing the current {@link UseCase}.

@@ -22,6 +22,7 @@ import dagger.Module
 import dagger.android.ContributesAndroidInjector
 import io.shtanko.picasagallery.util.ActivityScoped
 import io.shtanko.picasagallery.util.FragmentScoped
+import io.shtanko.picasagallery.view.main.MainContract.Presenter
 
 @Module abstract class MainModule {
 
@@ -30,5 +31,5 @@ import io.shtanko.picasagallery.util.FragmentScoped
   abstract fun mainFragment(): MainFragment
 
   @ActivityScoped
-  @Binds abstract fun mainPresenter(presenter: MainPresenter): MainContract.Presenter
+  @Binds abstract fun mainPresenter(presenter: MainPresenter): Presenter
 }

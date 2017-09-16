@@ -17,13 +17,11 @@
 
 package io.shtanko.picasagallery.data.api
 
-import com.github.kittinunf.fuel.core.FuelManager
-import com.google.gson.FieldNamingPolicy
+import com.google.gson.FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
-import io.shtanko.picasagallery.Config
 import io.shtanko.picasagallery.core.prefs.PreferencesModule
 
 @Module(includes = arrayOf(PreferencesModule::class))
@@ -32,7 +30,7 @@ class ApiModule {
   @Provides
   fun provideGson(): Gson {
     val gsonBuilder = GsonBuilder()
-    gsonBuilder.setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+    gsonBuilder.setFieldNamingPolicy(LOWER_CASE_WITH_UNDERSCORES)
     gsonBuilder.setPrettyPrinting()
     return gsonBuilder.create()
   }

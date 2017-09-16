@@ -19,13 +19,14 @@ package io.shtanko.picasagallery.data.account
 
 import android.content.SharedPreferences
 import android.text.TextUtils
-import com.google.android.gms.auth.GoogleAuthUtil
+import com.google.android.gms.auth.GoogleAuthUtil.GOOGLE_ACCOUNT_TYPE
 import io.shtanko.picasagallery.Config
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class AccountHelper @Inject constructor(val sharedPreferences: SharedPreferences) : Account {
+class AccountHelper @Inject constructor(
+    private val sharedPreferences: SharedPreferences) : Account {
 
   override fun hasActiveAccount() = !TextUtils.isEmpty(getActiveAccountName())
 
@@ -34,7 +35,7 @@ class AccountHelper @Inject constructor(val sharedPreferences: SharedPreferences
 
   override fun getActiveAccount(): android.accounts.Account {
     val account = getActiveAccountName()
-    return android.accounts.Account(account, GoogleAuthUtil.GOOGLE_ACCOUNT_TYPE)
+    return android.accounts.Account(account, GOOGLE_ACCOUNT_TYPE)
   }
 
   override fun setActiveAccount(accountName: String) {

@@ -18,11 +18,8 @@
 package io.shtanko.picasagallery.view.photo
 
 import android.os.Bundle
-import android.os.Handler
-import android.view.KeyEvent
 import dagger.Lazy
 import io.shtanko.picasagallery.R
-import io.shtanko.picasagallery.extensions.close
 import io.shtanko.picasagallery.view.base.BaseActivity
 import io.shtanko.picasagallery.view.delegate.ViewType
 import io.shtanko.picasagallery.view.photo.PhotosFragment.PhotoClickListener
@@ -32,7 +29,7 @@ class PhotosActivity : BaseActivity(), PhotoClickListener {
 
   @Inject lateinit var presenter: PhotosPresenter
   @Inject lateinit var fragmentProvider: Lazy<PhotosFragment>
-  val viewer = PhotoViewer()
+  private val viewer = PhotoViewer()
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)

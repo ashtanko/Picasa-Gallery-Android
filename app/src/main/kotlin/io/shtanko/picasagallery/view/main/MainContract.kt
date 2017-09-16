@@ -17,7 +17,7 @@
 
 package io.shtanko.picasagallery.view.main
 
-import io.shtanko.picasagallery.base.BasePresenter
+import io.shtanko.picasagallery.view.base.BasePresenter
 import io.shtanko.picasagallery.extensions.AlbumsList
 import io.shtanko.picasagallery.view.base.BaseErrorView
 import io.shtanko.picasagallery.view.base.BaseProgressView

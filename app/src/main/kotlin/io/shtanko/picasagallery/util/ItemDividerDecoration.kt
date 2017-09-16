@@ -20,6 +20,7 @@ package io.shtanko.picasagallery.util
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Paint
+import android.graphics.Paint.Style.FILL
 import android.support.annotation.ColorInt
 import android.support.annotation.Dimension
 import android.support.annotation.NonNull
@@ -38,7 +39,7 @@ class ItemDividerDecoration constructor(
   init {
     paint = Paint()
     paint.color = dividerColor
-    paint.style = Paint.Style.FILL
+    paint.style = FILL
   }
 
   override fun onDrawOver(canvas: Canvas, parent: RecyclerView, state: State?) {

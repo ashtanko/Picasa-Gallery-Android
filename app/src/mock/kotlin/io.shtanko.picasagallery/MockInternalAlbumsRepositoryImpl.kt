@@ -15,24 +15,22 @@
  *
  */
 
-package io.shtanko.picasagallery.data.album
+package io.shtanko.picasagallery
 
 import io.reactivex.Flowable
-import io.shtanko.picasagallery.core.prefs.PreferenceHelper
-import io.shtanko.picasagallery.data.api.ApiManager
-import io.shtanko.picasagallery.extensions.AlbumsList
+import io.shtanko.picasagallery.data.entity.internal.ContentType
+import io.shtanko.picasagallery.data.internal.InternalAlbumsRepository
+import io.shtanko.picasagallery.extensions.ContentList
+import io.shtanko.picasagallery.view.util.getContentData
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class AlbumDataSourceImpl @Inject constructor(
-    private val apiManager: ApiManager,
-    private val preferencesHelper: PreferenceHelper,
-    private val albumEntityMapper: AlbumEntityMapper) : AlbumDataSource {
+class MockInternalAlbumsRepositoryImpl @Inject constructor() : InternalAlbumsRepository {
 
-
-  override fun getAlbums(): Flowable<AlbumsList> {
-    return apiManager.getUserAlbums(
-        preferencesHelper.getUserId()).map { albumEntityMapper.transform(it) }
+  override fun content(): Flowable<ContentList> {
+    val content = ArrayList<ContentType>()
+    content.addAll(getContentData())
+    return Flowable.fromIterable(content).toList().toFlowable()
   }
 }

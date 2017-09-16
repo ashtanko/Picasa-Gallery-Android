@@ -17,20 +17,21 @@
 
 package io.shtanko.picasagallery.core.image
 
+import android.R.interpolator
 import android.animation.AnimatorListenerAdapter
-import android.animation.AnimatorSet
-import android.animation.ObjectAnimator
+import android.animation.ObjectAnimator.ofFloat
 import android.content.Context
 import android.graphics.ColorMatrixColorFilter
-import android.os.Build
-import android.os.Build.VERSION
-import android.os.Build.VERSION_CODES
-import android.view.animation.AnimationUtils
+import android.os.Build.VERSION.SDK_INT
+import android.os.Build.VERSION_CODES.JELLY_BEAN
+import android.os.Build.VERSION_CODES.LOLLIPOP
+import android.view.animation.AnimationUtils.loadInterpolator
 import android.widget.ImageView
 import com.bumptech.glide.DrawableRequestBuilder
 import com.bumptech.glide.Glide
-import com.bumptech.glide.Priority
-import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.Priority.LOW
+import com.bumptech.glide.Priority.NORMAL
+import com.bumptech.glide.load.engine.DiskCacheStrategy.SOURCE
 import com.bumptech.glide.load.resource.bitmap.BitmapTransformation
 import com.bumptech.glide.load.resource.drawable.GlideDrawable
 import com.bumptech.glide.request.RequestListener
@@ -49,18 +50,18 @@ class ImageHelperImpl : ImageHelper {
     load(context, url, object : OnLoadImageListener {
       override fun onLoadSucceed() {
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+        if (SDK_INT >= LOLLIPOP) {
           imageView?.setHasTransientState(true)
 
           val matrix = ObservableColorMatrix
-          val saturation = ObjectAnimator.ofFloat(matrix, "saturation", 0f,
+          val saturation = ofFloat(matrix, "saturation", 0f,
               1f)
 
           saturation.addUpdateListener { imageView?.colorFilter = ColorMatrixColorFilter(matrix) }
           saturation.duration = 2800
 
-          saturation.interpolator = AnimationUtils.loadInterpolator(context,
-              android.R.interpolator.fast_out_slow_in)
+          saturation.interpolator = loadInterpolator(context,
+              interpolator.fast_out_slow_in)
 
           saturation.addListener(object : AnimatorListenerAdapter() {
             override fun onAnimationEnd(animation: android.animation.Animator?) {
@@ -81,7 +82,7 @@ class ImageHelperImpl : ImageHelper {
 
   private fun clean(imageView: ImageView?) {
     imageView?.clearColorFilter()
-    if (VERSION.SDK_INT >= VERSION_CODES.JELLY_BEAN) {
+    if (SDK_INT >= JELLY_BEAN) {
       imageView?.setHasTransientState(false)
     }
   }
@@ -92,7 +93,7 @@ class ImageHelperImpl : ImageHelper {
     val thumbnailRequest = Glide
         .with(context)
         .load(url)
-        .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+        .diskCacheStrategy(SOURCE)
         .placeholder(R.drawable.image_placeholder)
         .listener(object : RequestListener<String, GlideDrawable> {
 
@@ -107,7 +108,7 @@ class ImageHelperImpl : ImageHelper {
           }
         })
 
-    if (listener != null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+    if (listener != null && SDK_INT >= LOLLIPOP) {
       val matrix = ObservableColorMatrix
       matrix.setSaturation(0.0F)
       imageView?.colorFilter = ColorMatrixColorFilter(matrix)
@@ -128,7 +129,7 @@ class ImageHelperImpl : ImageHelper {
         .with(context)
         .load(url)
         .placeholder(R.drawable.image_placeholder)
-        .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+        .diskCacheStrategy(SOURCE)
         .listener(object : RequestListener<String, GlideDrawable> {
 
           override fun onException(e: Exception?, model: String, target: Target<GlideDrawable>,
@@ -149,9 +150,9 @@ class ImageHelperImpl : ImageHelper {
       builder.dontAnimate()
     }
     if (lowPriority) {
-      builder.priority(Priority.LOW)
+      builder.priority(LOW)
     } else {
-      builder.priority(Priority.NORMAL)
+      builder.priority(NORMAL)
     }
 
     if (thumbnail != null) {

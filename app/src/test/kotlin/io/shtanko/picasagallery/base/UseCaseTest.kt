@@ -21,7 +21,7 @@ import com.nhaarman.mockito_kotlin.mock
 import io.shtanko.picasagallery.core.executor.PostExecutionThread
 import io.shtanko.picasagallery.core.executor.ThreadExecutor
 import io.shtanko.picasagallery.data.DefaultObserver
-import org.hamcrest.MatcherAssert
+import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.core.Is.`is`
 import org.junit.Before
 import org.junit.Test
@@ -45,7 +45,7 @@ class UseCaseTest {
     val subscriber = TestObserver()
     useCase?.execute(subscriber, UseCaseTestClass.Params.createQuery())
     useCase?.unSubscribe()
-    MatcherAssert.assertThat(subscriber.isDisposed, `is`(true))
+    assertThat(subscriber.isDisposed, `is`(true))
   }
 
   inner class TestObserver : DefaultObserver<TestModel>() {

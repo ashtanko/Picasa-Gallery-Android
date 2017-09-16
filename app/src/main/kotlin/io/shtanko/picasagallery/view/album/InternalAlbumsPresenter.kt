@@ -17,17 +17,27 @@
 
 package io.shtanko.picasagallery.view.album
 
+import io.shtanko.picasagallery.data.entity.internal.Content
+import io.shtanko.picasagallery.data.entity.internal.ContentType
 import io.shtanko.picasagallery.data.internal.InternalAlbumsRepository
 import io.shtanko.picasagallery.util.ActivityScoped
 import io.shtanko.picasagallery.view.album.InternalAlbumsContract.Presenter
 import io.shtanko.picasagallery.view.album.InternalAlbumsContract.View
+import io.shtanko.picasagallery.view.delegate.ViewType
 import javax.annotation.Nullable
 import javax.inject.Inject
 
 @ActivityScoped
 class InternalAlbumsPresenter @Inject constructor(
-    var repository: InternalAlbumsRepository
+    private val repository: InternalAlbumsRepository
 ) : Presenter {
+
+
+  override fun onItemClick(view: ViewType) {
+    if (view is ContentType) {
+      this.view?.viewAlbum(view as Content)
+    }
+  }
 
   @Nullable
   private var view: View? = null

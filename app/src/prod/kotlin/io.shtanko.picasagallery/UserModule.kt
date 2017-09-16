@@ -19,14 +19,15 @@ package io.shtanko.picasagallery
 
 import dagger.Module
 import dagger.Provides
-import io.shtanko.picasagallery.base.UseCase
 import io.shtanko.picasagallery.core.executor.PostExecutionThread
 import io.shtanko.picasagallery.core.executor.ThreadExecutor
 import io.shtanko.picasagallery.data.entity.user.User
 import io.shtanko.picasagallery.data.user.GetUserDetails
+import io.shtanko.picasagallery.data.user.GetUserDetails.Params
 import io.shtanko.picasagallery.data.user.GetUserRepositoryImpl
 import io.shtanko.picasagallery.data.user.UserDataSourceImpl
 import io.shtanko.picasagallery.data.user.UserRepository
+import io.shtanko.picasagallery.view.base.UseCase
 import javax.inject.Named
 import javax.inject.Singleton
 
@@ -43,7 +44,7 @@ class UserModule {
   @Named("UserDetails")
   fun provideUserDetails(userRepository: UserRepository,
       threadExecutor: ThreadExecutor,
-      postExecutionThread: PostExecutionThread): UseCase<User, io.shtanko.picasagallery.data.user.GetUserDetails.Params> =
+      postExecutionThread: PostExecutionThread): UseCase<User, Params> =
       GetUserDetails(userRepository, threadExecutor, postExecutionThread)
 
 }

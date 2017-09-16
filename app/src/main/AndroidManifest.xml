@@ -59,5 +59,10 @@
 
     <activity android:name=".view.album.InternalAlbumsActivity"/>
 
+    <meta-data
+        android:name="io.shtanko.picasagallery.util.PicasaGlideModule"
+        android:value="GlideModule">
+    </meta-data>
+
   </application>
 </manifest>

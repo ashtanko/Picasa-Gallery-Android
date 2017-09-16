@@ -15,10 +15,18 @@
  *
  */
 
-package io.shtanko.picasagallery.base
+package io.shtanko.picasagallery
 
+import dagger.Binds
+import dagger.Module
+import io.shtanko.picasagallery.data.internal.InternalAlbumsRepository
+import javax.inject.Singleton
 
-interface BasePresenter<in T> {
-  fun takeView(view: T)
-  fun dropView()
+@Module
+abstract class InternalAlbumsDataModule {
+
+  @Singleton
+  @Binds
+  abstract fun provideInternalAlbumsRepository(
+      albumRepository: MockInternalAlbumsRepositoryImpl): InternalAlbumsRepository
 }

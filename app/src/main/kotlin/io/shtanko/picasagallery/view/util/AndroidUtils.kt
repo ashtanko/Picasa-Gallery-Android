@@ -78,7 +78,7 @@ object AndroidUtils {
     runOnUIThread(runnable, 0)
   }
 
-  public fun runOnUIThread(runnable: Runnable, delay: Long) {
+  private fun runOnUIThread(runnable: Runnable, delay: Long) {
     if (delay == 0.toLong()) {
       PicasaApplication.applicationHandler.post(runnable)
     } else {

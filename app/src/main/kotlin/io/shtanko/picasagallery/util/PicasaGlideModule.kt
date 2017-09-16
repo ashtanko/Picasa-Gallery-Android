@@ -15,17 +15,18 @@
  *
  */
 
-package io.shtanko.picasagallery.data.internal
+package io.shtanko.picasagallery.util
 
-import dagger.Binds
-import dagger.Module
-import javax.inject.Singleton
+import android.content.Context
+import com.bumptech.glide.Glide
+import com.bumptech.glide.GlideBuilder
+import com.bumptech.glide.module.GlideModule
 
-@Module
-abstract class InternalAlbumsDataModule {
+class PicasaGlideModule : GlideModule {
 
-  @Singleton
-  @Binds
-  abstract fun provideInternalAlbumsRepository(
-      albumRepository: InternalAlbumsRepositoryImpl): InternalAlbumsRepository
+  override fun applyOptions(context: Context?, builder: GlideBuilder?) {
+  }
+
+  override fun registerComponents(context: Context?, glide: Glide?) {
+  }
 }

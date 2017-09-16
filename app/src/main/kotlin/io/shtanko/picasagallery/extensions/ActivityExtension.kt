@@ -19,16 +19,19 @@ package io.shtanko.picasagallery.extensions
 
 import android.app.Activity
 import android.content.Context
-import android.os.Build
+import android.os.Build.VERSION.SDK_INT
+import android.os.Build.VERSION_CODES.JELLY_BEAN
+import android.os.Build.VERSION_CODES.M
 import android.support.v4.app.Fragment
-import android.widget.Toast
+import android.widget.Toast.LENGTH_SHORT
+import android.widget.Toast.makeText
 import dagger.android.DaggerFragment
 
-fun Fragment.getSafeContext(): Context = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) this.context else activity
-fun DaggerFragment.getSafeContext(): Context = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) this.context else activity
+fun Fragment.getSafeContext(): Context = if (SDK_INT >= M) this.context else activity
+fun DaggerFragment.getSafeContext(): Context = if (SDK_INT >= M) this.context else activity
 
 fun Activity.close() {
-  if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+  if (SDK_INT >= JELLY_BEAN) {
     finishAffinity()
   } else {
     finish()
@@ -36,9 +39,9 @@ fun Activity.close() {
 }
 
 fun Activity.shortToast(message: String) {
-  Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+  makeText(this, message, LENGTH_SHORT).show()
 }
 
 fun Fragment.shortToast(message: String) {
-  Toast.makeText(activity, message, Toast.LENGTH_SHORT).show()
+  makeText(activity, message, LENGTH_SHORT).show()
 }

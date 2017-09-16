@@ -91,7 +91,6 @@ class PhotosFragment @Inject constructor() : BaseFragment(), PhotosContract.View
 
   override fun showPhotos(photos: PhotosList) {
     photosAdapter.items = photos
-    photosAdapter.notifyDataSetChanged()
   }
 
   override fun viewPhoto(model: ViewType) {

@@ -17,9 +17,11 @@
 
 package io.shtanko.picasagallery
 
-import com.google.android.gms.common.Scopes
+import com.google.android.gms.common.Scopes.DRIVE_APPFOLDER
+import com.google.android.gms.common.Scopes.PLUS_ME
+import com.google.android.gms.common.Scopes.PROFILE
 import java.util.ArrayList
-import java.util.Arrays
+import java.util.Arrays.asList
 
 object Config {
 
@@ -34,7 +36,7 @@ object Config {
   val SAVED_PERSON_FAMILY_NAME_PREF = "user_family_name_pref"
   val SAVED_EMAIL_PREF = "user_email_pref"
   val SAVED_ID_PREF = "user_id_pref"
-  val PICASA_BASE_URL = "https://picasaweb.google.com/data"
+  private val PICASA_BASE_URL = "https://picasaweb.google.com/data"
   val PICASA_BASE_API_URL = "$PICASA_BASE_URL/feed/api"
 
   val LOGS_PATH = "/logs"
@@ -55,13 +57,11 @@ object Config {
   val LOG_FILE_FORMAT_NAME = ".log"
   val NET_LOG_FILENAME = "_net$LOG_FILE_FORMAT_NAME"
 
-  val AUTH_SCOPES = ArrayList(Arrays.asList(
-      Scopes.PLUS_ME,
-      Scopes.PROFILE,
-      Scopes.DRIVE_APPFOLDER,
+  val AUTH_SCOPES = ArrayList(asList(
+      PLUS_ME,
+      PROFILE,
+      DRIVE_APPFOLDER,
       "https://www.googleapis.com/auth/plus.profile.emails.read"))
-
-  //https://picasaweb.google.com/data/feed/api/user/113288841856843375771?alt=json&start-index=1&max-results=1
 
   val jsonParams = object : ArrayList<Pair<String, String>>() {
     init {

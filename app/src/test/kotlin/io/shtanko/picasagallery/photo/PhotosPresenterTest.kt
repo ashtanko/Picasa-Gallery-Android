@@ -31,7 +31,7 @@ import io.shtanko.picasagallery.view.util.getPhotosData
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mockito.MockitoAnnotations
+import org.mockito.MockitoAnnotations.initMocks
 import org.mockito.junit.MockitoJUnitRunner
 
 @RunWith(MockitoJUnitRunner::class)
@@ -43,7 +43,7 @@ class PhotosPresenterTest {
 
   @Before
   fun setUp() {
-    MockitoAnnotations.initMocks(this)
+    initMocks(this)
     presenter = PhotosPresenter(FakePhotosRepository())
     presenter.takeView(view)
   }

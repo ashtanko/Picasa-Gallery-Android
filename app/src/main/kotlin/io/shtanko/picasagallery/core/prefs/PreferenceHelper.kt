@@ -50,9 +50,8 @@ class PreferenceHelper constructor(val sharedPreferences: SharedPreferences) {
     val personFamilyName = sharedPreferences.getString(Config.SAVED_PERSON_FAMILY_NAME_PREF, "")
     val personEmail = sharedPreferences.getString(Config.SAVED_EMAIL_PREF, "")
     val personId = sharedPreferences.getString(Config.SAVED_ID_PREF, "")
-    val user = User(personName, personGivenName,
+    return User(personName, personGivenName,
         personFamilyName, personEmail, personId)
-    return user
   }
 
   fun saveToken(token: String) = sharedPreferences.edit().putString(Config.SAVED_TOKEN_PREF,

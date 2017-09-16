@@ -17,11 +17,12 @@
 
 package io.shtanko.picasagallery.view.photo
 
-import io.shtanko.picasagallery.base.BasePresenter
+import io.shtanko.picasagallery.view.base.BasePresenter
 import io.shtanko.picasagallery.extensions.PhotosList
 import io.shtanko.picasagallery.view.base.BaseErrorView
 import io.shtanko.picasagallery.view.base.BaseProgressView
 import io.shtanko.picasagallery.view.base.BaseView
+import io.shtanko.picasagallery.view.base.Clickable
 import io.shtanko.picasagallery.view.delegate.ViewType
 
 interface PhotosContract {
@@ -30,7 +31,7 @@ interface PhotosContract {
     fun viewPhoto(model: ViewType)
   }
 
-  interface Presenter : BasePresenter<PhotosContract.View> {
+  interface Presenter : BasePresenter<View> {
     fun getPhotos()
     fun onPhotoClick(model: ViewType)
   }

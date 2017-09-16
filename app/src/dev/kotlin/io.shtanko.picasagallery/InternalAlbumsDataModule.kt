@@ -15,18 +15,19 @@
  *
  */
 
-package io.shtanko.picasagallery.view.launch
+package io.shtanko.picasagallery
 
-import io.shtanko.picasagallery.view.base.BasePresenter
-import io.shtanko.picasagallery.view.base.BaseView
+import dagger.Binds
+import dagger.Module
+import io.shtanko.picasagallery.data.internal.InternalAlbumsRepository
+import io.shtanko.picasagallery.data.internal.InternalAlbumsRepositoryImpl
+import javax.inject.Singleton
 
+@Module
+abstract class InternalAlbumsDataModule {
 
-interface LaunchContract {
-  interface View : BaseView<Presenter> {
-    fun onSignedIn()
-    fun onSignedOut()
-  }
-  interface Presenter : BasePresenter<View> {
-    fun isSignIn()
-  }
+  @Singleton
+  @Binds
+  abstract fun provideInternalAlbumsRepository(
+      albumRepository: InternalAlbumsRepositoryImpl): InternalAlbumsRepository
 }

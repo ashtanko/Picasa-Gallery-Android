@@ -37,11 +37,12 @@ import io.shtanko.picasagallery.util.ItemDividerDecoration
 import io.shtanko.picasagallery.view.base.BaseFragment
 import io.shtanko.picasagallery.view.delegate.ViewType
 import io.shtanko.picasagallery.view.main.MainContract.Presenter
+import io.shtanko.picasagallery.view.main.MainContract.View
 import io.shtanko.picasagallery.view.util.OnItemClickListener
 import javax.inject.Inject
 
 @ActivityScoped
-class MainFragment @Inject constructor() : BaseFragment(), MainContract.View, OnItemClickListener {
+class MainFragment @Inject constructor() : BaseFragment(), View, OnItemClickListener {
 
   // region injection
   @Inject lateinit var presenter: Presenter
@@ -72,7 +73,7 @@ class MainFragment @Inject constructor() : BaseFragment(), MainContract.View, On
     val gridLayoutManager = GridLayoutManager(activity, TWO_COLUMNS_GRID)
 
     with(rootView) {
-      progressBar = rootView.findViewById<ProgressBar>(R.id.progress_bar)
+      progressBar = rootView.findViewById(R.id.progress_bar)
 
       rootView.findViewById<RecyclerView>(R.id.grid).apply {
         setHasFixedSize(true)

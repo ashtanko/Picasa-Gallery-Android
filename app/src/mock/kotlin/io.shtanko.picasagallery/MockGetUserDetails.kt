@@ -19,7 +19,7 @@ package io.shtanko.picasagallery
 
 import io.reactivex.Flowable
 import io.shtanko.picasagallery.MockGetUserDetails.Params
-import io.shtanko.picasagallery.base.UseCase
+import io.shtanko.picasagallery.view.base.UseCase
 import io.shtanko.picasagallery.core.executor.PostExecutionThread
 import io.shtanko.picasagallery.core.executor.ThreadExecutor
 import io.shtanko.picasagallery.data.entity.user.User

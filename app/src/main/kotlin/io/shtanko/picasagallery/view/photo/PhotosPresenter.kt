@@ -26,7 +26,7 @@ import javax.inject.Inject
 
 @ActivityScoped
 class PhotosPresenter @Inject constructor(
-    var repository: PhotosRepository
+    private val repository: PhotosRepository
 ) : PhotosContract.Presenter {
 
   override fun onPhotoClick(model: ViewType) {

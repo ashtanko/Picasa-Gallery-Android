@@ -17,6 +17,7 @@
 
 package io.shtanko.picasagallery.view.album
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.GridLayoutManager
@@ -27,18 +28,27 @@ import io.shtanko.picasagallery.Config
 import io.shtanko.picasagallery.R
 import io.shtanko.picasagallery.R.color
 import io.shtanko.picasagallery.R.dimen
+import io.shtanko.picasagallery.data.entity.internal.Content
+import io.shtanko.picasagallery.data.entity.internal.ContentType
 import io.shtanko.picasagallery.extensions.ContentList
 import io.shtanko.picasagallery.util.ActivityScoped
 import io.shtanko.picasagallery.util.ItemDividerDecoration
+import io.shtanko.picasagallery.view.album.InternalAlbumsContract.Presenter
 import io.shtanko.picasagallery.view.album.InternalAlbumsContract.View
 import io.shtanko.picasagallery.view.base.BaseFragment
+import io.shtanko.picasagallery.view.photo.PhotosActivity
+import io.shtanko.picasagallery.view.util.OnItemClickListener
 import javax.inject.Inject
 
 @ActivityScoped
-class InternalAlbumsFragment @Inject constructor() : BaseFragment(), View {
+class InternalAlbumsFragment @Inject constructor() : BaseFragment(), View, OnItemClickListener {
+
+  override fun viewAlbum(model: Content) {
+    activity.startActivity(Intent(activity, PhotosActivity::class.java))
+  }
 
   // region injection
-  @Inject lateinit var presenter: InternalAlbumsContract.Presenter
+  @Inject lateinit var presenter: Presenter
   @Inject lateinit var internalAlbumsAdapter: InternalAlbumsAdapter
   // endregion
 
@@ -48,7 +58,7 @@ class InternalAlbumsFragment @Inject constructor() : BaseFragment(), View {
     presenter.takeView(this)
     presenter.getContent()
 
-    val gridLayoutManager = GridLayoutManager(activity, Config.TWO_COLUMNS_GRID)
+    val gridLayoutManager = GridLayoutManager(activity, Config.THREE_COLUMNS_GRID)
 
     with(rootView) {
       rootView.findViewById<RecyclerView>(R.id.grid).apply {
@@ -60,6 +70,7 @@ class InternalAlbumsFragment @Inject constructor() : BaseFragment(), View {
             activity.resources.getDimensionPixelSize(dimen.divider_height),
             ContextCompat.getColor(activity, color.divider)))
       }
+      internalAlbumsAdapter.onItemClickListener = this@InternalAlbumsFragment
     }
 
     return rootView
@@ -70,9 +81,14 @@ class InternalAlbumsFragment @Inject constructor() : BaseFragment(), View {
   }
 
   override fun showData(data: ContentList) {
+    internalAlbumsAdapter.items = data
   }
 
   override fun setLoadingIndicator(active: Boolean) {
 
+  }
+
+  override fun <T> onItemClicked(model: T) {
+    if (model is ContentType) presenter.onItemClick(model)
   }
 }

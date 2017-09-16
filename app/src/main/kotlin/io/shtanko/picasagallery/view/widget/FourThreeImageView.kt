@@ -20,6 +20,7 @@ package io.shtanko.picasagallery.view.widget
 import android.content.Context
 import android.support.v7.widget.AppCompatImageView
 import android.util.AttributeSet
+import android.view.View.MeasureSpec.makeMeasureSpec
 
 class FourThreeImageView : AppCompatImageView {
 
@@ -31,7 +32,7 @@ class FourThreeImageView : AppCompatImageView {
       defStyleAttr)
 
   override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-    val fourThreeHeight = MeasureSpec.makeMeasureSpec(MeasureSpec.getSize(widthMeasureSpec) * 3 / 4,
+    val fourThreeHeight = makeMeasureSpec(MeasureSpec.getSize(widthMeasureSpec) * 3 / 4,
         MeasureSpec.EXACTLY)
     super.onMeasure(widthMeasureSpec, fourThreeHeight)
   }

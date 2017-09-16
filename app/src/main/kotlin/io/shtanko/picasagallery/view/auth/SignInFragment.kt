@@ -21,9 +21,10 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.ProgressBar
-import android.widget.Toast
 import com.google.android.gms.auth.api.Auth
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.auth.api.signin.GoogleSignInResult
@@ -36,6 +37,7 @@ import io.shtanko.picasagallery.R
 import io.shtanko.picasagallery.data.entity.user.User
 import io.shtanko.picasagallery.extensions.close
 import io.shtanko.picasagallery.extensions.getSafeContext
+import io.shtanko.picasagallery.extensions.shortToast
 import io.shtanko.picasagallery.view.main.MainActivity
 import javax.inject.Inject
 
@@ -56,8 +58,7 @@ class SignInFragment @Inject constructor() : DaggerFragment(),
   var progressBar: ProgressBar? = null
 
   override fun onConnectionFailed(p0: ConnectionResult) {
-    Toast.makeText(this.getSafeContext(), "Unable to connect to Google Play Services",
-        Toast.LENGTH_SHORT).show()
+    shortToast("Unable to connect to Google Play Services")
   }
 
   override fun onConnected(p0: Bundle?) =
@@ -135,7 +136,7 @@ class SignInFragment @Inject constructor() : DaggerFragment(),
   }
 
   override fun setLoadingIndicator(active: Boolean) {
-    progressBar?.visibility = if (active) View.VISIBLE else View.GONE
+    progressBar?.visibility = if (active) VISIBLE else GONE
   }
 
   private fun addSignInButton() {

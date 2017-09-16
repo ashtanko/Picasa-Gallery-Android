@@ -17,8 +17,8 @@
 
 package io.shtanko.picasagallery.view.auth
 
-import io.shtanko.picasagallery.data.user.UserRepositoryImpl
 import io.shtanko.picasagallery.data.entity.user.User
+import io.shtanko.picasagallery.data.user.UserRepositoryImpl
 import io.shtanko.picasagallery.util.ActivityScoped
 import io.shtanko.picasagallery.view.auth.SignInContract.View
 import javax.annotation.Nullable
@@ -26,7 +26,7 @@ import javax.inject.Inject
 
 @ActivityScoped
 class SignInPresenter @Inject constructor(
-    var repository: UserRepositoryImpl) : SignInContract.Presenter {
+    private val repository: UserRepositoryImpl) : SignInContract.Presenter {
 
   @Nullable
   private var view: SignInContract.View? = null

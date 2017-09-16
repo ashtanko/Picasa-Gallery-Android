@@ -31,7 +31,7 @@ import java.util.ArrayList
 import java.util.Arrays
 
 class LoginAndAuthWithGoogleApi constructor(val activity: Activity,
-    val callback: LoginAndAuthListener,
+    callback: LoginAndAuthListener,
     val name: String) : LoginAndAuth, GoogleApiClient.ConnectionCallbacks,
     GoogleApiClient.OnConnectionFailedListener {
 

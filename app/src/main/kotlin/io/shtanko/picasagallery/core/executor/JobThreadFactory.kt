@@ -17,7 +17,7 @@
 
 package io.shtanko.picasagallery.core.executor
 
-import io.shtanko.picasagallery.Config
+import io.shtanko.picasagallery.Config.JOB_THREAD_NAME
 import java.util.concurrent.ThreadFactory
 
 object JobThreadFactory : ThreadFactory {
@@ -25,6 +25,5 @@ object JobThreadFactory : ThreadFactory {
   private var counter = 0
 
   override fun newThread(runnable: Runnable?): Thread = Thread(runnable,
-      Config.JOB_THREAD_NAME + counter++)
-
+      JOB_THREAD_NAME + counter++)
 }
