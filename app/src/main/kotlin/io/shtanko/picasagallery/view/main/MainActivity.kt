@@ -20,6 +20,7 @@ package io.shtanko.picasagallery.view.main
 import android.content.Intent
 import android.os.Bundle
 import dagger.Lazy
+import io.shtanko.picasagallery.Config
 import io.shtanko.picasagallery.R
 import io.shtanko.picasagallery.data.entity.album.Album
 import io.shtanko.picasagallery.data.entity.album.AlbumType
@@ -43,8 +44,11 @@ class MainActivity : BaseActivity(), AlbumClickListener {
   override fun onAlbumClick(model: ViewType) {
     if (model is AlbumType) {
       val album = model as Album
-      println()
+      val intent = Intent(this, InternalAlbumsActivity::class.java)
+      intent.putExtra(Config.PHOTO_ID_KEY, album.id)
+      intent.putExtra(Config.ALBUM_ID_KEY, album.albumId)
+      startActivity(intent)
     }
-    startActivity(Intent(this, InternalAlbumsActivity::class.java))
+
   }
 }

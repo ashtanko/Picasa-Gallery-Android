@@ -54,9 +54,13 @@ class InternalAlbumsFragment @Inject constructor() : BaseFragment(), View, OnIte
 
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
       savedInstanceState: Bundle?): android.view.View? {
+
     val rootView = inflater.inflate(R.layout.container_list_fragment, container, false)
     presenter.takeView(this)
     presenter.getContent()
+
+    val photoId = arguments.getString(Config.PHOTO_ID_KEY)
+    val albumId = arguments.getString(Config.ALBUM_ID_KEY)
 
     val gridLayoutManager = GridLayoutManager(activity, Config.THREE_COLUMNS_GRID)
 

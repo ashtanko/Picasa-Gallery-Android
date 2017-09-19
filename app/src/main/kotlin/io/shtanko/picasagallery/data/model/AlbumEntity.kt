@@ -26,5 +26,7 @@ data class AlbumEntity(
     @SerializedName("title") val title: TitleTypeEntity,
     @SerializedName("summary") val summary: TitleTypeEntity,
     @SerializedName("rights") val rights: TitleTypeEntity,
-    @SerializedName("media"+"$"+"group") val media: MediaAndGroups
+    @SerializedName("media" + "$" + "group") val media: MediaAndGroups,
+    @SerializedName("gphoto" + "$" + "id") val photoId: SingleStringElementEntity,
+    @SerializedName("gphoto" + "$" + "albumid") val albumId: SingleStringElementEntity
 )

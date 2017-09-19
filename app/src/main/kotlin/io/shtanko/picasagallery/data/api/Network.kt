@@ -72,8 +72,28 @@ class Network @Inject constructor() : PicasaService {
 
   override fun getAlbums(userId: String, albumId: String): Observable<AlbumsResponseEntity> {
 
-    Config.configureAlbumsPath(userId, albumId).httpGet()
-
-    return Observable.empty()
+    return Config.configureAlbumsPath(userId, albumId).httpGet(Config.jsonParams).rx_object(
+        AlbumsResponseEntity.Deserializer)
+        .flatMapMaybe {
+          when (it) {
+            is Result.Success -> {
+              if (!it.value.version.isEmpty()) {
+                Maybe.just(it.value)
+              } else {
+                Maybe.empty<AlbumsResponseEntity>()
+              }
+            }
+            is Result.Failure -> {
+              try {
+                Maybe.error<AlbumsResponseEntity>(
+                    Gson().fromJson(it.error.response.data.toString(Charsets.UTF_8),
+                        UserException::class.java))
+              } catch (e: Throwable) {
+                Maybe.error<AlbumsResponseEntity>(UserException(
+                    it.error.message ?: it.error.exception.message ?: it.error.response.responseMessage))
+              }
+            }
+          }
+        }.toObservable()
   }
 }

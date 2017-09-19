@@ -33,8 +33,7 @@ import org.junit.FixMethodOrder
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.MethodSorters
-import org.mockito.MockitoAnnotations
-import org.mockito.MockitoAnnotations.*
+import org.mockito.MockitoAnnotations.initMocks
 import org.mockito.junit.MockitoJUnitRunner
 
 @RunWith(MockitoJUnitRunner::class)
@@ -61,7 +60,7 @@ class MainPresenterTest {
 
   @Test
   fun album_clickTest() {
-    val dummyModel = Album("", "")
+    val dummyModel = Album("", "", "", "")
     presenter.onAlbumClick(dummyModel)
     verify(view, times(1)).viewAlbum(dummyModel)
   }
@@ -94,7 +93,7 @@ class MainPresenterTest {
 
   private fun getDummyAlbumsList(): AlbumsList {
     val dummyList = ArrayList<AlbumType>()
-    getImages().mapTo(dummyList) { Album("Item", it) }
+    getImages().mapTo(dummyList) { Album("", "Item", it, "") }
     return dummyList
   }
 }

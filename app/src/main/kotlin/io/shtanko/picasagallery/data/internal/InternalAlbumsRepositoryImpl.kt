@@ -18,16 +18,15 @@
 package io.shtanko.picasagallery.data.internal
 
 import io.reactivex.Flowable
-import io.shtanko.picasagallery.data.entity.internal.ContentType
 import io.shtanko.picasagallery.extensions.ContentList
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class InternalAlbumsRepositoryImpl @Inject constructor() : InternalAlbumsRepository {
+
   override fun content(): Flowable<ContentList> {
-    TODO(
-        "not implemented") //To change body of created functions use File | Settings | File Templates.
+    return Flowable.empty()
   }
 
 }

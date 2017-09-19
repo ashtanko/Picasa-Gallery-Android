@@ -45,6 +45,9 @@ object Config {
   val JOB_THREAD_NAME = "android_"
   val APPLICATION_LOG_TAG = "PICASA_GALLERY"
 
+  val PHOTO_ID_KEY = "PHOTO_ID_KEY"
+  val ALBUM_ID_KEY = "ALBUM_ID_KEY"
+
   val TWO_COLUMNS_GRID = 2
   val THREE_COLUMNS_GRID = 3
 
@@ -83,3 +86,8 @@ object Config {
       albumId: String) = "user/$userId/albumid/$albumId"
 
 }
+
+//https://picasaweb.google.com/data/entry/api/user/113288841856843375771/albumid/6118035341781982113/photoid/6118701132347833426?alt=json
+
+//https://picasaweb.google.com/data/feed/api/user/113288841856843375771/albumid/6118035341781982113?alt=json&start-index=1&max-results=1000
+

@@ -47,6 +47,7 @@ class AlbumEntityDataMapperTest {
   private val FAKE_ALBUM_URL = "0"
   private val FAKE_ALBUM_TYPE = "0"
   private val FAKE_ALBUM_MEDIUM = "0"
+  private val FAKE_ID = "0"
   private var albumEntityDataMapper: AlbumEntityMapper? = null
 
   @Before
@@ -86,11 +87,13 @@ class AlbumEntityDataMapperTest {
     val fakeUpdated = SingleStringElementEntity(FAKE_ALBUM_UPDATED)
     val fakeSummary = TitleTypeEntity(FAKE_ALBUM_SUMMARY, "")
     val fakeRights = TitleTypeEntity(FAKE_ALBUM_RIGHTS, "")
+    val fakePhotoId = SingleStringElementEntity(FAKE_ID)
+    val fakeId = SingleStringElementEntity(FAKE_ID)
 
     val mediaContent = listOf(MediaContent(FAKE_ALBUM_URL, FAKE_ALBUM_TYPE, FAKE_ALBUM_MEDIUM))
     val credit = listOf(SingleIntegerElementEntity(0))
     val media = MediaAndGroups(mediaContent, credit)
     return AlbumEntity(fakeAlbumId, fakePublished, fakeUpdated, fakeTitle, fakeSummary, fakeRights,
-        media)
+        media, fakePhotoId, fakeId)
   }
 }
