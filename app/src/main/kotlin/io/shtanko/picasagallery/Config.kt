@@ -80,14 +80,8 @@ object Config {
     }
   }
 
-  internal fun configureUserPath(id: String): String = "user/$id"
+  internal fun configureUserPath(id: String): String = String.format("user/%s", id)
 
   internal fun configureAlbumsPath(userId: String,
-      albumId: String) = "user/$userId/albumid/$albumId"
-
+      albumId: String) = String.format("user/%s/alubumid/%s", userId, albumId)
 }
-
-//https://picasaweb.google.com/data/entry/api/user/113288841856843375771/albumid/6118035341781982113/photoid/6118701132347833426?alt=json
-
-//https://picasaweb.google.com/data/feed/api/user/113288841856843375771/albumid/6118035341781982113?alt=json&start-index=1&max-results=1000
-

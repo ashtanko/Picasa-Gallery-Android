@@ -17,14 +17,17 @@
 
 package io.shtanko.picasagallery.view.auth
 
+import android.accounts.Account
 import android.content.Intent
 import android.os.Bundle
+import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.ProgressBar
+import com.google.android.gms.auth.GoogleAuthUtil
 import com.google.android.gms.auth.api.Auth
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.auth.api.signin.GoogleSignInResult
@@ -33,6 +36,10 @@ import com.google.android.gms.common.SignInButton
 import com.google.android.gms.common.SignInButton.SIZE_STANDARD
 import com.google.android.gms.common.api.GoogleApiClient
 import dagger.android.support.DaggerFragment
+import io.reactivex.Single
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
+import io.shtanko.picasagallery.Config
 import io.shtanko.picasagallery.R
 import io.shtanko.picasagallery.data.entity.user.User
 import io.shtanko.picasagallery.extensions.close
@@ -40,6 +47,7 @@ import io.shtanko.picasagallery.extensions.getSafeContext
 import io.shtanko.picasagallery.extensions.shortToast
 import io.shtanko.picasagallery.view.main.MainActivity
 import javax.inject.Inject
+
 
 class SignInFragment @Inject constructor() : DaggerFragment(),
     SignInContract.View,
@@ -121,6 +129,19 @@ class SignInFragment @Inject constructor() : DaggerFragment(),
     if (result.isSuccess) {
       val acct = result.signInAccount
       if (acct != null) {
+        val account = Account(acct.email, "com.google")
+        Single.create<String> { it ->
+          val token = GoogleAuthUtil.getToken(activity, account,
+              "oauth2:" + TextUtils.join(" ", Config.AUTH_SCOPES))
+          if (token != null && !TextUtils.isEmpty(token)) {
+            it.onSuccess(token)
+          } else {
+            it.onError(Throwable("Error get token"))
+          }
+        }.subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread()).subscribe { t1, t2 ->
+        }
+
         val user = User(acct.displayName, acct.givenName,
             acct.familyName, acct.email, acct.id)
         presenter.saveUserData(user)
