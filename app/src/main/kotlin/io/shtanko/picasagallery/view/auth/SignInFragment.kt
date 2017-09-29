@@ -17,17 +17,14 @@
 
 package io.shtanko.picasagallery.view.auth
 
-import android.accounts.Account
 import android.content.Intent
 import android.os.Bundle
-import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.ProgressBar
-import com.google.android.gms.auth.GoogleAuthUtil
 import com.google.android.gms.auth.api.Auth.GOOGLE_SIGN_IN_API
 import com.google.android.gms.auth.api.Auth.GoogleSignInApi
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -37,12 +34,8 @@ import com.google.android.gms.common.SignInButton
 import com.google.android.gms.common.SignInButton.SIZE_STANDARD
 import com.google.android.gms.common.api.GoogleApiClient
 import dagger.android.support.DaggerFragment
-import io.reactivex.Single
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
-import io.shtanko.picasagallery.Config
 import io.shtanko.picasagallery.R
-import io.shtanko.picasagallery.data.entity.user.User
+import io.shtanko.picasagallery.R.string.unable_connect_google_services
 import io.shtanko.picasagallery.extensions.close
 import io.shtanko.picasagallery.extensions.getSafeContext
 import io.shtanko.picasagallery.extensions.shortToast
@@ -51,130 +44,108 @@ import javax.inject.Inject
 
 
 class SignInFragment @Inject constructor() : DaggerFragment(),
-    SignInContract.View,
-    GoogleApiClient.OnConnectionFailedListener,
-    GoogleApiClient.ConnectionCallbacks {
+		SignInContract.View,
+		GoogleApiClient.OnConnectionFailedListener,
+		GoogleApiClient.ConnectionCallbacks {
 
-  @Inject lateinit var presenter: SignInContract.Presenter
-  @Inject lateinit var googleSignInOptions: GoogleSignInOptions
-  lateinit var rootView: View
-  private var googleApiClient: GoogleApiClient? = null
+	// region injection
+	@Inject lateinit var presenter: SignInContract.Presenter
+	@Inject lateinit var googleSignInOptions: GoogleSignInOptions
+	// endregion
 
-  companion object {
-    private val SIGN_IN_RESULT = 1
-  }
+	lateinit private var rootView: View
+	lateinit private var googleApiClient: GoogleApiClient
+	lateinit private var progressBar: ProgressBar
 
-  var progressBar: ProgressBar? = null
+	companion object {
+		private val SIGN_IN_RESULT = 1
+	}
 
-  override fun onConnectionFailed(p0: ConnectionResult) {
-    shortToast("Unable to connect to Google Play Services")
-  }
 
-  override fun onConnected(p0: Bundle?) =
-      enableButton(true)
+	override fun onResume() {
+		super.onResume()
+		presenter.takeView(this)
+	}
 
-  override fun onConnectionSuspended(p0: Int) =
-      enableButton(false)
+	override fun onDestroy() {
+		super.onDestroy()
+		presenter.dropView()
+	}
 
-  override fun onResume() {
-    super.onResume()
-    presenter.takeView(this)
-  }
+	override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
+			savedInstanceState: Bundle?): View? {
+		val root = inflater.inflate(R.layout.fragment_siginin, container, false)
 
-  override fun onDestroy() {
-    super.onDestroy()
-    presenter.dropView()
-  }
+		rootView = root
+		with(root) {
+			addSignInButton()
+			progressBar = rootView.findViewById<ProgressBar>(R.id.progress_bar)
+		}
 
-  override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-      savedInstanceState: Bundle?): View? {
+		googleApiClient = GoogleApiClient.Builder(getSafeContext())
+				.addApi(GOOGLE_SIGN_IN_API, googleSignInOptions)
+				.addConnectionCallbacks(this)
+				.addOnConnectionFailedListener(this)
+				.build()
 
-    val root = inflater.inflate(R.layout.fragment_siginin, container, false)
+		googleApiClient.connect()
+		return root
+	}
 
-    rootView = root
-    with(root) {
-      addSignInButton()
-      progressBar = rootView.findViewById<ProgressBar>(R.id.progress_bar)
-    }
+	override fun onDetach() {
+		super.onDetach()
+		googleApiClient.disconnect()
+	}
 
-    googleApiClient = GoogleApiClient.Builder(getSafeContext())
-        .addApi(GOOGLE_SIGN_IN_API, googleSignInOptions)
-        .addConnectionCallbacks(this)
-        .addOnConnectionFailedListener(this)
-        .build()
+	override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+		super.onActivityResult(requestCode, resultCode, data)
+		if (requestCode == SIGN_IN_RESULT) {
+			val result = GoogleSignInApi.getSignInResultFromIntent(data)
+			handleSignInResult(result)
+		}
+	}
 
-    googleApiClient?.connect()
+	override fun onConnectionFailed(p0: ConnectionResult) =
+			shortToast(getString(unable_connect_google_services))
 
-    return root
-  }
+	override fun onConnected(p0: Bundle?) = enableButton(true)
+	override fun onConnectionSuspended(p0: Int) = enableButton(false)
 
-  override fun onDetach() {
-    super.onDetach()
-    googleApiClient?.disconnect()
-  }
+	override fun openNextScreen() = openMainActivity()
 
-  private fun login() {
-    val signInIntent = GoogleSignInApi.getSignInIntent(googleApiClient)
-    startActivityForResult(signInIntent, SIGN_IN_RESULT)
-  }
+	override fun setLoadingIndicator(active: Boolean) {
+		progressBar.visibility = if (active) VISIBLE else GONE
+	}
 
-  override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-    super.onActivityResult(requestCode, resultCode, data)
-    if (requestCode == SIGN_IN_RESULT) {
-      val result = GoogleSignInApi.getSignInResultFromIntent(data)
-      handleSignInResult(result)
-    }
-  }
+	// region private functions
+	private fun login() {
+		val signInIntent = GoogleSignInApi.getSignInIntent(googleApiClient)
+		startActivityForResult(signInIntent, SIGN_IN_RESULT)
+	}
 
-  private fun handleSignInResult(result: GoogleSignInResult) {
-    if (result.isSuccess) {
-      val acct = result.signInAccount
-      if (acct != null) {
-        val account = Account(acct.email, "com.google")
-        Single.create<String> { it ->
-          val token = GoogleAuthUtil.getToken(activity, account,
-              "oauth2:" + TextUtils.join(" ", Config.AUTH_SCOPES))
-          if (token != null && !TextUtils.isEmpty(token)) {
-            it.onSuccess(token)
-          } else {
-            it.onError(Throwable("Error get token"))
-          }
-        }.subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread()).subscribe { t1, t2 ->
-          presenter.saveToken(t1)
-        }
+	private fun handleSignInResult(result: GoogleSignInResult) =
+			presenter.signIn(activity.applicationContext, result)
 
-        val user = User(acct.displayName, acct.givenName,
-            acct.familyName, acct.email, acct.id)
-        presenter.saveUserData(user)
-        openMainActivity()
-      }
-    }
-  }
+	private fun openMainActivity() {
+		startActivity(Intent(activity, MainActivity::class.java)).also {
+			activity.close()
+		}
+	}
 
-  private fun openMainActivity() {
-    startActivity(Intent(activity, MainActivity::class.java)).also {
-      activity.close()
-    }
-  }
+	private fun addSignInButton() {
+		with(rootView.findViewById<SignInButton>(R.id.sign_in_button)) {
+			setSize(SIZE_STANDARD)
+			setOnClickListener {
+				login()
+			}
+		}
+	}
 
-  override fun setLoadingIndicator(active: Boolean) {
-    progressBar?.visibility = if (active) VISIBLE else GONE
-  }
-
-  private fun addSignInButton() {
-    with(rootView.findViewById<SignInButton>(R.id.sign_in_button)) {
-      setSize(SIZE_STANDARD)
-      setOnClickListener {
-        login()
-      }
-    }
-  }
-
-  private fun enableButton(enable: Boolean) {
-    with(rootView.findViewById<SignInButton>(R.id.sign_in_button)) {
-      isEnabled = enable
-    }
-  }
+	private fun enableButton(enable: Boolean) {
+		with(rootView.findViewById<SignInButton>(R.id.sign_in_button)) {
+			isEnabled = enable
+		}
+	}
+	// endregion
 }
 

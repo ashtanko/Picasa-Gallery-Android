@@ -17,21 +17,23 @@
 
 package io.shtanko.picasagallery.view.auth
 
-import io.shtanko.picasagallery.view.base.BasePresenter
+import android.content.Context
+import com.google.android.gms.auth.api.signin.GoogleSignInResult
 import io.shtanko.picasagallery.data.entity.user.User
+import io.shtanko.picasagallery.view.base.BasePresenter
 import io.shtanko.picasagallery.view.base.BaseView
-
 
 interface SignInContract {
 
-  interface View : BaseView<Presenter> {
-    fun setLoadingIndicator(active: Boolean)
-  }
+	interface View : BaseView<Presenter> {
+		fun setLoadingIndicator(active: Boolean)
+		fun openNextScreen()
+	}
 
-  interface Presenter : BasePresenter<View> {
-    fun signIn()
-    fun saveUserData(user: User)
-    fun saveToken(token: String)
-  }
+	interface Presenter : BasePresenter<View> {
+		fun signIn(context: Context, result: GoogleSignInResult)
+		fun saveUserData(user: User)
+		fun saveToken(token: String)
+	}
 
 }

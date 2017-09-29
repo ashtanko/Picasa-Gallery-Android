@@ -46,124 +46,124 @@ import java.lang.Exception
 class ImageHelperImpl : ImageHelper {
 
 
-  override fun process(context: Context?, imageView: ImageView?, url: String?) {
-    load(context, url, object : OnLoadImageListener {
-      override fun onLoadSucceed() {
+	override fun process(context: Context?, imageView: ImageView?, url: String?) {
+		load(context, url, object : OnLoadImageListener {
+			override fun onLoadSucceed() {
 
-        if (SDK_INT >= LOLLIPOP) {
-          imageView?.setHasTransientState(true)
+				if (SDK_INT >= LOLLIPOP) {
+					imageView?.setHasTransientState(true)
 
-          val matrix = ObservableColorMatrix
-          val saturation = ofFloat(matrix, "saturation", 0f,
-              1f)
+					val matrix = ObservableColorMatrix
+					val saturation = ofFloat(matrix, "saturation", 0f,
+							1f)
 
-          saturation.addUpdateListener { imageView?.colorFilter = ColorMatrixColorFilter(matrix) }
-          saturation.duration = 2800
+					saturation.addUpdateListener { imageView?.colorFilter = ColorMatrixColorFilter(matrix) }
+					saturation.duration = 2800
 
-          saturation.interpolator = loadInterpolator(context,
-              interpolator.fast_out_slow_in)
+					saturation.interpolator = loadInterpolator(context,
+							interpolator.fast_out_slow_in)
 
-          saturation.addListener(object : AnimatorListenerAdapter() {
-            override fun onAnimationEnd(animation: android.animation.Animator?) {
-              clean(imageView)
-            }
-          })
-          saturation.start()
-        } else {
-          clean(imageView)
-        }
-      }
+					saturation.addListener(object : AnimatorListenerAdapter() {
+						override fun onAnimationEnd(animation: android.animation.Animator?) {
+							clean(imageView)
+						}
+					})
+					saturation.start()
+				} else {
+					clean(imageView)
+				}
+			}
 
-      override fun onLoadFailed() {
-        clean(imageView)
-      }
-    }, imageView)
-  }
+			override fun onLoadFailed() {
+				clean(imageView)
+			}
+		}, imageView)
+	}
 
-  private fun clean(imageView: ImageView?) {
-    imageView?.clearColorFilter()
-    if (SDK_INT >= JELLY_BEAN) {
-      imageView?.setHasTransientState(false)
-    }
-  }
+	private fun clean(imageView: ImageView?) {
+		imageView?.clearColorFilter()
+		if (SDK_INT >= JELLY_BEAN) {
+			imageView?.setHasTransientState(false)
+		}
+	}
 
-  override fun load(context: Context?, url: String?, listener: OnLoadImageListener?,
-      imageView: ImageView?) {
+	override fun load(context: Context?, url: String?, listener: OnLoadImageListener?,
+			imageView: ImageView?) {
 
-    val thumbnailRequest = Glide
-        .with(context)
-        .load(url)
-        .diskCacheStrategy(SOURCE)
-        .placeholder(R.drawable.image_placeholder)
-        .listener(object : RequestListener<String, GlideDrawable> {
+		val thumbnailRequest = Glide
+				.with(context)
+				.load(url)
+				.diskCacheStrategy(SOURCE)
+				.placeholder(R.drawable.image_placeholder)
+				.listener(object : RequestListener<String, GlideDrawable> {
 
-          override fun onException(e: Exception?, model: String, target: Target<GlideDrawable>,
-              isFirstResource: Boolean): Boolean = false
+					override fun onException(e: Exception?, model: String, target: Target<GlideDrawable>,
+							isFirstResource: Boolean): Boolean = false
 
-          override fun onResourceReady(resource: GlideDrawable, model: String,
-              target: Target<GlideDrawable>,
-              isFromMemoryCache: Boolean, isFirstResource: Boolean): Boolean {
-            imageView?.isEnabled = true
-            return false
-          }
-        })
+					override fun onResourceReady(resource: GlideDrawable, model: String,
+							target: Target<GlideDrawable>,
+							isFromMemoryCache: Boolean, isFirstResource: Boolean): Boolean {
+						imageView?.isEnabled = true
+						return false
+					}
+				})
 
-    if (listener != null && SDK_INT >= LOLLIPOP) {
-      val matrix = ObservableColorMatrix
-      matrix.setSaturation(0.0F)
-      imageView?.colorFilter = ColorMatrixColorFilter(matrix)
-      imageView?.isEnabled = false
-    }
+		if (listener != null && SDK_INT >= LOLLIPOP) {
+			val matrix = ObservableColorMatrix
+			matrix.setSaturation(0.0F)
+			imageView?.colorFilter = ColorMatrixColorFilter(matrix)
+			imageView?.isEnabled = false
+		}
 
-    loadImage(context, imageView, url, false, false,
-        if (listener == null) null else thumbnailRequest, null,
-        if (listener == null) null else FadeAnimator, listener)
+		loadImage(context, imageView, url, false, false,
+				if (listener == null) null else thumbnailRequest, null,
+				if (listener == null) null else FadeAnimator, listener)
 
-  }
+	}
 
-  override fun loadImage(context: Context?, imageView: ImageView?, url: String?, noAnimate: Boolean,
-      lowPriority: Boolean, thumbnail: DrawableRequestBuilder<String>?,
-      transformation: BitmapTransformation?, animator: Animator?, listener: OnLoadImageListener?) {
+	override fun loadImage(context: Context?, imageView: ImageView?, url: String?, noAnimate: Boolean,
+			lowPriority: Boolean, thumbnail: DrawableRequestBuilder<String>?,
+			transformation: BitmapTransformation?, animator: Animator?, listener: OnLoadImageListener?) {
 
-    val builder = Glide
-        .with(context)
-        .load(url)
-        .placeholder(R.drawable.image_placeholder)
-        .diskCacheStrategy(SOURCE)
-        .listener(object : RequestListener<String, GlideDrawable> {
+		val builder = Glide
+				.with(context)
+				.load(url)
+				.placeholder(R.drawable.image_placeholder)
+				.diskCacheStrategy(SOURCE)
+				.listener(object : RequestListener<String, GlideDrawable> {
 
-          override fun onException(e: Exception?, model: String, target: Target<GlideDrawable>,
-              isFirstResource: Boolean): Boolean {
-            listener?.onLoadFailed()
-            return false
-          }
+					override fun onException(e: Exception?, model: String, target: Target<GlideDrawable>,
+							isFirstResource: Boolean): Boolean {
+						listener?.onLoadFailed()
+						return false
+					}
 
-          override fun onResourceReady(resource: GlideDrawable, model: String,
-              target: Target<GlideDrawable>,
-              isFromMemoryCache: Boolean, isFirstResource: Boolean): Boolean {
-            listener?.onLoadSucceed()
-            return false
-          }
-        })
+					override fun onResourceReady(resource: GlideDrawable, model: String,
+							target: Target<GlideDrawable>,
+							isFromMemoryCache: Boolean, isFirstResource: Boolean): Boolean {
+						listener?.onLoadSucceed()
+						return false
+					}
+				})
 
-    if (noAnimate) {
-      builder.dontAnimate()
-    }
-    if (lowPriority) {
-      builder.priority(LOW)
-    } else {
-      builder.priority(NORMAL)
-    }
+		if (noAnimate) {
+			builder.dontAnimate()
+		}
+		if (lowPriority) {
+			builder.priority(LOW)
+		} else {
+			builder.priority(NORMAL)
+		}
 
-    if (thumbnail != null) {
-      builder.thumbnail(thumbnail)
-    }
-    if (transformation != null) {
-      builder.transform(transformation)
-    }
-    if (animator != null) {
-      builder.animate(animator)
-    }
-    builder.into(imageView)
-  }
+		if (thumbnail != null) {
+			builder.thumbnail(thumbnail)
+		}
+		if (transformation != null) {
+			builder.transform(transformation)
+		}
+		if (animator != null) {
+			builder.animate(animator)
+		}
+		builder.into(imageView)
+	}
 }

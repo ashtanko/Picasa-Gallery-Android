@@ -19,13 +19,13 @@ package io.shtanko.picasagallery.data
 
 import io.shtanko.picasagallery.data.entity.user.User
 import io.shtanko.picasagallery.util.Factory
-import java.util.UUID
+import java.util.UUID.randomUUID
 
 class MockUser {
-  companion object : Factory<User> {
-    override fun create(): User = User(
-        "Mock Name", "Mock Given Name", "Mock Family Name",
-        "mock@mock.com",
-        "${UUID.randomUUID()}")
-  }
+	companion object : Factory<User> {
+		override fun create(): User = User(
+				"Mock Name", "Mock Given Name", "Mock Family Name",
+				"mock@mock.com",
+				"${randomUUID()}")
+	}
 }

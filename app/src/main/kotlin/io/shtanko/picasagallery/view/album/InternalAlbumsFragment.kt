@@ -24,7 +24,9 @@ import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import io.shtanko.picasagallery.Config
+import io.shtanko.picasagallery.Config.ALBUM_ID_KEY
+import io.shtanko.picasagallery.Config.PHOTO_ID_KEY
+import io.shtanko.picasagallery.Config.THREE_COLUMNS_GRID
 import io.shtanko.picasagallery.R
 import io.shtanko.picasagallery.R.color
 import io.shtanko.picasagallery.R.dimen
@@ -43,56 +45,54 @@ import javax.inject.Inject
 @ActivityScoped
 class InternalAlbumsFragment @Inject constructor() : BaseFragment(), View, OnItemClickListener {
 
-  override fun viewAlbum(model: Content) {
-    activity.startActivity(Intent(activity, PhotosActivity::class.java))
-  }
+	override fun viewAlbum(model: Content) {
+		activity.startActivity(Intent(activity, PhotosActivity::class.java))
+	}
 
-  // region injection
-  @Inject lateinit var presenter: Presenter
-  @Inject lateinit var internalAlbumsAdapter: InternalAlbumsAdapter
-  // endregion
+	// region injection
+	@Inject lateinit var presenter: Presenter
+	@Inject lateinit var internalAlbumsAdapter: InternalAlbumsAdapter
+	// endregion
 
-  override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-      savedInstanceState: Bundle?): android.view.View? {
+	override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
+			savedInstanceState: Bundle?): android.view.View? {
 
-    val rootView = inflater.inflate(R.layout.container_list_fragment, container, false)
-    presenter.takeView(this)
-    presenter.getContent()
+		val rootView = inflater.inflate(R.layout.container_list_fragment, container, false)
+		presenter.takeView(this)
+		presenter.getContent()
 
-    val photoId = arguments.getString(Config.PHOTO_ID_KEY)
-    val albumId = arguments.getString(Config.ALBUM_ID_KEY)
+		val photoId = arguments.getString(PHOTO_ID_KEY)
+		val albumId = arguments.getString(ALBUM_ID_KEY)
 
-    val gridLayoutManager = GridLayoutManager(activity, Config.THREE_COLUMNS_GRID)
+		val gridLayoutManager = GridLayoutManager(activity, THREE_COLUMNS_GRID)
 
-    with(rootView) {
-      rootView.findViewById<RecyclerView>(R.id.grid).apply {
-        setHasFixedSize(true)
-        layoutManager = gridLayoutManager
-        adapter = internalAlbumsAdapter
+		with(rootView) {
+			rootView.findViewById<RecyclerView>(R.id.grid).apply {
+				setHasFixedSize(true)
+				layoutManager = gridLayoutManager
+				adapter = internalAlbumsAdapter
 
-        addItemDecoration(ItemDividerDecoration(
-            activity.resources.getDimensionPixelSize(dimen.divider_height),
-            ContextCompat.getColor(activity, color.divider)))
-      }
-      internalAlbumsAdapter.onItemClickListener = this@InternalAlbumsFragment
-    }
+				addItemDecoration(ItemDividerDecoration(
+						activity.resources.getDimensionPixelSize(dimen.divider_height),
+						ContextCompat.getColor(activity, color.divider)))
+			}
+			internalAlbumsAdapter.onItemClickListener = this@InternalAlbumsFragment
+		}
 
-    return rootView
+		return rootView
+	}
 
-  }
+	override fun showError(message: String) {
+	}
 
-  override fun showError(message: String) {
-  }
+	override fun showData(data: ContentList) {
+		internalAlbumsAdapter.items = data
+	}
 
-  override fun showData(data: ContentList) {
-    internalAlbumsAdapter.items = data
-  }
+	override fun setLoadingIndicator(active: Boolean) {
+	}
 
-  override fun setLoadingIndicator(active: Boolean) {
-
-  }
-
-  override fun <T> onItemClicked(model: T) {
-    if (model is ContentType) presenter.onItemClick(model)
-  }
+	override fun <T> onItemClicked(model: T) {
+		if (model is ContentType) presenter.onItemClick(model)
+	}
 }

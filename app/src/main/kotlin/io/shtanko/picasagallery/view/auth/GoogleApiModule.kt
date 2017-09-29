@@ -19,27 +19,28 @@ package io.shtanko.picasagallery.view.auth
 
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions.Builder
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions.DEFAULT_SIGN_IN
 import com.google.android.gms.common.api.Scope
 import dagger.Module
 import dagger.Provides
-import io.shtanko.picasagallery.Config
 import io.shtanko.picasagallery.Config.AUTH_SCOPES
 import javax.inject.Singleton
 
 @Module
 class GoogleApiModule {
 
-  @Provides
-  @Singleton
-  fun provideGoogleSignInOptions(): GoogleSignInOptions {
-    /** List of OAuth scopes to be requested from the Google sign-in API  */
-    fun getAuthScopes(): List<String> = AUTH_SCOPES
-    val gsoBuilder = Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-    for (scope in getAuthScopes()) {
-      gsoBuilder.requestScopes(Scope(scope))
-    }
-    return gsoBuilder.requestEmail()
-        .build()
-  }
+	@Provides
+	@Singleton
+	fun provideGoogleSignInOptions(): GoogleSignInOptions {
+		/** List of OAuth scopes to be requested from the Google sign-in API  */
+		fun getAuthScopes(): List<String> = AUTH_SCOPES
+
+		val gsoBuilder = Builder(DEFAULT_SIGN_IN)
+		for (scope in getAuthScopes()) {
+			gsoBuilder.requestScopes(Scope(scope))
+		}
+		return gsoBuilder.requestEmail()
+				.build()
+	}
 
 }

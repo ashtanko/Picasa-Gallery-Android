@@ -35,30 +35,30 @@ import org.mockito.junit.MockitoJUnitRunner
 @RunWith(MockitoJUnitRunner.Silent::class)
 class LaunchPresenterTest {
 
-  private val getUserDetails = mock<GetUserDetails>()
-  private val view = mock<View>()
-  private lateinit var presenter: LaunchPresenter
+	private val getUserDetails = mock<GetUserDetails>()
+	private val view = mock<View>()
+	private lateinit var presenter: LaunchPresenter
 
-  @Before
-  fun setUp() {
-    initMocks(this)
-    presenter = LaunchPresenter(getUserDetails)
-    presenter.takeView(view)
-  }
+	@Before
+	fun setUp() {
+		initMocks(this)
+		presenter = LaunchPresenter(getUserDetails)
+		presenter.takeView(view)
+	}
 
-  @Test
-  fun is_signed_inTest() {
-    presenter.isSignIn()
-    verify(view, never()).onSignedIn()
-  }
+	@Test
+	fun is_signed_inTest() {
+		presenter.isSignIn()
+		verify(view, never()).onSignedIn()
+	}
 
-  @Test
-  fun is_signed_outTest() {
-    presenter.isSignIn()
-    verify(view, never()).onSignedOut()
-  }
+	@Test
+	fun is_signed_outTest() {
+		presenter.isSignIn()
+		verify(view, never()).onSignedOut()
+	}
 
-  inner class UserListObserver : DefaultObserver<User>() {
+	inner class UserListObserver : DefaultObserver<User>() {
 
-  }
+	}
 }

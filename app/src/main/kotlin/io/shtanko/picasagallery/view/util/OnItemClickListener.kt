@@ -18,5 +18,5 @@
 package io.shtanko.picasagallery.view.util
 
 interface OnItemClickListener {
-  fun <T> onItemClicked(model: T)
+	fun <T> onItemClicked(model: T)
 }

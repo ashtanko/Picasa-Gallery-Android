@@ -32,25 +32,24 @@ import javax.inject.Inject
 @ActivityScoped
 class ProfileFragment @Inject constructor() : BaseFragment(), ProfileContract.View {
 
-  @Inject lateinit var presenter: ProfileContract.Presenter
+	@Inject lateinit var presenter: ProfileContract.Presenter
 
-  val dummyImage = "https://images-na.ssl-images-amazon.com/images/M/MV5BOTAzNTY1NjYwMl5BMl5BanBnXkFtZTgwNTIwNjMzMjI@._CR786,95,469,469_UX402_UY402._SY201_SX201_AL_.jpg"
+	val dummyImage = "https://images-na.ssl-images-amazon.com/images/M/MV5BOTAzNTY1NjYwMl5BMl5BanBnXkFtZTgwNTIwNjMzMjI@._CR786,95,469,469_UX402_UY402._SY201_SX201_AL_.jpg"
 
+	override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
+			savedInstanceState: Bundle?): View? {
+		val rootView = inflater.inflate(R.layout.fragment_profile, container, false)
 
-  override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-      savedInstanceState: Bundle?): View? {
-    val rootView = inflater.inflate(R.layout.fragment_profile, container, false)
+		with(rootView) {
+			rootView.findViewById<AppCompatImageView>(R.id.avatar).apply {
+				Glide.with(activity)
+						.load(dummyImage)
+						.transform(CircleTransform(activity.applicationContext))
+						.into(this)
+			}
+		}
 
-    with(rootView) {
-      rootView.findViewById<AppCompatImageView>(R.id.avatar).apply {
-        Glide.with(activity)
-            .load(dummyImage)
-            .transform(CircleTransform(activity.applicationContext))
-            .into(this)
-      }
-    }
-
-    return rootView
-  }
+		return rootView
+	}
 
 }

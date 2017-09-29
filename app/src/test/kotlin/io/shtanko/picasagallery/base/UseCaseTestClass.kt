@@ -23,17 +23,16 @@ import io.shtanko.picasagallery.core.executor.PostExecutionThread
 import io.shtanko.picasagallery.core.executor.ThreadExecutor
 import io.shtanko.picasagallery.view.base.UseCase
 
-
 class UseCaseTestClass(threadExecutor: ThreadExecutor,
-    postExecutionThread: PostExecutionThread) : UseCase<TestModel, Params>(threadExecutor,
-    postExecutionThread) {
+		postExecutionThread: PostExecutionThread) : UseCase<TestModel, Params>(threadExecutor,
+		postExecutionThread) {
 
-  override fun buildUseCaseObservable(params: Params): Flowable<TestModel> = Flowable.empty()
+	override fun buildUseCaseObservable(params: Params): Flowable<TestModel> = Flowable.empty()
 
 
-  class Params private constructor() {
-    companion object {
-      fun createQuery() = Params()
-    }
-  }
+	class Params private constructor() {
+		companion object {
+			fun createQuery() = Params()
+		}
+	}
 }

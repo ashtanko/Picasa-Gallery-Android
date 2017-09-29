@@ -18,5 +18,5 @@
 package io.shtanko.picasagallery.util
 
 interface Factory<out T> {
-  fun create(): T
+	fun create(): T
 }

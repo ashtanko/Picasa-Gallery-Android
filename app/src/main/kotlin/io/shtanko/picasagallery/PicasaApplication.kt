@@ -26,20 +26,20 @@ import kotlin.properties.Delegates
 
 class PicasaApplication : DaggerApplication() {
 
-  override fun applicationInjector(): AndroidInjector<out DaggerApplication> {
-    val appComponent = DaggerAppComponent.builder().application(this).build()
-    appComponent.inject(this)
-    return appComponent
-  }
+	override fun applicationInjector(): AndroidInjector<out DaggerApplication> {
+		val appComponent = DaggerAppComponent.builder().application(this).build()
+		appComponent.inject(this)
+		return appComponent
+	}
 
-  companion object {
-    var app: Application by Delegates.notNull()
-    @Volatile lateinit var applicationHandler: Handler
-  }
+	companion object {
+		var app: Application by Delegates.notNull()
+		@Volatile lateinit var applicationHandler: Handler
+	}
 
-  override fun onCreate() {
-    super.onCreate()
-    app = this
-    applicationHandler = Handler(mainLooper)
-  }
+	override fun onCreate() {
+		super.onCreate()
+		app = this
+		applicationHandler = Handler(mainLooper)
+	}
 }

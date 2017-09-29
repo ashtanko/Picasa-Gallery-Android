@@ -22,9 +22,9 @@ package io.shtanko.picasagallery.view.auth
  * provided by {@link LoginAndAuthWithGoogleApi}.
  */
 interface LoginAndAuthListener {
-  abstract fun onPlusInfoLoaded(accountName: String)
+	abstract fun onPlusInfoLoaded(accountName: String)
 
-  abstract fun onAuthSuccess(accountName: String, newlyAuthenticated: Boolean)
+	abstract fun onAuthSuccess(accountName: String, newlyAuthenticated: Boolean)
 
-  abstract fun onAuthFailure(accountName: String)
+	abstract fun onAuthFailure(accountName: String)
 }

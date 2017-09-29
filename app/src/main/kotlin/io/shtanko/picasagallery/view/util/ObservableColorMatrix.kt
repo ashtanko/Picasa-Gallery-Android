@@ -21,13 +21,12 @@ import android.graphics.ColorMatrix
 
 object ObservableColorMatrix : ColorMatrix() {
 
-  private var saturation = 1f
+	private var saturation = 1f
+	private fun getSaturation(): Float = saturation
 
-  private fun getSaturation(): Float = saturation
-
-  override fun setSaturation(saturation: Float) {
-    this.saturation = saturation
-    super.setSaturation(saturation)
-  }
+	override fun setSaturation(saturation: Float) {
+		this.saturation = saturation
+		super.setSaturation(saturation)
+	}
 
 }

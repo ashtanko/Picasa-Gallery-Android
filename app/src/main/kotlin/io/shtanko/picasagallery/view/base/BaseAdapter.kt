@@ -17,9 +17,8 @@
 
 package io.shtanko.picasagallery.view.base
 
-
 import android.support.v4.util.SparseArrayCompat
-import android.support.v7.widget.RecyclerView
+import android.support.v7.widget.RecyclerView.Adapter
 import android.support.v7.widget.RecyclerView.ViewHolder
 import android.view.ViewGroup
 import io.shtanko.picasagallery.view.delegate.ViewType
@@ -27,27 +26,27 @@ import io.shtanko.picasagallery.view.delegate.ViewTypeAdapterDelegate
 import io.shtanko.picasagallery.view.util.OnItemClickListener
 import kotlin.properties.Delegates
 
-abstract class BaseAdapter<T : ViewType> : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+abstract class BaseAdapter<T : ViewType> : Adapter<ViewHolder>() {
 
-  var onItemClickListener: OnItemClickListener? = null
+	var onItemClickListener: OnItemClickListener? = null
 
-  var items: List<T> by Delegates.observable(
-      emptyList()) { _, _, _ -> notifyDataSetChanged() }
+	var items: List<T> by Delegates.observable(
+			emptyList()) { _, _, _ -> notifyDataSetChanged() }
 
-  override fun getItemCount() = items.size
+	override fun getItemCount() = items.size
 
-  protected var delegateAdapters = SparseArrayCompat<ViewTypeAdapterDelegate>()
+	protected var delegateAdapters = SparseArrayCompat<ViewTypeAdapterDelegate>()
 
-  override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ViewHolder =
-      delegateAdapters.get(viewType).onCreateViewHolder(parent)
+	override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ViewHolder =
+			delegateAdapters.get(viewType).onCreateViewHolder(parent)
 
-  override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-    val model = this.items[position]
-    holder.itemView.setOnClickListener {
-      onItemClickListener?.onItemClicked(model)
-    }
-    delegateAdapters.get(getItemViewType(position)).onBindViewHolder(holder, model)
-  }
+	override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+		val model = this.items[position]
+		holder.itemView.setOnClickListener {
+			onItemClickListener?.onItemClicked(model)
+		}
+		delegateAdapters.get(getItemViewType(position)).onBindViewHolder(holder, model)
+	}
 
-  override fun getItemViewType(position: Int): Int = this.items[position].getViewType()
+	override fun getItemViewType(position: Int): Int = this.items[position].getViewType()
 }

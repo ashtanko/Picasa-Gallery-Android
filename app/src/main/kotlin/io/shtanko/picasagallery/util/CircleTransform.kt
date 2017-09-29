@@ -34,26 +34,26 @@ import com.bumptech.glide.load.resource.bitmap.BitmapTransformation
 
 class CircleTransform constructor(context: Context) : BitmapTransformation(context) {
 
-  private fun circleCrop(pool: BitmapPool, source: Bitmap): Bitmap {
-    val sourceWidth = source.width
-    val sourceHeight = source.height
-    val size = Math.min(sourceWidth, sourceHeight)
-    val x = (sourceWidth - size) / 2
-    val y = (sourceHeight - size) / 2
-    val squared = createBitmap(source, x, y, size, size)
-    var result = pool.get(size, size, Bitmap.Config.ARGB_8888)
-    if (result == null)
-      result = createBitmap(size, size, ARGB_8888)
-    val canvas = Canvas(result)
-    val paint = Paint(FILTER_BITMAP_FLAG or DITHER_FLAG or ANTI_ALIAS_FLAG)
-    paint.shader = BitmapShader(squared, CLAMP, CLAMP)
-    val r = size / 2f
-    canvas.drawCircle(r, r, r, paint)
-    return result
-  }
+	private fun circleCrop(pool: BitmapPool, source: Bitmap): Bitmap {
+		val sourceWidth = source.width
+		val sourceHeight = source.height
+		val size = Math.min(sourceWidth, sourceHeight)
+		val x = (sourceWidth - size) / 2
+		val y = (sourceHeight - size) / 2
+		val squared = createBitmap(source, x, y, size, size)
+		var result = pool.get(size, size, ARGB_8888)
+		if (result == null)
+			result = createBitmap(size, size, ARGB_8888)
+		val canvas = Canvas(result)
+		val paint = Paint(FILTER_BITMAP_FLAG or DITHER_FLAG or ANTI_ALIAS_FLAG)
+		paint.shader = BitmapShader(squared, CLAMP, CLAMP)
+		val r = size / 2f
+		canvas.drawCircle(r, r, r, paint)
+		return result
+	}
 
-  override fun transform(pool: BitmapPool, toTransform: Bitmap, outWidth: Int,
-      outHeight: Int): Bitmap = circleCrop(pool, toTransform)
+	override fun transform(pool: BitmapPool, toTransform: Bitmap, outWidth: Int,
+			outHeight: Int): Bitmap = circleCrop(pool, toTransform)
 
-  override fun getId(): String = javaClass.name
+	override fun getId(): String = javaClass.name
 }

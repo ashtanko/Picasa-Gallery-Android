@@ -26,64 +26,58 @@ import java.util.Arrays.asList
 
 object Config {
 
-  val ACTIVE_ACCOUNT_PREF = "chosen_account_pref"
+	val AUTHORIZATION_HEADER = "Authorization"
+	val BEARER_PREFIX = "Bearer"
+	val ACTIVE_ACCOUNT_PREF = "chosen_account_pref"
+	val PREFIX_PREF_AUTH_TOKEN = "auth_token_"
+	val SAVED_TOKEN_PREF = "token_pref"
+	val USER_REFUSED_SIGN_IN_PREF = "user_refused_sign_in_pref"
+	val SAVED_PERSON_NAME_PREF = "user_name_pref"
+	val SAVED_PERSON_GIVEN_NAME_PREF = "user_given_name_pref"
+	val SAVED_PERSON_FAMILY_NAME_PREF = "user_family_name_pref"
+	val SAVED_EMAIL_PREF = "user_email_pref"
+	val SAVED_ID_PREF = "user_id_pref"
+	private val PICASA_BASE_URL = "https://picasaweb.google.com/data"
+	val PICASA_BASE_API_URL = "$PICASA_BASE_URL/feed/api"
+	val PICASA_BASE_USER_API_URL = "$PICASA_BASE_URL/feed/api/user/default"
+	val LOGS_PATH = "/logs"
+	val LOGS_DATE_FORMAT = "dd_MM_yyyy_HH_mm_ss"
+	val JOB_THREAD_NAME = "android_"
+	val APPLICATION_LOG_TAG = "PICASA_GALLERY"
+	val PHOTO_ID_KEY = "PHOTO_ID_KEY"
+	val ALBUM_ID_KEY = "ALBUM_ID_KEY"
+	val TWO_COLUMNS_GRID = 2
+	val THREE_COLUMNS_GRID = 3
+	val MAIN_VIEW_TYPE_ID = 0
+	val USER_VIEW_TYPE_ID = 1
+	val PHOTO_VIEW_TYPE_ID = 2
+	val CONTENT_VIEW_TYPE_ID = 3
+	val LOG_QUEUE_NAME = "LOG_QUEUE"
+	val LOG_FILE_FORMAT_NAME = ".log"
+	val NET_LOG_FILENAME = "_net$LOG_FILE_FORMAT_NAME"
 
-  val PREFIX_PREF_AUTH_TOKEN = "auth_token_"
+	val AUTH_SCOPES = ArrayList(asList(
+			PLUS_ME,
+			PROFILE,
+			DRIVE_APPFOLDER,
+			"https://www.googleapis.com/auth/plus.profile.emails.read"))
 
-  val SAVED_TOKEN_PREF = "token_pref"
-  val USER_REFUSED_SIGN_IN_PREF = "user_refused_sign_in_pref"
-  val SAVED_PERSON_NAME_PREF = "user_name_pref"
-  val SAVED_PERSON_GIVEN_NAME_PREF = "user_given_name_pref"
-  val SAVED_PERSON_FAMILY_NAME_PREF = "user_family_name_pref"
-  val SAVED_EMAIL_PREF = "user_email_pref"
-  val SAVED_ID_PREF = "user_id_pref"
-  private val PICASA_BASE_URL = "https://picasaweb.google.com/data"
-  val PICASA_BASE_API_URL = "$PICASA_BASE_URL/feed/api"
-  val PICASA_BASE_USER_API_URL = "$PICASA_BASE_URL/feed/api/user/default"
+	val JSON_PARAMS = object : ArrayList<Pair<String, String>>() {
+		init {
+			add(Pair("alt", "json"))
+		}
+	}
 
-  val LOGS_PATH = "/logs"
-  val LOGS_DATE_FORMAT = "dd_MM_yyyy_HH_mm_ss"
+	private val params = object : ArrayList<Pair<String, String>>() {
+		init {
+			add(Pair("alt", "json"))
+			add(Pair("start-index", "json"))
+			add(Pair("max-results", "json"))
+		}
+	}
 
-  val JOB_THREAD_NAME = "android_"
-  val APPLICATION_LOG_TAG = "PICASA_GALLERY"
+	internal fun configureUserPath(id: String): String = format("user/%s", id)
 
-  val PHOTO_ID_KEY = "PHOTO_ID_KEY"
-  val ALBUM_ID_KEY = "ALBUM_ID_KEY"
-
-  val TWO_COLUMNS_GRID = 2
-  val THREE_COLUMNS_GRID = 3
-
-  val MAIN_VIEW_TYPE_ID = 0
-  val USER_VIEW_TYPE_ID = 1
-  val PHOTO_VIEW_TYPE_ID = 2
-  val CONTENT_VIEW_TYPE_ID = 3
-
-  val LOG_QUEUE_NAME = "LOG_QUEUE"
-  val LOG_FILE_FORMAT_NAME = ".log"
-  val NET_LOG_FILENAME = "_net$LOG_FILE_FORMAT_NAME"
-
-  val AUTH_SCOPES = ArrayList(asList(
-      PLUS_ME,
-      PROFILE,
-      DRIVE_APPFOLDER,
-      "https://www.googleapis.com/auth/plus.profile.emails.read"))
-
-  val jsonParams = object : ArrayList<Pair<String, String>>() {
-    init {
-      add(Pair("alt", "json"))
-    }
-  }
-
-  private val params = object : ArrayList<Pair<String, String>>() {
-    init {
-      add(Pair("alt", "json"))
-      add(Pair("start-index", "json"))
-      add(Pair("max-results", "json"))
-    }
-  }
-
-  internal fun configureUserPath(id: String): String = format("user/%s", id)
-
-  internal fun configureAlbumsPath(userId: String,
-      albumId: String) = format("user/%s/alubumid/%s", userId, albumId)
+	internal fun configureAlbumsPath(userId: String,
+			albumId: String) = format("user/%s/alubumid/%s", userId, albumId)
 }

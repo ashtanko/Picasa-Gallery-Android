@@ -17,19 +17,15 @@
 
 package io.shtanko.picasagallery.view.profile
 
+import io.shtanko.picasagallery.view.profile.ProfileContract.Presenter
 import io.shtanko.picasagallery.view.profile.ProfileContract.View
 import javax.inject.Inject
 
+class ProfilePresenter @Inject constructor() : Presenter {
+	override fun takeView(view: View) {
+	}
 
-class ProfilePresenter @Inject constructor() : ProfileContract.Presenter {
-  override fun takeView(view: View) {
-    TODO(
-        "not implemented") //To change body of created functions use File | Settings | File Templates.
-  }
-
-  override fun dropView() {
-    TODO(
-        "not implemented") //To change body of created functions use File | Settings | File Templates.
-  }
+	override fun dropView() {
+	}
 
 }

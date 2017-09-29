@@ -32,23 +32,23 @@ import javax.inject.Inject
 
 class MainActivity : BaseActivity(), AlbumClickListener {
 
-  @Inject lateinit var presenter: MainPresenter
-  @Inject lateinit var mainFragmentProvider: Lazy<MainFragment>
+	@Inject lateinit var presenter: MainPresenter
+	@Inject lateinit var mainFragmentProvider: Lazy<MainFragment>
 
-  override fun onCreate(savedInstanceState: Bundle?) {
-    super.onCreate(savedInstanceState)
-    setContentView(R.layout.container_activity)
-    addFragment(R.id.content_frame, mainFragmentProvider)
-  }
+	override fun onCreate(savedInstanceState: Bundle?) {
+		super.onCreate(savedInstanceState)
+		setContentView(R.layout.container_activity)
+		addFragment(R.id.content_frame, mainFragmentProvider)
+	}
 
-  override fun onAlbumClick(model: ViewType) {
-    if (model is AlbumType) {
-      val album = model as Album
-      val intent = Intent(this, InternalAlbumsActivity::class.java)
-      intent.putExtra(Config.PHOTO_ID_KEY, album.id)
-      intent.putExtra(Config.ALBUM_ID_KEY, album.albumId)
-      startActivity(intent)
-    }
+	override fun onAlbumClick(model: ViewType) {
+		if (model is AlbumType) {
+			val album = model as Album
+			val intent = Intent(this, InternalAlbumsActivity::class.java)
+			intent.putExtra(Config.PHOTO_ID_KEY, album.id)
+			intent.putExtra(Config.ALBUM_ID_KEY, album.albumId)
+			startActivity(intent)
+		}
 
-  }
+	}
 }

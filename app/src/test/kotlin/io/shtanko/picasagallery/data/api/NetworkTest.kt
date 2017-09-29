@@ -19,16 +19,16 @@ package io.shtanko.picasagallery.data.api
 
 import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.core.FuelManager
-import io.shtanko.picasagallery.Config
+import io.shtanko.picasagallery.Config.PICASA_BASE_API_URL
 
 class NetworkTest {
-  private val MOCK_USER_ID = "1"
+	private val MOCK_USER_ID = "1"
 
-  init {
-    FuelManager.instance.basePath = Config.PICASA_BASE_API_URL
+	init {
+		FuelManager.instance.basePath = PICASA_BASE_API_URL
 
-    Fuel.testMode {
-      timeout = 15000
-    }
-  }
+		Fuel.testMode {
+			timeout = 15000
+		}
+	}
 }

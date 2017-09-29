@@ -22,14 +22,15 @@ import dagger.Module
 import dagger.android.ContributesAndroidInjector
 import io.shtanko.picasagallery.util.ActivityScoped
 import io.shtanko.picasagallery.util.FragmentScoped
+import io.shtanko.picasagallery.view.album.InternalAlbumsContract.Presenter
 
 @Module abstract class InternalAlbumsModule {
 
-  @FragmentScoped
-  @ContributesAndroidInjector
-  abstract fun internalAlbumsFragment(): InternalAlbumsFragment
+	@FragmentScoped
+	@ContributesAndroidInjector
+	abstract fun internalAlbumsFragment(): InternalAlbumsFragment
 
-  @ActivityScoped
-  @Binds abstract fun internalAlbumsPresenter(
-      presenter: InternalAlbumsPresenter): InternalAlbumsContract.Presenter
+	@ActivityScoped
+	@Binds abstract fun internalAlbumsPresenter(
+			presenter: InternalAlbumsPresenter): Presenter
 }

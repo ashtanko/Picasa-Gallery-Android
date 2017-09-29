@@ -20,7 +20,6 @@ package io.shtanko.picasagallery.util
 import javax.inject.Scope
 import kotlin.annotation.AnnotationRetention.RUNTIME
 
-
 @MustBeDocumented
 @Scope
 @Retention(RUNTIME)

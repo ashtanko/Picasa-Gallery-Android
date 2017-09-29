@@ -23,15 +23,15 @@ import javax.inject.Singleton
 
 @Singleton
 class Serializer @Inject constructor(val gson: Gson) {
-  /**
-   * Serialize an object to Json.
-   * @param object to serialize.
-   */
-  fun serialize(any: Any, clazz: Class<*>): String = gson.toJson(any, clazz)
+	/**
+	 * Serialize an object to Json.
+	 * @param object to serialize.
+	 */
+	fun serialize(any: Any, clazz: Class<*>): String = gson.toJson(any, clazz)
 
-  /**
-   * Deserialize a json representation of an object.
-   * @param string A json string to deserialize.
-   */
-  fun <T> deserialize(string: String, clazz: Class<T>): T = gson.fromJson(string, clazz)
+	/**
+	 * Deserialize a json representation of an object.
+	 * @param string A json string to deserialize.
+	 */
+	fun <T> deserialize(string: String, clazz: Class<T>): T = gson.fromJson(string, clazz)
 }

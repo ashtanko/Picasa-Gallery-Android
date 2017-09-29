@@ -18,26 +18,24 @@
 package io.shtanko.picasagallery.data.user
 
 import io.reactivex.Flowable
-import io.shtanko.picasagallery.view.base.UseCase
 import io.shtanko.picasagallery.core.executor.PostExecutionThread
 import io.shtanko.picasagallery.core.executor.ThreadExecutor
 import io.shtanko.picasagallery.data.entity.user.User
 import io.shtanko.picasagallery.data.user.GetUserDetails.Params
+import io.shtanko.picasagallery.view.base.UseCase
 import javax.inject.Inject
 
 class GetUserDetails @Inject constructor(
-    var userRepository: UserRepository,
-    threadExecutor: ThreadExecutor,
-    postExecutionThread: PostExecutionThread) : UseCase<User, Params>(threadExecutor,
-    postExecutionThread) {
+		var userRepository: UserRepository,
+		threadExecutor: ThreadExecutor,
+		postExecutionThread: PostExecutionThread) : UseCase<User, Params>(threadExecutor,
+		postExecutionThread) {
 
+	override fun buildUseCaseObservable(params: Params): Flowable<User> = userRepository.getUserData()
 
-  override fun buildUseCaseObservable(params: Params): Flowable<User> = userRepository.getUserData()
-
-  class Params private constructor() {
-    companion object {
-      fun createQuery() = Params()
-    }
-  }
-
+	class Params private constructor() {
+		companion object {
+			fun createQuery() = Params()
+		}
+	}
 }

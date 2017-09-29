@@ -18,6 +18,5 @@
 package io.shtanko.picasagallery.data.entity.base
 
 data class BaseAnimationEntity(
-    val isAnimationShown: Boolean
-) {
-}
+		val isAnimationShown: Boolean
+)

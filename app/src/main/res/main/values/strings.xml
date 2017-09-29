@@ -17,4 +17,5 @@
   -->
 
 <resources>
+  <string name="unable_connect_google_services">Unable to connect to Google Play Services</string>
 </resources>

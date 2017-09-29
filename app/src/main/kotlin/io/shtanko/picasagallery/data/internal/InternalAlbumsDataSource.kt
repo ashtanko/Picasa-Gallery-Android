@@ -18,5 +18,5 @@
 package io.shtanko.picasagallery.data.internal
 
 interface InternalAlbumsDataSource {
-  fun getInternalAlbums()
+	fun getInternalAlbums()
 }

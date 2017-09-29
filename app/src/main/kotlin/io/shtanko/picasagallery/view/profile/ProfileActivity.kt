@@ -19,19 +19,21 @@ package io.shtanko.picasagallery.view.profile
 
 import android.os.Bundle
 import dagger.Lazy
-import io.shtanko.picasagallery.R
+import io.shtanko.picasagallery.R.id.content_frame
+import io.shtanko.picasagallery.R.layout.container_activity
 import io.shtanko.picasagallery.view.base.BaseActivity
 import javax.inject.Inject
 
-
 class ProfileActivity : BaseActivity() {
 
-  @Inject lateinit var presenter: ProfilePresenter
-  @Inject lateinit var fragmentProvider: Lazy<ProfileFragment>
+	// region injection
+	@Inject lateinit var presenter: ProfilePresenter
+	@Inject lateinit var fragmentProvider: Lazy<ProfileFragment>
+	// endregion
 
-  override fun onCreate(savedInstanceState: Bundle?) {
-    super.onCreate(savedInstanceState)
-    setContentView(R.layout.container_activity)
-    addFragment(R.id.content_frame, fragmentProvider)
-  }
+	override fun onCreate(savedInstanceState: Bundle?) {
+		super.onCreate(savedInstanceState)
+		setContentView(container_activity)
+		addFragment(content_frame, fragmentProvider)
+	}
 }

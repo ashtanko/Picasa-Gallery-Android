@@ -24,13 +24,13 @@ import com.bumptech.glide.request.animation.ViewPropertyAnimation
 
 object FadeAnimator : ViewPropertyAnimation.Animator {
 
-  override fun animate(view: View?) {
-    if (!view?.isEnabled!!) {
-      view.isEnabled = true
-      val animator = ObjectAnimator.ofFloat(view, "alpha", 0f, 1f)
-      animator.duration = 300
-      animator.interpolator = AccelerateDecelerateInterpolator()
-      animator.start()
-    }
-  }
+	override fun animate(view: View?) {
+		if (!view?.isEnabled!!) {
+			view.isEnabled = true
+			val animator = ObjectAnimator.ofFloat(view, "alpha", 0f, 1f)
+			animator.duration = 300
+			animator.interpolator = AccelerateDecelerateInterpolator()
+			animator.start()
+		}
+	}
 }

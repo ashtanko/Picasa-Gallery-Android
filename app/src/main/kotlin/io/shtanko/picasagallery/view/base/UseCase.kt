@@ -28,35 +28,35 @@ import io.shtanko.picasagallery.core.executor.ThreadExecutor
 
 
 abstract class UseCase<T, in P>(private val threadExecutor: ThreadExecutor,
-    private val postExecutionThread: PostExecutionThread) {
+		private val postExecutionThread: PostExecutionThread) {
 
-  /**
-   * Builds an {@link rx.Observable} which will be used when executing the current {@link UseCase}.
-   */
-  internal abstract fun buildUseCaseObservable(params: P): Flowable<T>
+	/**
+	 * Builds an {@link rx.Observable} which will be used when executing the current {@link UseCase}.
+	 */
+	internal abstract fun buildUseCaseObservable(params: P): Flowable<T>
 
-  private var disposables = CompositeDisposable()
+	private var disposables = CompositeDisposable()
 
 
-  fun execute(observer: DisposableObserver<T>, params: P) {
-    Preconditions.checkNotNull(observer)
+	fun execute(observer: DisposableObserver<T>, params: P) {
+		Preconditions.checkNotNull(observer)
 
-    val observable = this.buildUseCaseObservable(params)
-        .subscribeOn(Schedulers.from(threadExecutor))
+		val observable = this.buildUseCaseObservable(params)
+				.subscribeOn(Schedulers.from(threadExecutor))
 
-    if (postExecutionThread.getScheduler() != null) {
-      observable.observeOn(postExecutionThread.getScheduler())
-    }
-    addDisposable(observable.toObservable().subscribeWith(observer))
-  }
+		if (postExecutionThread.getScheduler() != null) {
+			observable.observeOn(postExecutionThread.getScheduler())
+		}
+		addDisposable(observable.toObservable().subscribeWith(observer))
+	}
 
-  fun unSubscribe() {
-    if (!disposables.isDisposed) disposables.dispose()
-  }
+	fun unSubscribe() {
+		if (!disposables.isDisposed) disposables.dispose()
+	}
 
-  private fun addDisposable(disposable: Disposable) {
-    Preconditions.checkNotNull(disposable)
-    Preconditions.checkNotNull(disposables)
-    disposables.add(disposable)
-  }
+	private fun addDisposable(disposable: Disposable) {
+		Preconditions.checkNotNull(disposable)
+		Preconditions.checkNotNull(disposables)
+		disposables.add(disposable)
+	}
 }

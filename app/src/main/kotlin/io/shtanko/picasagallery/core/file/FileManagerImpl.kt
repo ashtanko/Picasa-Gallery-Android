@@ -32,60 +32,60 @@ import javax.inject.Singleton
 @Singleton
 class FileManagerImpl : FileManager {
 
-  override fun writeToFile(file: File, fileContent: String) {
-    if (file.exists()) {
-      try {
-        val writer = FileWriter(file)
-        writer.write(fileContent)
-        writer.close()
-      } catch (e: IOException) {
-        FileLog.e(e)
-      }
-    }
-  }
+	override fun writeToFile(file: File, fileContent: String) {
+		if (file.exists()) {
+			try {
+				val writer = FileWriter(file)
+				writer.write(fileContent)
+				writer.close()
+			} catch (e: IOException) {
+				FileLog.e(e)
+			}
+		}
+	}
 
-  override fun readFileContent(file: File): String {
-    val fileContentBuilder = StringBuilder()
-    if (file.exists()) {
-      try {
-        val fileReader = FileReader(file)
-        val bufferedReader = BufferedReader(fileReader)
-        var stringLine = bufferedReader.readLine()
+	override fun readFileContent(file: File): String {
+		val fileContentBuilder = StringBuilder()
+		if (file.exists()) {
+			try {
+				val fileReader = FileReader(file)
+				val bufferedReader = BufferedReader(fileReader)
+				var stringLine = bufferedReader.readLine()
 
-        while (stringLine != null) {
-          fileContentBuilder.append(stringLine).append("\n")
-          stringLine = bufferedReader.readLine()
-        }
-        bufferedReader.close()
-        fileReader.close()
-      } catch (e: IOException) {
-        FileLog.e(e)
-      }
-    }
+				while (stringLine != null) {
+					fileContentBuilder.append(stringLine).append("\n")
+					stringLine = bufferedReader.readLine()
+				}
+				bufferedReader.close()
+				fileReader.close()
+			} catch (e: IOException) {
+				FileLog.e(e)
+			}
+		}
 
-    return fileContentBuilder.toString()
-  }
+		return fileContentBuilder.toString()
+	}
 
-  override fun exists(file: File) = file.exists()
+	override fun exists(file: File) = file.exists()
 
-  override fun clearDirectory(dir: File): Boolean {
-    var result = false
-    if (dir.exists()) {
-      for (file in dir.listFiles()) {
-        result = file.delete()
-      }
-    }
-    return result
-  }
+	override fun clearDirectory(dir: File): Boolean {
+		var result = false
+		if (dir.exists()) {
+			for (file in dir.listFiles()) {
+				result = file.delete()
+			}
+		}
+		return result
+	}
 
-  private fun isEOF(br: BufferedReader): Boolean {
-    var result = false
-    try {
-      result = br.ready()
-    } catch (e: IOException) {
-      System.err.println(e)
-    }
-    return result
-  }
+	private fun isEOF(br: BufferedReader): Boolean {
+		var result = false
+		try {
+			result = br.ready()
+		} catch (e: IOException) {
+			System.err.println(e)
+		}
+		return result
+	}
 
 }

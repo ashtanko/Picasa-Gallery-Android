@@ -37,49 +37,49 @@ import org.mockito.junit.MockitoJUnitRunner
 @RunWith(MockitoJUnitRunner::class)
 class PhotosPresenterTest {
 
-  private val view = mock<View>()
-  private lateinit var presenter: PhotosPresenter
-  private val exception = RuntimeException("Error")
+	private val view = mock<View>()
+	private lateinit var presenter: PhotosPresenter
+	private val exception = RuntimeException("Error")
 
-  @Before
-  fun setUp() {
-    initMocks(this)
-    presenter = PhotosPresenter(FakePhotosRepository())
-    presenter.takeView(view)
-  }
+	@Before
+	fun setUp() {
+		initMocks(this)
+		presenter = PhotosPresenter(FakePhotosRepository())
+		presenter.takeView(view)
+	}
 
-  @Test
-  fun on_photo_clickTest() {
-    presenter.onPhotoClick(getFakePhoto())
-    verify(view, times(1)).viewPhoto(getFakePhoto())
-  }
+	@Test
+	fun on_photo_clickTest() {
+		presenter.onPhotoClick(getFakePhoto())
+		verify(view, times(1)).viewPhoto(getFakePhoto())
+	}
 
-  @Test
-  fun on_success_get_photosTest() {
-    presenter.getPhotos()
-    verify(view, times(1)).showPhotos(getFakePhotos())
-  }
+	@Test
+	fun on_success_get_photosTest() {
+		presenter.getPhotos()
+		verify(view, times(1)).showPhotos(getFakePhotos())
+	}
 
-  @Test
-  fun on_error_get_photosTest() {
-    presenter = PhotosPresenter(FakePhotosRepositoryWithException())
-    presenter.takeView(view)
-    presenter.getPhotos()
-    verify(view, times(1)).showError(exception.localizedMessage)
-  }
+	@Test
+	fun on_error_get_photosTest() {
+		presenter = PhotosPresenter(FakePhotosRepositoryWithException())
+		presenter.takeView(view)
+		presenter.getPhotos()
+		verify(view, times(1)).showError(exception.localizedMessage)
+	}
 
-  inner class FakePhotosRepository : PhotosRepository {
-    override fun photos(): Flowable<PhotosList> =
-        Flowable.fromIterable(getFakePhotos()).toList().toFlowable()
-  }
+	inner class FakePhotosRepository : PhotosRepository {
+		override fun photos(): Flowable<PhotosList> =
+				Flowable.fromIterable(getFakePhotos()).toList().toFlowable()
+	}
 
-  inner class FakePhotosRepositoryWithException : PhotosRepository {
-    override fun photos(): Flowable<PhotosList> =
-        Flowable.fromIterable(getFakePhotos()).concatWith(
-            Flowable.error { exception }).toList().toFlowable()
-  }
+	inner class FakePhotosRepositoryWithException : PhotosRepository {
+		override fun photos(): Flowable<PhotosList> =
+				Flowable.fromIterable(getFakePhotos()).concatWith(
+						Flowable.error { exception }).toList().toFlowable()
+	}
 
-  private fun getFakePhoto(): ViewType = Photo(0)
-  private fun getFakePhotos() = getPhotosData()
+	private fun getFakePhoto(): ViewType = Photo(0)
+	private fun getFakePhotos() = getPhotosData()
 
 }

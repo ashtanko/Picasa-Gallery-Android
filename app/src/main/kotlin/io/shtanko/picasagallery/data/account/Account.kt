@@ -21,38 +21,38 @@ import android.accounts.Account
 
 interface Account {
 
-  /**
-   * Specify whether the app has an active account set.
-   *
-   */
-  abstract fun hasActiveAccount(): Boolean
+	/**
+	 * Specify whether the app has an active account set.
+	 *
+	 */
+	abstract fun hasActiveAccount(): Boolean
 
-  /**
-   * Return the accountName the app is using as the active Google Account.
-   *
-   */
-  abstract fun getActiveAccountName(): String
+	/**
+	 * Return the accountName the app is using as the active Google Account.
+	 *
+	 */
+	abstract fun getActiveAccountName(): String
 
-  /**
-   * Return the {@code Account} the app is using as the active Google Account.
-   *
-   */
-  abstract fun getActiveAccount(): Account
+	/**
+	 * Return the {@code Account} the app is using as the active Google Account.
+	 *
+	 */
+	abstract fun getActiveAccount(): Account
 
-  abstract fun setActiveAccount(accountName: String)
+	abstract fun setActiveAccount(accountName: String)
 
-  abstract fun clearActiveAccount()
+	abstract fun clearActiveAccount()
 
-  abstract fun makeAccountSpecificPrefKey(prefix: String): String
+	abstract fun makeAccountSpecificPrefKey(prefix: String): String
 
-  abstract fun makeAccountSpecificPrefKey(accountName: String, prefix: String): String
+	abstract fun makeAccountSpecificPrefKey(accountName: String, prefix: String): String
 
-  abstract fun getAuthToken(): String
+	abstract fun getAuthToken(): String
 
-  abstract fun setAuthToken(accountName: String, authToken: String?)
+	abstract fun setAuthToken(accountName: String, authToken: String?)
 
-  abstract fun setAuthToken(authToken: String?)
+	abstract fun setAuthToken(authToken: String?)
 
-  fun invalidateAuthToken() = setAuthToken(null)
+	fun invalidateAuthToken() = setAuthToken(null)
 
 }

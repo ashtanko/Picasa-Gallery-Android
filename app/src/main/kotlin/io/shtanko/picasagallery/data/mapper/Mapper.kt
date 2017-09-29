@@ -18,6 +18,6 @@
 package io.shtanko.picasagallery.data.mapper
 
 interface Mapper<F, T> {
-  fun transformFrom(from: F): T
-  fun transformTo(to: T): F
+	fun transformFrom(from: F): T
+	fun transformTo(to: T): F
 }

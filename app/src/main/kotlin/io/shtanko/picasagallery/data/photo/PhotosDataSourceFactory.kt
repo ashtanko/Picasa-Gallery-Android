@@ -23,5 +23,4 @@ import javax.inject.Singleton
 @Singleton
 class PhotosDataSourceFactory @Inject constructor() {
 
-
 }

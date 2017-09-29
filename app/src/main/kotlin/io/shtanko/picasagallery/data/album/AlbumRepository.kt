@@ -21,5 +21,5 @@ import io.reactivex.Flowable
 import io.shtanko.picasagallery.extensions.AlbumsList
 
 interface AlbumRepository {
-  abstract fun albums(): Flowable<AlbumsList>
+	abstract fun albums(): Flowable<AlbumsList>
 }

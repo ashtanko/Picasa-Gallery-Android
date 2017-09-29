@@ -21,5 +21,4 @@ import dagger.Module
 
 @Module
 class DatabaseModule {
-
 }

@@ -19,7 +19,8 @@ package io.shtanko.picasagallery.view.photo
 
 import android.os.Bundle
 import dagger.Lazy
-import io.shtanko.picasagallery.R
+import io.shtanko.picasagallery.R.id.content_frame
+import io.shtanko.picasagallery.R.layout.container_activity
 import io.shtanko.picasagallery.view.base.BaseActivity
 import io.shtanko.picasagallery.view.delegate.ViewType
 import io.shtanko.picasagallery.view.photo.PhotosFragment.PhotoClickListener
@@ -27,23 +28,23 @@ import javax.inject.Inject
 
 class PhotosActivity : BaseActivity(), PhotoClickListener {
 
-  @Inject lateinit var presenter: PhotosPresenter
-  @Inject lateinit var fragmentProvider: Lazy<PhotosFragment>
-  private val viewer = PhotoViewer()
+	@Inject lateinit var presenter: PhotosPresenter
+	@Inject lateinit var fragmentProvider: Lazy<PhotosFragment>
+	private val viewer = PhotoViewer()
 
-  override fun onCreate(savedInstanceState: Bundle?) {
-    super.onCreate(savedInstanceState)
-    setContentView(R.layout.container_activity)
-    addFragment(R.id.content_frame, fragmentProvider)
-  }
+	override fun onCreate(savedInstanceState: Bundle?) {
+		super.onCreate(savedInstanceState)
+		setContentView(container_activity)
+		addFragment(content_frame, fragmentProvider)
+	}
 
-  override fun onPhotoClick(model: ViewType) {
-    viewer.initActivity(this)
-    viewer.openPhoto()
-  }
+	override fun onPhotoClick(model: ViewType) {
+		viewer.initActivity(this)
+		viewer.openPhoto()
+	}
 
-  override fun onDestroy() {
-    super.onDestroy()
-    viewer.closePhoto()
-  }
+	override fun onDestroy() {
+		super.onDestroy()
+		viewer.closePhoto()
+	}
 }

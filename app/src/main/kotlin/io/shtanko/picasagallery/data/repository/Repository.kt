@@ -17,6 +17,5 @@
 
 package io.shtanko.picasagallery.data.repository
 
-
 interface Repository {
 }

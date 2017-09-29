@@ -22,13 +22,14 @@ import dagger.Module
 import dagger.android.ContributesAndroidInjector
 import io.shtanko.picasagallery.util.ActivityScoped
 import io.shtanko.picasagallery.util.FragmentScoped
+import io.shtanko.picasagallery.view.auth.SignInContract.Presenter
 
 @Module abstract class SignInModule {
 
-  @FragmentScoped
-  @ContributesAndroidInjector
-  abstract fun signInFragment(): SignInFragment
+	@FragmentScoped
+	@ContributesAndroidInjector
+	abstract fun signInFragment(): SignInFragment
 
-  @ActivityScoped
-  @Binds abstract fun signInPresenter(presenter: SignInPresenter): SignInContract.Presenter
+	@ActivityScoped
+	@Binds abstract fun signInPresenter(presenter: SignInPresenter): Presenter
 }

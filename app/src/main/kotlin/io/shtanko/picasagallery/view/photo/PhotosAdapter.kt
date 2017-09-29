@@ -25,7 +25,7 @@ import javax.inject.Inject
 
 @ActivityScoped
 class PhotosAdapter @Inject constructor() : BaseAdapter<PhotoType>() {
-  init {
-    delegateAdapters.put(Config.PHOTO_VIEW_TYPE_ID, PhotosAdapterDelegateImpl())
-  }
+	init {
+		delegateAdapters.put(Config.PHOTO_VIEW_TYPE_ID, PhotosAdapterDelegateImpl())
+	}
 }

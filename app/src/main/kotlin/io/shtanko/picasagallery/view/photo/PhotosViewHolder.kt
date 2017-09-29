@@ -29,17 +29,18 @@ import io.shtanko.picasagallery.view.widget.FourThreeImageView
 
 class PhotosViewHolder(itemView: View?) : BaseViewHolder(itemView), Divided {
 
-  val image = itemView?.findViewById<FourThreeImageView>(R.id.album)
-  private val imageHelper: ImageHelper
+	val image = itemView?.findViewById<FourThreeImageView>(R.id.album)
+	private val imageHelper: ImageHelper
 
-  init {
-    imageHelper = ImageHelperImpl()
-  }
+	init {
+		imageHelper = ImageHelperImpl()
+	}
 
-  override fun bind(item: ViewType) {
-    if (item is PhotoType) {
-      imageHelper.process(itemView.context, image, "https://cdn.dribbble.com/users/989466/screenshots/3785128/diamond-sword-dribbble-alex-pasquarella.png")
-    }
-  }
+	override fun bind(item: ViewType) {
+		if (item is PhotoType) {
+			imageHelper.process(itemView.context, image,
+					"https://cdn.dribbble.com/users/989466/screenshots/3785128/diamond-sword-dribbble-alex-pasquarella.png")
+		}
+	}
 
 }

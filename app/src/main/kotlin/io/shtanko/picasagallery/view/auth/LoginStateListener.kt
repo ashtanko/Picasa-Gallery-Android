@@ -18,19 +18,19 @@
 package io.shtanko.picasagallery.view.auth
 
 interface LoginStateListener {
-  /**
-   * This is called when the user has requested to sign in. Implements showing the login UI.
-   */
-  abstract fun onSignInOrCreateAccount()
+	/**
+	 * This is called when the user has requested to sign in. Implements showing the login UI.
+	 */
+	abstract fun onSignInOrCreateAccount()
 
-  /**
-   * This is called when the user has selected another account. Implements any custom changes
-   * required in the feature based on the selected account.
-   */
-  abstract fun onAccountChangeRequested()
+	/**
+	 * This is called when the user has selected another account. Implements any custom changes
+	 * required in the feature based on the selected account.
+	 */
+	abstract fun onAccountChangeRequested()
 
-  /**
-   * This is called when the user has selected another account. Implements login in the user.
-   */
-  abstract fun onStartLoginProcessRequested()
+	/**
+	 * This is called when the user has selected another account. Implements login in the user.
+	 */
+	abstract fun onStartLoginProcessRequested()
 }

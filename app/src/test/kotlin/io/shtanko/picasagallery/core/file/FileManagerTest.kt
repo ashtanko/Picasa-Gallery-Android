@@ -21,35 +21,35 @@ import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.FixMethodOrder
 import org.junit.Test
-import org.junit.runners.MethodSorters
+import org.junit.runners.MethodSorters.JVM
 import java.io.File
 import java.io.File.createTempFile
 
-@FixMethodOrder(MethodSorters.JVM)
+@FixMethodOrder(JVM)
 class FileManagerTest {
 
-  private lateinit var manager: FileManager
-  private val FILE_PREFIX = "file"
-  private val FILE_SUFFIX = ".fuck"
-  private val FILE_CONTENT = "Test\nTest\nTest\n"
+	private lateinit var manager: FileManager
+	private val FILE_PREFIX = "file"
+	private val FILE_SUFFIX = ".fuck"
+	private val FILE_CONTENT = "Test\nTest\nTest\n"
 
-  @Before
-  fun setUp() {
-    manager = FileManagerImpl()
-  }
+	@Before
+	fun setUp() {
+		manager = FileManagerImpl()
+	}
 
-  @Test
-  fun is_file_existsTest() {
-    assertEquals(manager.exists(getTmpFile()), true)
-  }
+	@Test
+	fun is_file_existsTest() {
+		assertEquals(manager.exists(getTmpFile()), true)
+	}
 
-  @Test
-  fun write_to_file_Test() {
-    val file = getTmpFile()
-    manager.writeToFile(file, FILE_CONTENT)
-    assertEquals(manager.readFileContent(file), FILE_CONTENT)
-  }
+	@Test
+	fun write_to_file_Test() {
+		val file = getTmpFile()
+		manager.writeToFile(file, FILE_CONTENT)
+		assertEquals(manager.readFileContent(file), FILE_CONTENT)
+	}
 
-  private fun getTmpFile(): File = createTempFile(FILE_PREFIX, FILE_SUFFIX)
+	private fun getTmpFile(): File = createTempFile(FILE_PREFIX, FILE_SUFFIX)
 
 }

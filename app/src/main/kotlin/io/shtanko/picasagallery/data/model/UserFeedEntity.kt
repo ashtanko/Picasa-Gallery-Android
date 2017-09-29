@@ -19,10 +19,9 @@ package io.shtanko.picasagallery.data.model
 
 import com.google.gson.annotations.SerializedName
 
-
 data class UserFeedEntity(
-    @SerializedName("xmlns") var xmlns: String,
-    @SerializedName("id") var id: SingleStringElementEntity,
-    @SerializedName("updated") var updated: SingleStringElementEntity,
-    @SerializedName("entry") var entry: List<AlbumEntity>
+		@SerializedName("xmlns") var xmlns: String,
+		@SerializedName("id") var id: SingleStringElementEntity,
+		@SerializedName("updated") var updated: SingleStringElementEntity,
+		@SerializedName("entry") var entry: List<AlbumEntity>
 )

@@ -24,8 +24,8 @@ import javax.inject.Singleton
 
 @Singleton
 class GetUserRepositoryImpl @Inject constructor(
-    private val dataSourceImpl: UserDataSource) : UserRepository {
+		private val dataSourceImpl: UserDataSource) : UserRepository {
 
-  override fun getUserData(): Flowable<User> = Flowable.just(dataSourceImpl.getUser())
+	override fun getUserData(): Flowable<User> = Flowable.just(dataSourceImpl.getUser())
 
 }

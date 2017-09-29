@@ -18,7 +18,6 @@
 package io.shtanko.picasagallery.data.photo
 
 import io.reactivex.Flowable
-import io.reactivex.Observable
 import io.shtanko.picasagallery.data.entity.photo.Photo
 import io.shtanko.picasagallery.extensions.PhotosList
 
@@ -27,9 +26,9 @@ import io.shtanko.picasagallery.extensions.PhotosList
  */
 interface PhotosRepository {
 
-  /**
-   * Get an [rx.Observable] which will emit a List of [Photo].
-   */
-  abstract fun photos(): Flowable<PhotosList>
+	/**
+	 * Get an [rx.Observable] which will emit a List of [Photo].
+	 */
+	abstract fun photos(): Flowable<PhotosList>
 
 }

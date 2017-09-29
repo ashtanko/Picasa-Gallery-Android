@@ -23,10 +23,9 @@ import com.bumptech.glide.GlideBuilder
 import com.bumptech.glide.module.GlideModule
 
 class PicasaGlideModule : GlideModule {
+	override fun applyOptions(context: Context?, builder: GlideBuilder?) {
+	}
 
-  override fun applyOptions(context: Context?, builder: GlideBuilder?) {
-  }
-
-  override fun registerComponents(context: Context?, glide: Glide?) {
-  }
+	override fun registerComponents(context: Context?, glide: Glide?) {
+	}
 }

@@ -22,13 +22,14 @@ import dagger.Module
 import dagger.android.ContributesAndroidInjector
 import io.shtanko.picasagallery.util.ActivityScoped
 import io.shtanko.picasagallery.util.FragmentScoped
+import io.shtanko.picasagallery.view.photo.PhotosContract.Presenter
 
 @Module abstract class PhotosModule {
 
-  @FragmentScoped
-  @ContributesAndroidInjector
-  abstract fun photosFragment(): PhotosFragment
+	@FragmentScoped
+	@ContributesAndroidInjector
+	abstract fun photosFragment(): PhotosFragment
 
-  @ActivityScoped
-  @Binds abstract fun photosPresenter(presenter: PhotosPresenter): PhotosContract.Presenter
+	@ActivityScoped
+	@Binds abstract fun photosPresenter(presenter: PhotosPresenter): Presenter
 }

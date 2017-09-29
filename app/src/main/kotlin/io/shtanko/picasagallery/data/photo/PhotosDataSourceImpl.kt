@@ -25,7 +25,7 @@ import javax.inject.Singleton
 
 @Singleton
 class PhotosDataSourceImpl @Inject constructor(val api: PicasaService) : PhotosDataSource {
-  override fun getPhotos(): Flowable<PhotosList> {
-    return Flowable.empty()
-  }
+	override fun getPhotos(): Flowable<PhotosList> {
+		return Flowable.empty()
+	}
 }

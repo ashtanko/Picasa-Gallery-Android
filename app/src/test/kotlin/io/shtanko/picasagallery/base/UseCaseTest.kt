@@ -31,24 +31,24 @@ import org.mockito.junit.MockitoJUnitRunner
 @RunWith(MockitoJUnitRunner::class)
 class UseCaseTest {
 
-  private val mockThreadExecutor = mock<ThreadExecutor>()
-  private val mockPostExecutionThread = mock<PostExecutionThread>()
-  private var useCase: UseCaseTestClass? = null
+	private val mockThreadExecutor = mock<ThreadExecutor>()
+	private val mockPostExecutionThread = mock<PostExecutionThread>()
+	private var useCase: UseCaseTestClass? = null
 
-  @Before
-  fun setUp() {
-    useCase = UseCaseTestClass(mockThreadExecutor, mockPostExecutionThread)
-  }
+	@Before
+	fun setUp() {
+		useCase = UseCaseTestClass(mockThreadExecutor, mockPostExecutionThread)
+	}
 
-  @Test
-  fun when_executing_use_caseTest() {
-    val subscriber = TestObserver()
-    useCase?.execute(subscriber, UseCaseTestClass.Params.createQuery())
-    useCase?.unSubscribe()
-    assertThat(subscriber.isDisposed, `is`(true))
-  }
+	@Test
+	fun when_executing_use_caseTest() {
+		val subscriber = TestObserver()
+		useCase?.execute(subscriber, UseCaseTestClass.Params.createQuery())
+		useCase?.unSubscribe()
+		assertThat(subscriber.isDisposed, `is`(true))
+	}
 
-  inner class TestObserver : DefaultObserver<TestModel>() {
+	inner class TestObserver : DefaultObserver<TestModel>() {
 
-  }
+	}
 }

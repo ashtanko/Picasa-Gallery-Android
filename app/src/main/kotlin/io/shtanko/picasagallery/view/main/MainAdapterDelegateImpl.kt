@@ -25,14 +25,14 @@ import io.shtanko.picasagallery.view.delegate.ViewType
 import io.shtanko.picasagallery.view.delegate.ViewTypeAdapterDelegate
 
 class MainAdapterDelegateImpl : ViewTypeAdapterDelegate {
-  override fun onCreateViewHolder(parent: ViewGroup?): ViewHolder {
-    val view = parent?.inflate(R.layout.album_item)
-    return MainViewHolder(view)
-  }
+	override fun onCreateViewHolder(parent: ViewGroup?): ViewHolder {
+		val view = parent?.inflate(R.layout.album_item)
+		return MainViewHolder(view)
+	}
 
-  override fun onBindViewHolder(holder: ViewHolder, item: ViewType) {
-    holder as MainViewHolder
-    holder.bind(item)
-  }
+	override fun onBindViewHolder(holder: ViewHolder, item: ViewType) {
+		holder as MainViewHolder
+		holder.bind(item)
+	}
 
 }

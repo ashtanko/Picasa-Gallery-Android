@@ -19,5 +19,4 @@ package io.shtanko.picasagallery.data.entity.internal
 
 import io.shtanko.picasagallery.view.delegate.ViewType
 
-interface ContentType : ViewType {
-}
+interface ContentType : ViewType

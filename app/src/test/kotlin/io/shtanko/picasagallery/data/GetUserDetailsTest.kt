@@ -35,26 +35,26 @@ import org.mockito.junit.MockitoJUnitRunner
 @RunWith(MockitoJUnitRunner::class)
 class GetUserDetailsTest {
 
-  private val mockUserRepository = mock<UserRepository>()
-  private val mockThreadExecutor = mock<ThreadExecutor>()
-  private val mockPostExecutionThread = mock<PostExecutionThread>()
-  private var getUserDetails: GetUserDetails? = null
+	private val mockUserRepository = mock<UserRepository>()
+	private val mockThreadExecutor = mock<ThreadExecutor>()
+	private val mockPostExecutionThread = mock<PostExecutionThread>()
+	private var getUserDetails: GetUserDetails? = null
 
-  @Before
-  fun setUp() {
-    getUserDetails = GetUserDetails(mockUserRepository, mockThreadExecutor, mockPostExecutionThread)
-  }
+	@Before
+	fun setUp() {
+		getUserDetails = GetUserDetails(mockUserRepository, mockThreadExecutor, mockPostExecutionThread)
+	}
 
-  @Test
-  fun get_userTest() {
-    `when`(getUserDetails?.userRepository?.getUserData()).thenReturn(
-        Flowable.just(MockUser.create()))
-    `when`(mockUserRepository.getUserData()).thenReturn(
-        Flowable.just(MockUser.create()))
-    getUserDetails?.buildUseCaseObservable(GetUserDetails.Params.createQuery())
-    verify(mockUserRepository).getUserData()
-    verifyNoMoreInteractions(mockUserRepository)
-    verifyZeroInteractions(mockThreadExecutor)
-    verifyZeroInteractions(mockPostExecutionThread)
-  }
+	@Test
+	fun get_userTest() {
+		`when`(getUserDetails?.userRepository?.getUserData()).thenReturn(
+				Flowable.just(MockUser.create()))
+		`when`(mockUserRepository.getUserData()).thenReturn(
+				Flowable.just(MockUser.create()))
+		getUserDetails?.buildUseCaseObservable(GetUserDetails.Params.createQuery())
+		verify(mockUserRepository).getUserData()
+		verifyNoMoreInteractions(mockUserRepository)
+		verifyZeroInteractions(mockThreadExecutor)
+		verifyZeroInteractions(mockPostExecutionThread)
+	}
 }

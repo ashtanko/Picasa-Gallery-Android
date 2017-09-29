@@ -20,22 +20,22 @@ package io.shtanko.picasagallery.util
 import android.util.Log
 
 object Logger {
-  private var TAG = javaClass.simpleName
+	private var TAG = javaClass.simpleName
 
-  fun verbose(message: String) {
-    Log.v(TAG, message)
-  }
+	fun verbose(message: String) {
+		Log.v(TAG, message)
+	}
 
-  fun verbose(clazz: Any, message: String?) {
-    Log.v(clazz.javaClass.simpleName, message)
-  }
+	fun verbose(clazz: Any, message: String?) {
+		Log.v(clazz.javaClass.simpleName, message)
+	}
 
-  fun error(clazz: Any, message: String?) {
-    Log.e(clazz.javaClass.simpleName, message)
-  }
+	fun error(clazz: Any, message: String?) {
+		Log.e(clazz.javaClass.simpleName, message)
+	}
 
-  fun error(e: Throwable) {
-    Log.e(TAG, e.localizedMessage)
-  }
+	fun error(e: Throwable) {
+		Log.e(TAG, e.localizedMessage)
+	}
 
 }

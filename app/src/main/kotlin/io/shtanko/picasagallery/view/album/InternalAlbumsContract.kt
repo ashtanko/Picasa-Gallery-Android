@@ -18,7 +18,6 @@
 package io.shtanko.picasagallery.view.album
 
 import io.shtanko.picasagallery.data.entity.internal.Content
-import io.shtanko.picasagallery.data.entity.internal.ContentType
 import io.shtanko.picasagallery.extensions.ContentList
 import io.shtanko.picasagallery.view.base.BaseContentView
 import io.shtanko.picasagallery.view.base.BaseErrorView
@@ -26,14 +25,13 @@ import io.shtanko.picasagallery.view.base.BasePresenter
 import io.shtanko.picasagallery.view.base.BaseProgressView
 import io.shtanko.picasagallery.view.base.BaseView
 import io.shtanko.picasagallery.view.base.Clickable
-import io.shtanko.picasagallery.view.delegate.ViewType
 
 interface InternalAlbumsContract {
-  abstract interface View : BaseView<Presenter>, BaseProgressView, BaseErrorView, BaseContentView<ContentList> {
-    fun viewAlbum(model: Content)
-  }
+	abstract interface View : BaseView<Presenter>, BaseProgressView, BaseErrorView, BaseContentView<ContentList> {
+		fun viewAlbum(model: Content)
+	}
 
-  abstract interface Presenter : BasePresenter<View>, Clickable {
-    fun getContent()
-  }
+	abstract interface Presenter : BasePresenter<View>, Clickable {
+		fun getContent()
+	}
 }

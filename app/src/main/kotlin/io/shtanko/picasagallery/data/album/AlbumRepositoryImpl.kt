@@ -24,7 +24,7 @@ import javax.inject.Singleton
 
 @Singleton
 class AlbumRepositoryImpl @Inject constructor(
-    private val dataSource: AlbumDataSource
+		private val dataSource: AlbumDataSource
 ) : AlbumRepository {
-  override fun albums(): Flowable<AlbumsList> = dataSource.getAlbums()
+	override fun albums(): Flowable<AlbumsList> = dataSource.getAlbums()
 }

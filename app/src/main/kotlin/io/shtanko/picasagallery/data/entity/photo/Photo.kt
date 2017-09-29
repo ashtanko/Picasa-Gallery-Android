@@ -17,8 +17,8 @@
 
 package io.shtanko.picasagallery.data.entity.photo
 
-import io.shtanko.picasagallery.Config
+import io.shtanko.picasagallery.Config.PHOTO_VIEW_TYPE_ID
 
 data class Photo(val id: Int) : PhotoType {
-  override fun getViewType() = Config.PHOTO_VIEW_TYPE_ID
+	override fun getViewType() = PHOTO_VIEW_TYPE_ID
 }

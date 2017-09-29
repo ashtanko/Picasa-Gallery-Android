@@ -20,7 +20,7 @@ package io.shtanko.picasagallery.data.model
 import com.google.gson.annotations.SerializedName
 
 data class MediaAndGroups(
-    @SerializedName("media"+"$"+"content") val content: List<MediaContent>,
-    @SerializedName("media"+"$"+"credit") val credit: List<SingleIntegerElementEntity>
+		@SerializedName("media" + "$" + "content") val content: List<MediaContent>,
+		@SerializedName("media" + "$" + "credit") val credit: List<SingleIntegerElementEntity>
 
 )

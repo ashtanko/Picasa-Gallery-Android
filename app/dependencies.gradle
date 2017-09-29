@@ -24,6 +24,7 @@ dependencies {
   def runnerRulesVersion = '1.0.0'
   def junitVersion = "4.12"
   def fuelVersion = '1.10.0'
+  def leakCanaryVersion = '1.5.1'
   // endregion
 
   // region SUPPORT
@@ -47,6 +48,7 @@ dependencies {
 
   // region OTHER
   compile 'com.google.code.findbugs:jsr305:3.0.2'
+  compile "com.squareup.leakcanary:leakcanary-android:${leakCanaryVersion}"
   // endregion
 
   // region PLAY SERVICES

@@ -30,38 +30,38 @@ import javax.inject.Inject
 
 @ActivityScoped
 class LaunchPresenter @Inject constructor(
-    private val getUserDetails: GetUserDetails) : Presenter {
+		private val getUserDetails: GetUserDetails) : Presenter {
 
-  @Nullable
-  private var view: View? = null
+	@Nullable
+	private var view: View? = null
 
-  override fun takeView(view: View) {
-    this.view = view
-  }
+	override fun takeView(view: View) {
+		this.view = view
+	}
 
-  override fun dropView() {
-    this.view = null
-    getUserDetails.unSubscribe()
-  }
+	override fun dropView() {
+		this.view = null
+		getUserDetails.unSubscribe()
+	}
 
-  override fun isSignIn() {
-    getUserDetails.execute(UserListObserver(), GetUserDetails.Params.createQuery())
-  }
+	override fun isSignIn() {
+		getUserDetails.execute(UserListObserver(), GetUserDetails.Params.createQuery())
+	}
 
-  inner class UserListObserver : DefaultObserver<User>() {
-    override fun onComplete() {
-    }
+	inner class UserListObserver : DefaultObserver<User>() {
+		override fun onComplete() {
+		}
 
-    override fun onNext(t: User) {
-      if (!TextUtils.isEmpty(t.personId)) {
-        this@LaunchPresenter.view?.onSignedIn()
-      } else {
-        this@LaunchPresenter.view?.onSignedOut()
-      }
-    }
+		override fun onNext(t: User) {
+			if (!TextUtils.isEmpty(t.personId)) {
+				this@LaunchPresenter.view?.onSignedIn()
+			} else {
+				this@LaunchPresenter.view?.onSignedOut()
+			}
+		}
 
-    override fun onError(exception: Throwable) {
-      FileLog.e(exception)
-    }
-  }
+		override fun onError(exception: Throwable) {
+			FileLog.e(exception)
+		}
+	}
 }

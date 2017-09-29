@@ -17,7 +17,6 @@
 
 package io.shtanko.picasagallery.view.base
 
-
 interface BaseProgressView {
-  fun setLoadingIndicator(active: Boolean)
+	fun setLoadingIndicator(active: Boolean)
 }

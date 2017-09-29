@@ -24,5 +24,5 @@ import javax.inject.Singleton
 
 @Singleton
 class UIThread @Inject constructor() : PostExecutionThread {
-  override fun getScheduler(): Scheduler = AndroidSchedulers.mainThread()
+	override fun getScheduler(): Scheduler = AndroidSchedulers.mainThread()
 }

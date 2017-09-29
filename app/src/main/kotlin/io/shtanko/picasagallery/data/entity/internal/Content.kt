@@ -17,10 +17,10 @@
 
 package io.shtanko.picasagallery.data.entity.internal
 
-import io.shtanko.picasagallery.Config
+import io.shtanko.picasagallery.Config.CONTENT_VIEW_TYPE_ID
 
 data class Content(
-    val type: String,
-    val src: String) : ContentType {
-  override fun getViewType(): Int = Config.CONTENT_VIEW_TYPE_ID
+		val type: String,
+		val src: String) : ContentType {
+	override fun getViewType(): Int = CONTENT_VIEW_TYPE_ID
 }

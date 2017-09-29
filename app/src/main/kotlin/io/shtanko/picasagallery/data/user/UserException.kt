@@ -18,5 +18,5 @@
 package io.shtanko.picasagallery.data.user
 
 class UserException(override val message: String, cause: Throwable?) : Throwable(message, cause) {
-  constructor(message: String) : this(message, null)
+	constructor(message: String) : this(message, null)
 }

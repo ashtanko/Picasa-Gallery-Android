@@ -18,5 +18,9 @@
 package io.shtanko.picasagallery.extensions
 
 import com.github.kittinunf.fuel.core.Request
+import io.shtanko.picasagallery.Config
+import io.shtanko.picasagallery.Config.AUTHORIZATION_HEADER
+import java.lang.String.format
 
-fun Request.authenticate(token:String):Request = header("Authorization" to "Bearer " + token)
+fun Request.authenticate(token: String): Request = header(
+		AUTHORIZATION_HEADER to format("%s ", Config.BEARER_PREFIX) + token)

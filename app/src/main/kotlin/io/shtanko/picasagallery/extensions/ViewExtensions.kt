@@ -26,10 +26,10 @@ import io.shtanko.picasagallery.view.util.AndroidUtils.dp
 private fun getSize(size: Float): Int = (if (size < 0) size.toInt() else dp(size))
 
 fun ViewGroup.inflate(layoutRes: Int): View =
-    from(context).inflate(layoutRes, this, false)
+		from(context).inflate(layoutRes, this, false)
 
 fun createFrame(width: Int, height: Int, gravity: Int): LayoutParams =
-    LayoutParams(getSize(width.toFloat()), getSize(height.toFloat()), gravity)
+		LayoutParams(getSize(width.toFloat()), getSize(height.toFloat()), gravity)
 
 fun createFrame(width: Int, height: Float): LayoutParams =
-    LayoutParams(getSize(width.toFloat()), getSize(height))
+		LayoutParams(getSize(width.toFloat()), getSize(height))

@@ -18,5 +18,5 @@
 package io.shtanko.picasagallery.core.log
 
 enum class LogType {
-  DEBUG, ERROR
+	DEBUG, ERROR
 }

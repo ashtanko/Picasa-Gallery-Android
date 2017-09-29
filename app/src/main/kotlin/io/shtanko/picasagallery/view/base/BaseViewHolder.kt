@@ -18,25 +18,23 @@
 package io.shtanko.picasagallery.view.base
 
 import android.support.annotation.NonNull
-import android.support.v7.widget.RecyclerView
+import android.support.v7.widget.RecyclerView.ViewHolder
 import android.view.View
 import io.shtanko.picasagallery.view.delegate.ViewType
 
+abstract class BaseViewHolder(itemView: View?) : ViewHolder(
+		itemView), View.OnClickListener {
 
-abstract class BaseViewHolder(itemView: View?) : RecyclerView.ViewHolder(
-    itemView), View.OnClickListener {
+	init {
+		itemView?.setOnClickListener(this)
+	}
 
-  init {
-    itemView?.setOnClickListener(this)
-  }
+	override fun onClick(v: View?) {
+	}
 
-  override fun onClick(v: View?) {
+	abstract fun bind(item: ViewType)
 
-  }
-
-  abstract fun bind(item: ViewType)
-
-  protected @NonNull
-  fun view(): View = itemView
+	protected @NonNull
+	fun view(): View = itemView
 
 }

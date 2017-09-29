@@ -26,10 +26,10 @@ import javax.inject.Singleton
 @Singleton
 class JobExecutor @Inject constructor() : ThreadExecutor {
 
-  private var threadPoolExecutor: ThreadPoolExecutor = ThreadPoolExecutor(3, 5, 10, SECONDS,
-      LinkedBlockingQueue<Runnable>(), JobThreadFactory)
+	private var threadPoolExecutor: ThreadPoolExecutor = ThreadPoolExecutor(3, 5, 10, SECONDS,
+			LinkedBlockingQueue<Runnable>(), JobThreadFactory)
 
-  override fun execute(runnable: Runnable?) {
-    threadPoolExecutor.execute(runnable)
-  }
+	override fun execute(runnable: Runnable?) {
+		threadPoolExecutor.execute(runnable)
+	}
 }

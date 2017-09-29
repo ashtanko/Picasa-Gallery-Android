@@ -20,57 +20,58 @@ package io.shtanko.picasagallery.data.account
 import android.content.SharedPreferences
 import android.text.TextUtils
 import com.google.android.gms.auth.GoogleAuthUtil.GOOGLE_ACCOUNT_TYPE
-import io.shtanko.picasagallery.Config
+import io.shtanko.picasagallery.Config.ACTIVE_ACCOUNT_PREF
+import io.shtanko.picasagallery.Config.PREFIX_PREF_AUTH_TOKEN
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class AccountHelper @Inject constructor(
-    private val sharedPreferences: SharedPreferences) : Account {
+		private val sharedPreferences: SharedPreferences) : Account {
 
-  override fun hasActiveAccount() = !TextUtils.isEmpty(getActiveAccountName())
+	override fun hasActiveAccount() = !TextUtils.isEmpty(getActiveAccountName())
 
-  override fun getActiveAccountName(): String =
-      sharedPreferences.getString(Config.ACTIVE_ACCOUNT_PREF, null)
+	override fun getActiveAccountName(): String =
+			sharedPreferences.getString(ACTIVE_ACCOUNT_PREF, null)
 
-  override fun getActiveAccount(): android.accounts.Account {
-    val account = getActiveAccountName()
-    return android.accounts.Account(account, GOOGLE_ACCOUNT_TYPE)
-  }
+	override fun getActiveAccount(): android.accounts.Account {
+		val account = getActiveAccountName()
+		return android.accounts.Account(account, GOOGLE_ACCOUNT_TYPE)
+	}
 
-  override fun setActiveAccount(accountName: String) {
-    sharedPreferences.edit().putString(Config.ACTIVE_ACCOUNT_PREF, accountName).apply()
-  }
+	override fun setActiveAccount(accountName: String) {
+		sharedPreferences.edit().putString(ACTIVE_ACCOUNT_PREF, accountName).apply()
+	}
 
-  override fun clearActiveAccount() {
-    sharedPreferences.edit().remove(Config.ACTIVE_ACCOUNT_PREF).apply()
-  }
+	override fun clearActiveAccount() {
+		sharedPreferences.edit().remove(ACTIVE_ACCOUNT_PREF).apply()
+	}
 
-  override fun makeAccountSpecificPrefKey(prefix: String): String {
-    if (hasActiveAccount()) {
-      return makeAccountSpecificPrefKey(getActiveAccountName(),
-          prefix)
-    } else {
-      return ""
-    }
-  }
+	override fun makeAccountSpecificPrefKey(prefix: String): String {
+		if (hasActiveAccount()) {
+			return makeAccountSpecificPrefKey(getActiveAccountName(),
+					prefix)
+		} else {
+			return ""
+		}
+	}
 
-  override fun makeAccountSpecificPrefKey(accountName: String,
-      prefix: String): String = prefix + accountName
+	override fun makeAccountSpecificPrefKey(accountName: String,
+			prefix: String): String = prefix + accountName
 
-  override fun getAuthToken(): String = if (hasActiveAccount())
-    sharedPreferences.getString(makeAccountSpecificPrefKey(Config.PREFIX_PREF_AUTH_TOKEN),
-        null) else ""
+	override fun getAuthToken(): String = if (hasActiveAccount())
+		sharedPreferences.getString(makeAccountSpecificPrefKey(PREFIX_PREF_AUTH_TOKEN),
+				null) else ""
 
-  override fun setAuthToken(accountName: String, authToken: String?) {
-    sharedPreferences.edit().putString(
-        makeAccountSpecificPrefKey(accountName, Config.PREFIX_PREF_AUTH_TOKEN),
-        authToken).apply()
-  }
+	override fun setAuthToken(accountName: String, authToken: String?) {
+		sharedPreferences.edit().putString(
+				makeAccountSpecificPrefKey(accountName, PREFIX_PREF_AUTH_TOKEN),
+				authToken).apply()
+	}
 
-  override fun setAuthToken(authToken: String?) {
-    if (hasActiveAccount()) {
-      setAuthToken(getActiveAccountName(), authToken)
-    }
-  }
+	override fun setAuthToken(authToken: String?) {
+		if (hasActiveAccount()) {
+			setAuthToken(getActiveAccountName(), authToken)
+		}
+	}
 }

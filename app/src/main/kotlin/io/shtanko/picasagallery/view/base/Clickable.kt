@@ -20,5 +20,5 @@ package io.shtanko.picasagallery.view.base
 import io.shtanko.picasagallery.view.delegate.ViewType
 
 interface Clickable {
-  fun onItemClick(view: ViewType)
+	fun onItemClick(view: ViewType)
 }

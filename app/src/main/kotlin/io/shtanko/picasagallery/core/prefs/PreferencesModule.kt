@@ -28,13 +28,13 @@ import io.shtanko.picasagallery.core.app.AppModule
 @Module(includes = arrayOf(AppModule::class))
 class PreferencesModule {
 
-  @Provides
-  fun provideSharedPreferences(context: Context): SharedPreferences =
-      context.getSharedPreferences(context.getString(R.string.preference_file_key),
-          MODE_PRIVATE)
+	@Provides
+	fun provideSharedPreferences(context: Context): SharedPreferences =
+			context.getSharedPreferences(context.getString(R.string.preference_file_key),
+					MODE_PRIVATE)
 
-  @Provides
-  fun providePreferencesHelper(sharedPreferences: SharedPreferences): PreferenceHelper =
-      PreferenceHelper(sharedPreferences)
+	@Provides
+	fun providePreferencesHelper(sharedPreferences: SharedPreferences): PreferenceHelper =
+			PreferenceHelper(sharedPreferences)
 
 }

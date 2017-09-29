@@ -31,20 +31,20 @@ import org.mockito.junit.MockitoJUnitRunner
 @RunWith(MockitoJUnitRunner::class)
 class SignInPresenterTest {
 
-  private val userRepository = mock<UserRepositoryImpl>()
-  private val view = mock<View>()
-  private lateinit var presenter: SignInPresenter
+	private val userRepository = mock<UserRepositoryImpl>()
+	private val view = mock<View>()
+	private lateinit var presenter: SignInPresenter
 
-  @Before
-  fun setUp() {
-    initMocks(this)
-    presenter = SignInPresenter(userRepository)
-    presenter.takeView(view)
-  }
+	@Before
+	fun setUp() {
+		initMocks(this)
+		presenter = SignInPresenter(userRepository)
+		presenter.takeView(view)
+	}
 
-  @Test
-  fun not_nullTest() {
-    Assert.assertNull(null)
-  }
+	@Test
+	fun not_nullTest() {
+		Assert.assertNull(null)
+	}
 
 }

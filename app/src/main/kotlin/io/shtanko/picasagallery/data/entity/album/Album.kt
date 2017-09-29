@@ -17,9 +17,9 @@
 
 package io.shtanko.picasagallery.data.entity.album
 
-import io.shtanko.picasagallery.Config
+import io.shtanko.picasagallery.Config.MAIN_VIEW_TYPE_ID
 
 data class Album(val id: String?, val title: String?, val imageUrl: String?,
-    val albumId: String?) : AlbumType {
-  override fun getViewType() = Config.MAIN_VIEW_TYPE_ID
+		val albumId: String?) : AlbumType {
+	override fun getViewType() = MAIN_VIEW_TYPE_ID
 }

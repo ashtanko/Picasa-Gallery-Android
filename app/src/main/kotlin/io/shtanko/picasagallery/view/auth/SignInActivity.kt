@@ -19,18 +19,21 @@ package io.shtanko.picasagallery.view.auth
 
 import android.os.Bundle
 import dagger.Lazy
-import io.shtanko.picasagallery.R
 import io.shtanko.picasagallery.view.base.BaseActivity
 import javax.inject.Inject
+import io.shtanko.picasagallery.R.id.content_frame as content
+import io.shtanko.picasagallery.R.layout.container_activity as container
 
 class SignInActivity : BaseActivity() {
 
-  @Inject lateinit var presenter: SignInPresenter
-  @Inject lateinit var fragmentProvider: Lazy<SignInFragment>
+	// region injection
+	@Inject lateinit var presenter: SignInPresenter
+	@Inject lateinit var fragmentProvider: Lazy<SignInFragment>
+	// endregion
 
-  override fun onCreate(savedInstanceState: Bundle?) {
-    super.onCreate(savedInstanceState)
-    setContentView(R.layout.container_activity)
-    addFragment(R.id.content_frame, fragmentProvider)
-  }
+	override fun onCreate(savedState: Bundle?) {
+		super.onCreate(savedState)
+		setContentView(container)
+		addFragment(content, fragmentProvider)
+	}
 }

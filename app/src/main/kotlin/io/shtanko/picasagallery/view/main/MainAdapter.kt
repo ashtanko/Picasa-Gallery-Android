@@ -26,8 +26,8 @@ import javax.inject.Inject
 @ActivityScoped
 class MainAdapter @Inject constructor() : BaseAdapter<AlbumType>() {
 
-  init {
-    delegateAdapters.put(Config.MAIN_VIEW_TYPE_ID, MainAdapterDelegateImpl())
-  }
+	init {
+		delegateAdapters.put(Config.MAIN_VIEW_TYPE_ID, MainAdapterDelegateImpl())
+	}
 
 }

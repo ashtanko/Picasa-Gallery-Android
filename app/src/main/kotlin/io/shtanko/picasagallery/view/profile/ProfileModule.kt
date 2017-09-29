@@ -28,12 +28,12 @@ import io.shtanko.picasagallery.view.profile.ProfileContract.Presenter
 @Module
 abstract class ProfileModule {
 
-  @FragmentScoped
-  @ContributesAndroidInjector
-  internal abstract fun profileFragment(): ProfileFragment
+	@FragmentScoped
+	@ContributesAndroidInjector
+	internal abstract fun profileFragment(): ProfileFragment
 
-  @ActivityScoped
-  @Binds
-  internal abstract fun profilePresenter(presenter: ProfilePresenter): Presenter
+	@ActivityScoped
+	@Binds
+	internal abstract fun profilePresenter(presenter: ProfilePresenter): Presenter
 
 }

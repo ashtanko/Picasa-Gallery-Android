@@ -30,16 +30,16 @@ import io.shtanko.picasagallery.view.widget.FourThreeImageView
 
 class MainViewHolder(itemView: View?) : BaseViewHolder(itemView), Divided {
 
-  val image = itemView?.findViewById<FourThreeImageView>(R.id.album)
-  private val imageHelper: ImageHelper
+	val image = itemView?.findViewById<FourThreeImageView>(R.id.album)
+	private val imageHelper: ImageHelper
 
-  init {
-    imageHelper = ImageHelperImpl()
-  }
+	init {
+		imageHelper = ImageHelperImpl()
+	}
 
-  override fun bind(item: ViewType) {
-    if (item is Album) {
-      imageHelper.process(itemView.context, image, item.imageUrl)
-    }
-  }
+	override fun bind(item: ViewType) {
+		if (item is Album) {
+			imageHelper.process(itemView.context, image, item.imageUrl)
+		}
+	}
 }
