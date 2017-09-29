@@ -15,15 +15,8 @@
  *
  */
 
-package io.shtanko.picasagallery.data.user
+package io.shtanko.picasagallery.extensions
 
-import io.shtanko.picasagallery.data.entity.user.User
+import com.github.kittinunf.fuel.core.Request
 
-
-interface UserDataSource {
-  fun getUser(): User
-  fun getToken():String
-  fun saveUser(user: User)
-  fun saveToken(token: String)
-  fun markUserRefusedSignIn(refused: Boolean)
-}
+fun Request.authenticate(token:String):Request = header("Authorization" to "Bearer " + token)

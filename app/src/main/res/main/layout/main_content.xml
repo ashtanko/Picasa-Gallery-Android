@@ -30,6 +30,7 @@
       style="?android:attr/progressBarStyle"
       />
 
+
   <android.support.v7.widget.RecyclerView
       android:id="@+id/grid"
       android:layout_width="match_parent"

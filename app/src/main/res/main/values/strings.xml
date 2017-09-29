@@ -17,9 +17,4 @@
   -->
 
 <resources>
-  <string name="error">Error</string>
-  <string name="google_account_error">You may only set a Google account</string>
-  <string name="user_cancelled_error">User canceled account picker dialog</string>
-  <string name="access_goole_account_alert_title">This app needs to access your Google account (via Contacts).</string>
-  <string name="sign_in_tile">Sign in</string>
 </resources>

@@ -24,6 +24,7 @@ import javax.inject.Singleton
 @Singleton
 class UserRepositoryImpl @Inject constructor(
     private val dataSourceImpl: UserDataSourceImpl) : UserDataSource {
+  override fun getToken(): String = dataSourceImpl.getToken()
 
   override fun markUserRefusedSignIn(refused: Boolean) {
     dataSourceImpl.markUserRefusedSignIn(refused)

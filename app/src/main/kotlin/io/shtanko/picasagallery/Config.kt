@@ -20,6 +20,7 @@ package io.shtanko.picasagallery
 import com.google.android.gms.common.Scopes.DRIVE_APPFOLDER
 import com.google.android.gms.common.Scopes.PLUS_ME
 import com.google.android.gms.common.Scopes.PROFILE
+import java.lang.String.format
 import java.util.ArrayList
 import java.util.Arrays.asList
 
@@ -38,6 +39,7 @@ object Config {
   val SAVED_ID_PREF = "user_id_pref"
   private val PICASA_BASE_URL = "https://picasaweb.google.com/data"
   val PICASA_BASE_API_URL = "$PICASA_BASE_URL/feed/api"
+  val PICASA_BASE_USER_API_URL = "$PICASA_BASE_URL/feed/api/user/default"
 
   val LOGS_PATH = "/logs"
   val LOGS_DATE_FORMAT = "dd_MM_yyyy_HH_mm_ss"
@@ -80,8 +82,8 @@ object Config {
     }
   }
 
-  internal fun configureUserPath(id: String): String = String.format("user/%s", id)
+  internal fun configureUserPath(id: String): String = format("user/%s", id)
 
   internal fun configureAlbumsPath(userId: String,
-      albumId: String) = String.format("user/%s/alubumid/%s", userId, albumId)
+      albumId: String) = format("user/%s/alubumid/%s", userId, albumId)
 }

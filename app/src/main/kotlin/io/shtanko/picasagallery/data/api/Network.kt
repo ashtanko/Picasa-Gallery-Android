@@ -26,15 +26,19 @@ import io.reactivex.Flowable
 import io.reactivex.Maybe
 import io.reactivex.Observable
 import io.shtanko.picasagallery.Config
+import io.shtanko.picasagallery.core.prefs.PreferenceHelper
 import io.shtanko.picasagallery.data.model.AlbumEntity
 import io.shtanko.picasagallery.data.model.AlbumsResponseEntity
 import io.shtanko.picasagallery.data.model.UserFeedResponseEntity
 import io.shtanko.picasagallery.data.user.UserException
+import io.shtanko.picasagallery.extensions.authenticate
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class Network @Inject constructor() : PicasaService {
+class Network @Inject constructor(
+    private val preferencesHelper: PreferenceHelper
+) : PicasaService {
 
   override fun getUserAlbums(userId: String): Flowable<List<AlbumEntity>> {
     return Flowable.empty()
@@ -45,7 +49,8 @@ class Network @Inject constructor() : PicasaService {
   }
 
   override fun getUser(userId: String): Observable<UserFeedResponseEntity> {
-    return Config.configureUserPath(userId).httpGet(Config.jsonParams).rx_object(
+    return Config.PICASA_BASE_USER_API_URL.httpGet(Config.jsonParams).authenticate(
+        preferencesHelper.getToken()).rx_object(
         UserFeedResponseEntity.Deserializer)
         .flatMapMaybe {
           when (it) {

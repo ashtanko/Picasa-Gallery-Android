@@ -28,7 +28,8 @@ import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.ProgressBar
 import com.google.android.gms.auth.GoogleAuthUtil
-import com.google.android.gms.auth.api.Auth
+import com.google.android.gms.auth.api.Auth.GOOGLE_SIGN_IN_API
+import com.google.android.gms.auth.api.Auth.GoogleSignInApi
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.auth.api.signin.GoogleSignInResult
 import com.google.android.gms.common.ConnectionResult
@@ -97,7 +98,7 @@ class SignInFragment @Inject constructor() : DaggerFragment(),
     }
 
     googleApiClient = GoogleApiClient.Builder(getSafeContext())
-        .addApi(Auth.GOOGLE_SIGN_IN_API, googleSignInOptions)
+        .addApi(GOOGLE_SIGN_IN_API, googleSignInOptions)
         .addConnectionCallbacks(this)
         .addOnConnectionFailedListener(this)
         .build()
@@ -113,14 +114,14 @@ class SignInFragment @Inject constructor() : DaggerFragment(),
   }
 
   private fun login() {
-    val signInIntent = Auth.GoogleSignInApi.getSignInIntent(googleApiClient)
+    val signInIntent = GoogleSignInApi.getSignInIntent(googleApiClient)
     startActivityForResult(signInIntent, SIGN_IN_RESULT)
   }
 
   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
     super.onActivityResult(requestCode, resultCode, data)
     if (requestCode == SIGN_IN_RESULT) {
-      val result = Auth.GoogleSignInApi.getSignInResultFromIntent(data)
+      val result = GoogleSignInApi.getSignInResultFromIntent(data)
       handleSignInResult(result)
     }
   }
@@ -140,6 +141,7 @@ class SignInFragment @Inject constructor() : DaggerFragment(),
           }
         }.subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread()).subscribe { t1, t2 ->
+          presenter.saveToken(t1)
         }
 
         val user = User(acct.displayName, acct.givenName,

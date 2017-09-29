@@ -22,6 +22,7 @@ import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
+import io.shtanko.picasagallery.core.prefs.PreferenceHelper
 import io.shtanko.picasagallery.core.prefs.PreferencesModule
 
 @Module(includes = arrayOf(PreferencesModule::class))
@@ -36,8 +37,8 @@ class ApiModule {
   }
 
   @Provides
-  fun providePicasaService(): PicasaService =
-      Network()
+  fun providePicasaService(helper: PreferenceHelper): PicasaService =
+      Network(helper)
 
   @Provides
   fun provideApiManagerImpl(service: PicasaService): ApiManager = ApiManagerImpl(service)

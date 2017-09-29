@@ -19,7 +19,6 @@ package io.shtanko.picasagallery.vendors.utils.time;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.Serializable;
-import java.text.DateFormat;
 import java.text.DateFormatSymbols;
 import java.text.FieldPosition;
 import java.util.ArrayList;
@@ -31,6 +30,8 @@ import java.util.Locale;
 import java.util.TimeZone;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
+
+import static java.util.Calendar.DST_OFFSET;
 
 /**
  * <p>FastDatePrinter is a fast and thread-safe version of
@@ -1096,7 +1097,7 @@ public class FastDatePrinter implements DatePrinter, Serializable {
      */
     @Override public void appendTo(final StringBuffer buffer, final Calendar calendar) {
       final TimeZone zone = calendar.getTimeZone();
-      if (zone.useDaylightTime() && calendar.get(Calendar.DST_OFFSET) != 0) {
+      if (zone.useDaylightTime() && calendar.get(DST_OFFSET) != 0) {
         buffer.append(getTimeZoneDisplay(zone, true, mStyle, mLocale));
       } else {
         buffer.append(getTimeZoneDisplay(zone, false, mStyle, mLocale));
@@ -1134,7 +1135,7 @@ public class FastDatePrinter implements DatePrinter, Serializable {
      * {@inheritDoc}
      */
     @Override public void appendTo(final StringBuffer buffer, final Calendar calendar) {
-      int offset = calendar.get(Calendar.ZONE_OFFSET) + calendar.get(Calendar.DST_OFFSET);
+      int offset = calendar.get(Calendar.ZONE_OFFSET) + calendar.get(DST_OFFSET);
 
       if (offset < 0) {
         buffer.append('-');

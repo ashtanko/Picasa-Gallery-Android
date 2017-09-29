@@ -25,4 +25,14 @@
     <item name="colorAccent">@color/colorAccent</item>
   </style>
 
+  <style name="PicasaImageView">
+    <item name="android:scaleType">centerCrop</item>
+  </style>
+
+
+  <style name="Widget.Picasa.Toolbar" parent="Base.V7.Widget.AppCompat.Toolbar">
+    <item name="android:background">@color/colorAccent</item>
+  </style>
+
+
 </resources>
