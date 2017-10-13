@@ -28,9 +28,9 @@ import javax.inject.Singleton
 @Singleton
 class MockPhotosDataSourceImpl @Inject constructor() : PhotosDataSource {
 
-  override fun getPhotos(): Flowable<PhotosList> {
-    val mockList = ArrayList<PhotoType>()
-    mockList.addAll(getPhotosData())
-    return Flowable.just(mockList)
-  }
+	override fun getPhotos(): Flowable<PhotosList> {
+		val mockList = ArrayList<PhotoType>()
+		mockList.addAll(getPhotosData())
+		return Flowable.just(mockList)
+	}
 }

@@ -27,11 +27,11 @@ import javax.inject.Singleton
 
 @Module
 abstract public class AlbumsRepositoryModule {
-  @Singleton
-  @Binds
-  abstract fun provideAlbumDataSource(dataSourceImpl: AlbumDataSourceImpl): AlbumDataSource
+	@Singleton
+	@Binds
+	abstract fun provideAlbumDataSource(dataSourceImpl: AlbumDataSourceImpl): AlbumDataSource
 
-  @Singleton
-  @Binds
-  abstract fun provideAlbumsRepository(albumRepository: AlbumRepositoryImpl): AlbumRepository
+	@Singleton
+	@Binds
+	abstract fun provideAlbumsRepository(albumRepository: AlbumRepositoryImpl): AlbumRepository
 }

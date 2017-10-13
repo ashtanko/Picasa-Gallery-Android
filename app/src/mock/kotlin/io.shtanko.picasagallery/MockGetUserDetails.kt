@@ -29,23 +29,23 @@ import javax.inject.Singleton
 
 @Singleton
 class MockGetUserDetails @Inject constructor(
-    val userRepository: UserRepository,
-    threadExecutor: ThreadExecutor,
-    postExecutionThread: PostExecutionThread) : UseCase<User, Params>(threadExecutor,
-    postExecutionThread) {
+		val userRepository: UserRepository,
+		threadExecutor: ThreadExecutor,
+		postExecutionThread: PostExecutionThread) : UseCase<User, Params>(threadExecutor,
+		postExecutionThread) {
 
 
-  override fun buildUseCaseObservable(
-      params: Params): Flowable<User> {
-    val n = String::class.java.name
-    val user = User(n, n, n, n, n)
-    return Flowable.just(user)
-  }
+	override fun buildUseCaseObservable(
+			params: Params): Flowable<User> {
+		val n = String::class.java.name
+		val user = User(n, n, n, n, n)
+		return Flowable.just(user)
+	}
 
-  class Params private constructor() {
-    companion object {
-      fun createQuery() = Params()
-    }
-  }
+	class Params private constructor() {
+		companion object {
+			fun createQuery() = Params()
+		}
+	}
 
 }

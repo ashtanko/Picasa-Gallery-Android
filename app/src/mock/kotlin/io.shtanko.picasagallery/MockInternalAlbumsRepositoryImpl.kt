@@ -28,9 +28,9 @@ import javax.inject.Singleton
 @Singleton
 class MockInternalAlbumsRepositoryImpl @Inject constructor() : InternalAlbumsRepository {
 
-  override fun content(): Flowable<ContentList> {
-    val content = ArrayList<ContentType>()
-    content.addAll(getContentData())
-    return Flowable.fromIterable(content).toList().toFlowable()
-  }
+	override fun content(): Flowable<ContentList> {
+		val content = ArrayList<ContentType>()
+		content.addAll(getContentData())
+		return Flowable.fromIterable(content).toList().toFlowable()
+	}
 }
