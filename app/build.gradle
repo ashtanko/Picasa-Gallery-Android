@@ -43,15 +43,20 @@ if (rootProject.file(RELEASE_PROPERTIES_FILE).exists()) {
   props.load(new FileInputStream(rootProject.file(DEBUG_PROPERTIES_FILE)))
 }
 
+static def releaseTime() {
+  return new Date().format("yyyy-MM-dd", TimeZone.getTimeZone("UTC"))
+}
+
 android {
-  applicationVariants.all { variant ->
-    variant.outputs.each { output ->
-      def newApkFileName
-      def newApkNameString = output.outputFile.name.replace(".apk",
-          "-${new Date().format('yyyyMMdd')}-${variant.versionName}-${variant.versionCode}.apk")
-      def file = output.packageApplication.outputFile
-      newApkFileName = new File(file.parent, newApkNameString)
-      output.outputFile = newApkFileName
+
+  android.applicationVariants.all { variant ->
+    variant.outputs.all { output ->
+      def outputFile = output.outputFile
+      if (outputFile != null && outputFile.name.endsWith('.apk')) {
+        def fileName = outputFile.name.replace("app",
+            "${defaultConfig.applicationId}_${defaultConfig.versionName}_${releaseTime()}")
+        outputFileName = fileName
+      }
     }
   }
 
@@ -118,6 +123,8 @@ android {
   }
 
   productFlavors {
+    flavorDimensions "tier"
+
     dev {}
     mock {}
     prod {}
@@ -192,6 +199,7 @@ android {
       showStandardStreams = true
     }
   }
+  buildToolsVersion '26.0.2'
 }
 
 kapt {

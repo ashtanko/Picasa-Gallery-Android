@@ -67,9 +67,6 @@ class MainFragment @Inject constructor() : BaseFragment(), View, OnItemClickList
 	override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
 			savedInstanceState: Bundle?): android.view.View? {
 		val rootView = inflater.inflate(R.layout.container_list_fragment, container, false)
-		presenter.takeView(this)
-		presenter.getAlbums()
-
 		val gridLayoutManager = GridLayoutManager(activity, TWO_COLUMNS_GRID)
 
 		with(rootView) {
@@ -88,6 +85,12 @@ class MainFragment @Inject constructor() : BaseFragment(), View, OnItemClickList
 		}
 
 		return rootView
+	}
+
+	override fun onViewCreated(view: android.view.View?, savedState: Bundle?) {
+		super.onViewCreated(view, savedState)
+		presenter.takeView(this)
+		presenter.getAlbums()
 	}
 
 	override fun onDestroy() {
