@@ -46,7 +46,7 @@ import javax.inject.Inject
 class InternalAlbumsFragment @Inject constructor() : BaseFragment(), View, OnItemClickListener {
 
 	override fun viewAlbum(model: Content) {
-		activity.startActivity(Intent(activity, PhotosActivity::class.java))
+		activity?.startActivity(Intent(activity, PhotosActivity::class.java))
 	}
 
 	// region injection
@@ -61,8 +61,8 @@ class InternalAlbumsFragment @Inject constructor() : BaseFragment(), View, OnIte
 		presenter.takeView(this)
 		presenter.getContent()
 
-		val photoId = arguments.getString(PHOTO_ID_KEY)
-		val albumId = arguments.getString(ALBUM_ID_KEY)
+		val photoId = arguments?.getString(PHOTO_ID_KEY)
+		val albumId = arguments?.getString(ALBUM_ID_KEY)
 
 		val gridLayoutManager = GridLayoutManager(activity, THREE_COLUMNS_GRID)
 
@@ -73,8 +73,8 @@ class InternalAlbumsFragment @Inject constructor() : BaseFragment(), View, OnIte
 				adapter = internalAlbumsAdapter
 
 				addItemDecoration(ItemDividerDecoration(
-						activity.resources.getDimensionPixelSize(dimen.divider_height),
-						ContextCompat.getColor(activity, color.divider)))
+						activity?.resources?.getDimensionPixelSize(dimen.divider_height)!!,
+						ContextCompat.getColor(activity!!, color.divider)))
 			}
 			internalAlbumsAdapter.onItemClickListener = this@InternalAlbumsFragment
 		}

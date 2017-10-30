@@ -21,6 +21,7 @@ final JACOCO_VERSION = '0.7.2.201409121644'
 
 jacoco {
   toolVersion = JACOCO_VERSION
+
 }
 
 android {
@@ -80,7 +81,7 @@ project.afterEvaluate {
                           'android/**/*.*']
 
         def debugTree = fileTree(
-            dir: "${project.buildDir}/intermediates/classes/$productFlavorName/$buildTypeName",
+            dir: "${project.buildDir}/tmp/kotlin-classes/${sourceName}UnitTest",
             excludes: fileFilter)
 
         sourceDirectories =

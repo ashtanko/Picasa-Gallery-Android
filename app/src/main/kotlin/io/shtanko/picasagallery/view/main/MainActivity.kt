@@ -49,6 +49,5 @@ class MainActivity : BaseActivity(), AlbumClickListener {
 			intent.putExtra(Config.ALBUM_ID_KEY, album.albumId)
 			startActivity(intent)
 		}
-
 	}
 }

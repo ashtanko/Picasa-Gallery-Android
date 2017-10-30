@@ -26,7 +26,6 @@ import android.graphics.Paint;
 import android.graphics.RectF;
 import android.graphics.Shader;
 import android.view.View;
-import io.shtanko.picasagallery.core.log.FileLog;
 import io.shtanko.picasagallery.view.util.AndroidUtils;
 
 public class ClippingImageView extends View {
@@ -179,7 +178,7 @@ public class ClippingImageView extends View {
         try {
           canvas.drawBitmap(bmp, matrix, paint);
         } catch (Exception e) {
-          FileLog.INSTANCE.e(e);
+          //FileLog.INSTANCE.e(e);
         }
       }
       canvas.restore();

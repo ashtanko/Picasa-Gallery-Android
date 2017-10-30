@@ -17,10 +17,10 @@
 
 dependencies {
   // region CONSTANTS
-  def supportVersion = '26.0.1'
-  def daggerVersion = '2.11'
-  def playServicesVersion = '11.2.0'
-  def espressoVersion = '3.0.0'
+  def supportVersion = '27.0.0'
+  def daggerVersion = '2.12'
+  def playServicesVersion = '11.4.2'
+  def espressoVersion = '3.0.1'
   def runnerRulesVersion = '1.0.0'
   def junitVersion = "4.12"
   def fuelVersion = '1.10.0'
@@ -95,7 +95,7 @@ dependencies {
 
   // region UNIT TESTING
   testCompile "junit:junit:$junitVersion"
-  testCompile 'org.assertj:assertj-core:3.6.1'
+  testCompile 'org.assertj:assertj-core:3.8.0'
   testCompile('com.nhaarman:mockito-kotlin:1.5.0') {
     exclude group: 'org.jetbrains.kotlin'
   }

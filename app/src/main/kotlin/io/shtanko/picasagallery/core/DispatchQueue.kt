@@ -17,11 +17,11 @@
 
 package io.shtanko.picasagallery.core
 
+import android.annotation.SuppressLint
 import android.os.Handler
 import android.os.Looper.loop
 import android.os.Looper.prepare
 import android.os.Message
-import io.shtanko.picasagallery.core.log.FileLog.e
 import java.util.concurrent.CountDownLatch
 
 class DispatchQueue constructor(threadName: String) : Thread() {
@@ -39,7 +39,6 @@ class DispatchQueue constructor(threadName: String) : Thread() {
 			if (delay <= 0) handler?.sendMessage(msg) else handler?.sendMessageDelayed(msg,
 					delay.toLong())
 		} catch (e: Exception) {
-			e(e)
 		}
 	}
 
@@ -48,7 +47,6 @@ class DispatchQueue constructor(threadName: String) : Thread() {
 			syncLatch.await()
 			handler?.removeCallbacks(runnable)
 		} catch (e: Exception) {
-			e(e)
 		}
 	}
 
@@ -61,7 +59,6 @@ class DispatchQueue constructor(threadName: String) : Thread() {
 			syncLatch.await()
 			if (delay <= 0) handler?.post(runnable) else handler?.postDelayed(runnable, delay)
 		} catch (e: Exception) {
-			e(e)
 		}
 	}
 
@@ -70,7 +67,6 @@ class DispatchQueue constructor(threadName: String) : Thread() {
 			syncLatch.await()
 			handler?.removeCallbacksAndMessages(null)
 		} catch (e: Exception) {
-			e(e)
 		}
 	}
 
@@ -81,7 +77,8 @@ class DispatchQueue constructor(threadName: String) : Thread() {
 	override fun run() {
 		super.run()
 		prepare()
-		handler = object : Handler() {
+		handler = @SuppressLint("HandlerLeak")
+		object : Handler() {
 			override fun handleMessage(msg: Message) = this@DispatchQueue.handleMessage(msg)
 		}
 		syncLatch.countDown()

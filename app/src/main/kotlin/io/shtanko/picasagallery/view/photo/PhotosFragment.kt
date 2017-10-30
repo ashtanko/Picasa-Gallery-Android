@@ -112,8 +112,8 @@ class PhotosFragment @Inject constructor() : BaseFragment(), PhotosContract.View
 				adapter = photosAdapter
 				addItemDecoration(
 						ItemDividerDecoration(
-								activity.resources.getDimensionPixelSize(dimen.divider_height),
-								getColor(activity, color.divider)
+								activity?.resources?.getDimensionPixelSize(dimen.divider_height)!!,
+								getColor(activity!!, color.divider)
 						))
 			}
 

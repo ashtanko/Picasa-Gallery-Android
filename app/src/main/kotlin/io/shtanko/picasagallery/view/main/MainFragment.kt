@@ -78,8 +78,8 @@ class MainFragment @Inject constructor() : BaseFragment(), View, OnItemClickList
 				adapter = mainAdapter
 
 				addItemDecoration(ItemDividerDecoration(
-						activity.resources.getDimensionPixelSize(R.dimen.divider_height),
-						ContextCompat.getColor(activity, R.color.divider)))
+						activity?.resources?.getDimensionPixelSize(R.dimen.divider_height)!!,
+						ContextCompat.getColor(activity!!, R.color.divider)))
 			}
 			mainAdapter.onItemClickListener = this@MainFragment
 		}
@@ -87,7 +87,7 @@ class MainFragment @Inject constructor() : BaseFragment(), View, OnItemClickList
 		return rootView
 	}
 
-	override fun onViewCreated(view: android.view.View?, savedState: Bundle?) {
+	override fun onViewCreated(view: android.view.View, savedState: Bundle?) {
 		super.onViewCreated(view, savedState)
 		presenter.takeView(this)
 		presenter.getAlbums()

@@ -26,7 +26,7 @@ import io.shtanko.picasagallery.data.model.AlbumEntity
 import io.shtanko.picasagallery.data.model.AlbumsResponseEntity
 import io.shtanko.picasagallery.data.model.UserFeedResponseEntity
 
-class ApiManagerImpl constructor(var apiService: PicasaService) : ApiManager {
+class ApiManagerImpl constructor(private var apiService: PicasaService) : ApiManager {
 
 	override fun getUserAlbums(userId: String): Flowable<List<AlbumEntity>> =
 			getUser(userId).map { it.feed.entry }.toFlowable(DROP)
@@ -37,7 +37,6 @@ class ApiManagerImpl constructor(var apiService: PicasaService) : ApiManager {
 
 	override fun getAlbums(userId: String, albumId: String): Observable<AlbumsResponseEntity> {
 		return apiService.getAlbums(userId, albumId).subscribeOn(
-				mainThread()).observeOn(
-				io())
+				mainThread()).observeOn(io())
 	}
 }

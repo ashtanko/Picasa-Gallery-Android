@@ -82,7 +82,7 @@ class SignInFragment @Inject constructor() : DaggerFragment(),
 			progressBar = rootView.findViewById<ProgressBar>(R.id.progress_bar)
 		}
 
-		googleApiClient = GoogleApiClient.Builder(getSafeContext())
+		googleApiClient = GoogleApiClient.Builder(getSafeContext()!!)
 				.addApi(GOOGLE_SIGN_IN_API, googleSignInOptions)
 				.addConnectionCallbacks(this)
 				.addOnConnectionFailedListener(this)
@@ -124,11 +124,11 @@ class SignInFragment @Inject constructor() : DaggerFragment(),
 	}
 
 	private fun handleSignInResult(result: GoogleSignInResult) =
-			presenter.signIn(activity.applicationContext, result)
+			presenter.signIn(activity?.applicationContext!!, result)
 
 	private fun openMainActivity() {
 		startActivity(Intent(activity, MainActivity::class.java)).also {
-			activity.close()
+			activity?.close()
 		}
 	}
 

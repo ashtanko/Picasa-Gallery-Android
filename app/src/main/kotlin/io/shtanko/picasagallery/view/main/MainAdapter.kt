@@ -29,5 +29,4 @@ class MainAdapter @Inject constructor() : BaseAdapter<AlbumType>() {
 	init {
 		delegateAdapters.put(Config.MAIN_VIEW_TYPE_ID, MainAdapterDelegateImpl())
 	}
-
 }
