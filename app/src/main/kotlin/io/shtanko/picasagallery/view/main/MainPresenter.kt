@@ -54,7 +54,6 @@ class MainPresenter @Inject constructor(
 					view?.showError(e.localizedMessage)
 					Logger.error(e)
 				})
-
 	}
 
 	override fun onAlbumClick(model: ViewType) {

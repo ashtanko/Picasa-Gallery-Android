@@ -17,7 +17,6 @@
 
 package io.shtanko.picasagallery.core.file
 
-import io.shtanko.picasagallery.core.log.FileLog
 import java.io.BufferedReader
 import java.io.File
 import java.io.FileReader
@@ -39,7 +38,7 @@ class FileManagerImpl : FileManager {
 				writer.write(fileContent)
 				writer.close()
 			} catch (e: IOException) {
-				FileLog.e(e)
+
 			}
 		}
 	}
@@ -59,7 +58,7 @@ class FileManagerImpl : FileManager {
 				bufferedReader.close()
 				fileReader.close()
 			} catch (e: IOException) {
-				FileLog.e(e)
+
 			}
 		}
 

@@ -5,7 +5,6 @@ config/release.properties
 /.idea/workspace.xml
 /.idea/libraries
 .DS_Store
-/build
 /captures
 .externalNativeBuild
 ### Example user template template
@@ -19,7 +18,7 @@ gen### Example user template template
 
 # IntelliJ project files
 gen### Gradle template
-/build/
+build/
 
 # Ignore Gradle GUI config
 gradle-app.setting
@@ -82,8 +81,6 @@ fabric.properties
 =======
 # Built application files
 *.apk
-*.ap_
-
 # Files for the ART/Dalvik VM
 *.dex
 
@@ -96,7 +93,7 @@ gen/
 
 # Gradle files
 .gradle/
-build/
+/build/
 
 # Local configuration file (sdk path, etc)
 local.properties
@@ -111,8 +108,6 @@ proguard/
 .navigation/
 
 # Android Studio captures folder
-captures/
-
 # Intellij
 .idea/workspace.xml
 .idea/tasks.xml

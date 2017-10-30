@@ -44,7 +44,7 @@ class ProfileFragment @Inject constructor() : BaseFragment(), ProfileContract.Vi
 			rootView.findViewById<AppCompatImageView>(R.id.avatar).apply {
 				Glide.with(activity)
 						.load(dummyImage)
-						.transform(CircleTransform(activity.applicationContext))
+						.transform(CircleTransform(activity?.applicationContext!!))
 						.into(this)
 			}
 		}

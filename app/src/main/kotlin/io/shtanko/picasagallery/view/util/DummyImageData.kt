@@ -37,6 +37,7 @@ fun getPhotosData(): ArrayList<PhotoType> {
 fun getImages(): Array<String> {
 	val BASE_URL = "https://cdn.dribbble.com/users"
 	return arrayOf(
+			"https://cdn.dribbble.com/users/1158341/screenshots/3905987/illustration_for_landing_page-1.png",
 			"$BASE_URL/334782/screenshots/3776132/gatefold-dribbs.jpg",
 			"$BASE_URL/2738/screenshots/3778113/happy_moon.jpg",
 			"$BASE_URL/1291181/screenshots/3775427/image.png",

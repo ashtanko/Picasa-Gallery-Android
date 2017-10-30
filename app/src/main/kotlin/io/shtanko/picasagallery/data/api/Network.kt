@@ -34,6 +34,7 @@ import io.shtanko.picasagallery.data.model.AlbumsResponseEntity
 import io.shtanko.picasagallery.data.model.UserFeedResponseEntity
 import io.shtanko.picasagallery.data.user.UserException
 import io.shtanko.picasagallery.extensions.authenticate
+import io.shtanko.picasagallery.util.Logger
 import javax.inject.Inject
 import javax.inject.Singleton
 import kotlin.text.Charsets.UTF_8
@@ -53,6 +54,8 @@ class Network @Inject constructor(
 	}
 
 	override fun getUser(userId: String): Observable<UserFeedResponseEntity> {
+		Logger.verbose(PICASA_BASE_USER_API_URL.httpGet(PARAMS).path)
+		Logger.verbose("TOKEN: ${preferencesHelper.getToken()}")
 		return PICASA_BASE_USER_API_URL.httpGet(PARAMS).authenticate(
 				preferencesHelper.getToken()).rx_object(
 				UserFeedResponseEntity.Deserializer)
@@ -80,7 +83,7 @@ class Network @Inject constructor(
 	}
 
 	override fun getAlbums(userId: String, albumId: String): Observable<AlbumsResponseEntity> {
-
+		Logger.verbose(Config.configureAlbumsPath(userId, albumId).httpGet(PARAMS).path)
 		return Config.configureAlbumsPath(userId, albumId).httpGet(PARAMS).rx_object(
 				AlbumsResponseEntity.Deserializer)
 				.flatMapMaybe {

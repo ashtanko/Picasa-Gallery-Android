@@ -59,7 +59,6 @@ import android.widget.FrameLayout
 import android.widget.Scroller
 import io.shtanko.picasagallery.PicasaApplication
 import io.shtanko.picasagallery.R
-import io.shtanko.picasagallery.core.log.FileLog
 import io.shtanko.picasagallery.extensions.createFrame
 import io.shtanko.picasagallery.vendors.utils.BackgroundDrawable
 import io.shtanko.picasagallery.vendors.utils.ClippingImageView
@@ -188,7 +187,6 @@ class PhotoViewer : GestureDetector.OnDoubleTapListener, GestureDetector.OnGestu
 						try {
 							return view.startActionModeForChild(originalView, callback, type)
 						} catch (e: Throwable) {
-							FileLog.e(e)
 						}
 					}
 				}
@@ -349,7 +347,6 @@ class PhotoViewer : GestureDetector.OnDoubleTapListener, GestureDetector.OnGestu
 					wm.removeView(windowView)
 				}
 			} catch (e: Exception) {
-				FileLog.e(e)
 			}
 		}
 	}

@@ -27,7 +27,7 @@ import dagger.android.DaggerFragment
 import android.os.Build.VERSION.SDK_INT as SDK
 import android.widget.Toast.LENGTH_SHORT as SHORT
 
-fun Fragment.getSafeContext(): Context = if (SDK >= M) this.context else activity
+fun Fragment.getSafeContext(): Context? = if (SDK >= M) this.context else activity
 fun DaggerFragment.getSafeContext(): Context = if (SDK >= M) this.context else activity
 
 fun Activity.close() {

@@ -79,49 +79,56 @@ project.afterEvaluate {
                           '**/*$*$*.*',
                           'android/**/*.*']
 
-        def debugTree = fileTree(
-            dir: "${project.buildDir}/intermediates/classes/$productFlavorName/$buildTypeName",
-            excludes: fileFilter)
+        FileTree tree = fileTree(dir: "${project.buildDir}/tmp/kotlin-classes/${sourceName}UnitTest")
+
+        tree.setExcludes(fileFilter)
+        tree.setDir("${project.buildDir}/intermediates/classes/$productFlavorName/$buildTypeName")
+        tree.setDir("${project.buildDir}/tmp/kotlin-classes/${sourceName}")
 
         sourceDirectories =
             files([android.sourceSets.main.java.srcDirs, "src/$productFlavorName/kotlin"])
-        classDirectories = files([debugTree])
+        classDirectories = files([tree])
         executionData = fileTree(dir: project.projectDir, includes: ['**/*.exec', '**/*.ec'])
       }
 
       // dirty kotlin jacoco hack
       task "create${sourceName.capitalize()}UnitTestCoverageReportKotlin"(
-          dependsOn: "create${sourceName.capitalize()}UnitTestCoverageReport") << {
-        def strHtml = 'html'
-        def strUTF8 = 'UTF-8'
-        def strHref = 'href=\"'
-        def strResources = '.resources'
+          dependsOn: "create${sourceName.capitalize()}UnitTestCoverageReport") {
 
-        def indexFileName = "index.$strHtml"
-        def indexSourceFileName = "index.source.$strHtml"
-        def reports = new File(project.buildDir,
-            "/reports/jacoco/create${sourceName.capitalize()}UnitTestCoverageReport/$strHtml")
-        def index = new File(reports, indexFileName).getText(strUTF8)
-        def footer = '<div class="footer">'
-        def result = new StringBuilder(index.substring(0, index.indexOf(footer)))
+        doLast {
+          def strHtml = 'html'
+          def strUTF8 = 'UTF-8'
+          def strHref = 'href=\"'
+          def strResources = '.resources'
 
-        reports.eachDirMatch({ !new File(it).name.startsWith(".") }) { dir ->
-          def moduleIndex = new File(dir, indexSourceFileName)
-          def content = moduleIndex.getText(strUTF8)
-              .replaceAll("\\.\\./\\$strResources", strResources)
-              .replaceAll(strHref, "$strHref${dir.name}/")
-          result.append(content.substring(content.indexOf('<h1>'), content.indexOf(footer)))
+          def indexFileName = "index.$strHtml"
+          def indexSourceFileName = "index.source.$strHtml"
+          def reports = new File(project.buildDir,
+              "/reports/jacoco/create${sourceName.capitalize()}UnitTestCoverageReport/$strHtml")
+          def index = new File(reports, indexFileName).getText(strUTF8)
+          def footer = '<div class="footer">'
+          def result = new StringBuilder(index.substring(0, index.indexOf(footer)))
+
+          reports.eachDirMatch({ !new File(it).name.startsWith(".") }) { dir ->
+            def moduleIndex = new File(dir, indexSourceFileName)
+            def content = moduleIndex.getText(strUTF8)
+                .replaceAll("\\.\\./\\$strResources", strResources)
+                .replaceAll(strHref, "$strHref${dir.name}/")
+            result.append(content.substring(content.indexOf('<h1>'), content.indexOf(footer)))
+          }
+          result.append(index.substring(index.indexOf(footer)))
+
+          def output = new File(reports, indexSourceFileName)
+          output.delete()
+
+          output << result.toString()
         }
-        result.append(index.substring(index.indexOf(footer)))
-
-        def output = new File(reports, indexSourceFileName)
-        output.delete()
-        output << result.toString()
       }
     }
   }
 }
 
 coveralls {
-  jacocoReportPath = "${buildDir}/reports/jacoco/createDevDebugUnitTestCoverageReport/createDevDebugUnitTestCoverageReport.xml"
+  jacocoReportPath =
+      "${buildDir}/reports/jacoco/createDevDebugUnitTestCoverageReport/createDevDebugUnitTestCoverageReport.xml"
 }

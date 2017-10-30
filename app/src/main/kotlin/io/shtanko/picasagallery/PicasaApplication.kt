@@ -26,11 +26,8 @@ import kotlin.properties.Delegates
 
 class PicasaApplication : DaggerApplication() {
 
-	override fun applicationInjector(): AndroidInjector<out DaggerApplication> {
-		val appComponent = DaggerAppComponent.builder().application(this).build()
-		appComponent.inject(this)
-		return appComponent
-	}
+	override fun applicationInjector(): AndroidInjector<out DaggerApplication> =
+			DaggerAppComponent.builder().application(this).build()
 
 	companion object {
 		var app: Application by Delegates.notNull()
