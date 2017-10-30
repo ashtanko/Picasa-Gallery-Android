@@ -40,6 +40,8 @@ android:
     - sys-img-armeabi-v7a-android-25
     - android-26
     - sys-img-armeabi-v7a-android-26
+    - android-27
+    - sys-img-armeabi-v7a-android-27
 
     - tools
     - platform-tools
@@ -65,8 +67,8 @@ install:
   - mkdir "$ANDROID_HOME/licenses" || true
   - echo y | android update sdk -u -a -t tools
   - echo y | android update sdk -u -a -t platform-tools
-  - echo y | android update sdk -u -a -t build-tools-26.0.1
-  - echo y | android update sdk -u -a -t android-26
+  - echo y | android update sdk -u -a -t build-tools-27.0.0
+  - echo y | android update sdk -u -a -t android-27
   - echo y | android update sdk -u -a -t extra-google-m2repository
   - echo y | android update sdk -u -a -t extra-android-m2repository
   - echo y | android update sdk -u -a -t android-sdk-preview-license
@@ -85,7 +87,7 @@ cache:
 
 matrix:
   include:
-    - env: ANDROID_TARGET=android-26  ANDROID_ABI=armeabi-v7a
+    - env: ANDROID_TARGET=android-27  ANDROID_ABI=armeabi-v7a
   allow_failures:
     - env: ANDROID_TARGET=android-14  ANDROID_ABI=armeabi-v7a
     - env: ANDROID_TARGET=android-15  ANDROID_ABI=armeabi-v7a
@@ -100,15 +102,16 @@ matrix:
     - env: ANDROID_TARGET=android-24  ANDROID_ABI=armeabi-v7a
     - env: ANDROID_TARGET=android-25  ANDROID_ABI=armeabi-v7a
     - env: ANDROID_TARGET=android-26  ANDROID_ABI=armeabi-v7a
+    - env: ANDROID_TARGET=android-27  ANDROID_ABI=armeabi-v7a
   fast_finish: false
 
 env:
   global:
-    - ANDROID_API=26
+    - ANDROID_API=27
     - EMULATOR_API_LEVEL=25
-    - ANDROID_BUILD_TOOLS=26.0.0
+    - ANDROID_BUILD_TOOLS=27.0.0
     - ADB_INSTALL_TIMEOUT=55 # minutes
-    - ANDROID_BUILD_TOOLS_VERSION=26.0.0
+    - ANDROID_BUILD_TOOLS_VERSION=27.0.0
     - ANDROID_ABI=armeabi-v7a
     - ANDROID_TAG=google_apis
     - CODECOV_TOKEN=c3c594dd-b509-4ca0-9fd0-248dc1af7cf3
