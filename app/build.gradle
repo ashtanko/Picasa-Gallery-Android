@@ -75,6 +75,14 @@ android {
     versionCode gitCommitCount
     versionName "1.0"
     testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+    // region cpp configuration
+    externalNativeBuild {
+      cmake {
+        cppFlags "-std=c++14 -frtti -fexceptions"
+      }
+    }
+    // endregion
   }
 
   testOptions {
@@ -197,6 +205,12 @@ android {
       events 'passed', 'skipped', 'failed', 'standardOut', 'standardError'
       outputs.upToDateWhen { false }
       showStandardStreams = true
+    }
+  }
+
+  externalNativeBuild {
+    cmake {
+      path "src/main/cpp/CMakeLists.txt"
     }
   }
 }
