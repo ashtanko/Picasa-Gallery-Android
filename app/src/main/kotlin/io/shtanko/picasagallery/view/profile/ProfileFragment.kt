@@ -22,10 +22,8 @@ import android.support.v7.widget.AppCompatImageView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.bumptech.glide.Glide
 import io.shtanko.picasagallery.R
 import io.shtanko.picasagallery.util.ActivityScoped
-import io.shtanko.picasagallery.util.CircleTransform
 import io.shtanko.picasagallery.view.base.BaseFragment
 import javax.inject.Inject
 
@@ -42,10 +40,7 @@ class ProfileFragment @Inject constructor() : BaseFragment(), ProfileContract.Vi
 
 		with(rootView) {
 			rootView.findViewById<AppCompatImageView>(R.id.avatar).apply {
-				Glide.with(activity)
-						.load(dummyImage)
-						.transform(CircleTransform(activity?.applicationContext!!))
-						.into(this)
+				// todo glide
 			}
 		}
 

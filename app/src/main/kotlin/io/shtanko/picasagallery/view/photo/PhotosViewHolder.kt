@@ -18,9 +18,8 @@
 package io.shtanko.picasagallery.view.photo
 
 import android.view.View
+import com.bumptech.glide.Glide
 import io.shtanko.picasagallery.R
-import io.shtanko.picasagallery.core.image.ImageHelper
-import io.shtanko.picasagallery.core.image.ImageHelperImpl
 import io.shtanko.picasagallery.data.entity.photo.PhotoType
 import io.shtanko.picasagallery.view.base.BaseViewHolder
 import io.shtanko.picasagallery.view.delegate.ViewType
@@ -30,17 +29,15 @@ import io.shtanko.picasagallery.view.widget.FourThreeImageView
 class PhotosViewHolder(itemView: View?) : BaseViewHolder(itemView), Divided {
 
 	val image = itemView?.findViewById<FourThreeImageView>(R.id.album)
-	private val imageHelper: ImageHelper
 
 	init {
-		imageHelper = ImageHelperImpl()
 	}
 
 	override fun bind(item: ViewType) {
 		if (item is PhotoType) {
-			imageHelper.process(itemView.context, image,
-					"https://cdn.dribbble.com/users/989466/screenshots/3785128/diamond-sword-dribbble-alex-pasquarella.png")
+			Glide.with(itemView.context).load(
+					"https://cdn.dribbble.com/users/989466/screenshots/3785128/diamond-sword-dribbble-alex-pasquarella.png").into(
+					image)
 		}
 	}
-
 }

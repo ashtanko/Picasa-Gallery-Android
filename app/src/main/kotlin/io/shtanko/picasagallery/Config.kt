@@ -80,4 +80,6 @@ object Config {
 
 	internal fun configureAlbumsPath(userId: String,
 			albumId: String) = format("user/%s/alubumid/%s", userId, albumId)
+
+	external fun stringFromJNI(): String
 }
