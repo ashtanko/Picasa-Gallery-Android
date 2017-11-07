@@ -18,9 +18,9 @@
 package io.shtanko.picasagallery.view.album
 
 import android.view.View
-import com.bumptech.glide.Glide
 import io.shtanko.picasagallery.R
 import io.shtanko.picasagallery.data.entity.internal.Content
+import io.shtanko.picasagallery.util.GlideApp
 import io.shtanko.picasagallery.view.base.BaseViewHolder
 import io.shtanko.picasagallery.view.delegate.ViewType
 import io.shtanko.picasagallery.view.util.Divided
@@ -35,7 +35,7 @@ class InternalAlbumsViewHolder(itemView: View?) : BaseViewHolder(itemView), Divi
 
 	override fun bind(item: ViewType) {
 		if (item is Content) {
-			Glide.with(itemView.context).load(item.src).into(image)
+			GlideApp.with(itemView.context).load(item.src).into(image)
 		}
 	}
 }

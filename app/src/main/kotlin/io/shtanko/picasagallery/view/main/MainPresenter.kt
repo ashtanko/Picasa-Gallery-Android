@@ -17,6 +17,8 @@
 
 package io.shtanko.picasagallery.view.main
 
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import io.shtanko.picasagallery.data.album.AlbumRepository
 import io.shtanko.picasagallery.util.ActivityScoped
 import io.shtanko.picasagallery.util.Logger
@@ -44,7 +46,9 @@ class MainPresenter @Inject constructor(
 
 	override fun getAlbums() {
 		view?.setLoadingIndicator(true)
-		repository.albums().subscribe(
+		repository.albums()
+				.subscribeOn(Schedulers.io())
+				.observeOn(AndroidSchedulers.mainThread()).subscribe(
 				{ it ->
 					view?.setLoadingIndicator(false)
 					view?.onShowAlbums(it)

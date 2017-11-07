@@ -23,6 +23,7 @@ import dagger.android.AndroidInjector
 import dagger.android.DaggerApplication
 import io.shtanko.picasagallery.Config.NATIVE_LIBRARY_NAME
 import io.shtanko.picasagallery.core.app.DaggerAppComponent
+import io.shtanko.picasagallery.util.GlideApp
 import kotlin.properties.Delegates
 
 class PicasaApplication : DaggerApplication() {

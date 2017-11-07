@@ -37,9 +37,5 @@ class ApiModule {
 	}
 
 	@Provides
-	fun providePicasaService(helper: PreferenceHelper): PicasaService =
-			Network(helper)
-
-	@Provides
-	fun provideApiManagerImpl(service: PicasaService): ApiManager = ApiManagerImpl(service)
+	fun provideApiManagerImpl(helper: PreferenceHelper): ApiManager = ApiManagerImpl(helper)
 }

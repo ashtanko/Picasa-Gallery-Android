@@ -15,17 +15,11 @@
  *
  */
 
-package io.shtanko.picasagallery.data.photo
+package io.shtanko.picasagallery.util
 
-import io.reactivex.Flowable
-import io.shtanko.picasagallery.data.api.ApiManager
-import io.shtanko.picasagallery.extensions.PhotosList
-import javax.inject.Inject
-import javax.inject.Singleton
+import com.bumptech.glide.annotation.GlideModule
+import com.bumptech.glide.module.AppGlideModule
 
-@Singleton
-class PhotosDataSourceImpl @Inject constructor(val api: ApiManager) : PhotosDataSource {
-	override fun getPhotos(): Flowable<PhotosList> {
-		return Flowable.empty()
-	}
+@GlideModule
+class PicasaModule : AppGlideModule() {
 }

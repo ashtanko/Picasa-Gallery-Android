@@ -18,9 +18,9 @@
 package io.shtanko.picasagallery.view.photo
 
 import android.view.View
-import com.bumptech.glide.Glide
 import io.shtanko.picasagallery.R
 import io.shtanko.picasagallery.data.entity.photo.PhotoType
+import io.shtanko.picasagallery.util.GlideApp
 import io.shtanko.picasagallery.view.base.BaseViewHolder
 import io.shtanko.picasagallery.view.delegate.ViewType
 import io.shtanko.picasagallery.view.util.Divided
@@ -35,7 +35,7 @@ class PhotosViewHolder(itemView: View?) : BaseViewHolder(itemView), Divided {
 
 	override fun bind(item: ViewType) {
 		if (item is PhotoType) {
-			Glide.with(itemView.context).load(
+			GlideApp.with(itemView.context).load(
 					"https://cdn.dribbble.com/users/989466/screenshots/3785128/diamond-sword-dribbble-alex-pasquarella.png").into(
 					image)
 		}

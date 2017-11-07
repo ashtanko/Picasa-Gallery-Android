@@ -54,13 +54,18 @@ class SignInFragment @Inject constructor() : DaggerFragment(),
 	// endregion
 
 	lateinit private var rootView: View
-	lateinit private var googleApiClient: GoogleApiClient
 	lateinit private var progressBar: ProgressBar
+
+	private val googleApiClient: GoogleApiClient
+		get() = GoogleApiClient.Builder(getSafeContext()!!)
+				.addApi(GOOGLE_SIGN_IN_API, googleSignInOptions)
+				.addConnectionCallbacks(this)
+				.addOnConnectionFailedListener(this)
+				.build()
 
 	companion object {
 		private val SIGN_IN_RESULT = 1
 	}
-
 
 	override fun onResume() {
 		super.onResume()
@@ -81,12 +86,6 @@ class SignInFragment @Inject constructor() : DaggerFragment(),
 			addSignInButton()
 			progressBar = rootView.findViewById<ProgressBar>(R.id.progress_bar)
 		}
-
-		googleApiClient = GoogleApiClient.Builder(getSafeContext()!!)
-				.addApi(GOOGLE_SIGN_IN_API, googleSignInOptions)
-				.addConnectionCallbacks(this)
-				.addOnConnectionFailedListener(this)
-				.build()
 
 		googleApiClient.connect()
 		return root

@@ -41,6 +41,7 @@ fun getImages(): Array<String> {
 			"$BASE_URL/334782/screenshots/3776132/gatefold-dribbs.jpg",
 			"$BASE_URL/2738/screenshots/3778113/happy_moon.jpg",
 			"$BASE_URL/1291181/screenshots/3775427/image.png",
+			"https://assets.materialup.com/uploads/d383e8e9-1f77-49d9-8451-08d5d85a0bf0/preview.png",
 			"$BASE_URL/179241/screenshots/3775619/chris-fernandez-cats-cats-cats-4.png",
 			"$BASE_URL/230124/screenshots/3775406/kraken_v2a.jpg",
 			"$BASE_URL/1133651/screenshots/3755524/___-3.jpg",
