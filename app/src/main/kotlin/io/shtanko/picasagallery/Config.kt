@@ -55,6 +55,7 @@ object Config {
 	const val LOG_QUEUE_NAME = "LOG_QUEUE"
 	const val LOG_FILE_FORMAT_NAME = ".log"
 	const val NET_LOG_FILENAME = "_net$LOG_FILE_FORMAT_NAME"
+	const val NATIVE_LIBRARY_NAME = "picasa-lib"
 
 	val AUTH_SCOPES = ArrayList(asList(
 			PLUS_ME,
