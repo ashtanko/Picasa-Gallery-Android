@@ -1,8 +1,19 @@
 #include <iostream>
+#include <jni.h>
+#include <string>
+#include <map>
 
 using namespace std;
 
-int main() {
-    cout << "hello" << endl;
-    return 0;
-};
+extern "C"
+JNIEXPORT jstring
+
+JNICALL
+Java_io_shtanko_picasagallery_Config_stringFromJNI(
+        JNIEnv *env,
+        jobject /* this */) {
+
+    std::string hello = "Hello from C++";
+    return env->NewStringUTF(hello.c_str());
+}
+

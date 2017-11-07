@@ -22,6 +22,7 @@ import android.os.Handler
 import dagger.android.AndroidInjector
 import dagger.android.DaggerApplication
 import io.shtanko.picasagallery.core.app.DaggerAppComponent
+import io.shtanko.picasagallery.util.Logger
 import kotlin.properties.Delegates
 
 class PicasaApplication : DaggerApplication() {
@@ -32,6 +33,9 @@ class PicasaApplication : DaggerApplication() {
 	companion object {
 		var app: Application by Delegates.notNull()
 		@Volatile lateinit var applicationHandler: Handler
+		init {
+			System.loadLibrary("picasa-lib")
+		}
 	}
 
 	override fun onCreate() {

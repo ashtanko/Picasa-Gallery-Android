@@ -35,7 +35,6 @@
     public *;
 }
 
--keepnames class io.shtanko.picasagallery.util.PicasaGlideModule
 -keep public class * implements com.bumptech.glide.module.GlideModule
 -keepclasseswithmembers class * {
     @retrofit2.http.* <methods>;
