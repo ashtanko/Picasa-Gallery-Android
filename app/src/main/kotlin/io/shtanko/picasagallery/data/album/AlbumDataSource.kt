@@ -21,5 +21,5 @@ import io.reactivex.Flowable
 import io.shtanko.picasagallery.extensions.AlbumsList
 
 interface AlbumDataSource {
-	fun getAlbums(): Flowable<AlbumsList>
+  fun getAlbums(): Flowable<AlbumsList>
 }

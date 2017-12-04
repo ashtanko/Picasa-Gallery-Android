@@ -30,28 +30,28 @@ import javax.inject.Singleton
  */
 @Singleton
 class UserCacheImpl @Inject constructor(
-		serializer: Serializer,
-		fileManager: FileManager,
-		threadExecutor: ThreadExecutor) : UserCache {
+    serializer: Serializer,
+    fileManager: FileManager,
+    threadExecutor: ThreadExecutor) : UserCache {
 
-	override fun get(): Flowable<User> {
-		Flowable.unsafeCreate<User> {
+  override fun get(): Flowable<User> {
+    Flowable.unsafeCreate<User> {
 
-		}
-		TODO(
-				"not implemented") //To change body of created functions use File | Settings | File Templates.
-	}
+    }
+    TODO(
+        "not implemented") //To change body of created functions use File | Settings | File Templates.
+  }
 
-	override fun put(user: User?) {
-	}
+  override fun put(user: User?) {
+  }
 
-	override fun isCached(): Boolean {
-		TODO(
-				"not implemented") //To change body of created functions use File | Settings | File Templates.
-	}
+  override fun isCached(): Boolean {
+    TODO(
+        "not implemented") //To change body of created functions use File | Settings | File Templates.
+  }
 
-	override fun isExpired(): Boolean {
-		TODO(
-				"not implemented") //To change body of created functions use File | Settings | File Templates.
-	}
+  override fun isExpired(): Boolean {
+    TODO(
+        "not implemented") //To change body of created functions use File | Settings | File Templates.
+  }
 }

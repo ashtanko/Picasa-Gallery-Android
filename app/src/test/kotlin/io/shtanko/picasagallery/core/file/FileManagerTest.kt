@@ -28,28 +28,28 @@ import java.io.File.createTempFile
 @FixMethodOrder(JVM)
 class FileManagerTest {
 
-	private lateinit var manager: FileManager
-	private val FILE_PREFIX = "file"
-	private val FILE_SUFFIX = ".fuck"
-	private val FILE_CONTENT = "Test\nTest\nTest\n"
+  private lateinit var manager: FileManager
+  private val FILE_PREFIX = "file"
+  private val FILE_SUFFIX = ".fuck"
+  private val FILE_CONTENT = "Test\nTest\nTest\n"
 
-	@Before
-	fun setUp() {
-		manager = FileManagerImpl()
-	}
+  @Before
+  fun setUp() {
+    manager = FileManagerImpl()
+  }
 
-	@Test
-	fun is_file_existsTest() {
-		assertEquals(manager.exists(getTmpFile()), true)
-	}
+  @Test
+  fun isFileExistsTest() {
+    assertEquals(manager.exists(getTmpFile()), true)
+  }
 
-	@Test
-	fun write_to_file_Test() {
-		val file = getTmpFile()
-		manager.writeToFile(file, FILE_CONTENT)
-		assertEquals(manager.readFileContent(file), FILE_CONTENT)
-	}
+  @Test
+  fun writeToFileTest() {
+    val file = getTmpFile()
+    manager.writeToFile(file, FILE_CONTENT)
+    assertEquals(manager.readFileContent(file), FILE_CONTENT)
+  }
 
-	private fun getTmpFile(): File = createTempFile(FILE_PREFIX, FILE_SUFFIX)
+  private fun getTmpFile(): File = createTempFile(FILE_PREFIX, FILE_SUFFIX)
 
 }

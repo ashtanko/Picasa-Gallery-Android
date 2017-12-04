@@ -37,30 +37,30 @@ import io.shtanko.picasagallery.view.profile.ProfileModule
 @Module
 abstract class ActivityBindingModule {
 
-	@ActivityScoped
-	@ContributesAndroidInjector(modules = arrayOf(MainModule::class))
-	abstract fun mainActivity(): MainActivity
+  @ActivityScoped
+  @ContributesAndroidInjector(modules = arrayOf(MainModule::class))
+  abstract fun mainActivity(): MainActivity
 
-	@ActivityScoped
-	@ContributesAndroidInjector(modules = arrayOf(SignInModule::class))
-	abstract fun signInActivity(): SignInActivity
+  @ActivityScoped
+  @ContributesAndroidInjector(modules = arrayOf(SignInModule::class))
+  abstract fun signInActivity(): SignInActivity
 
-	@ActivityScoped
-	@ContributesAndroidInjector(modules = arrayOf(ProfileModule::class))
-	abstract fun profileActivity(): ProfileActivity
+  @ActivityScoped
+  @ContributesAndroidInjector(modules = arrayOf(ProfileModule::class))
+  abstract fun profileActivity(): ProfileActivity
 
 
-	@ActivityScoped
-	@ContributesAndroidInjector(modules = arrayOf(LaunchModule::class))
-	abstract fun launchActivity(): LaunchActivity
+  @ActivityScoped
+  @ContributesAndroidInjector(modules = arrayOf(LaunchModule::class))
+  abstract fun launchActivity(): LaunchActivity
 
-	@ActivityScoped
-	@ContributesAndroidInjector(modules = arrayOf(PhotosModule::class))
-	abstract fun photosActivity(): PhotosActivity
+  @ActivityScoped
+  @ContributesAndroidInjector(modules = arrayOf(PhotosModule::class))
+  abstract fun photosActivity(): PhotosActivity
 
-	@ActivityScoped
-	@ContributesAndroidInjector(modules = arrayOf(InternalAlbumsModule::class))
-	abstract fun internalAlbumsActivity(): InternalAlbumsActivity
+  @ActivityScoped
+  @ContributesAndroidInjector(modules = arrayOf(InternalAlbumsModule::class))
+  abstract fun internalAlbumsActivity(): InternalAlbumsActivity
 
 
 }

@@ -18,5 +18,5 @@
 package io.shtanko.picasagallery.view.base
 
 interface BaseErrorView {
-	fun showError(message: String)
+  fun showError(message: String)
 }

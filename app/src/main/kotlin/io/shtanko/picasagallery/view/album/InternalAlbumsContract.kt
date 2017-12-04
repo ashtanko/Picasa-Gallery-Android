@@ -24,14 +24,14 @@ import io.shtanko.picasagallery.view.base.BaseErrorView
 import io.shtanko.picasagallery.view.base.BasePresenter
 import io.shtanko.picasagallery.view.base.BaseProgressView
 import io.shtanko.picasagallery.view.base.BaseView
-import io.shtanko.picasagallery.view.base.Clickable
+import io.shtanko.picasagallery.view.delegate.Clickable
 
 interface InternalAlbumsContract {
-	abstract interface View : BaseView<Presenter>, BaseProgressView, BaseErrorView, BaseContentView<ContentList> {
-		fun viewAlbum(model: Content)
-	}
+  abstract interface View : BaseView<Presenter>, BaseProgressView, BaseErrorView, BaseContentView<ContentList> {
+    fun viewAlbum(model: Content)
+  }
 
-	abstract interface Presenter : BasePresenter<View>, Clickable {
-		fun getContent()
-	}
+  abstract interface Presenter : BasePresenter<View>, Clickable {
+    fun getContent()
+  }
 }

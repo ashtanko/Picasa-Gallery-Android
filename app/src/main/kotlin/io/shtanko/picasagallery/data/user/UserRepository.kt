@@ -21,5 +21,5 @@ import io.reactivex.Flowable
 import io.shtanko.picasagallery.data.entity.user.User
 
 interface UserRepository {
-	fun getUserData(): Flowable<User>
+  fun getUserData(): Flowable<User>
 }

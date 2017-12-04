@@ -40,60 +40,60 @@ import org.mockito.junit.MockitoJUnitRunner
 @FixMethodOrder(JVM)
 class MainPresenterTest {
 
-	private val view = mock<View>()
-	private lateinit var presenter: MainPresenter
-	private val exception = RuntimeException("Error")
+  private val view = mock<View>()
+  private lateinit var presenter: MainPresenter
+  private val exception = RuntimeException("Error")
 
-	@Before
-	fun setUp() {
-		initMocks(this)
-		presenter = MainPresenter(FakeAlbumRepository())
-		presenter.takeView(view)
-	}
+  @Before
+  fun setUp() {
+    initMocks(this)
+    presenter = MainPresenter(FakeAlbumRepository())
+    presenter.takeView(view)
+  }
 
-	@Test
-	fun on_album_clickTest() {
-		val album = getDummyAlbumsList()[0]
-		presenter.onAlbumClick(album)
-		verify(view).viewAlbum(album)
-	}
+  @Test
+  fun onAlbumClickTest() {
+    val album = getDummyAlbumsList()[0]
+    presenter.onAlbumClick(album)
+    verify(view).viewAlbum(album)
+  }
 
-	@Test
-	fun album_clickTest() {
-		val dummyModel = Album("", "", "", "")
-		presenter.onAlbumClick(dummyModel)
-		verify(view, times(1)).viewAlbum(dummyModel)
-	}
+  @Test
+  fun albumClickTest() {
+    val dummyModel = Album("", "", "", "")
+    presenter.onAlbumClick(dummyModel)
+    verify(view, times(1)).viewAlbum(dummyModel)
+  }
 
-	@Test
-	fun success_get_albumsTest() {
-		presenter.getAlbums()
-		verify(view, times(1)).onShowAlbums(getDummyAlbumsList())
-		verify(view, times(1)).setLoadingIndicator(false)
-	}
+  @Test
+  fun successGetAlbumsTest() {
+    presenter.getAlbums()
+    verify(view, times(1)).onShowAlbums(getDummyAlbumsList())
+    verify(view, times(1)).setLoadingIndicator(false)
+  }
 
-	@Test
-	fun error_get_albumsTest() {
-		presenter = MainPresenter(FakeAlbumRepositoryWithException())
-		presenter.takeView(view)
-		presenter.getAlbums()
-		verify(view, times(1)).showError(exception.localizedMessage)
-		verify(view, times(1)).setLoadingIndicator(false)
-	}
+  @Test
+  fun errorGetAlbumsTest() {
+    presenter = MainPresenter(FakeAlbumRepositoryWithException())
+    presenter.takeView(view)
+    presenter.getAlbums()
+    verify(view, times(1)).showError(exception.localizedMessage)
+    verify(view, times(1)).setLoadingIndicator(false)
+  }
 
-	inner class FakeAlbumRepository : AlbumRepository {
-		override fun albums(): Flowable<AlbumsList> = Flowable.just(getDummyAlbumsList())
-	}
+  inner class FakeAlbumRepository : AlbumRepository {
+    override fun albums(): Flowable<AlbumsList> = Flowable.just(getDummyAlbumsList())
+  }
 
-	inner class FakeAlbumRepositoryWithException : AlbumRepository {
-		override fun albums(): Flowable<AlbumsList> = Flowable.fromIterable(
-				getDummyAlbumsList()).concatWith(
-				Flowable.error { exception }).toList().toFlowable()
-	}
+  inner class FakeAlbumRepositoryWithException : AlbumRepository {
+    override fun albums(): Flowable<AlbumsList> = Flowable.fromIterable(
+        getDummyAlbumsList()).concatWith(
+        Flowable.error { exception }).toList().toFlowable()
+  }
 
-	private fun getDummyAlbumsList(): AlbumsList {
-		val dummyList = ArrayList<AlbumType>()
-		getImages().mapTo(dummyList) { Album("", "Item", it, "") }
-		return dummyList
-	}
+  private fun getDummyAlbumsList(): AlbumsList {
+    val dummyList = ArrayList<AlbumType>()
+    getImages().mapTo(dummyList) { Album("", "Item", it, "") }
+    return dummyList
+  }
 }

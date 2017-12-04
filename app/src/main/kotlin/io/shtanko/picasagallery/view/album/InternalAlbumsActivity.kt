@@ -27,21 +27,21 @@ import javax.inject.Inject
 
 class InternalAlbumsActivity : BaseActivity() {
 
-	// region injection
-	@Inject lateinit var internalAlbumsPresenter: InternalAlbumsPresenter
-	@Inject lateinit var internalAlbumsFragmentProvider: Lazy<InternalAlbumsFragment>
-	// endregion
+  // region injection
+  @Inject lateinit var internalAlbumsPresenter: InternalAlbumsPresenter
+  @Inject lateinit var internalAlbumsFragmentProvider: Lazy<InternalAlbumsFragment>
+  // endregion
 
-	override fun onCreate(savedInstanceState: Bundle?) {
-		super.onCreate(savedInstanceState)
-		setContentView(R.layout.container_activity)
+  override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
+    setContentView(R.layout.container_activity)
 
-		val photoId = intent.getStringExtra(PHOTO_ID_KEY)
-		val albumId = intent.getStringExtra(ALBUM_ID_KEY)
-		val bundle = Bundle()
-		bundle.putString(PHOTO_ID_KEY, photoId)
-		bundle.putString(ALBUM_ID_KEY, albumId)
-		internalAlbumsFragmentProvider.get().arguments = bundle
-		addFragment(R.id.content_frame, internalAlbumsFragmentProvider)
-	}
+    val photoId = intent.getStringExtra(PHOTO_ID_KEY)
+    val albumId = intent.getStringExtra(ALBUM_ID_KEY)
+    val bundle = Bundle()
+    bundle.putString(PHOTO_ID_KEY, photoId)
+    bundle.putString(ALBUM_ID_KEY, albumId)
+    internalAlbumsFragmentProvider.get().arguments = bundle
+    addFragment(R.id.content_frame, internalAlbumsFragmentProvider)
+  }
 }

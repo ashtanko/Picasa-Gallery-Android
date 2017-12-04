@@ -26,9 +26,9 @@ import io.shtanko.picasagallery.extensions.PhotosList
  */
 interface PhotosRepository {
 
-	/**
-	 * Get an [rx.Observable] which will emit a List of [Photo].
-	 */
-	abstract fun photos(): Flowable<PhotosList>
+  /**
+   * Get an [rx.Observable] which will emit a List of [Photo].
+   */
+  abstract fun photos(): Flowable<PhotosList>
 
 }

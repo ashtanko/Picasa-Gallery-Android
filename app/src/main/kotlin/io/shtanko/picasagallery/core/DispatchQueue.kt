@@ -25,63 +25,63 @@ import android.os.Message
 import java.util.concurrent.CountDownLatch
 
 class DispatchQueue constructor(threadName: String) : Thread() {
-	@Volatile private var handler: Handler? = null
-	private val syncLatch = CountDownLatch(1)
+  @Volatile private var handler: Handler? = null
+  private val syncLatch = CountDownLatch(1)
 
-	init {
-		name = threadName
-		start()
-	}
+  init {
+    name = threadName
+    start()
+  }
 
-	fun sendMessage(msg: Message, delay: Int) {
-		try {
-			syncLatch.await()
-			if (delay <= 0) handler?.sendMessage(msg) else handler?.sendMessageDelayed(msg,
-					delay.toLong())
-		} catch (e: Exception) {
-		}
-	}
+  fun sendMessage(msg: Message, delay: Int) {
+    try {
+      syncLatch.await()
+      if (delay <= 0) handler?.sendMessage(msg) else handler?.sendMessageDelayed(msg,
+          delay.toLong())
+    } catch (e: Exception) {
+    }
+  }
 
-	fun cancelRunnable(runnable: Runnable) {
-		try {
-			syncLatch.await()
-			handler?.removeCallbacks(runnable)
-		} catch (e: Exception) {
-		}
-	}
+  fun cancelRunnable(runnable: Runnable) {
+    try {
+      syncLatch.await()
+      handler?.removeCallbacks(runnable)
+    } catch (e: Exception) {
+    }
+  }
 
-	fun postRunnable(runnable: Runnable) {
-		postRunnable(runnable, 0)
-	}
+  fun postRunnable(runnable: Runnable) {
+    postRunnable(runnable, 0)
+  }
 
-	private fun postRunnable(runnable: Runnable, delay: Long) {
-		try {
-			syncLatch.await()
-			if (delay <= 0) handler?.post(runnable) else handler?.postDelayed(runnable, delay)
-		} catch (e: Exception) {
-		}
-	}
+  private fun postRunnable(runnable: Runnable, delay: Long) {
+    try {
+      syncLatch.await()
+      if (delay <= 0) handler?.post(runnable) else handler?.postDelayed(runnable, delay)
+    } catch (e: Exception) {
+    }
+  }
 
-	fun cleanupQueue() {
-		try {
-			syncLatch.await()
-			handler?.removeCallbacksAndMessages(null)
-		} catch (e: Exception) {
-		}
-	}
+  fun cleanupQueue() {
+    try {
+      syncLatch.await()
+      handler?.removeCallbacksAndMessages(null)
+    } catch (e: Exception) {
+    }
+  }
 
-	fun handleMessage(inputMessage: Message) {
+  fun handleMessage(inputMessage: Message) {
 
-	}
+  }
 
-	override fun run() {
-		super.run()
-		prepare()
-		handler = @SuppressLint("HandlerLeak")
-		object : Handler() {
-			override fun handleMessage(msg: Message) = this@DispatchQueue.handleMessage(msg)
-		}
-		syncLatch.countDown()
-		loop()
-	}
+  override fun run() {
+    super.run()
+    prepare()
+    handler = @SuppressLint("HandlerLeak")
+    object : Handler() {
+      override fun handleMessage(msg: Message) = this@DispatchQueue.handleMessage(msg)
+    }
+    syncLatch.countDown()
+    loop()
+  }
 }

@@ -26,8 +26,8 @@ import javax.inject.Singleton
 @Module
 abstract class InternalAlbumsDataModule {
 
-	@Singleton
-	@Binds
-	abstract fun provideInternalAlbumsRepository(
-			albumRepository: InternalAlbumsRepositoryImpl): InternalAlbumsRepository
+  @Singleton
+  @Binds
+  abstract fun provideInternalAlbumsRepository(
+      albumRepository: InternalAlbumsRepositoryImpl): InternalAlbumsRepository
 }

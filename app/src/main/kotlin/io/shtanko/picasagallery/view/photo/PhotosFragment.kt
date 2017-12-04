@@ -43,85 +43,85 @@ import javax.inject.Inject
 @ActivityScoped
 class PhotosFragment @Inject constructor() : BaseFragment(), PhotosContract.View, OnItemClickListener {
 
-	// region injection
-	@Inject lateinit var presenter: PhotosContract.Presenter
-	@Inject lateinit var photosAdapter: PhotosAdapter
-	// endregion
+  // region injection
+  @Inject lateinit var presenter: PhotosContract.Presenter
+  @Inject lateinit var photosAdapter: PhotosAdapter
+  // endregion
 
-	private var progressBar: ProgressBar? = null
-	private var photoClickListener: PhotoClickListener? = null
+  private var progressBar: ProgressBar? = null
+  private var photoClickListener: PhotoClickListener? = null
 
-	override fun onAttach(context: Context?) {
-		super.onAttach(context)
-		if (context is PhotosActivity) {
-			this.photoClickListener = context
-		}
-	}
+  override fun onAttach(context: Context?) {
+    super.onAttach(context)
+    if (context is PhotosActivity) {
+      this.photoClickListener = context
+    }
+  }
 
-	override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-			savedInstanceState: Bundle?): View? {
-		val rootView = inflater.inflate(layout.container_list_fragment, container, false)
-		presenterActions()
-		viewActions(rootView)
-		return rootView
-	}
+  override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
+      savedInstanceState: Bundle?): View? {
+    val rootView = inflater.inflate(layout.container_list_fragment, container, false)
+    presenterActions()
+    viewActions(rootView)
+    return rootView
+  }
 
-	override fun onDetach() {
-		super.onDetach()
-		this.photoClickListener = null
-	}
+  override fun onDetach() {
+    super.onDetach()
+    this.photoClickListener = null
+  }
 
-	override fun onDestroy() {
-		super.onDestroy()
-		presenter.dropView()
-	}
+  override fun onDestroy() {
+    super.onDestroy()
+    presenter.dropView()
+  }
 
-	override fun showError(message: String) {
-	}
+  override fun showError(message: String) {
+  }
 
-	override fun setLoadingIndicator(active: Boolean) {
-	}
+  override fun setLoadingIndicator(active: Boolean) {
+  }
 
-	override fun <T> onItemClicked(model: T) {
-		if (model is PhotoType) {
-			presenter.onPhotoClick(model)
-		}
-	}
+  override fun <T> onItemClicked(model: T) {
+    if (model is PhotoType) {
+      presenter.onPhotoClick(model)
+    }
+  }
 
-	override fun showPhotos(photos: PhotosList) {
-		photosAdapter.items = photos
-	}
+  override fun showPhotos(photos: PhotosList) {
+    photosAdapter.items = photos
+  }
 
-	override fun viewPhoto(model: ViewType) {
-		photoClickListener?.onPhotoClick(model)
-	}
+  override fun viewPhoto(model: ViewType) {
+    photoClickListener?.onPhotoClick(model)
+  }
 
-	private fun presenterActions() {
-		presenter.takeView(this)
-		presenter.getPhotos()
-	}
+  private fun presenterActions() {
+    presenter.takeView(this)
+    presenter.getPhotos()
+  }
 
-	private fun viewActions(rootView: View) {
-		val gridLayoutManager = GridLayoutManager(activity, THREE_COLUMNS_GRID)
+  private fun viewActions(rootView: View) {
+    val gridLayoutManager = GridLayoutManager(activity, THREE_COLUMNS_GRID)
 
-		with(rootView) {
-			progressBar = rootView.findViewById(R.id.progress_bar)
+    with(rootView) {
+      progressBar = rootView.findViewById(R.id.progress_bar)
 
-			rootView.findViewById<RecyclerView>(R.id.grid).apply {
-				layoutManager = gridLayoutManager
-				adapter = photosAdapter
-				addItemDecoration(
-						ItemDividerDecoration(
-								activity?.resources?.getDimensionPixelSize(dimen.divider_height)!!,
-								getColor(activity!!, color.divider)
-						))
-			}
+      rootView.findViewById<RecyclerView>(R.id.grid).apply {
+        layoutManager = gridLayoutManager
+        adapter = photosAdapter
+        addItemDecoration(
+            ItemDividerDecoration(
+                activity?.resources?.getDimensionPixelSize(dimen.divider_height)!!,
+                getColor(activity!!, color.divider)
+            ))
+      }
 
-			photosAdapter.onItemClickListener = this@PhotosFragment
-		}
-	}
+      photosAdapter.onItemClickListener = this@PhotosFragment
+    }
+  }
 
-	interface PhotoClickListener {
-		fun onPhotoClick(model: ViewType)
-	}
+  interface PhotoClickListener {
+    fun onPhotoClick(model: ViewType)
+  }
 }

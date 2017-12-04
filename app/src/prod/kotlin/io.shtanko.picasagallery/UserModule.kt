@@ -34,17 +34,17 @@ import javax.inject.Singleton
 @Module
 class UserModule {
 
-	@Provides
-	@Singleton
-	fun provideUserRepository(dataSourceImpl: UserDataSourceImpl): UserRepository =
-			GetUserRepositoryImpl(dataSourceImpl)
+  @Provides
+  @Singleton
+  fun provideUserRepository(dataSourceImpl: UserDataSourceImpl): UserRepository =
+      GetUserRepositoryImpl(dataSourceImpl)
 
-	@Provides
-	@Singleton
-	@Named("UserDetails")
-	fun provideUserDetails(userRepository: UserRepository,
-			threadExecutor: ThreadExecutor,
-			postExecutionThread: PostExecutionThread): UseCase<User, Params> =
-			GetUserDetails(userRepository, threadExecutor, postExecutionThread)
+  @Provides
+  @Singleton
+  @Named("UserDetails")
+  fun provideUserDetails(userRepository: UserRepository,
+      threadExecutor: ThreadExecutor,
+      postExecutionThread: PostExecutionThread): UseCase<User, Params> =
+      GetUserDetails(userRepository, threadExecutor, postExecutionThread)
 
 }

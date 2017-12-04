@@ -29,18 +29,18 @@ import javax.inject.Singleton
 @Module
 class GoogleApiModule {
 
-	@Provides
-	@Singleton
-	fun provideGoogleSignInOptions(): GoogleSignInOptions {
-		/** List of OAuth scopes to be requested from the Google sign-in API  */
-		fun getAuthScopes(): List<String> = AUTH_SCOPES
+  @Provides
+  @Singleton
+  fun provideGoogleSignInOptions(): GoogleSignInOptions {
+    /** List of OAuth scopes to be requested from the Google sign-in API  */
+    fun getAuthScopes(): List<String> = AUTH_SCOPES
 
-		val gsoBuilder = Builder(DEFAULT_SIGN_IN)
-		for (scope in getAuthScopes()) {
-			gsoBuilder.requestScopes(Scope(scope))
-		}
-		return gsoBuilder.requestEmail()
-				.build()
-	}
+    val gsoBuilder = Builder(DEFAULT_SIGN_IN)
+    for (scope in getAuthScopes()) {
+      gsoBuilder.requestScopes(Scope(scope))
+    }
+    return gsoBuilder.requestEmail()
+        .build()
+  }
 
 }

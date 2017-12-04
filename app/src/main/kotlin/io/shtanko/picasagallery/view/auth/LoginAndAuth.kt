@@ -21,30 +21,30 @@ import android.content.Intent
 
 interface LoginAndAuth {
 
-	/**
-	 * @return the account name for the logged in user, or null.
-	 */
-	abstract fun getAccountName(): String
+  /**
+   * @return the account name for the logged in user, or null.
+   */
+  abstract fun getAccountName(): String
 
-	/**
-	 * Initiates the login process.
-	 */
-	abstract fun start()
+  /**
+   * Initiates the login process.
+   */
+  abstract fun start()
 
-	/**
-	 * @return if this has been started (via [.start]).
-	 */
-	abstract fun isStarted(): Boolean
+  /**
+   * @return if this has been started (via [.start]).
+   */
+  abstract fun isStarted(): Boolean
 
-	/**
-	 * Disconnects the connected user.
-	 */
-	abstract fun stop()
+  /**
+   * Disconnects the connected user.
+   */
+  abstract fun stop()
 
-	/**
-	 * Attempts the login process. This is called when the user has requested to do so.
-	 */
-	abstract fun retryAuthByUserRequest()
+  /**
+   * Attempts the login process. This is called when the user has requested to do so.
+   */
+  abstract fun retryAuthByUserRequest()
 
-	abstract fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent): Boolean
+  abstract fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent): Boolean
 }

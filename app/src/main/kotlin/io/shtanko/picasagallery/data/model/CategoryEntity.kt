@@ -20,6 +20,6 @@ package io.shtanko.picasagallery.data.model
 import com.google.gson.annotations.SerializedName
 
 data class CategoryEntity(
-		@SerializedName("term") var term: String,
-		@SerializedName("scheme") var scheme: String
+    @SerializedName("term") var term: String,
+    @SerializedName("scheme") var scheme: String
 )

@@ -23,20 +23,20 @@ import javax.inject.Singleton
 
 @Singleton
 class UserRepositoryImpl @Inject constructor(
-		private val dataSourceImpl: UserDataSourceImpl) : UserDataSource {
-	override fun getToken(): String = dataSourceImpl.getToken()
+    private val dataSourceImpl: UserDataSourceImpl) : UserDataSource {
+  override fun getToken(): String = dataSourceImpl.getToken()
 
-	override fun markUserRefusedSignIn(refused: Boolean) {
-		dataSourceImpl.markUserRefusedSignIn(refused)
-	}
+  override fun markUserRefusedSignIn(refused: Boolean) {
+    dataSourceImpl.markUserRefusedSignIn(refused)
+  }
 
-	override fun getUser() = dataSourceImpl.getUser()
+  override fun getUser() = dataSourceImpl.getUser()
 
-	override fun saveToken(token: String) {
-		dataSourceImpl.saveToken(token)
-	}
+  override fun saveToken(token: String) {
+    dataSourceImpl.saveToken(token)
+  }
 
-	override fun saveUser(user: User) {
-		dataSourceImpl.saveUser(user)
-	}
+  override fun saveUser(user: User) {
+    dataSourceImpl.saveUser(user)
+  }
 }

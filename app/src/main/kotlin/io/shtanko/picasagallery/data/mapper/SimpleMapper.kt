@@ -18,6 +18,6 @@
 package io.shtanko.picasagallery.data.mapper
 
 interface SimpleMapper<in F, out T> {
-	fun transform(from: F?): T
-	fun transform(fromCollection: Collection<F>): List<T>
+  fun transform(from: F?): T
+  fun transform(fromCollection: Collection<F>): List<T>
 }

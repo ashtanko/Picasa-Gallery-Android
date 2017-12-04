@@ -22,30 +22,30 @@ import io.shtanko.picasagallery.data.entity.user.User
 
 interface UserCache {
 
-	/**
-	 * Gets an {@link rx.Flowable} which will emit a {@link User}.
-	 */
-	fun get(): Flowable<User>
+  /**
+   * Gets an {@link rx.Flowable} which will emit a {@link User}.
+   */
+  fun get(): Flowable<User>
 
-	/**
-	 * Puts and element into the cache.
-	 *
-	 * @param user Element to insert in the cache.
-	 */
-	fun put(user: User?)
+  /**
+   * Puts and element into the cache.
+   *
+   * @param user Element to insert in the cache.
+   */
+  fun put(user: User?)
 
-	/**
-	 * Checks if an element (User) exists in the cache.
-	 *
-	 * @return true if the element is cached, otherwise false.
-	 */
-	fun isCached(): Boolean
+  /**
+   * Checks if an element (User) exists in the cache.
+   *
+   * @return true if the element is cached, otherwise false.
+   */
+  fun isCached(): Boolean
 
-	/**
-	 * Checks if the cache is expired.
-	 *
-	 * @return true, the cache is expired, otherwise false.
-	 */
-	fun isExpired(): Boolean
+  /**
+   * Checks if the cache is expired.
+   *
+   * @return true, the cache is expired, otherwise false.
+   */
+  fun isExpired(): Boolean
 
 }

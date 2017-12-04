@@ -28,23 +28,23 @@ import javax.inject.Inject
 
 class PhotosActivity : BaseActivity(), PhotoClickListener {
 
-	@Inject lateinit var presenter: PhotosPresenter
-	@Inject lateinit var fragmentProvider: Lazy<PhotosFragment>
-	private val viewer = PhotoViewer()
+  @Inject lateinit var presenter: PhotosPresenter
+  @Inject lateinit var fragmentProvider: Lazy<PhotosFragment>
+  private val viewer = PhotoViewer()
 
-	override fun onCreate(savedInstanceState: Bundle?) {
-		super.onCreate(savedInstanceState)
-		setContentView(container_activity)
-		addFragment(content_frame, fragmentProvider)
-	}
+  override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
+    setContentView(container_activity)
+    addFragment(content_frame, fragmentProvider)
+  }
 
-	override fun onPhotoClick(model: ViewType) {
-		viewer.initActivity(this)
-		viewer.openPhoto()
-	}
+  override fun onPhotoClick(model: ViewType) {
+    viewer.initActivity(this)
+    viewer.openPhoto()
+  }
 
-	override fun onDestroy() {
-		super.onDestroy()
-		viewer.closePhoto()
-	}
+  override fun onDestroy() {
+    super.onDestroy()
+    viewer.closePhoto()
+  }
 }

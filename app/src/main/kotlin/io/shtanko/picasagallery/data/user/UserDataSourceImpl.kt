@@ -24,22 +24,22 @@ import javax.inject.Singleton
 
 @Singleton
 class UserDataSourceImpl @Inject constructor(
-		private val preferencesHelper: PreferenceHelper) : UserDataSource {
-	override fun getToken(): String =
-			preferencesHelper.getToken()
+    private val preferencesHelper: PreferenceHelper) : UserDataSource {
+  override fun getToken(): String =
+      preferencesHelper.getToken()
 
 
-	override fun markUserRefusedSignIn(refused: Boolean) {
-		preferencesHelper.markUserRefusedSignIn(refused)
-	}
+  override fun markUserRefusedSignIn(refused: Boolean) {
+    preferencesHelper.markUserRefusedSignIn(refused)
+  }
 
-	override fun getUser() = preferencesHelper.getUser()
+  override fun getUser() = preferencesHelper.getUser()
 
-	override fun saveToken(token: String) {
-		preferencesHelper.saveToken(token)
-	}
+  override fun saveToken(token: String) {
+    preferencesHelper.saveToken(token)
+  }
 
-	override fun saveUser(user: User) {
-		preferencesHelper.saveUserData(user)
-	}
+  override fun saveUser(user: User) {
+    preferencesHelper.saveUserData(user)
+  }
 }

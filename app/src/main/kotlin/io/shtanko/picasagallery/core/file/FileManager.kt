@@ -20,8 +20,8 @@ package io.shtanko.picasagallery.core.file
 import java.io.File
 
 interface FileManager {
-	abstract fun writeToFile(file: File, fileContent: String)
-	abstract fun readFileContent(file: File): String
-	abstract fun exists(file: File): Boolean
-	abstract fun clearDirectory(dir: File): Boolean
+  abstract fun writeToFile(file: File, fileContent: String)
+  abstract fun readFileContent(file: File): String
+  abstract fun exists(file: File): Boolean
+  abstract fun clearDirectory(dir: File): Boolean
 }

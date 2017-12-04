@@ -17,9 +17,12 @@
 
 package io.shtanko.picasagallery.view.album
 
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import io.shtanko.picasagallery.data.entity.internal.Content
 import io.shtanko.picasagallery.data.entity.internal.ContentType
 import io.shtanko.picasagallery.data.internal.InternalAlbumsRepository
+import io.shtanko.picasagallery.extensions.applyComputationScheduler
 import io.shtanko.picasagallery.util.ActivityScoped
 import io.shtanko.picasagallery.view.album.InternalAlbumsContract.Presenter
 import io.shtanko.picasagallery.view.album.InternalAlbumsContract.View
@@ -29,37 +32,39 @@ import javax.inject.Inject
 
 @ActivityScoped
 class InternalAlbumsPresenter @Inject constructor(
-		private val repository: InternalAlbumsRepository
+    private val repository: InternalAlbumsRepository
 ) : Presenter {
 
-	override fun onItemClick(view: ViewType) {
-		if (view is ContentType) {
-			this.view?.viewAlbum(view as Content)
-		}
-	}
+  override fun onItemClick(view: ViewType) {
+    if (view is ContentType) {
+      this.view?.viewAlbum(view as Content)
+    }
+  }
 
-	@Nullable
-	private var view: View? = null
+  @Nullable
+  private var view: View? = null
 
-	override fun takeView(view: View) {
-		this.view = view
-	}
+  override fun takeView(view: View) {
+    this.view = view
+  }
 
-	override fun dropView() {
-		view = null
-	}
+  override fun dropView() {
+    view = null
+  }
 
-	override fun getContent() {
-		view?.setLoadingIndicator(true)
-		repository.content().subscribe(
-				{ it ->
-					view?.setLoadingIndicator(false)
-					view?.showData(it)
-				},
-				{ e ->
-					view?.setLoadingIndicator(false)
-					view?.showError(e.localizedMessage)
-				}
-		)
-	}
+  override fun getContent() {
+    view?.setLoadingIndicator(true)
+
+    repository.content()
+        .subscribe(
+            { it ->
+              view?.setLoadingIndicator(false)
+              view?.showData(it)
+            },
+            { e ->
+              view?.setLoadingIndicator(false)
+              view?.showError(e.localizedMessage)
+            }
+        )
+  }
 }

@@ -23,4 +23,4 @@ import io.shtanko.picasagallery.Config.AUTHORIZATION_HEADER
 import java.lang.String.format
 
 fun Request.authenticate(token: String): Request = header(
-		AUTHORIZATION_HEADER to format("%s ", Config.BEARER_PREFIX) + token)
+    AUTHORIZATION_HEADER to format("%s ", Config.BEARER_PREFIX) + token)

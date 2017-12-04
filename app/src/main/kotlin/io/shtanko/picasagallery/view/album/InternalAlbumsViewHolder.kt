@@ -28,14 +28,14 @@ import io.shtanko.picasagallery.view.widget.FourThreeImageView
 
 class InternalAlbumsViewHolder(itemView: View?) : BaseViewHolder(itemView), Divided {
 
-	val image = itemView?.findViewById<FourThreeImageView>(R.id.album)
+  val image = itemView?.findViewById<FourThreeImageView>(R.id.album)
 
-	init {
-	}
+  init {
+  }
 
-	override fun bind(item: ViewType) {
-		if (item is Content) {
-			GlideApp.with(itemView.context).load(item.src).into(image)
-		}
-	}
+  override fun bind(item: ViewType) {
+    if (item is Content) {
+      GlideApp.with(itemView.context).load(item.src).into(image)
+    }
+  }
 }

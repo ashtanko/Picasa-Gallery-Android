@@ -19,9 +19,9 @@ package io.shtanko.picasagallery.data.internal
 
 class InternalAlbumsDataSourceImpl : InternalAlbumsDataSource {
 
-	override fun getInternalAlbums() {
-		TODO(
-				"not implemented") //To change body of created functions use File | Settings | File Templates.
-	}
+  override fun getInternalAlbums() {
+    TODO(
+        "not implemented") //To change body of created functions use File | Settings | File Templates.
+  }
 
 }

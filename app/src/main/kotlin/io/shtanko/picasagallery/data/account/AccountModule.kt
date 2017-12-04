@@ -25,8 +25,8 @@ import javax.inject.Singleton
 @Module
 class AccountModule {
 
-	@Provides
-	@Singleton
-	fun provideAccountHelper(sp: SharedPreferences): Account = AccountHelper(sp)
+  @Provides
+  @Singleton
+  fun provideAccountHelper(sp: SharedPreferences): Account = AccountHelper(sp)
 
 }

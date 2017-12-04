@@ -25,15 +25,15 @@ import io.shtanko.picasagallery.view.base.BaseView
 
 interface SignInContract {
 
-	interface View : BaseView<Presenter> {
-		fun setLoadingIndicator(active: Boolean)
-		fun openNextScreen()
-	}
+  interface View : BaseView<Presenter> {
+    fun setLoadingIndicator(active: Boolean)
+    fun openNextScreen()
+  }
 
-	interface Presenter : BasePresenter<View> {
-		fun signIn(context: Context, result: GoogleSignInResult)
-		fun saveUserData(user: User)
-		fun saveToken(token: String)
-	}
+  interface Presenter : BasePresenter<View> {
+    fun signIn(context: Context, result: GoogleSignInResult)
+    fun saveUserData(user: User)
+    fun saveToken(token: String)
+  }
 
 }

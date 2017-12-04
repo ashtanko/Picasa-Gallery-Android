@@ -18,5 +18,5 @@
 package io.shtanko.picasagallery.view.delegate
 
 interface ViewType {
-	fun getViewType(): Int
+  fun getViewType(): Int
 }

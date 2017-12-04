@@ -22,10 +22,10 @@ import io.shtanko.picasagallery.view.profile.ProfileContract.View
 import javax.inject.Inject
 
 class ProfilePresenter @Inject constructor() : Presenter {
-	override fun takeView(view: View) {
-	}
+  override fun takeView(view: View) {
+  }
 
-	override fun dropView() {
-	}
+  override fun dropView() {
+  }
 
 }

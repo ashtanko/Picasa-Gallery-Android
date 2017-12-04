@@ -21,5 +21,5 @@ import io.reactivex.Flowable
 import io.shtanko.picasagallery.extensions.ContentList
 
 interface InternalAlbumsRepository {
-	abstract fun content(): Flowable<ContentList>
+  abstract fun content(): Flowable<ContentList>
 }

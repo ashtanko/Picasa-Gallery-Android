@@ -24,12 +24,12 @@ import io.shtanko.picasagallery.util.ActivityUtils
 
 abstract class BaseActivity : DaggerAppCompatActivity() {
 
-	fun <T : Fragment> addFragment(fragmentId: Int, provider: Lazy<T>) {
-		var mainFragment = supportFragmentManager.findFragmentById(
-				fragmentId)
-		if (mainFragment == null) {
-			mainFragment = provider.get()
-			ActivityUtils.addFragmentToActivity(supportFragmentManager, mainFragment, fragmentId)
-		}
-	}
+  fun <T : Fragment> addFragment(fragmentId: Int, provider: Lazy<T>) {
+    var mainFragment = supportFragmentManager.findFragmentById(
+        fragmentId)
+    if (mainFragment == null) {
+      mainFragment = provider.get()
+      ActivityUtils.addFragmentToActivity(supportFragmentManager, mainFragment, fragmentId)
+    }
+  }
 }

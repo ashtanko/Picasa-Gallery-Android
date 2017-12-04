@@ -19,33 +19,33 @@ package io.shtanko.picasagallery
 
 import io.reactivex.Flowable
 import io.shtanko.picasagallery.MockGetUserDetails.Params
-import io.shtanko.picasagallery.view.base.UseCase
 import io.shtanko.picasagallery.core.executor.PostExecutionThread
 import io.shtanko.picasagallery.core.executor.ThreadExecutor
 import io.shtanko.picasagallery.data.entity.user.User
 import io.shtanko.picasagallery.data.user.UserRepository
+import io.shtanko.picasagallery.view.base.UseCase
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class MockGetUserDetails @Inject constructor(
-		val userRepository: UserRepository,
-		threadExecutor: ThreadExecutor,
-		postExecutionThread: PostExecutionThread) : UseCase<User, Params>(threadExecutor,
-		postExecutionThread) {
+    val userRepository: UserRepository,
+    threadExecutor: ThreadExecutor,
+    postExecutionThread: PostExecutionThread) : UseCase<User, Params>(threadExecutor,
+    postExecutionThread) {
 
 
-	override fun buildUseCaseObservable(
-			params: Params): Flowable<User> {
-		val n = String::class.java.name
-		val user = User(n, n, n, n, n)
-		return Flowable.just(user)
-	}
+  override fun buildUseCaseObservable(
+      params: Params): Flowable<User> {
+    val n = String::class.java.name
+    val user = User(n, n, n, n, n)
+    return Flowable.just(user)
+  }
 
-	class Params private constructor() {
-		companion object {
-			fun createQuery() = Params()
-		}
-	}
+  class Params private constructor() {
+    companion object {
+      fun createQuery() = Params()
+    }
+  }
 
 }

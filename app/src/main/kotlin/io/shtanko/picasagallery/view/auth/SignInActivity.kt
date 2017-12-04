@@ -26,14 +26,14 @@ import io.shtanko.picasagallery.R.layout.container_activity as container
 
 class SignInActivity : BaseActivity() {
 
-	// region injection
-	@Inject lateinit var presenter: SignInPresenter
-	@Inject lateinit var fragmentProvider: Lazy<SignInFragment>
-	// endregion
+  // region injection
+  @Inject lateinit var presenter: SignInPresenter
+  @Inject lateinit var fragmentProvider: Lazy<SignInFragment>
+  // endregion
 
-	override fun onCreate(savedState: Bundle?) {
-		super.onCreate(savedState)
-		setContentView(container)
-		addFragment(content, fragmentProvider)
-	}
+  override fun onCreate(savedState: Bundle?) {
+    super.onCreate(savedState)
+    setContentView(container)
+    addFragment(content, fragmentProvider)
+  }
 }

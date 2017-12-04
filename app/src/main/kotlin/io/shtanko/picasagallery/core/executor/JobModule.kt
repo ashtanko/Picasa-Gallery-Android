@@ -24,11 +24,11 @@ import javax.inject.Singleton
 @Module
 class JobModule {
 
-	@Singleton
-	@Provides
-	fun provideThreadExecutor(jobExecutor: JobExecutor): ThreadExecutor = jobExecutor
+  @Singleton
+  @Provides
+  fun provideThreadExecutor(jobExecutor: JobExecutor): ThreadExecutor = jobExecutor
 
-	@Singleton
-	@Provides
-	fun providePostExecutionThread(uiThread: UIThread): PostExecutionThread = uiThread
+  @Singleton
+  @Provides
+  fun providePostExecutionThread(uiThread: UIThread): PostExecutionThread = uiThread
 }

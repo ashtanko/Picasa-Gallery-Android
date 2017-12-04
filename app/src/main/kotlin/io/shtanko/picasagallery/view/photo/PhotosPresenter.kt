@@ -18,6 +18,7 @@
 package io.shtanko.picasagallery.view.photo
 
 import io.shtanko.picasagallery.data.photo.PhotosRepository
+import io.shtanko.picasagallery.extensions.applyComputationScheduler
 import io.shtanko.picasagallery.util.ActivityScoped
 import io.shtanko.picasagallery.view.delegate.ViewType
 import io.shtanko.picasagallery.view.photo.PhotosContract.Presenter
@@ -27,36 +28,37 @@ import javax.inject.Inject
 
 @ActivityScoped
 class PhotosPresenter @Inject constructor(
-		private val repository: PhotosRepository
+    private val repository: PhotosRepository
 ) : Presenter {
 
-	override fun onPhotoClick(model: ViewType) {
-		view?.viewPhoto(model)
-	}
+  override fun onPhotoClick(model: ViewType) {
+    view?.viewPhoto(model)
+  }
 
-	override fun getPhotos() {
-		view?.setLoadingIndicator(true)
+  override fun getPhotos() {
+    view?.setLoadingIndicator(true)
 
-		repository.photos().subscribe(
-				{ it ->
-					view?.setLoadingIndicator(false)
-					view?.showPhotos(it)
-				},
-				{ e ->
-					view?.setLoadingIndicator(false)
-					view?.showError(e.localizedMessage)
-				}
-		)
-	}
+    repository.photos()
+        .subscribe(
+            { it ->
+              view?.setLoadingIndicator(false)
+              view?.showPhotos(it)
+            },
+            { e ->
+              view?.setLoadingIndicator(false)
+              view?.showError(e.localizedMessage)
+            }
+        )
+  }
 
-	@Nullable
-	private var view: PhotosContract.View? = null
+  @Nullable
+  private var view: PhotosContract.View? = null
 
-	override fun takeView(view: View) {
-		this.view = view
-	}
+  override fun takeView(view: View) {
+    this.view = view
+  }
 
-	override fun dropView() {
-		this.view = null
-	}
+  override fun dropView() {
+    this.view = null
+  }
 }

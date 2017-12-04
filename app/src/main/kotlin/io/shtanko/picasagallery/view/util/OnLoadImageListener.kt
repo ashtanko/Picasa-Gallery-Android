@@ -18,6 +18,6 @@
 package io.shtanko.picasagallery.view.util
 
 interface OnLoadImageListener {
-	fun onLoadSucceed()
-	fun onLoadFailed()
+  fun onLoadSucceed()
+  fun onLoadFailed()
 }

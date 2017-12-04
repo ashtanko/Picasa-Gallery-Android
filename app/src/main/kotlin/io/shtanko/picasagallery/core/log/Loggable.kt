@@ -18,10 +18,10 @@
 package io.shtanko.picasagallery.core.log
 
 abstract interface Loggable {
-	abstract fun e(message: String, t: Throwable)
-	abstract fun e(message: String)
-	abstract fun d(message: String)
-	abstract fun e(message: Throwable)
-	abstract fun getLogFile(): String
-	abstract fun cleanupLogs()
+  abstract fun e(message: String, t: Throwable)
+  abstract fun e(message: String)
+  abstract fun d(message: String)
+  abstract fun e(message: Throwable)
+  abstract fun getLogFile(): String
+  abstract fun cleanupLogs()
 }

@@ -25,7 +25,7 @@ import javax.inject.Singleton
 
 @Module
 abstract class PhotosDataSourceModule {
-	@Singleton
-	@Binds
-	abstract fun providePhotosDataSource(dataSource: PhotosDataSourceImpl): PhotosDataSource
+  @Singleton
+  @Binds
+  abstract fun providePhotosDataSource(dataSource: PhotosDataSourceImpl): PhotosDataSource
 }

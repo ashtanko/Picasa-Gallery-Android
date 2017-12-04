@@ -24,8 +24,8 @@ import javax.inject.Singleton
 @Module
 class PhotosDataModule {
 
-	@Provides
-	@Singleton
-	fun providePhotosRepository(dataSource: PhotosDataSource): PhotosRepository =
-			PhotosRepositoryImpl(dataSource)
+  @Provides
+  @Singleton
+  fun providePhotosRepository(dataSource: PhotosDataSource): PhotosRepository =
+      PhotosRepositoryImpl(dataSource)
 }

@@ -26,11 +26,11 @@ import io.shtanko.picasagallery.view.album.InternalAlbumsContract.Presenter
 
 @Module abstract class InternalAlbumsModule {
 
-	@FragmentScoped
-	@ContributesAndroidInjector
-	abstract fun internalAlbumsFragment(): InternalAlbumsFragment
+  @FragmentScoped
+  @ContributesAndroidInjector
+  abstract fun internalAlbumsFragment(): InternalAlbumsFragment
 
-	@ActivityScoped
-	@Binds abstract fun internalAlbumsPresenter(
-			presenter: InternalAlbumsPresenter): Presenter
+  @ActivityScoped
+  @Binds abstract fun internalAlbumsPresenter(
+      presenter: InternalAlbumsPresenter): Presenter
 }

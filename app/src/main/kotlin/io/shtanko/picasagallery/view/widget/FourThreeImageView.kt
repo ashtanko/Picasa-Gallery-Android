@@ -25,17 +25,17 @@ import android.view.View.MeasureSpec.makeMeasureSpec
 
 class FourThreeImageView : AppCompatImageView {
 
-	// region default constructors
-	constructor(context: Context) : super(context)
+  // region default constructors
+  constructor(context: Context) : super(context)
 
-	constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
-	constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs,
-			defStyleAttr)
-	// endregion
+  constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
+  constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs,
+      defStyleAttr)
+  // endregion
 
-	override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-		val fourThreeHeight = makeMeasureSpec(MeasureSpec.getSize(widthMeasureSpec) * 3 / 4,
-				EXACTLY)
-		super.onMeasure(widthMeasureSpec, fourThreeHeight)
-	}
+  override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
+    val fourThreeHeight = makeMeasureSpec(MeasureSpec.getSize(widthMeasureSpec) * 3 / 4,
+        EXACTLY)
+    super.onMeasure(widthMeasureSpec, fourThreeHeight)
+  }
 }

@@ -25,13 +25,13 @@ import io.shtanko.picasagallery.view.base.BaseView
 import io.shtanko.picasagallery.view.delegate.ViewType
 
 interface MainContract {
-	interface View : BaseView<Presenter>, BaseProgressView, BaseErrorView {
-		fun onShowAlbums(list: AlbumsList)
-		fun viewAlbum(model: ViewType)
-	}
+  interface View : BaseView<Presenter>, BaseProgressView, BaseErrorView {
+    fun onShowAlbums(list: AlbumsList)
+    fun viewAlbum(model: ViewType)
+  }
 
-	interface Presenter : BasePresenter<View> {
-		fun getAlbums()
-		fun onAlbumClick(model: ViewType)
-	}
+  interface Presenter : BasePresenter<View> {
+    fun getAlbums()
+    fun onAlbumClick(model: ViewType)
+  }
 }

@@ -43,69 +43,69 @@ import io.shtanko.picasagallery.Config.JSON_PARAMS as PARAMS
 
 @Singleton
 class ApiManagerImpl @Inject constructor(
-		private val preferencesHelper: PreferenceHelper
+    private val preferencesHelper: PreferenceHelper
 ) : ApiManager {
 
-	override fun getUserAlbums(userId: String): Flowable<List<AlbumEntity>> =
-			getUser(userId).map { return@map it.feed.entry }.toFlowable(DROP)
+  override fun getUserAlbums(userId: String): Flowable<List<AlbumEntity>> =
+      getUser(userId).map { return@map it.feed.entry }.toFlowable(DROP)
 
-	init {
-		FuelManager.instance.basePath = PICASA_BASE_API_URL
-	}
+  init {
+    FuelManager.instance.basePath = PICASA_BASE_API_URL
+  }
 
-	override fun getUser(userId: String): Observable<UserFeedResponseEntity> {
-		Logger.verbose(PICASA_BASE_USER_API_URL.httpGet(PARAMS).path)
-		Logger.verbose("TOKEN: ${preferencesHelper.getToken()}")
-		return PICASA_BASE_USER_API_URL.httpGet(PARAMS).authenticate(
-				preferencesHelper.getToken()).rx_object(
-				UserFeedResponseEntity.Deserializer)
-				.flatMapMaybe {
-					when (it) {
-						is Result.Success -> {
-							if (!it.value.feed.id.body.isEmpty()) {
-								Maybe.just(it.value)
-							} else {
-								Maybe.empty<UserFeedResponseEntity>()
-							}
-						}
-						is Result.Failure -> {
-							try {
-								Maybe.error<UserFeedResponseEntity>(
-										Gson().fromJson(it.error.response.data.toString(UTF_8),
-												UserException::class.java))
-							} catch (e: Throwable) {
-								Maybe.error<UserFeedResponseEntity>(UserException(
-										it.error.message ?: it.error.exception.message ?: it.error.response.responseMessage))
-							}
-						}
-					}
-				}.toObservable()
-	}
+  override fun getUser(userId: String): Observable<UserFeedResponseEntity> {
+    Logger.vTemp(PICASA_BASE_USER_API_URL.httpGet(PARAMS).path)
+    Logger.vTemp("TOKEN: ${preferencesHelper.getToken()}")
+    return PICASA_BASE_USER_API_URL.httpGet(PARAMS).authenticate(
+        preferencesHelper.getToken()).rx_object(
+        UserFeedResponseEntity.Deserializer)
+        .flatMapMaybe {
+          when (it) {
+            is Result.Success -> {
+              if (!it.value.feed.id.body.isEmpty()) {
+                Maybe.just(it.value)
+              } else {
+                Maybe.empty<UserFeedResponseEntity>()
+              }
+            }
+            is Result.Failure -> {
+              try {
+                Maybe.error<UserFeedResponseEntity>(
+                    Gson().fromJson(it.error.response.data.toString(UTF_8),
+                        UserException::class.java))
+              } catch (e: Throwable) {
+                Maybe.error<UserFeedResponseEntity>(UserException(
+                    it.error.message ?: it.error.exception.message ?: it.error.response.responseMessage))
+              }
+            }
+          }
+        }.toObservable()
+  }
 
-	override fun getAlbums(userId: String, albumId: String): Observable<AlbumsResponseEntity> {
-		Logger.verbose(Config.configureAlbumsPath(userId, albumId).httpGet(PARAMS).path)
-		return Config.configureAlbumsPath(userId, albumId).httpGet(PARAMS).rx_object(
-				AlbumsResponseEntity.Deserializer)
-				.flatMapMaybe {
-					when (it) {
-						is Result.Success -> {
-							if (!it.value.version.isEmpty()) {
-								Maybe.just(it.value)
-							} else {
-								Maybe.empty<AlbumsResponseEntity>()
-							}
-						}
-						is Result.Failure -> {
-							try {
-								Maybe.error<AlbumsResponseEntity>(
-										Gson().fromJson(it.error.response.data.toString(UTF_8),
-												UserException::class.java))
-							} catch (e: Throwable) {
-								Maybe.error<AlbumsResponseEntity>(UserException(
-										it.error.message ?: it.error.exception.message ?: it.error.response.responseMessage))
-							}
-						}
-					}
-				}.toObservable()
-	}
+  override fun getAlbums(userId: String, albumId: String): Observable<AlbumsResponseEntity> {
+    Logger.verbose(Config.configureAlbumsPath(userId, albumId).httpGet(PARAMS).path)
+    return Config.configureAlbumsPath(userId, albumId).httpGet(PARAMS).rx_object(
+        AlbumsResponseEntity.Deserializer)
+        .flatMapMaybe {
+          when (it) {
+            is Result.Success -> {
+              if (!it.value.version.isEmpty()) {
+                Maybe.just(it.value)
+              } else {
+                Maybe.empty<AlbumsResponseEntity>()
+              }
+            }
+            is Result.Failure -> {
+              try {
+                Maybe.error<AlbumsResponseEntity>(
+                    Gson().fromJson(it.error.response.data.toString(UTF_8),
+                        UserException::class.java))
+              } catch (e: Throwable) {
+                Maybe.error<AlbumsResponseEntity>(UserException(
+                    it.error.message ?: it.error.exception.message ?: it.error.response.responseMessage))
+              }
+            }
+          }
+        }.toObservable()
+  }
 }

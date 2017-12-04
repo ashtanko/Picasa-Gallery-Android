@@ -28,45 +28,45 @@ import io.shtanko.picasagallery.view.util.Divided
 import kotlin.properties.Delegates
 
 class ItemDividerDecoration constructor(
-		@Dimension private var dividerSize: Int,
-		@ColorInt dividerColor: Int
+    @Dimension private var dividerSize: Int,
+    @ColorInt dividerColor: Int
 ) : RecyclerView.ItemDecoration() {
 
-	private var paint: Paint by Delegates.notNull()
+  private var paint: Paint by Delegates.notNull()
 
-	init {
-		paint = Paint()
-		paint.color = dividerColor
-		paint.style = FILL
-	}
+  init {
+    paint = Paint()
+    paint.color = dividerColor
+    paint.style = FILL
+  }
 
-	override fun onDrawOver(canvas: Canvas, parent: RecyclerView, state: State?) {
-		if (parent.isAnimating) return
+  override fun onDrawOver(canvas: Canvas, parent: RecyclerView, state: State?) {
+    if (parent.isAnimating) return
 
-		val childCount = parent.childCount
+    val childCount = parent.childCount
 
-		val lm = parent.layoutManager
+    val lm = parent.layoutManager
 
-		for (i in 0 until childCount) {
-			val child = parent.getChildAt(i)
-			val viewHolder = parent.getChildViewHolder(child)
-			if (viewHolder is Divided) {
-				val right = lm.getDecoratedRight(child)
-				val bottom = lm.getDecoratedBottom(child)
-				// draw the bottom divider
-				canvas.drawRect(lm.getDecoratedLeft(child).toFloat(),
-						(bottom - dividerSize).toFloat(),
-						right.toFloat(),
-						bottom.toFloat(),
-						paint)
-				// draw the right edge divider
-				canvas.drawRect((right - dividerSize).toFloat(),
-						lm.getDecoratedTop(child).toFloat(),
-						right.toFloat(),
-						(bottom - dividerSize).toFloat(),
-						paint)
-			}
-		}
-	}
+    for (i in 0 until childCount) {
+      val child = parent.getChildAt(i)
+      val viewHolder = parent.getChildViewHolder(child)
+      if (viewHolder is Divided) {
+        val right = lm.getDecoratedRight(child)
+        val bottom = lm.getDecoratedBottom(child)
+        // draw the bottom divider
+        canvas.drawRect(lm.getDecoratedLeft(child).toFloat(),
+            (bottom - dividerSize).toFloat(),
+            right.toFloat(),
+            bottom.toFloat(),
+            paint)
+        // draw the right edge divider
+        canvas.drawRect((right - dividerSize).toFloat(),
+            lm.getDecoratedTop(child).toFloat(),
+            right.toFloat(),
+            (bottom - dividerSize).toFloat(),
+            paint)
+      }
+    }
+  }
 
 }

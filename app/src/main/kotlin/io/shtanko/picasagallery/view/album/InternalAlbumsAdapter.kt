@@ -26,8 +26,8 @@ import javax.inject.Inject
 @ActivityScoped
 class InternalAlbumsAdapter @Inject constructor() : BaseAdapter<ContentType>() {
 
-	init {
-		delegateAdapters.put(CONTENT_VIEW_TYPE_ID, InternalAlbumsDelegateImpl())
-	}
+  init {
+    delegateAdapters.put(CONTENT_VIEW_TYPE_ID, InternalAlbumsDelegateImpl())
+  }
 
 }

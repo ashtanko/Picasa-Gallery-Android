@@ -20,6 +20,6 @@ package io.shtanko.picasagallery.data.model
 import com.google.gson.annotations.SerializedName
 
 data class TitleTypeEntity(
-		@SerializedName("$" + "t") var body: String,
-		@SerializedName("type") var type: String
+    @SerializedName("$" + "t") var body: String,
+    @SerializedName("type") var type: String
 )

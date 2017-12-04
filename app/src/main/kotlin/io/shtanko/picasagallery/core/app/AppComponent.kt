@@ -38,30 +38,30 @@ import javax.inject.Singleton
 
 @Singleton
 @Component(modules = arrayOf(
-		AndroidSupportInjectionModule::class,
-		AppModule::class,
-		ActivityBindingModule::class,
-		ApiModule::class,
-		PreferencesModule::class,
-		AlbumsRepositoryModule::class,
-		UserModule::class,
-		JobModule::class,
-		AccountModule::class,
-		PhotosDataSourceModule::class,
-		PhotosDataModule::class,
-		GoogleApiModule::class,
-		InternalAlbumsDataModule::class
+    AndroidSupportInjectionModule::class,
+    AppModule::class,
+    ActivityBindingModule::class,
+    ApiModule::class,
+    PreferencesModule::class,
+    AlbumsRepositoryModule::class,
+    UserModule::class,
+    JobModule::class,
+    AccountModule::class,
+    PhotosDataSourceModule::class,
+    PhotosDataModule::class,
+    GoogleApiModule::class,
+    InternalAlbumsDataModule::class
 ))
 interface AppComponent : AndroidInjector<DaggerApplication> {
 
-	override fun inject(instance: DaggerApplication?)
+  override fun inject(instance: DaggerApplication?)
 
-	@Component.Builder
-	interface Builder {
+  @Component.Builder
+  interface Builder {
 
-		@BindsInstance
-		fun application(application: Application): Builder
+    @BindsInstance
+    fun application(application: Application): Builder
 
-		fun build(): AppComponent
-	}
+    fun build(): AppComponent
+  }
 }

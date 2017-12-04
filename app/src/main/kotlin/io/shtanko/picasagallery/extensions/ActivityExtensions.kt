@@ -31,17 +31,17 @@ fun Fragment.getSafeContext(): Context? = if (SDK >= M) this.context else activi
 fun DaggerFragment.getSafeContext(): Context = if (SDK >= M) this.context else activity
 
 fun Activity.close() {
-	if (SDK >= JELLY_BEAN) {
-		finishAffinity()
-	} else {
-		finish()
-	}
+  if (SDK >= JELLY_BEAN) {
+    finishAffinity()
+  } else {
+    finish()
+  }
 }
 
 fun Activity.shortToast(message: String) {
-	makeText(this, message, SHORT).show()
+  makeText(this, message, SHORT).show()
 }
 
 fun Fragment.shortToast(message: String) {
-	makeText(activity, message, SHORT).show()
+  makeText(activity, message, SHORT).show()
 }

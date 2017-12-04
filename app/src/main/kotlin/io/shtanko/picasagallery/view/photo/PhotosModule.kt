@@ -26,10 +26,10 @@ import io.shtanko.picasagallery.view.photo.PhotosContract.Presenter
 
 @Module abstract class PhotosModule {
 
-	@FragmentScoped
-	@ContributesAndroidInjector
-	abstract fun photosFragment(): PhotosFragment
+  @FragmentScoped
+  @ContributesAndroidInjector
+  abstract fun photosFragment(): PhotosFragment
 
-	@ActivityScoped
-	@Binds abstract fun photosPresenter(presenter: PhotosPresenter): Presenter
+  @ActivityScoped
+  @Binds abstract fun photosPresenter(presenter: PhotosPresenter): Presenter
 }

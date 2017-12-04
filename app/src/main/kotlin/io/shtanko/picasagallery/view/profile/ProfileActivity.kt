@@ -26,14 +26,14 @@ import javax.inject.Inject
 
 class ProfileActivity : BaseActivity() {
 
-	// region injection
-	@Inject lateinit var presenter: ProfilePresenter
-	@Inject lateinit var fragmentProvider: Lazy<ProfileFragment>
-	// endregion
+  // region injection
+  @Inject lateinit var presenter: ProfilePresenter
+  @Inject lateinit var fragmentProvider: Lazy<ProfileFragment>
+  // endregion
 
-	override fun onCreate(savedInstanceState: Bundle?) {
-		super.onCreate(savedInstanceState)
-		setContentView(container_activity)
-		addFragment(content_frame, fragmentProvider)
-	}
+  override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
+    setContentView(container_activity)
+    addFragment(content_frame, fragmentProvider)
+  }
 }

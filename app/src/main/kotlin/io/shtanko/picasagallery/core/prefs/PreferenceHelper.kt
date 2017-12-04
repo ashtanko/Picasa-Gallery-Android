@@ -31,38 +31,38 @@ import javax.inject.Singleton
 @Singleton
 class PreferenceHelper constructor(val sharedPreferences: SharedPreferences) {
 
-	fun markUserRefusedSignIn(refused: Boolean) {
-		sharedPreferences.edit().putBoolean(USER_REFUSED_SIGN_IN_PREF, refused).apply()
-	}
+  fun markUserRefusedSignIn(refused: Boolean) {
+    sharedPreferences.edit().putBoolean(USER_REFUSED_SIGN_IN_PREF, refused).apply()
+  }
 
-	fun saveUserData(user: User) {
-		sharedPreferences.run {
-			edit().putString(SAVED_PERSON_NAME_PREF, user.personName).apply()
-			edit().putString(SAVED_PERSON_GIVEN_NAME_PREF,
-					user.personGivenName).apply()
-			edit().putString(SAVED_PERSON_FAMILY_NAME_PREF,
-					user.personFamilyName).apply()
-			edit().putString(SAVED_EMAIL_PREF, user.personEmail).apply()
-			edit().putString(SAVED_ID_PREF, user.personId).apply()
-		}
-	}
+  fun saveUserData(user: User) {
+    sharedPreferences.run {
+      edit().putString(SAVED_PERSON_NAME_PREF, user.personName).apply()
+      edit().putString(SAVED_PERSON_GIVEN_NAME_PREF,
+          user.personGivenName).apply()
+      edit().putString(SAVED_PERSON_FAMILY_NAME_PREF,
+          user.personFamilyName).apply()
+      edit().putString(SAVED_EMAIL_PREF, user.personEmail).apply()
+      edit().putString(SAVED_ID_PREF, user.personId).apply()
+    }
+  }
 
 
-	fun getUser(): User {
-		val personName = sharedPreferences.getString(SAVED_PERSON_NAME_PREF, "")
-		val personGivenName = sharedPreferences.getString(SAVED_PERSON_GIVEN_NAME_PREF, "")
-		val personFamilyName = sharedPreferences.getString(SAVED_PERSON_FAMILY_NAME_PREF, "")
-		val personEmail = sharedPreferences.getString(SAVED_EMAIL_PREF, "")
-		val personId = sharedPreferences.getString(SAVED_ID_PREF, "")
-		return User(personName, personGivenName,
-				personFamilyName, personEmail, personId)
-	}
+  fun getUser(): User {
+    val personName = sharedPreferences.getString(SAVED_PERSON_NAME_PREF, "")
+    val personGivenName = sharedPreferences.getString(SAVED_PERSON_GIVEN_NAME_PREF, "")
+    val personFamilyName = sharedPreferences.getString(SAVED_PERSON_FAMILY_NAME_PREF, "")
+    val personEmail = sharedPreferences.getString(SAVED_EMAIL_PREF, "")
+    val personId = sharedPreferences.getString(SAVED_ID_PREF, "")
+    return User(personName, personGivenName,
+        personFamilyName, personEmail, personId)
+  }
 
-	fun saveToken(token: String) = sharedPreferences.edit().putString(SAVED_TOKEN_PREF,
-			token).apply()
+  fun saveToken(token: String) = sharedPreferences.edit().putString(SAVED_TOKEN_PREF,
+      token).apply()
 
-	fun getToken(): String = sharedPreferences.getString(SAVED_TOKEN_PREF, "")
+  fun getToken(): String = sharedPreferences.getString(SAVED_TOKEN_PREF, "")
 
-	fun getUserId(): String = sharedPreferences.getString(SAVED_ID_PREF, "")
+  fun getUserId(): String = sharedPreferences.getString(SAVED_ID_PREF, "")
 
 }

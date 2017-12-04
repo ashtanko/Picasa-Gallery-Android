@@ -18,5 +18,5 @@
 package io.shtanko.picasagallery.view.base
 
 interface BaseContentView<in T> {
-	fun showData(data: T)
+  fun showData(data: T)
 }

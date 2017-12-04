@@ -26,13 +26,13 @@ import javax.inject.Singleton
 
 @Singleton
 class AlbumDataSourceImpl @Inject constructor(
-		private val apiManager: ApiManager,
-		private val preferencesHelper: PreferenceHelper,
-		private val albumEntityMapper: AlbumEntityMapper) : AlbumDataSource {
+    private val apiManager: ApiManager,
+    private val preferencesHelper: PreferenceHelper,
+    private val albumEntityMapper: AlbumEntityMapper) : AlbumDataSource {
 
 
-	override fun getAlbums(): Flowable<AlbumsList> {
-		return apiManager.getUserAlbums(
-				preferencesHelper.getUserId()).map { albumEntityMapper.transform(it) }
-	}
+  override fun getAlbums(): Flowable<AlbumsList> {
+    return apiManager.getUserAlbums(
+        preferencesHelper.getUserId()).map { albumEntityMapper.transform(it) }
+  }
 }

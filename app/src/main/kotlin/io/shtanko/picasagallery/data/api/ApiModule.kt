@@ -28,14 +28,14 @@ import io.shtanko.picasagallery.core.prefs.PreferencesModule
 @Module(includes = arrayOf(PreferencesModule::class))
 class ApiModule {
 
-	@Provides
-	fun provideGson(): Gson {
-		val gsonBuilder = GsonBuilder()
-		gsonBuilder.setFieldNamingPolicy(LOWER_CASE_WITH_UNDERSCORES)
-		gsonBuilder.setPrettyPrinting()
-		return gsonBuilder.create()
-	}
+  @Provides
+  fun provideGson(): Gson {
+    val gsonBuilder = GsonBuilder()
+    gsonBuilder.setFieldNamingPolicy(LOWER_CASE_WITH_UNDERSCORES)
+    gsonBuilder.setPrettyPrinting()
+    return gsonBuilder.create()
+  }
 
-	@Provides
-	fun provideApiManagerImpl(helper: PreferenceHelper): ApiManager = ApiManagerImpl(helper)
+  @Provides
+  fun provideApiManagerImpl(helper: PreferenceHelper): ApiManager = ApiManagerImpl(helper)
 }

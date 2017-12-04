@@ -26,10 +26,10 @@ import io.shtanko.picasagallery.view.auth.SignInContract.Presenter
 
 @Module abstract class SignInModule {
 
-	@FragmentScoped
-	@ContributesAndroidInjector
-	abstract fun signInFragment(): SignInFragment
+  @FragmentScoped
+  @ContributesAndroidInjector
+  abstract fun signInFragment(): SignInFragment
 
-	@ActivityScoped
-	@Binds abstract fun signInPresenter(presenter: SignInPresenter): Presenter
+  @ActivityScoped
+  @Binds abstract fun signInPresenter(presenter: SignInPresenter): Presenter
 }

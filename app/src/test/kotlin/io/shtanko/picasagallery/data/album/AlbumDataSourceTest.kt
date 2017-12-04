@@ -33,21 +33,21 @@ import org.mockito.junit.MockitoJUnitRunner
 @RunWith(MockitoJUnitRunner.Silent::class)
 class AlbumDataSourceTest {
 
-	private val FAKE_USER_ID = "123"
+  private val FAKE_USER_ID = "123"
 
-	private val mockApiManager = mock<ApiManager>()
-	private val albumEntityMapper = mock<AlbumEntityMapper>()
+  private val mockApiManager = mock<ApiManager>()
+  private val albumEntityMapper = mock<AlbumEntityMapper>()
 
-	@Before
-	fun setUp() {
-	}
+  @Before
+  fun setUp() {
+  }
 
-	@Test
-	@Throws(UnnecessaryStubbingException::class)
-	fun get_albumsTest() {
-		val fakeUserEntity = mock<UserFeedResponseEntity>()
-		val fakeUserObservable = Observable.just(fakeUserEntity)
-		given(mockApiManager.getUser(FAKE_USER_ID)).willReturn(fakeUserObservable)
-		verify(mockApiManager, times(0)).getUser(FAKE_USER_ID)
-	}
+  @Test
+  @Throws(UnnecessaryStubbingException::class)
+  fun getAlbumsTest() {
+    val fakeUserEntity = mock<UserFeedResponseEntity>()
+    val fakeUserObservable = Observable.just(fakeUserEntity)
+    given(mockApiManager.getUser(FAKE_USER_ID)).willReturn(fakeUserObservable)
+    verify(mockApiManager, times(0)).getUser(FAKE_USER_ID)
+  }
 }

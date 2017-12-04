@@ -17,9 +17,8 @@
 
 package io.shtanko.picasagallery.view.main
 
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 import io.shtanko.picasagallery.data.album.AlbumRepository
+import io.shtanko.picasagallery.extensions.applyComputationScheduler
 import io.shtanko.picasagallery.util.ActivityScoped
 import io.shtanko.picasagallery.util.Logger
 import io.shtanko.picasagallery.view.delegate.ViewType
@@ -30,37 +29,36 @@ import javax.inject.Inject
 
 @ActivityScoped
 class MainPresenter @Inject constructor(
-		private val repository: AlbumRepository
+    private val repository: AlbumRepository
 ) : Presenter {
 
-	@Nullable
-	private var view: View? = null
+  @Nullable
+  private var view: View? = null
 
-	override fun takeView(view: View) {
-		this.view = view
-	}
+  override fun takeView(view: View) {
+    this.view = view
+  }
 
-	override fun dropView() {
-		this.view = null
-	}
+  override fun dropView() {
+    this.view = null
+  }
 
-	override fun getAlbums() {
-		view?.setLoadingIndicator(true)
-		repository.albums()
-				.subscribeOn(Schedulers.io())
-				.observeOn(AndroidSchedulers.mainThread()).subscribe(
-				{ it ->
-					view?.setLoadingIndicator(false)
-					view?.onShowAlbums(it)
-				},
-				{ e ->
-					view?.setLoadingIndicator(false)
-					view?.showError(e.localizedMessage)
-					Logger.error(e)
-				})
-	}
+  override fun getAlbums() {
+    view?.setLoadingIndicator(true)
+    repository.albums()
+        .subscribe(
+            { it ->
+              view?.setLoadingIndicator(false)
+              view?.onShowAlbums(it)
+            },
+            { e ->
+              view?.setLoadingIndicator(false)
+              view?.showError(e.localizedMessage)
+              Logger.error(e)
+            })
+  }
 
-	override fun onAlbumClick(model: ViewType) {
-		view?.viewAlbum(model)
-	}
+  override fun onAlbumClick(model: ViewType) {
+    view?.viewAlbum(model)
+  }
 }

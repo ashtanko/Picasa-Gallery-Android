@@ -23,6 +23,7 @@ import com.nhaarman.mockito_kotlin.verify
 import io.reactivex.Flowable
 import io.shtanko.picasagallery.data.internal.InternalAlbumsRepository
 import io.shtanko.picasagallery.extensions.ContentList
+import io.shtanko.picasagallery.extensions.applyComputationScheduler
 import io.shtanko.picasagallery.view.album.InternalAlbumsContract.View
 import io.shtanko.picasagallery.view.album.InternalAlbumsPresenter
 import io.shtanko.picasagallery.view.util.getContentData
@@ -30,56 +31,56 @@ import org.junit.Before
 import org.junit.FixMethodOrder
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.junit.runners.MethodSorters
+import org.junit.runners.MethodSorters.JVM
 import org.mockito.MockitoAnnotations.initMocks
 import org.mockito.junit.MockitoJUnitRunner
 
 @RunWith(MockitoJUnitRunner::class)
-@FixMethodOrder(MethodSorters.JVM)
+@FixMethodOrder(JVM)
 class InternalAlbumsPresenterTest {
 
-	private val view = mock<View>()
-	private lateinit var presenter: InternalAlbumsPresenter
-	private val exception = RuntimeException("Error")
+  private val view = mock<View>()
+  private lateinit var presenter: InternalAlbumsPresenter
+  private val exception = RuntimeException("Error")
 
-	@Before
-	fun setUp() {
-		initMocks(this)
-		presenter = InternalAlbumsPresenter(FakeInternalAlbumsRepository())
-		presenter.takeView(view)
-	}
+  @Before
+  fun setUp() {
+    initMocks(this)
+    presenter = InternalAlbumsPresenter(FakeInternalAlbumsRepository())
+    presenter.takeView(view)
+  }
 
-	@Test
-	fun on_success_loaded_contentTest() {
-		presenter.getContent()
-		verify(view, times(1)).setLoadingIndicator(true)
-		verify(view, times(1)).showData(fakeContent)
-		verify(view, times(1)).setLoadingIndicator(false)
-	}
+  @Test
+  fun onSuccessLoadedContentTest() {
+    presenter.getContent()
+    verify(view, times(1)).setLoadingIndicator(true)
+    verify(view, times(1)).showData(fakeContent)
+    verify(view, times(1)).setLoadingIndicator(false)
+  }
 
-	@Test
-	fun on_failure_loaded_contentTest() {
-		presenter = InternalAlbumsPresenter(FakeInternalAlbumsRepositoryWithError())
-		presenter.takeView(view)
-		presenter.getContent()
-		verify(view, times(1)).setLoadingIndicator(true)
-		verify(view, times(1)).showError(exception.localizedMessage)
-		verify(view, times(1)).setLoadingIndicator(false)
-	}
+  @Test
+  fun onFailureLoadedContentTest() {
+    presenter = InternalAlbumsPresenter(FakeInternalAlbumsRepositoryWithError())
+    presenter.takeView(view)
+    presenter.getContent()
+    verify(view, times(1)).setLoadingIndicator(true)
+    verify(view, times(1)).showError(exception.localizedMessage)
+    verify(view, times(1)).setLoadingIndicator(false)
+  }
 
-	inner class FakeInternalAlbumsRepository : InternalAlbumsRepository {
-		override fun content(): Flowable<ContentList> =
-				Flowable.fromIterable(fakeContent).toList().toFlowable()
+  inner class FakeInternalAlbumsRepository : InternalAlbumsRepository {
+    override fun content(): Flowable<ContentList> =
+        Flowable.fromIterable(fakeContent).toList().toFlowable()
 
-	}
+  }
 
-	inner class FakeInternalAlbumsRepositoryWithError : InternalAlbumsRepository {
-		override fun content(): Flowable<ContentList> =
-				Flowable.fromIterable(fakeContent).concatWith(
-						Flowable.error { exception }).toList().toFlowable()
+  inner class FakeInternalAlbumsRepositoryWithError : InternalAlbumsRepository {
+    override fun content(): Flowable<ContentList> =
+        Flowable.fromIterable(fakeContent).concatWith(
+            Flowable.error { exception }).toList().toFlowable()
 
-	}
+  }
 
-	private val fakeContent = getContentData()
+  private val fakeContent = getContentData()
 
 }

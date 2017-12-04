@@ -21,9 +21,9 @@ import io.shtanko.picasagallery.view.base.BasePresenter
 import io.shtanko.picasagallery.view.base.BaseView
 
 interface ProfileContract {
-	interface View : BaseView<Presenter> {
-	}
+  interface View : BaseView<Presenter> {
+  }
 
-	interface Presenter : BasePresenter<View> {
-	}
+  interface Presenter : BasePresenter<View> {
+  }
 }
