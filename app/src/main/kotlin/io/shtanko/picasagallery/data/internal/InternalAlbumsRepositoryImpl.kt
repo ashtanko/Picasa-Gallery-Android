@@ -25,8 +25,6 @@ import javax.inject.Singleton
 @Singleton
 class InternalAlbumsRepositoryImpl @Inject constructor() : InternalAlbumsRepository {
 
-  override fun content(): Flowable<ContentList> {
-    return Flowable.empty()
-  }
+  override fun content(): Flowable<ContentList> = Flowable.empty()
 
 }

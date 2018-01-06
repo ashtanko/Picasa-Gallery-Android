@@ -17,38 +17,31 @@
 
 package io.shtanko.picasagallery.core.log
 
-/**
- * {@link io.shtanko.picasagallery.core.log.Loggable} implementation.
- */
-object FileLog : Loggable {
-  override fun e(message: String, t: Throwable) {
+
+object FileLog {
+
+  fun e(message: String, t: Throwable) {
+
+  }
+
+  fun e(message: String) {
+
+  }
+
+  fun d(message: String) {
+
+  }
+
+  fun e(message: Throwable) {
+
+  }
+
+  fun getLogFile(): String {
     TODO(
         "not implemented") //To change body of created functions use File | Settings | File Templates.
   }
 
-  override fun e(message: String) {
-    TODO(
-        "not implemented") //To change body of created functions use File | Settings | File Templates.
-  }
-
-  override fun d(message: String) {
-    TODO(
-        "not implemented") //To change body of created functions use File | Settings | File Templates.
-  }
-
-  override fun e(message: Throwable) {
-    TODO(
-        "not implemented") //To change body of created functions use File | Settings | File Templates.
-  }
-
-  override fun getLogFile(): String {
-    TODO(
-        "not implemented") //To change body of created functions use File | Settings | File Templates.
-  }
-
-  override fun cleanupLogs() {
-    TODO(
-        "not implemented") //To change body of created functions use File | Settings | File Templates.
+  fun cleanupLogs() {
   }
 
 }

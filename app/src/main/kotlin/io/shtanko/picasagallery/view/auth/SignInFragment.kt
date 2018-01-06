@@ -36,12 +36,12 @@ import com.google.android.gms.common.api.GoogleApiClient
 import dagger.android.support.DaggerFragment
 import io.shtanko.picasagallery.R
 import io.shtanko.picasagallery.R.string.unable_connect_google_services
+import io.shtanko.picasagallery.core.log.FileLog
 import io.shtanko.picasagallery.extensions.close
 import io.shtanko.picasagallery.extensions.getSafeContext
 import io.shtanko.picasagallery.extensions.shortToast
 import io.shtanko.picasagallery.view.main.MainActivity
 import javax.inject.Inject
-
 
 class SignInFragment @Inject constructor() : DaggerFragment(),
     SignInContract.View,
@@ -108,6 +108,7 @@ class SignInFragment @Inject constructor() : DaggerFragment(),
       shortToast(getString(unable_connect_google_services))
 
   override fun onConnected(p0: Bundle?) = enableButton(true)
+
   override fun onConnectionSuspended(p0: Int) = enableButton(false)
 
   override fun openNextScreen() = openMainActivity()
@@ -122,8 +123,14 @@ class SignInFragment @Inject constructor() : DaggerFragment(),
     startActivityForResult(signInIntent, SIGN_IN_RESULT)
   }
 
-  private fun handleSignInResult(result: GoogleSignInResult) =
-      presenter.signIn(activity?.applicationContext!!, result)
+  private fun handleSignInResult(result: GoogleSignInResult) {
+    if (context == null) {
+      FileLog.e("Context is null in ${javaClass.simpleName}")
+      return
+    } else {
+      presenter.signIn(context!!, result)
+    }
+  }
 
   private fun openMainActivity() {
     startActivity(Intent(activity, MainActivity::class.java)).also {
@@ -147,4 +154,5 @@ class SignInFragment @Inject constructor() : DaggerFragment(),
   }
   // endregion
 }
+
 

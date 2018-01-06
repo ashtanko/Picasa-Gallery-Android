@@ -20,7 +20,6 @@ package io.shtanko.picasagallery.view.launch
 import io.shtanko.picasagallery.view.base.BasePresenter
 import io.shtanko.picasagallery.view.base.BaseView
 
-
 interface LaunchContract {
   interface View : BaseView<Presenter> {
     fun onSignedIn()

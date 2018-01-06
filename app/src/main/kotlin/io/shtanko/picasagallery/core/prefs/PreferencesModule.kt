@@ -25,7 +25,7 @@ import dagger.Provides
 import io.shtanko.picasagallery.R
 import io.shtanko.picasagallery.core.app.AppModule
 
-@Module(includes = arrayOf(AppModule::class))
+@Module(includes = [AppModule::class])
 class PreferencesModule {
 
   @Provides
