@@ -19,6 +19,8 @@ package io.shtanko.picasagallery
 
 import android.app.Application
 import android.os.Handler
+import android.os.StrictMode
+import com.squareup.leakcanary.LeakCanary
 import dagger.android.AndroidInjector
 import dagger.android.DaggerApplication
 import io.shtanko.picasagallery.core.app.DaggerAppComponent
@@ -33,11 +35,31 @@ class PicasaApplication : DaggerApplication() {
         var app: Application by Delegates.notNull()
         @Volatile
         lateinit var applicationHandler: Handler
+
+        fun enableStrictMode() {
+            StrictMode.setThreadPolicy(StrictMode.ThreadPolicy.Builder()
+                    .detectAll()
+                    .penaltyLog()
+                    .penaltyDeath()
+                    .build())
+        }
     }
 
     override fun onCreate() {
         super.onCreate()
         app = this
         applicationHandler = Handler(mainLooper)
+        setupLeakCanary()
+    }
+
+    private fun setupLeakCanary() {
+        if (LeakCanary.isInAnalyzerProcess(this)) {
+            // This process is dedicated to LeakCanary for heap analysis.
+            // You should not init your app in this process.
+            return
+        }
+
+        PicasaApplication.enableStrictMode()
+        LeakCanary.install(this)
     }
 }
