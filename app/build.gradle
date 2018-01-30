@@ -22,6 +22,7 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'com.github.kt3k.coveralls'
 apply plugin: 'org.sonarqube'
+apply plugin: 'org.standardout.versioneye'
 // endregion
 
 // region CONSTANTS
@@ -81,12 +82,12 @@ android {
 
   defaultConfig {
 
-    //def gitCommitCount = "git rev-list HEAD --first-parent --count".execute().text.toInteger()
+    def gitCommitCount = "git rev-list HEAD --first-parent --count".execute().text.toInteger()
 
     applicationId "io.shtanko.picasagallery"
     targetSdkVersion TARGET_SDK_VERSION
     minSdkVersion MIN_SDK_VERSION
-    versionCode 1
+    versionCode gitCommitCount
     versionName "1.0"
     testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
   }
