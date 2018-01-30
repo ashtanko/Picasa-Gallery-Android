@@ -19,12 +19,13 @@ package io.shtanko.picasagallery.data.album
 
 import io.reactivex.Flowable
 import io.shtanko.picasagallery.extensions.AlbumsList
+import io.shtanko.picasagallery.extensions.applyComputationScheduler
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class AlbumRepositoryImpl @Inject constructor(
-    private val dataSource: AlbumDataSource
+        private val dataSource: AlbumDataSource
 ) : AlbumRepository {
-  override fun albums(): Flowable<AlbumsList> = dataSource.getAlbums()
+    override fun albums(): Flowable<AlbumsList> = dataSource.getAlbums().applyComputationScheduler()
 }

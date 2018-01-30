@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 Alexey Shtanko
+ * Copyright 2018 Alexey Shtanko
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,12 +17,11 @@
 
 package io.shtanko.picasagallery.main
 
-import android.support.test.espresso.IdlingRegistry
 import android.support.test.rule.ActivityTestRule
 import android.support.test.runner.AndroidJUnit4
-import io.shtanko.picasagallery.util.EspressoIdlingResource
+import io.shtanko.picasagallery.R
 import io.shtanko.picasagallery.view.main.MainActivity
-import org.junit.After
+import io.shtanko.picasagallery.view.main.MainFragment
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Rule
@@ -30,30 +29,26 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
-class MainActivityTest {
+class MainFragmentTest {
 
-    @get:Rule
-    val mainTestRule: ActivityTestRule<MainActivity> = object : ActivityTestRule<MainActivity>(
-            MainActivity::class.java) {
+    val mainActivityRule = ActivityTestRule(MainActivity::class.java, true, true)
 
-        override fun beforeActivityLaunched() {
-            super.beforeActivityLaunched()
-
-        }
-    }
+    @Rule
+    fun rule() = mainActivityRule
 
     @Before
-    fun registerIdlingResource() {
-        IdlingRegistry.getInstance().register(EspressoIdlingResource.idlingResource)
-    }
-
-    @After
-    fun unregisterIdlingResource() {
-        IdlingRegistry.getInstance().unregister(EspressoIdlingResource.idlingResource)
+    fun init() {
+        rule().activity.supportFragmentManager.beginTransaction().add(R.id.content_frame,
+                MainFragment()).commit()
     }
 
     @Test
-    fun run() {
-        Assert.assertNotNull(mainTestRule)
+    fun recyclerViewTest() {
+        Assert.assertNotNull(mainActivityRule)
+//        Espresso.onData(allOf(withId(R.id.album))).inAdapterView(
+//                withId(R.id.main_content_grid)).atPosition(
+//                0).perform(
+//                click())
     }
+
 }

@@ -23,14 +23,14 @@ import com.google.gson.annotations.SerializedName
 import java.io.Reader
 
 data class AlbumsResponseEntity(
-    @SerializedName("version") var version: String,
-    @SerializedName("encoding") var encoding: String,
-    @SerializedName("feed") var feed: AlbumsFeedEntity
+        @SerializedName("version") var version: String,
+        @SerializedName("encoding") var encoding: String,
+        @SerializedName("feed") var feed: AlbumsFeedEntity
 ) {
-  fun asJson() = Gson().toJson(this)
+    fun asJson() = Gson().toJson(this)
 
-  object Deserializer : ResponseDeserializable<AlbumsResponseEntity> {
-    override fun deserialize(reader: Reader) = Gson().fromJson(reader,
-        AlbumsResponseEntity::class.java)
-  }
+    object Deserializer : ResponseDeserializable<AlbumsResponseEntity> {
+        override fun deserialize(reader: Reader) = Gson().fromJson(reader,
+                AlbumsResponseEntity::class.java)
+    }
 }

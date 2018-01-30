@@ -17,7 +17,11 @@
 
 package io.shtanko.picasagallery.view.main
 
+import android.content.Context
+import android.os.Vibrator
 import android.view.View
+import android.view.View.OnLongClickListener
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import io.shtanko.picasagallery.R
 import io.shtanko.picasagallery.data.entity.album.Album
 import io.shtanko.picasagallery.util.GlideApp
@@ -26,18 +30,35 @@ import io.shtanko.picasagallery.view.delegate.ViewType
 import io.shtanko.picasagallery.view.util.Divided
 import io.shtanko.picasagallery.view.widget.FourThreeImageView
 
-class MainViewHolder(itemView: View?) : BaseViewHolder(itemView), Divided {
+class MainViewHolder(itemView: View?) : BaseViewHolder(itemView), Divided, OnLongClickListener {
 
-  val image = itemView?.findViewById<FourThreeImageView>(R.id.album)
+    val image = itemView?.findViewById<FourThreeImageView>(R.id.album)
 
-  init {
-  }
+    init {
 
-  override fun bind(item: ViewType) {
-    if (item is Album) {
-      GlideApp.with(itemView.context).load(
-          item.imageUrl).into(
-          image)
     }
-  }
+
+    override fun bind(item: ViewType) {
+        itemView.setOnLongClickListener(this)
+        if (item is Album) {
+            GlideApp.with(itemView.context)
+                    .asGif()
+                    .load(item.imageUrl)
+                    .placeholder(R.drawable.image_placeholder)
+                    .error(R.drawable.image_placeholder)
+                    .fitCenter()
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .into(image)
+        }
+    }
+
+    override fun onLongClick(view: View?): Boolean {
+
+        view?.let { view ->
+            val vibrator = view.context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+            val pattern = longArrayOf(0, 1000, 0)
+        }
+
+        return true
+    }
 }

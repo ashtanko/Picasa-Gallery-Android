@@ -24,11 +24,13 @@ import io.reactivex.Flowable
 import io.shtanko.picasagallery.data.internal.InternalAlbumsRepository
 import io.shtanko.picasagallery.extensions.ContentList
 import io.shtanko.picasagallery.extensions.applyComputationScheduler
+import io.shtanko.picasagallery.utils.TrampolineSchedulerRule
 import io.shtanko.picasagallery.view.album.InternalAlbumsContract.View
 import io.shtanko.picasagallery.view.album.InternalAlbumsPresenter
 import io.shtanko.picasagallery.view.util.getContentData
 import org.junit.Before
 import org.junit.FixMethodOrder
+import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.MethodSorters.JVM
@@ -42,6 +44,10 @@ class InternalAlbumsPresenterTest {
   private val view = mock<View>()
   private lateinit var presenter: InternalAlbumsPresenter
   private val exception = RuntimeException("Error")
+
+  @Rule
+  @JvmField
+  var trampolineSchedulerRule = TrampolineSchedulerRule()
 
   @Before
   fun setUp() {

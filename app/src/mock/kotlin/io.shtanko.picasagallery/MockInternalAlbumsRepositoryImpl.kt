@@ -21,6 +21,7 @@ import io.reactivex.Flowable
 import io.shtanko.picasagallery.data.entity.internal.ContentType
 import io.shtanko.picasagallery.data.internal.InternalAlbumsRepository
 import io.shtanko.picasagallery.extensions.ContentList
+import io.shtanko.picasagallery.extensions.applyComputationScheduler
 import io.shtanko.picasagallery.view.util.getContentData
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -31,6 +32,6 @@ class MockInternalAlbumsRepositoryImpl @Inject constructor() : InternalAlbumsRep
   override fun content(): Flowable<ContentList> {
     val content = ArrayList<ContentType>()
     content.addAll(getContentData())
-    return Flowable.fromIterable(content).toList().toFlowable()
+    return Flowable.fromIterable(content).toList().toFlowable().applyComputationScheduler()
   }
 }
