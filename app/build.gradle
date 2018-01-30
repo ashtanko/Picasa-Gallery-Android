@@ -67,22 +67,14 @@ android {
 
   defaultConfig {
 
-    def gitCommitCount = "git rev-list HEAD --first-parent --count".execute().text.toInteger()
+    //def gitCommitCount = "git rev-list HEAD --first-parent --count".execute().text.toInteger()
 
     applicationId "io.shtanko.picasagallery"
     targetSdkVersion TARGET_SDK_VERSION
     minSdkVersion MIN_SDK_VERSION
-    versionCode gitCommitCount
+    versionCode 1
     versionName "1.0"
     testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-
-    // region cpp configuration
-    externalNativeBuild {
-      cmake {
-        cppFlags "-std=c++14 -frtti -fexceptions"
-      }
-    }
-    // endregion
   }
 
   testOptions {
@@ -205,12 +197,6 @@ android {
       events 'passed', 'skipped', 'failed', 'standardOut', 'standardError'
       outputs.upToDateWhen { false }
       showStandardStreams = true
-    }
-  }
-
-  externalNativeBuild {
-    cmake {
-      path "src/main/cpp/CMakeLists.txt"
     }
   }
 }

@@ -21,7 +21,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.GridLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import io.shtanko.picasagallery.Config.ALBUM_ID_KEY
@@ -40,59 +39,62 @@ import io.shtanko.picasagallery.view.album.InternalAlbumsContract.View
 import io.shtanko.picasagallery.view.base.BaseFragment
 import io.shtanko.picasagallery.view.photo.PhotosActivity
 import io.shtanko.picasagallery.view.util.OnItemClickListener
+import kotlinx.android.synthetic.main.main_content.view.grid
 import javax.inject.Inject
 
 @ActivityScoped
 class InternalAlbumsFragment @Inject constructor() : BaseFragment(), View, OnItemClickListener {
 
-  override fun viewAlbum(model: Content) {
-    activity?.startActivity(Intent(activity, PhotosActivity::class.java))
-  }
-
-  // region injection
-  @Inject lateinit var presenter: Presenter
-  @Inject lateinit var internalAlbumsAdapter: InternalAlbumsAdapter
-  // endregion
-
-  override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-      savedInstanceState: Bundle?): android.view.View? {
-
-    val rootView = inflater.inflate(R.layout.container_list_fragment, container, false)
-    presenter.takeView(this)
-    presenter.getContent()
-
-    val photoId = arguments?.getString(PHOTO_ID_KEY)
-    val albumId = arguments?.getString(ALBUM_ID_KEY)
-
-    val gridLayoutManager = GridLayoutManager(activity, THREE_COLUMNS_GRID)
-
-    with(rootView) {
-      rootView.findViewById<RecyclerView>(R.id.grid).apply {
-        setHasFixedSize(true)
-        layoutManager = gridLayoutManager
-        adapter = internalAlbumsAdapter
-
-        addItemDecoration(ItemDividerDecoration(
-            activity?.resources?.getDimensionPixelSize(dimen.divider_height)!!,
-            ContextCompat.getColor(activity!!, color.divider)))
-      }
-      internalAlbumsAdapter.onItemClickListener = this@InternalAlbumsFragment
+    override fun viewAlbum(model: Content) {
+        activity?.startActivity(Intent(activity, PhotosActivity::class.java))
     }
 
-    return rootView
-  }
+    // region injection
+    @Inject lateinit var presenter: Presenter
+    @Inject lateinit var internalAlbumsAdapter: InternalAlbumsAdapter
+    // endregion
 
-  override fun showError(message: String) {
-  }
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
+            savedInstanceState: Bundle?): android.view.View? {
 
-  override fun showData(data: ContentList) {
-    internalAlbumsAdapter.items = data
-  }
+        val rootView = inflater.inflate(R.layout.container_list_fragment, container, false)
+        presenter.takeView(this)
+        presenter.getContent()
 
-  override fun setLoadingIndicator(active: Boolean) {
-  }
+        val photoId = arguments?.getString(PHOTO_ID_KEY)
+        val albumId = arguments?.getString(ALBUM_ID_KEY)
 
-  override fun <T> onItemClicked(model: T) {
-    if (model is ContentType) presenter.onItemClick(model)
-  }
+        val gridLayoutManager = GridLayoutManager(activity, THREE_COLUMNS_GRID)
+
+        with(rootView) {
+            grid.apply {
+                setHasFixedSize(true)
+                layoutManager = gridLayoutManager
+                adapter = internalAlbumsAdapter
+
+                activity?.let {
+                    addItemDecoration(ItemDividerDecoration(
+                            it.resources.getDimensionPixelSize(dimen.divider_height),
+                            ContextCompat.getColor(it, color.divider)))
+                }
+            }
+            internalAlbumsAdapter.onItemClickListener = this@InternalAlbumsFragment
+        }
+
+        return rootView
+    }
+
+    override fun showError(message: String) {
+    }
+
+    override fun showData(data: ContentList) {
+        internalAlbumsAdapter.items = data
+    }
+
+    override fun setLoadingIndicator(active: Boolean) {
+    }
+
+    override fun <T> onItemClicked(model: T) {
+        if (model is ContentType) presenter.onItemClick(model)
+    }
 }

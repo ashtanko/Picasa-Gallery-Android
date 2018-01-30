@@ -18,7 +18,6 @@
 package io.shtanko.picasagallery.view.main
 
 import io.shtanko.picasagallery.data.album.AlbumRepository
-import io.shtanko.picasagallery.extensions.applyComputationScheduler
 import io.shtanko.picasagallery.util.ActivityScoped
 import io.shtanko.picasagallery.util.Logger
 import io.shtanko.picasagallery.view.delegate.ViewType
@@ -29,36 +28,37 @@ import javax.inject.Inject
 
 @ActivityScoped
 class MainPresenter @Inject constructor(
-    private val repository: AlbumRepository
-) : Presenter {
+        private val repository: AlbumRepository) : Presenter {
 
-  @Nullable
-  private var view: View? = null
+    @Nullable
+    private var view: View? = null
 
-  override fun takeView(view: View) {
-    this.view = view
-  }
+    override fun takeView(view: View) {
+        this.view = view
+    }
 
-  override fun dropView() {
-    this.view = null
-  }
+    override fun dropView() {
+        this.view = null
+    }
 
-  override fun getAlbums() {
-    view?.setLoadingIndicator(true)
-    repository.albums()
-        .subscribe(
-            { it ->
-              view?.setLoadingIndicator(false)
-              view?.onShowAlbums(it)
-            },
-            { e ->
-              view?.setLoadingIndicator(false)
-              view?.showError(e.localizedMessage)
-              Logger.error(e)
-            })
-  }
+    override fun getAlbums() {
+        view?.let { view ->
+            view.setLoadingIndicator(true)
+            repository.albums()
+                    .subscribe(
+                            { data ->
+                                view.setLoadingIndicator(false)
+                                view.onShowAlbums(data)
+                            },
+                            { error ->
+                                view.setLoadingIndicator(false)
+                                view.showError(error.localizedMessage)
+                                Logger.error(error)
+                            })
+        }
+    }
 
-  override fun onAlbumClick(model: ViewType) {
-    view?.viewAlbum(model)
-  }
+    override fun onAlbumClick(model: ViewType) {
+        view?.viewAlbum(model)
+    }
 }

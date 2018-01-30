@@ -25,11 +25,13 @@ import io.shtanko.picasagallery.data.album.AlbumRepository
 import io.shtanko.picasagallery.data.entity.album.Album
 import io.shtanko.picasagallery.data.entity.album.AlbumType
 import io.shtanko.picasagallery.extensions.AlbumsList
+import io.shtanko.picasagallery.utils.TrampolineSchedulerRule
 import io.shtanko.picasagallery.view.main.MainContract.View
 import io.shtanko.picasagallery.view.main.MainPresenter
 import io.shtanko.picasagallery.view.util.getImages
 import org.junit.Before
 import org.junit.FixMethodOrder
+import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.MethodSorters.JVM
@@ -43,6 +45,9 @@ class MainPresenterTest {
   private val view = mock<View>()
   private lateinit var presenter: MainPresenter
   private val exception = RuntimeException("Error")
+
+  @Rule @JvmField
+  var trampolineSchedulerRule = TrampolineSchedulerRule()
 
   @Before
   fun setUp() {

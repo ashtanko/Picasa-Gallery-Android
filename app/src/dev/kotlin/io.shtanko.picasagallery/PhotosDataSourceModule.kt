@@ -21,12 +21,11 @@ import dagger.Binds
 import dagger.Module
 import io.shtanko.picasagallery.data.photo.PhotosDataSource
 import io.shtanko.picasagallery.data.photo.PhotosDataSourceImpl
-import io.shtanko.picasagallery.data.photo.PhotosRepository
 import javax.inject.Singleton
 
 @Module
 abstract class PhotosDataSourceModule {
-  @Singleton
-  @Binds
-  abstract fun providePhotosDataSource(dataSource: PhotosDataSourceImpl): PhotosDataSource
+    @Singleton
+    @Binds
+    abstract fun providePhotosDataSource(dataSource: PhotosDataSourceImpl): PhotosDataSource
 }

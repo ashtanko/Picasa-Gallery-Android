@@ -21,31 +21,23 @@ import android.app.Application
 import android.os.Handler
 import dagger.android.AndroidInjector
 import dagger.android.DaggerApplication
-import io.shtanko.picasagallery.Config.NATIVE_LIBRARY_NAME
 import io.shtanko.picasagallery.core.app.DaggerAppComponent
-import java.io.File
 import kotlin.properties.Delegates
 
 class PicasaApplication : DaggerApplication() {
 
-  override fun applicationInjector(): AndroidInjector<out DaggerApplication> =
-      DaggerAppComponent.builder().application(this).build()
+    override fun applicationInjector(): AndroidInjector<out DaggerApplication> =
+            DaggerAppComponent.builder().application(this).build()
 
-  companion object {
-    var app: Application by Delegates.notNull()
-    @Volatile lateinit var applicationHandler: Handler
-
-    init {
-      System.loadLibrary(NATIVE_LIBRARY_NAME)
+    companion object {
+        var app: Application by Delegates.notNull()
+        @Volatile
+        lateinit var applicationHandler: Handler
     }
-  }
 
-  override fun onCreate() {
-    super.onCreate()
-    app = this
-    applicationHandler = Handler(mainLooper)
-
-    val file = File("config.properties")
-    Config.initProperties(file.absolutePath)
-  }
+    override fun onCreate() {
+        super.onCreate()
+        app = this
+        applicationHandler = Handler(mainLooper)
+    }
 }
