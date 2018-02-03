@@ -221,6 +221,13 @@ kapt {
   correctErrorTypes = true
 }
 
+kotlin {
+  experimental {
+    coroutines 'enable'
+    //useBuildCache = true
+  }
+}
+
 apply from: 'dependencies.gradle'
 apply from: '../jacoco.gradle'
 apply from: '../sonarqube.gradle'

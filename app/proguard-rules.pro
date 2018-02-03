@@ -62,3 +62,7 @@
 -ignorewarnings
 -keep class org.apache.http.** { *; }
 -keep class android.net.http.** { *; }
+
+-keepclassmembernames class kotlinx.** {
+    volatile <fields>;
+}

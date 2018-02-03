@@ -36,7 +36,8 @@ dependencies {
   // endregion
 
   // region KOTLIN
-  implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+  //implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+  implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:0.22.1'
   // endregion
 
   // region NETWORK/IO
