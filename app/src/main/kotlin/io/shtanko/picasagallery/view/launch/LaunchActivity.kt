@@ -22,43 +22,43 @@ import android.os.Bundle
 import io.shtanko.picasagallery.extensions.close
 import io.shtanko.picasagallery.view.auth.SignInActivity
 import io.shtanko.picasagallery.view.base.BaseActivity
-import io.shtanko.picasagallery.view.launch.LaunchContract.View
 import io.shtanko.picasagallery.view.main.MainActivity
 import javax.inject.Inject
 
-class LaunchActivity : BaseActivity(), View {
+class LaunchActivity : BaseActivity(), LaunchContract.View {
 
-  @Inject lateinit var presenter: LaunchPresenter
+    @Inject
+    lateinit var presenter: LaunchPresenter
 
-  override fun onDestroy() {
-    super.onDestroy()
-    presenter.dropView()
-  }
-
-  override fun onCreate(savedInstanceState: Bundle?) {
-    super.onCreate(savedInstanceState)
-    presenter.takeView(this)
-    presenter.isSignIn()
-  }
-
-  override fun onSignedIn() {
-    showMainScreen()
-  }
-
-  override fun onSignedOut() {
-    showSignInScreen()
-  }
-
-  private fun showMainScreen() {
-    startActivity(Intent(this, MainActivity::class.java)).also {
-      close()
+    override fun onDestroy() {
+        super.onDestroy()
+        presenter.dropView()
     }
-  }
 
-  private fun showSignInScreen() {
-    startActivity(Intent(this, SignInActivity::class.java)).also {
-      close()
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        presenter.takeView(this)
+        presenter.isSignIn()
     }
-  }
+
+    override fun onSignedIn() {
+        showMainScreen()
+    }
+
+    override fun onSignedOut() {
+        showSignInScreen()
+    }
+
+    private fun showMainScreen() {
+        startActivity(Intent(this, MainActivity::class.java)).also {
+            close()
+        }
+    }
+
+    private fun showSignInScreen() {
+        startActivity(Intent(this, SignInActivity::class.java)).also {
+            close()
+        }
+    }
 }
 

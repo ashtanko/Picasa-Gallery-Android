@@ -25,8 +25,8 @@ import io.shtanko.picasagallery.view.launch.LaunchContract.Presenter
 @Module
 abstract class LaunchModule {
 
-  @ActivityScoped
-  @Binds
-  abstract fun launchPresenter(presenter: LaunchPresenter): Presenter
+    @ActivityScoped
+    @Binds
+    abstract fun launchPresenter(presenter: LaunchPresenter): Presenter
 
 }

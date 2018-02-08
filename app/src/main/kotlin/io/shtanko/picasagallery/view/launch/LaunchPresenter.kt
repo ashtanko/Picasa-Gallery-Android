@@ -18,49 +18,53 @@
 package io.shtanko.picasagallery.view.launch
 
 import android.text.TextUtils
-import io.shtanko.picasagallery.data.DefaultObserver
+import io.reactivex.observers.DisposableObserver
 import io.shtanko.picasagallery.data.entity.user.User
 import io.shtanko.picasagallery.data.user.GetUserDetails
 import io.shtanko.picasagallery.util.ActivityScoped
-import io.shtanko.picasagallery.view.launch.LaunchContract.Presenter
 import io.shtanko.picasagallery.view.launch.LaunchContract.View
 import javax.annotation.Nullable
 import javax.inject.Inject
 
 @ActivityScoped
 class LaunchPresenter @Inject constructor(
-    private val getUserDetails: GetUserDetails) : Presenter {
+        private val getUserDetails: GetUserDetails) : LaunchContract.Presenter {
 
-  @Nullable
-  private var view: View? = null
+    @Nullable
+    private var view: View? = null
 
-  override fun takeView(view: View) {
-    this.view = view
-  }
-
-  override fun dropView() {
-    this.view = null
-    getUserDetails.unSubscribe()
-  }
-
-  override fun isSignIn() {
-    getUserDetails.execute(UserListObserver(), GetUserDetails.Params.createQuery())
-  }
-
-  inner class UserListObserver : DefaultObserver<User>() {
-    override fun onComplete() {
+    override fun takeView(view: View) {
+        this.view = view
     }
 
-    override fun onNext(t: User) {
-      if (!TextUtils.isEmpty(t.personId)) {
-        this@LaunchPresenter.view?.onSignedIn()
-      } else {
-        this@LaunchPresenter.view?.onSignedOut()
-      }
+    override fun dropView() {
+        this.view = null
+        getUserDetails.unSubscribe()
     }
 
-    override fun onError(exception: Throwable) {
-
+    override fun isSignIn() {
+        getUserDetails.execute(getUserObserver(), GetUserDetails.Params.createQuery())
     }
-  }
+
+    private fun getUserObserver(): DisposableObserver<User> {
+        return object : DisposableObserver<User>() {
+            override fun onNext(user: User) {
+                view?.let { view ->
+                    if (!TextUtils.isEmpty(user.personId)) {
+                        view.onSignedIn()
+                    } else {
+                        view.onSignedOut()
+                    }
+                }
+            }
+
+            override fun onError(e: Throwable) {
+                view?.onSignedOut()
+            }
+
+            override fun onComplete() {
+
+            }
+        }
+    }
 }

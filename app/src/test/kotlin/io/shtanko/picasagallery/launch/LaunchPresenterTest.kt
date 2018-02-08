@@ -31,34 +31,33 @@ import org.mockito.Mockito.verify
 import org.mockito.MockitoAnnotations.initMocks
 import org.mockito.junit.MockitoJUnitRunner
 
-
 @RunWith(MockitoJUnitRunner.Silent::class)
 class LaunchPresenterTest {
 
-  private val getUserDetails = mock<GetUserDetails>()
-  private val view = mock<View>()
-  private lateinit var presenter: LaunchPresenter
+    private val getUserDetails = mock<GetUserDetails>()
+    private val view = mock<View>()
+    private lateinit var presenter: LaunchPresenter
 
-  @Before
-  fun setUp() {
-    initMocks(this)
-    presenter = LaunchPresenter(getUserDetails)
-    presenter.takeView(view)
-  }
+    @Before
+    fun setUp() {
+        initMocks(this)
+        presenter = LaunchPresenter(getUserDetails)
+        presenter.takeView(view)
+    }
 
-  @Test
-  fun isSignedInTest() {
-    presenter.isSignIn()
-    verify(view, never()).onSignedIn()
-  }
+    @Test
+    fun isSignedInTest() {
+        presenter.isSignIn()
+        verify(view, never()).onSignedIn()
+    }
 
-  @Test
-  fun isSignedOutTest() {
-    presenter.isSignIn()
-    verify(view, never()).onSignedOut()
-  }
+    @Test
+    fun isSignedOutTest() {
+        presenter.isSignIn()
+        verify(view, never()).onSignedOut()
+    }
 
-  inner class UserListObserver : DefaultObserver<User>() {
+    inner class UserListObserver : DefaultObserver<User>() {
 
-  }
+    }
 }
