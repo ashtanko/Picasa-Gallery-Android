@@ -19,11 +19,11 @@ package io.shtanko.picasagallery.data.entity.user
 
 import io.shtanko.picasagallery.Config.USER_VIEW_TYPE_ID
 
-data class User(var personName: String?,
-    var personGivenName: String?,
-    var personFamilyName: String?,
-    var personEmail: String?,
-    var personId: String?) : UserType {
+data class User(var personName: String? = "",
+        var personGivenName: String? = "",
+        var personFamilyName: String? = "",
+        var personEmail: String? = "",
+        var personId: String? = "") : UserType {
 
-  override fun getViewType() = USER_VIEW_TYPE_ID
+    override fun getViewType() = USER_VIEW_TYPE_ID
 }

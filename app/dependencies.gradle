@@ -98,9 +98,9 @@ dependencies {
   // endregion
 
   // region UNIT TESTING
-  testImplementation "junit:junit:$junitVersion"
-  testImplementation 'org.assertj:assertj-core:3.8.0'
-  testImplementation('com.nhaarman:mockito-kotlin:1.5.0') {
+  testCompile "junit:junit:$junitVersion"
+  testCompile 'org.assertj:assertj-core:3.8.0'
+  testCompile('com.nhaarman:mockito-kotlin:1.5.0') {
     exclude group: 'org.jetbrains.kotlin'
   }
   // endregion

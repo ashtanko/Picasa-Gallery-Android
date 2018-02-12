@@ -18,6 +18,8 @@
 package io.shtanko.picasagallery.auth
 
 import com.nhaarman.mockito_kotlin.mock
+import com.nhaarman.mockito_kotlin.verify
+import io.shtanko.picasagallery.data.entity.user.User
 import io.shtanko.picasagallery.data.user.UserRepositoryImpl
 import io.shtanko.picasagallery.view.auth.SignInContract.View
 import io.shtanko.picasagallery.view.auth.SignInPresenter
@@ -31,20 +33,32 @@ import org.mockito.junit.MockitoJUnitRunner
 @RunWith(MockitoJUnitRunner::class)
 class SignInPresenterTest {
 
-  private val userRepository = mock<UserRepositoryImpl>()
-  private val view = mock<View>()
-  private lateinit var presenter: SignInPresenter
+    private val userRepository = mock<UserRepositoryImpl>()
+    private val view = mock<View>()
+    private lateinit var presenter: SignInPresenter
 
-  @Before
-  fun setUp() {
-    initMocks(this)
-    presenter = SignInPresenter(userRepository)
-    presenter.takeView(view)
-  }
+    @Before
+    fun setUp() {
+        initMocks(this)
+        presenter = SignInPresenter(userRepository)
+        presenter.takeView(view)
+    }
 
-  @Test
-  fun notNnullTest() {
-    Assert.assertNull(null)
-  }
+    @Test
+    fun notNullTest() {
+        Assert.assertNull(null)
+    }
+
+    @Test
+    fun saveUserDataTest() {
+        presenter.saveUserData(User("", "", "", "", ""))
+        verify(view).setLoadingIndicator(false)
+    }
+
+    @Test
+    fun saveTokenTest() {
+        presenter.saveToken("token")
+        verify(view).setLoadingIndicator(false)
+    }
 
 }
