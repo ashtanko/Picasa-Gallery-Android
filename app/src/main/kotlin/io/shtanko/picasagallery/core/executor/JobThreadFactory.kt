@@ -24,6 +24,8 @@ object JobThreadFactory : ThreadFactory {
 
   private var counter = 0
 
-  override fun newThread(runnable: Runnable?): Thread = Thread(runnable,
-      JOB_THREAD_NAME + counter++)
+  override fun newThread(runnable: Runnable?): Thread = Thread(
+      runnable,
+      JOB_THREAD_NAME + counter++
+  )
 }

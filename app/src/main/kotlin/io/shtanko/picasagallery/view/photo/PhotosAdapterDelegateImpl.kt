@@ -31,7 +31,10 @@ class PhotosAdapterDelegateImpl : ViewTypeAdapterDelegate {
     return PhotosViewHolder(view)
   }
 
-  override fun onBindViewHolder(holder: ViewHolder, item: ViewType) {
+  override fun onBindViewHolder(
+    holder: ViewHolder,
+    item: ViewType
+  ) {
     holder as PhotosViewHolder
     holder.bind(item)
   }

@@ -28,8 +28,13 @@ object AndroidUtils {
   var displaySize = Point()
   var density = 1f
 
-  fun setRectToRect(matrix: Matrix, src: RectF, dst: RectF, rotation: Int,
-      align: Matrix.ScaleToFit) {
+  fun setRectToRect(
+    matrix: Matrix,
+    src: RectF,
+    dst: RectF,
+    rotation: Int,
+    align: Matrix.ScaleToFit
+  ) {
     val tx: Float
     var sx: Float
     val ty: Float
@@ -77,7 +82,10 @@ object AndroidUtils {
     runOnUIThread(runnable, 0)
   }
 
-  private fun runOnUIThread(runnable: Runnable, delay: Long) {
+  private fun runOnUIThread(
+    runnable: Runnable,
+    delay: Long
+  ) {
     if (delay == 0.toLong()) {
       PicasaApplication.applicationHandler.post(runnable)
     } else {

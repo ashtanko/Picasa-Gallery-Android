@@ -28,8 +28,8 @@ import io.shtanko.picasagallery.view.util.Divided
 import kotlin.properties.Delegates
 
 class ItemDividerDecoration constructor(
-    @Dimension private var dividerSize: Int,
-    @ColorInt dividerColor: Int
+  @Dimension private var dividerSize: Int,
+  @ColorInt dividerColor: Int
 ) : RecyclerView.ItemDecoration() {
 
   private var paint: Paint by Delegates.notNull()
@@ -40,7 +40,11 @@ class ItemDividerDecoration constructor(
     paint.style = FILL
   }
 
-  override fun onDrawOver(canvas: Canvas, parent: RecyclerView, state: State?) {
+  override fun onDrawOver(
+    canvas: Canvas,
+    parent: RecyclerView,
+    state: State?
+  ) {
     if (parent.isAnimating) return
 
     val childCount = parent.childCount
@@ -54,19 +58,22 @@ class ItemDividerDecoration constructor(
         val right = lm.getDecoratedRight(child)
         val bottom = lm.getDecoratedBottom(child)
         // draw the bottom divider
-        canvas.drawRect(lm.getDecoratedLeft(child).toFloat(),
+        canvas.drawRect(
+            lm.getDecoratedLeft(child).toFloat(),
             (bottom - dividerSize).toFloat(),
             right.toFloat(),
             bottom.toFloat(),
-            paint)
+            paint
+        )
         // draw the right edge divider
-        canvas.drawRect((right - dividerSize).toFloat(),
+        canvas.drawRect(
+            (right - dividerSize).toFloat(),
             lm.getDecoratedTop(child).toFloat(),
             right.toFloat(),
             (bottom - dividerSize).toFloat(),
-            paint)
+            paint
+        )
       }
     }
   }
-
 }

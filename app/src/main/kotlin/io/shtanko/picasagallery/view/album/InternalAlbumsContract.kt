@@ -27,7 +27,10 @@ import io.shtanko.picasagallery.view.base.BaseView
 import io.shtanko.picasagallery.view.delegate.Clickable
 
 interface InternalAlbumsContract {
-  abstract interface View : BaseView<Presenter>, BaseProgressView, BaseErrorView, BaseContentView<ContentList> {
+  abstract interface View : BaseView<Presenter>,
+      BaseProgressView,
+      BaseErrorView,
+      BaseContentView<ContentList> {
     fun viewAlbum(model: Content)
   }
 

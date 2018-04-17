@@ -36,7 +36,7 @@ import com.google.android.gms.common.api.GoogleApiClient
 import dagger.android.support.DaggerFragment
 import io.shtanko.picasagallery.R
 import io.shtanko.picasagallery.R.string.unable_connect_google_services
-import io.shtanko.picasagallery.core.log.FileLog
+//import io.shtanko.picasagallery.core.log.FileLog
 import io.shtanko.picasagallery.extensions.close
 import io.shtanko.picasagallery.extensions.getSafeContext
 import io.shtanko.picasagallery.extensions.shortToast
@@ -53,8 +53,8 @@ class SignInFragment @Inject constructor() : DaggerFragment(),
   @Inject lateinit var googleSignInOptions: GoogleSignInOptions
   // endregion
 
-  lateinit private var rootView: View
-  lateinit private var progressBar: ProgressBar
+  private lateinit var rootView: View
+  private lateinit var progressBar: ProgressBar
 
   private val googleApiClient: GoogleApiClient
     get() = GoogleApiClient.Builder(getSafeContext()!!)
@@ -77,8 +77,11 @@ class SignInFragment @Inject constructor() : DaggerFragment(),
     presenter.dropView()
   }
 
-  override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-      savedInstanceState: Bundle?): View? {
+  override fun onCreateView(
+    inflater: LayoutInflater,
+    container: ViewGroup?,
+    savedInstanceState: Bundle?
+  ): View? {
     val root = inflater.inflate(R.layout.fragment_siginin, container, false)
 
     rootView = root
@@ -96,7 +99,11 @@ class SignInFragment @Inject constructor() : DaggerFragment(),
     googleApiClient.disconnect()
   }
 
-  override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+  override fun onActivityResult(
+    requestCode: Int,
+    resultCode: Int,
+    data: Intent?
+  ) {
     super.onActivityResult(requestCode, resultCode, data)
     if (requestCode == SIGN_IN_RESULT) {
       val result = GoogleSignInApi.getSignInResultFromIntent(data)
@@ -105,7 +112,7 @@ class SignInFragment @Inject constructor() : DaggerFragment(),
   }
 
   override fun onConnectionFailed(p0: ConnectionResult) =
-      shortToast(getString(unable_connect_google_services))
+    shortToast(getString(unable_connect_google_services))
 
   override fun onConnected(p0: Bundle?) = enableButton(true)
 
@@ -125,7 +132,7 @@ class SignInFragment @Inject constructor() : DaggerFragment(),
 
   private fun handleSignInResult(result: GoogleSignInResult) {
     if (context == null) {
-      FileLog.e("Context is null in ${javaClass.simpleName}")
+      //FileLog.e("Context is null in ${javaClass.simpleName}")
       return
     } else {
       presenter.signIn(context!!, result)

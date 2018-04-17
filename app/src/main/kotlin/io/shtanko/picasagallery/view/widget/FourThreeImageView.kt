@@ -28,14 +28,29 @@ class FourThreeImageView : AppCompatImageView {
   // region default constructors
   constructor(context: Context) : super(context)
 
-  constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
-  constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs,
-      defStyleAttr)
+  constructor(
+    context: Context,
+    attrs: AttributeSet
+  ) : super(context, attrs)
+
+  constructor(
+    context: Context,
+    attrs: AttributeSet,
+    defStyleAttr: Int
+  ) : super(
+      context, attrs,
+      defStyleAttr
+  )
   // endregion
 
-  override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-    val fourThreeHeight = makeMeasureSpec(MeasureSpec.getSize(widthMeasureSpec) * 3 / 4,
-        EXACTLY)
+  override fun onMeasure(
+    widthMeasureSpec: Int,
+    heightMeasureSpec: Int
+  ) {
+    val fourThreeHeight = makeMeasureSpec(
+        MeasureSpec.getSize(widthMeasureSpec) * 3 / 4,
+        EXACTLY
+    )
     super.onMeasure(widthMeasureSpec, fourThreeHeight)
   }
 }

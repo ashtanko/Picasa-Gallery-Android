@@ -41,7 +41,9 @@ import io.shtanko.picasagallery.view.util.OnItemClickListener
 import javax.inject.Inject
 
 @ActivityScoped
-class PhotosFragment @Inject constructor() : BaseFragment(), PhotosContract.View, OnItemClickListener {
+class PhotosFragment @Inject constructor() : BaseFragment(),
+    PhotosContract.View,
+    OnItemClickListener {
 
   // region injection
   @Inject lateinit var presenter: PhotosContract.Presenter
@@ -58,8 +60,11 @@ class PhotosFragment @Inject constructor() : BaseFragment(), PhotosContract.View
     }
   }
 
-  override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-      savedInstanceState: Bundle?): View? {
+  override fun onCreateView(
+    inflater: LayoutInflater,
+    container: ViewGroup?,
+    savedInstanceState: Bundle?
+  ): View? {
     val rootView = inflater.inflate(layout.container_list_fragment, container, false)
     presenterActions()
     viewActions(rootView)
@@ -107,15 +112,17 @@ class PhotosFragment @Inject constructor() : BaseFragment(), PhotosContract.View
     with(rootView) {
       progressBar = rootView.findViewById(R.id.progress_bar)
 
-      rootView.findViewById<RecyclerView>(R.id.grid).apply {
-        layoutManager = gridLayoutManager
-        adapter = photosAdapter
-        addItemDecoration(
-            ItemDividerDecoration(
-                activity?.resources?.getDimensionPixelSize(dimen.divider_height)!!,
-                getColor(activity!!, color.divider)
-            ))
-      }
+      rootView.findViewById<RecyclerView>(R.id.grid)
+          .apply {
+            layoutManager = gridLayoutManager
+            adapter = photosAdapter
+            addItemDecoration(
+                ItemDividerDecoration(
+                    activity?.resources?.getDimensionPixelSize(dimen.divider_height)!!,
+                    getColor(activity!!, color.divider)
+                )
+            )
+          }
 
       photosAdapter.onItemClickListener = this@PhotosFragment
     }

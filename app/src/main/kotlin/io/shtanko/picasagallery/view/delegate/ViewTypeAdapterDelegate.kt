@@ -23,5 +23,8 @@ import android.view.ViewGroup
 interface ViewTypeAdapterDelegate {
   fun onCreateViewHolder(parent: ViewGroup?): RecyclerView.ViewHolder
 
-  fun onBindViewHolder(holder: RecyclerView.ViewHolder, item: ViewType)
+  fun onBindViewHolder(
+    holder: RecyclerView.ViewHolder,
+    item: ViewType
+  )
 }

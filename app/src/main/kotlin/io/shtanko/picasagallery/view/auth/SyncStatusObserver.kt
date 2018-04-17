@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 Alexey Shtanko
+ * Copyright 2018 Alexey Shtanko
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,14 +15,8 @@
  *
  */
 
-package io.shtanko.picasagallery.data.user
+package io.shtanko.picasagallery.view.auth
 
-import io.shtanko.picasagallery.data.entity.user.User
-
-interface UserDataSource {
-  fun getUser(): User
-  fun getToken(): String
-  fun saveUser(user: User)
-  fun saveToken(token: String)
-  fun markUserRefusedSignIn(refused: Boolean)
+interface SyncStatusObserver {
+  fun onStatusChanged()
 }

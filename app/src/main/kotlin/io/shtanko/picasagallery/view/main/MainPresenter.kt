@@ -28,37 +28,38 @@ import javax.inject.Inject
 
 @ActivityScoped
 class MainPresenter @Inject constructor(
-        private val repository: AlbumRepository) : Presenter {
+  private val repository: AlbumRepository
+) : Presenter {
 
-    @Nullable
-    private var view: View? = null
+  @Nullable
+  private var view: View? = null
 
-    override fun takeView(view: View) {
-        this.view = view
+  override fun takeView(view: View) {
+    this.view = view
+  }
+
+  override fun dropView() {
+    this.view = null
+  }
+
+  override fun getAlbums() {
+    view?.let { view ->
+      view.setLoadingIndicator(true)
+      repository.albums()
+          .subscribe(
+              { data ->
+                view.setLoadingIndicator(false)
+                view.onShowAlbums(data)
+              },
+              { error ->
+                view.setLoadingIndicator(false)
+                view.showError(error.localizedMessage)
+                Logger.error(error)
+              })
     }
+  }
 
-    override fun dropView() {
-        this.view = null
-    }
-
-    override fun getAlbums() {
-        view?.let { view ->
-            view.setLoadingIndicator(true)
-            repository.albums()
-                    .subscribe(
-                            { data ->
-                                view.setLoadingIndicator(false)
-                                view.onShowAlbums(data)
-                            },
-                            { error ->
-                                view.setLoadingIndicator(false)
-                                view.showError(error.localizedMessage)
-                                Logger.error(error)
-                            })
-        }
-    }
-
-    override fun onAlbumClick(model: ViewType) {
-        view?.viewAlbum(model)
-    }
+  override fun onAlbumClick(model: ViewType) {
+    view?.viewAlbum(model)
+  }
 }

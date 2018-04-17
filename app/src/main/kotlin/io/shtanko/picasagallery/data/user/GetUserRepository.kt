@@ -15,9 +15,22 @@
  *
  */
 
-package io.shtanko.picasagallery.data.entity.album
+package io.shtanko.picasagallery.data.user
 
-import io.shtanko.picasagallery.view.delegate.ViewType
+import io.reactivex.Flowable
+import io.shtanko.picasagallery.data.entity.user.User
+import javax.inject.Inject
+import javax.inject.Singleton
 
-interface AlbumType : ViewType {
+interface UserRepository {
+  fun getUserData(): Flowable<User>
+}
+
+@Singleton
+class GetUserRepositoryImpl @Inject constructor(
+  private val dataSourceImpl: UserDataSource
+) : UserRepository {
+
+  override fun getUserData(): Flowable<User> = Flowable.just(dataSourceImpl.getUser())
+
 }

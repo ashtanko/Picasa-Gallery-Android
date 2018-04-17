@@ -18,9 +18,13 @@
 package io.shtanko.picasagallery.data.entity.internal
 
 import io.shtanko.picasagallery.Config.CONTENT_VIEW_TYPE_ID
+import io.shtanko.picasagallery.view.delegate.ViewType
+
+interface ContentType : ViewType
 
 data class Content(
-    val type: String,
-    val src: String) : ContentType {
+  val type: String,
+  val src: String
+) : ContentType {
   override fun getViewType(): Int = CONTENT_VIEW_TYPE_ID
 }

@@ -26,10 +26,13 @@ import io.shtanko.picasagallery.view.base.UseCase
 import javax.inject.Inject
 
 class GetUserDetails @Inject constructor(
-    var userRepository: UserRepository,
-    threadExecutor: ThreadExecutor,
-    postExecutionThread: PostExecutionThread) : UseCase<User, Params>(threadExecutor,
-    postExecutionThread) {
+  var userRepository: UserRepository,
+  threadExecutor: ThreadExecutor,
+  postExecutionThread: PostExecutionThread
+) : UseCase<User, Params>(
+    threadExecutor,
+    postExecutionThread
+) {
 
   override fun buildUseCaseObservable(params: Params): Flowable<User> = userRepository.getUserData()
 

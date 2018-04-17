@@ -45,56 +45,62 @@ import javax.inject.Inject
 @ActivityScoped
 class InternalAlbumsFragment @Inject constructor() : BaseFragment(), View, OnItemClickListener {
 
-    override fun viewAlbum(model: Content) {
-        activity?.startActivity(Intent(activity, PhotosActivity::class.java))
-    }
+  override fun viewAlbum(model: Content) {
+    activity?.startActivity(Intent(activity, PhotosActivity::class.java))
+  }
 
-    // region injection
-    @Inject lateinit var presenter: Presenter
-    @Inject lateinit var internalAlbumsAdapter: InternalAlbumsAdapter
-    // endregion
+  // region injection
+  @Inject lateinit var presenter: Presenter
+  @Inject lateinit var internalAlbumsAdapter: InternalAlbumsAdapter
+  // endregion
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-            savedInstanceState: Bundle?): android.view.View? {
+  override fun onCreateView(
+    inflater: LayoutInflater,
+    container: ViewGroup?,
+    savedInstanceState: Bundle?
+  ): android.view.View? {
 
-        val rootView = inflater.inflate(R.layout.container_list_fragment, container, false)
-        presenter.takeView(this)
-        presenter.getContent()
+    val rootView = inflater.inflate(R.layout.container_list_fragment, container, false)
+    presenter.takeView(this)
+    presenter.getContent()
 
-        val photoId = arguments?.getString(PHOTO_ID_KEY)
-        val albumId = arguments?.getString(ALBUM_ID_KEY)
+    val photoId = arguments?.getString(PHOTO_ID_KEY)
+    val albumId = arguments?.getString(ALBUM_ID_KEY)
 
-        val gridLayoutManager = GridLayoutManager(activity, THREE_COLUMNS_GRID)
+    val gridLayoutManager = GridLayoutManager(activity, THREE_COLUMNS_GRID)
 
-        with(rootView) {
-            grid.apply {
-                setHasFixedSize(true)
-                layoutManager = gridLayoutManager
-                adapter = internalAlbumsAdapter
+    with(rootView) {
+      grid.apply {
+        setHasFixedSize(true)
+        layoutManager = gridLayoutManager
+        adapter = internalAlbumsAdapter
 
-                activity?.let {
-                    addItemDecoration(ItemDividerDecoration(
-                            it.resources.getDimensionPixelSize(dimen.divider_height),
-                            ContextCompat.getColor(it, color.divider)))
-                }
-            }
-            internalAlbumsAdapter.onItemClickListener = this@InternalAlbumsFragment
+        activity?.let {
+          addItemDecoration(
+              ItemDividerDecoration(
+                  it.resources.getDimensionPixelSize(dimen.divider_height),
+                  ContextCompat.getColor(it, color.divider)
+              )
+          )
         }
-
-        return rootView
+      }
+      internalAlbumsAdapter.onItemClickListener = this@InternalAlbumsFragment
     }
 
-    override fun showError(message: String) {
-    }
+    return rootView
+  }
 
-    override fun showData(data: ContentList) {
-        internalAlbumsAdapter.items = data
-    }
+  override fun showError(message: String) {
+  }
 
-    override fun setLoadingIndicator(active: Boolean) {
-    }
+  override fun showData(data: ContentList) {
+    internalAlbumsAdapter.items = data
+  }
 
-    override fun <T> onItemClicked(model: T) {
-        if (model is ContentType) presenter.onItemClick(model)
-    }
+  override fun setLoadingIndicator(active: Boolean) {
+  }
+
+  override fun <T> onItemClicked(model: T) {
+    if (model is ContentType) presenter.onItemClick(model)
+  }
 }

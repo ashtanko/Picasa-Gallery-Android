@@ -31,21 +31,29 @@ abstract class BaseAdapter<T : ViewType> : Adapter<ViewHolder>() {
   var onItemClickListener: OnItemClickListener? = null
 
   var items: List<T> by Delegates.observable(
-      emptyList()) { _, _, _ -> notifyDataSetChanged() }
+      emptyList()
+  ) { _, _, _ -> notifyDataSetChanged() }
 
   override fun getItemCount() = items.size
 
   protected var delegateAdapters = SparseArrayCompat<ViewTypeAdapterDelegate>()
 
-  override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ViewHolder =
-      delegateAdapters.get(viewType).onCreateViewHolder(parent)
+  override fun onCreateViewHolder(
+    parent: ViewGroup?,
+    viewType: Int
+  ): ViewHolder =
+    delegateAdapters.get(viewType).onCreateViewHolder(parent)
 
-  override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+  override fun onBindViewHolder(
+    holder: ViewHolder,
+    position: Int
+  ) {
     val model = this.items[position]
     holder.itemView.setOnClickListener {
       onItemClickListener?.onItemClicked(model)
     }
-    delegateAdapters.get(getItemViewType(position)).onBindViewHolder(holder, model)
+    delegateAdapters.get(getItemViewType(position))
+        .onBindViewHolder(holder, model)
   }
 
   override fun getItemViewType(position: Int): Int = this.items[position].getViewType()

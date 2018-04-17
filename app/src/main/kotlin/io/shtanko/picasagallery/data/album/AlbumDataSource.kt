@@ -18,8 +18,27 @@
 package io.shtanko.picasagallery.data.album
 
 import io.reactivex.Flowable
+import io.shtanko.picasagallery.core.prefs.PreferenceHelper
+import io.shtanko.picasagallery.data.api.ApiManager
 import io.shtanko.picasagallery.extensions.AlbumsList
+import javax.inject.Inject
+import javax.inject.Singleton
 
 interface AlbumDataSource {
   fun getAlbums(): Flowable<AlbumsList>
+}
+
+@Singleton
+class AlbumDataSourceImpl @Inject constructor(
+  private val apiManager: ApiManager,
+  private val preferencesHelper: PreferenceHelper,
+  private val albumEntityMapper: AlbumEntityMapper
+) : AlbumDataSource {
+
+  override fun getAlbums(): Flowable<AlbumsList> {
+    return apiManager.getUserAlbums(
+        preferencesHelper.getUserId()
+    )
+        .map { albumEntityMapper.transform(it) }
+  }
 }

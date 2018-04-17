@@ -24,9 +24,13 @@ import io.shtanko.picasagallery.util.ActivityUtils
 
 abstract class BaseActivity : DaggerAppCompatActivity() {
 
-  fun <T : Fragment> addFragment(fragmentId: Int, provider: Lazy<T>) {
+  fun <T : Fragment> addFragment(
+    fragmentId: Int,
+    provider: Lazy<T>
+  ) {
     var mainFragment = supportFragmentManager.findFragmentById(
-        fragmentId)
+        fragmentId
+    )
     if (mainFragment == null) {
       mainFragment = provider.get()
       ActivityUtils.addFragmentToActivity(supportFragmentManager, mainFragment, fragmentId)

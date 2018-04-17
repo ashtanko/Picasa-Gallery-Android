@@ -34,55 +34,65 @@ import javax.inject.Inject
 
 @ActivityScoped
 class SignInPresenter @Inject constructor(
-        private val repository: UserRepositoryImpl) : SignInContract.Presenter {
+  private val repository: UserRepositoryImpl
+) : SignInContract.Presenter {
 
-    @Nullable
-    private var view: SignInContract.View? = null
+  @Nullable
+  private var view: SignInContract.View? = null
 
-    override fun takeView(view: View) {
-        this.view = view
-    }
+  override fun takeView(view: View) {
+    this.view = view
+  }
 
-    override fun dropView() {
-        this.view = null
-    }
+  override fun dropView() {
+    this.view = null
+  }
 
-    override fun signIn(context: Context, result: GoogleSignInResult) {
-        this.view?.setLoadingIndicator(true)
+  override fun signIn(
+    context: Context,
+    result: GoogleSignInResult
+  ) {
+    this.view?.setLoadingIndicator(true)
 
-        if (result.isSuccess) {
-            val acct = result.signInAccount
-            if (acct != null) {
-                val account = Account(acct.email, "com.google")
-                Single.create<String> { it ->
-                    val token = GoogleAuthUtil.getToken(context, account,
-                            "oauth2:" + TextUtils.join(" ", Config.AUTH_SCOPES))
-                    if (token != null && !TextUtils.isEmpty(token)) {
-                        it.onSuccess(token)
-                    } else {
-                        // handle error
-                    }
-                }.applyComputationScheduler().subscribe { t1, _ ->
-                    if (!TextUtils.isEmpty(t1)) {
-                        saveToken(t1)
-
-                        val user = User(acct.displayName, acct.givenName,
-                                acct.familyName, acct.email, acct.id)
-                        saveUserData(user)
-                        view?.openNextScreen()
-                    }
-                }
-            }
+    if (result.isSuccess) {
+      val acct = result.signInAccount
+      if (acct != null) {
+        val account = Account(acct.email, "com.google")
+        Single.create<String> { it ->
+          val token = GoogleAuthUtil.getToken(
+              context, account,
+              "oauth2:" + TextUtils.join(" ", Config.AUTH_SCOPES)
+          )
+          if (token != null && !TextUtils.isEmpty(token)) {
+            it.onSuccess(token)
+          } else {
+            // handle error
+          }
         }
-    }
+            .applyComputationScheduler()
+            .subscribe { t1, _ ->
+              if (!TextUtils.isEmpty(t1)) {
+                saveToken(t1)
 
-    override fun saveUserData(user: User) {
-        this.view?.setLoadingIndicator(false)
-        repository.saveUser(user)
+                val user = User(
+                    acct.displayName, acct.givenName,
+                    acct.familyName, acct.email, acct.id
+                )
+                saveUserData(user)
+                view?.openNextScreen()
+              }
+            }
+      }
     }
+  }
 
-    override fun saveToken(token: String) {
-        this.view?.setLoadingIndicator(false)
-        repository.saveToken(token)
-    }
+  override fun saveUserData(user: User) {
+    this.view?.setLoadingIndicator(false)
+    repository.saveUser(user)
+  }
+
+  override fun saveToken(token: String) {
+    this.view?.setLoadingIndicator(false)
+    repository.saveToken(token)
+  }
 }

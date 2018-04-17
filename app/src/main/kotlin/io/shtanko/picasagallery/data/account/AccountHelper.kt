@@ -27,12 +27,13 @@ import javax.inject.Singleton
 
 @Singleton
 class AccountHelper @Inject constructor(
-    private val sharedPreferences: SharedPreferences) : Account {
+  private val sharedPreferences: SharedPreferences
+) : Account {
 
   override fun hasActiveAccount() = !TextUtils.isEmpty(getActiveAccountName())
 
   override fun getActiveAccountName(): String =
-      sharedPreferences.getString(ACTIVE_ACCOUNT_PREF, null)
+    sharedPreferences.getString(ACTIVE_ACCOUNT_PREF, null)
 
   override fun getActiveAccount(): android.accounts.Account {
     val account = getActiveAccountName()
@@ -40,33 +41,49 @@ class AccountHelper @Inject constructor(
   }
 
   override fun setActiveAccount(accountName: String) {
-    sharedPreferences.edit().putString(ACTIVE_ACCOUNT_PREF, accountName).apply()
+    sharedPreferences.edit()
+        .putString(ACTIVE_ACCOUNT_PREF, accountName)
+        .apply()
   }
 
   override fun clearActiveAccount() {
-    sharedPreferences.edit().remove(ACTIVE_ACCOUNT_PREF).apply()
+    sharedPreferences.edit()
+        .remove(ACTIVE_ACCOUNT_PREF)
+        .apply()
   }
 
   override fun makeAccountSpecificPrefKey(prefix: String): String {
     if (hasActiveAccount()) {
-      return makeAccountSpecificPrefKey(getActiveAccountName(),
-          prefix)
+      return makeAccountSpecificPrefKey(
+          getActiveAccountName(),
+          prefix
+      )
     } else {
       return ""
     }
   }
 
-  override fun makeAccountSpecificPrefKey(accountName: String,
-      prefix: String): String = prefix + accountName
+  override fun makeAccountSpecificPrefKey(
+    accountName: String,
+    prefix: String
+  ): String = prefix + accountName
 
   override fun getAuthToken(): String = if (hasActiveAccount())
-    sharedPreferences.getString(makeAccountSpecificPrefKey(PREFIX_PREF_AUTH_TOKEN),
-        null) else ""
+    sharedPreferences.getString(
+        makeAccountSpecificPrefKey(PREFIX_PREF_AUTH_TOKEN),
+        null
+    ) else ""
 
-  override fun setAuthToken(accountName: String, authToken: String?) {
-    sharedPreferences.edit().putString(
-        makeAccountSpecificPrefKey(accountName, PREFIX_PREF_AUTH_TOKEN),
-        authToken).apply()
+  override fun setAuthToken(
+    accountName: String,
+    authToken: String?
+  ) {
+    sharedPreferences.edit()
+        .putString(
+            makeAccountSpecificPrefKey(accountName, PREFIX_PREF_AUTH_TOKEN),
+            authToken
+        )
+        .apply()
   }
 
   override fun setAuthToken(authToken: String?) {

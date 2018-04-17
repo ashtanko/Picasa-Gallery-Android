@@ -31,7 +31,10 @@ import javax.inject.Singleton
 @Singleton
 class FileManagerImpl : FileManager {
 
-  override fun writeToFile(file: File, fileContent: String) {
+  override fun writeToFile(
+    file: File,
+    fileContent: String
+  ) {
     if (file.exists()) {
       try {
         val writer = FileWriter(file)
@@ -52,7 +55,8 @@ class FileManagerImpl : FileManager {
         var stringLine = bufferedReader.readLine()
 
         while (stringLine != null) {
-          fileContentBuilder.append(stringLine).append("\n")
+          fileContentBuilder.append(stringLine)
+              .append("\n")
           stringLine = bufferedReader.readLine()
         }
         bufferedReader.close()

@@ -46,5 +46,9 @@ interface LoginAndAuth {
    */
   abstract fun retryAuthByUserRequest()
 
-  abstract fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent): Boolean
+  abstract fun onActivityResult(
+    requestCode: Int,
+    resultCode: Int,
+    data: Intent
+  ): Boolean
 }

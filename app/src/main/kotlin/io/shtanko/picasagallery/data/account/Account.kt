@@ -45,11 +45,17 @@ interface Account {
 
   abstract fun makeAccountSpecificPrefKey(prefix: String): String
 
-  abstract fun makeAccountSpecificPrefKey(accountName: String, prefix: String): String
+  abstract fun makeAccountSpecificPrefKey(
+    accountName: String,
+    prefix: String
+  ): String
 
   abstract fun getAuthToken(): String
 
-  abstract fun setAuthToken(accountName: String, authToken: String?)
+  abstract fun setAuthToken(
+    accountName: String,
+    authToken: String?
+  )
 
   abstract fun setAuthToken(authToken: String?)
 

@@ -20,6 +20,8 @@ package io.shtanko.picasagallery.data.photo
 import io.reactivex.Flowable
 import io.shtanko.picasagallery.data.entity.photo.Photo
 import io.shtanko.picasagallery.extensions.PhotosList
+import javax.inject.Inject
+import javax.inject.Singleton
 
 /**
  * Interface that represents a Repository for getting [Photo] related data.
@@ -29,6 +31,14 @@ interface PhotosRepository {
   /**
    * Get an [rx.Observable] which will emit a List of [Photo].
    */
-  abstract fun photos(): Flowable<PhotosList>
+  fun photos(): Flowable<PhotosList>
 
+}
+
+@Singleton
+class PhotosRepositoryImpl @Inject constructor(
+  private val dataSource: PhotosDataSource
+) : PhotosRepository {
+
+  override fun photos(): Flowable<PhotosList> = dataSource.getPhotos()
 }

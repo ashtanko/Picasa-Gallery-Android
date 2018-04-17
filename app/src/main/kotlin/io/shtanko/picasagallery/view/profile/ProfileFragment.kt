@@ -32,16 +32,21 @@ class ProfileFragment @Inject constructor() : BaseFragment(), ProfileContract.Vi
 
   @Inject lateinit var presenter: ProfileContract.Presenter
 
-  val dummyImage = "https://images-na.ssl-images-amazon.com/images/M/MV5BOTAzNTY1NjYwMl5BMl5BanBnXkFtZTgwNTIwNjMzMjI@._CR786,95,469,469_UX402_UY402._SY201_SX201_AL_.jpg"
+  val dummyImage =
+    "https://images-na.ssl-images-amazon.com/images/M/MV5BOTAzNTY1NjYwMl5BMl5BanBnXkFtZTgwNTIwNjMzMjI@._CR786,95,469,469_UX402_UY402._SY201_SX201_AL_.jpg"
 
-  override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-      savedInstanceState: Bundle?): View? {
+  override fun onCreateView(
+    inflater: LayoutInflater,
+    container: ViewGroup?,
+    savedInstanceState: Bundle?
+  ): View? {
     val rootView = inflater.inflate(R.layout.fragment_profile, container, false)
 
     with(rootView) {
-      rootView.findViewById<AppCompatImageView>(R.id.avatar).apply {
+      rootView.findViewById<AppCompatImageView>(R.id.avatar)
+          .apply {
 
-      }
+          }
     }
 
     return rootView

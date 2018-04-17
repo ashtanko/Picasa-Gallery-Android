@@ -24,7 +24,8 @@ import io.shtanko.picasagallery.util.ActivityScoped
 import io.shtanko.picasagallery.util.FragmentScoped
 import io.shtanko.picasagallery.view.auth.SignInContract.Presenter
 
-@Module abstract class SignInModule {
+@Module
+abstract class SignInModule {
 
   @FragmentScoped
   @ContributesAndroidInjector

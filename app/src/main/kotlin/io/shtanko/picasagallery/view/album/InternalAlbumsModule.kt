@@ -24,7 +24,8 @@ import io.shtanko.picasagallery.util.ActivityScoped
 import io.shtanko.picasagallery.util.FragmentScoped
 import io.shtanko.picasagallery.view.album.InternalAlbumsContract.Presenter
 
-@Module abstract class InternalAlbumsModule {
+@Module
+abstract class InternalAlbumsModule {
 
   @FragmentScoped
   @ContributesAndroidInjector
@@ -32,5 +33,6 @@ import io.shtanko.picasagallery.view.album.InternalAlbumsContract.Presenter
 
   @ActivityScoped
   @Binds abstract fun internalAlbumsPresenter(
-      presenter: InternalAlbumsPresenter): Presenter
+    presenter: InternalAlbumsPresenter
+  ): Presenter
 }

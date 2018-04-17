@@ -28,38 +28,40 @@ import kotlin.properties.Delegates
 
 class PicasaApplication : DaggerApplication() {
 
-    override fun applicationInjector(): AndroidInjector<out DaggerApplication> =
-            DaggerAppComponent.builder().application(this).build()
+  override fun applicationInjector(): AndroidInjector<out DaggerApplication> =
+    DaggerAppComponent.builder().application(this).build()
 
-    companion object {
-        var app: Application by Delegates.notNull()
-        @Volatile
-        lateinit var applicationHandler: Handler
+  companion object {
+    var app: Application by Delegates.notNull()
+    @Volatile
+    lateinit var applicationHandler: Handler
 
-        fun enableStrictMode() {
-            StrictMode.setThreadPolicy(StrictMode.ThreadPolicy.Builder()
-                    .detectAll()
-                    .penaltyLog()
-                    .penaltyDeath()
-                    .build())
-        }
+    fun enableStrictMode() {
+      StrictMode.setThreadPolicy(
+          StrictMode.ThreadPolicy.Builder()
+              .detectAll()
+              .penaltyLog()
+              .penaltyDeath()
+              .build()
+      )
+    }
+  }
+
+  override fun onCreate() {
+    super.onCreate()
+    app = this
+    applicationHandler = Handler(mainLooper)
+    setupLeakCanary()
+  }
+
+  private fun setupLeakCanary() {
+    if (LeakCanary.isInAnalyzerProcess(this)) {
+      // This process is dedicated to LeakCanary for heap analysis.
+      // You should not init your app in this process.
+      return
     }
 
-    override fun onCreate() {
-        super.onCreate()
-        app = this
-        applicationHandler = Handler(mainLooper)
-        setupLeakCanary()
-    }
-
-    private fun setupLeakCanary() {
-        if (LeakCanary.isInAnalyzerProcess(this)) {
-            // This process is dedicated to LeakCanary for heap analysis.
-            // You should not init your app in this process.
-            return
-        }
-
-        PicasaApplication.enableStrictMode()
-        LeakCanary.install(this)
-    }
+    PicasaApplication.enableStrictMode()
+    LeakCanary.install(this)
+  }
 }

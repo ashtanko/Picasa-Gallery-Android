@@ -20,7 +20,7 @@ package io.shtanko.picasagallery.data.model
 import com.google.gson.annotations.SerializedName
 
 data class MediaContent(
-    @SerializedName("url") val url: String,
-    @SerializedName("type") val type: String,
-    @SerializedName("medium") val medium: String
+  @SerializedName("url") val url: String,
+  @SerializedName("type") val type: String,
+  @SerializedName("medium") val medium: String
 )

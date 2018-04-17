@@ -30,7 +30,10 @@ class MainAdapterDelegateImpl : ViewTypeAdapterDelegate {
     return MainViewHolder(view)
   }
 
-  override fun onBindViewHolder(holder: ViewHolder, item: ViewType) {
+  override fun onBindViewHolder(
+    holder: ViewHolder,
+    item: ViewType
+  ) {
     holder as MainViewHolder
     holder.bind(item)
   }

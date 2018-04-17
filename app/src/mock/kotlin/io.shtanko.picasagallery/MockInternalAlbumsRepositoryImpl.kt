@@ -32,6 +32,9 @@ class MockInternalAlbumsRepositoryImpl @Inject constructor() : InternalAlbumsRep
   override fun content(): Flowable<ContentList> {
     val content = ArrayList<ContentType>()
     content.addAll(getContentData())
-    return Flowable.fromIterable(content).toList().toFlowable().applyComputationScheduler()
+    return Flowable.fromIterable(content)
+        .toList()
+        .toFlowable()
+        .applyComputationScheduler()
   }
 }

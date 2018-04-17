@@ -24,8 +24,11 @@ class LoginAndAuthProvider {
   companion object {
     var stubLoginAndAuth: LoginAndAuth? = null
 
-    fun provideLoginAndAuth(activity: Activity, callback: LoginAndAuthListener,
-        accountName: String): LoginAndAuth? = if (stubLoginAndAuth != null)
+    fun provideLoginAndAuth(
+      activity: Activity,
+      callback: LoginAndAuthListener,
+      accountName: String
+    ): LoginAndAuth? = if (stubLoginAndAuth != null)
       stubLoginAndAuth else LoginAndAuthWithGoogleApi(activity, callback, accountName)
   }
 }

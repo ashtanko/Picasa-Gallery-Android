@@ -19,7 +19,16 @@ package io.shtanko.picasagallery.data.internal
 
 import io.reactivex.Flowable
 import io.shtanko.picasagallery.extensions.ContentList
+import javax.inject.Inject
+import javax.inject.Singleton
 
 interface InternalAlbumsRepository {
-  abstract fun content(): Flowable<ContentList>
+  fun content(): Flowable<ContentList>
+}
+
+@Singleton
+class InternalAlbumsRepositoryImpl @Inject constructor() : InternalAlbumsRepository {
+
+  override fun content(): Flowable<ContentList> = Flowable.empty()
+
 }

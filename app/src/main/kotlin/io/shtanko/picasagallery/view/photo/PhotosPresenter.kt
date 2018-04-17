@@ -27,40 +27,40 @@ import javax.inject.Inject
 
 @ActivityScoped
 class PhotosPresenter @Inject constructor(
-        private val repository: PhotosRepository
+  private val repository: PhotosRepository
 ) : Presenter {
 
-    override fun onPhotoClick(model: ViewType) {
-        view?.viewPhoto(model)
+  override fun onPhotoClick(model: ViewType) {
+    view?.viewPhoto(model)
+  }
+
+  override fun getPhotos() {
+
+    view?.let { view ->
+      view.setLoadingIndicator(true)
+
+      repository.photos()
+          .subscribe(
+              { data ->
+                view.setLoadingIndicator(false)
+                view.showPhotos(data)
+              },
+              { error ->
+                view.setLoadingIndicator(false)
+                view.showError(error.localizedMessage)
+              }
+          )
     }
+  }
 
-    override fun getPhotos() {
+  @Nullable
+  private var view: PhotosContract.View? = null
 
-        view?.let { view ->
-            view.setLoadingIndicator(true)
+  override fun takeView(view: View) {
+    this.view = view
+  }
 
-            repository.photos()
-                    .subscribe(
-                            { data ->
-                                view.setLoadingIndicator(false)
-                                view.showPhotos(data)
-                            },
-                            { error ->
-                                view.setLoadingIndicator(false)
-                                view.showError(error.localizedMessage)
-                            }
-                    )
-        }
-    }
-
-    @Nullable
-    private var view: PhotosContract.View? = null
-
-    override fun takeView(view: View) {
-        this.view = view
-    }
-
-    override fun dropView() {
-        this.view = null
-    }
+  override fun dropView() {
+    this.view = null
+  }
 }

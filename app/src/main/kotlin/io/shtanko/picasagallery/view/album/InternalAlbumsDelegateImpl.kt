@@ -30,7 +30,10 @@ class InternalAlbumsDelegateImpl : ViewTypeAdapterDelegate {
     return InternalAlbumsViewHolder(view)
   }
 
-  override fun onBindViewHolder(holder: ViewHolder, item: ViewType) {
+  override fun onBindViewHolder(
+    holder: ViewHolder,
+    item: ViewType
+  ) {
     holder as InternalAlbumsViewHolder
     holder.bind(item)
   }

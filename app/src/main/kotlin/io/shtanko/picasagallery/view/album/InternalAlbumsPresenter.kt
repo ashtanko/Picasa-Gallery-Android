@@ -29,39 +29,40 @@ import javax.inject.Inject
 
 @ActivityScoped
 class InternalAlbumsPresenter @Inject constructor(
-        private val repository: InternalAlbumsRepository) : Presenter {
+  private val repository: InternalAlbumsRepository
+) : Presenter {
 
-    @Nullable
-    private var view: View? = null
+  @Nullable
+  private var view: View? = null
 
-    override fun takeView(view: View) {
-        this.view = view
+  override fun takeView(view: View) {
+    this.view = view
+  }
+
+  override fun dropView() {
+    view = null
+  }
+
+  override fun onItemClick(view: ViewType) {
+    if (view is ContentType) {
+      this.view?.viewAlbum(view as Content)
     }
+  }
 
-    override fun dropView() {
-        view = null
+  override fun getContent() {
+    view?.let { view ->
+      view.setLoadingIndicator(true)
+      repository.content()
+          .subscribe(
+              { data ->
+                view.setLoadingIndicator(false)
+                view.showData(data)
+              },
+              { error ->
+                view.setLoadingIndicator(false)
+                view.showError(error.localizedMessage)
+              }
+          )
     }
-
-    override fun onItemClick(view: ViewType) {
-        if (view is ContentType) {
-            this.view?.viewAlbum(view as Content)
-        }
-    }
-
-    override fun getContent() {
-        view?.let { view ->
-            view.setLoadingIndicator(true)
-            repository.content()
-                    .subscribe(
-                            { data ->
-                                view.setLoadingIndicator(false)
-                                view.showData(data)
-                            },
-                            { error ->
-                                view.setLoadingIndicator(false)
-                                view.showError(error.localizedMessage)
-                            }
-                    )
-        }
-    }
+  }
 }

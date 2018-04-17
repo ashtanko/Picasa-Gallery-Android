@@ -17,9 +17,58 @@
 
 package io.shtanko.picasagallery.data.user
 
-import io.reactivex.Flowable
+import io.shtanko.picasagallery.core.prefs.PreferenceHelper
 import io.shtanko.picasagallery.data.entity.user.User
+import javax.inject.Inject
+import javax.inject.Singleton
 
-interface UserRepository {
-  fun getUserData(): Flowable<User>
+interface UserDataSource {
+  fun getUser(): User
+  fun getToken(): String
+  fun saveUser(user: User)
+  fun saveToken(token: String)
+  fun markUserRefusedSignIn(refused: Boolean)
+}
+
+@Singleton
+class UserDataSourceImpl @Inject constructor(
+  private val preferencesHelper: PreferenceHelper
+) : UserDataSource {
+  override fun getToken(): String =
+    preferencesHelper.getToken()
+
+  override fun markUserRefusedSignIn(refused: Boolean) {
+    preferencesHelper.markUserRefusedSignIn(refused)
+  }
+
+  override fun getUser() = preferencesHelper.getUser()
+
+  override fun saveToken(token: String) {
+    preferencesHelper.saveToken(token)
+  }
+
+  override fun saveUser(user: User) {
+    preferencesHelper.saveUserData(user)
+  }
+}
+
+@Singleton
+class UserRepositoryImpl @Inject constructor(
+  private val dataSourceImpl: UserDataSourceImpl
+) : UserDataSource {
+  override fun getToken(): String = dataSourceImpl.getToken()
+
+  override fun markUserRefusedSignIn(refused: Boolean) {
+    dataSourceImpl.markUserRefusedSignIn(refused)
+  }
+
+  override fun getUser() = dataSourceImpl.getUser()
+
+  override fun saveToken(token: String) {
+    dataSourceImpl.saveToken(token)
+  }
+
+  override fun saveUser(user: User) {
+    dataSourceImpl.saveUser(user)
+  }
 }

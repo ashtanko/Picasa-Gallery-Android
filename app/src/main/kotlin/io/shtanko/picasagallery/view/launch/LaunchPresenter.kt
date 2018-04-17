@@ -28,43 +28,44 @@ import javax.inject.Inject
 
 @ActivityScoped
 class LaunchPresenter @Inject constructor(
-        private val getUserDetails: GetUserDetails) : LaunchContract.Presenter {
+  private val getUserDetails: GetUserDetails
+) : LaunchContract.Presenter {
 
-    @Nullable
-    private var view: View? = null
+  @Nullable
+  private var view: View? = null
 
-    override fun takeView(view: View) {
-        this.view = view
-    }
+  override fun takeView(view: View) {
+    this.view = view
+  }
 
-    override fun dropView() {
-        this.view = null
-        getUserDetails.unSubscribe()
-    }
+  override fun dropView() {
+    this.view = null
+    getUserDetails.unSubscribe()
+  }
 
-    override fun isSignIn() {
-        getUserDetails.execute(getUserObserver(), GetUserDetails.Params.createQuery())
-    }
+  override fun isSignIn() {
+    getUserDetails.execute(getUserObserver(), GetUserDetails.Params.createQuery())
+  }
 
-    private fun getUserObserver(): DisposableObserver<User> {
-        return object : DisposableObserver<User>() {
-            override fun onNext(user: User) {
-                view?.let { view ->
-                    if (!TextUtils.isEmpty(user.personId)) {
-                        view.onSignedIn()
-                    } else {
-                        view.onSignedOut()
-                    }
-                }
-            }
-
-            override fun onError(e: Throwable) {
-                view?.onSignedOut()
-            }
-
-            override fun onComplete() {
-
-            }
+  private fun getUserObserver(): DisposableObserver<User> {
+    return object : DisposableObserver<User>() {
+      override fun onNext(user: User) {
+        view?.let { view ->
+          if (!TextUtils.isEmpty(user.personId)) {
+            view.onSignedIn()
+          } else {
+            view.onSignedOut()
+          }
         }
+      }
+
+      override fun onError(e: Throwable) {
+        view?.onSignedOut()
+      }
+
+      override fun onComplete() {
+
+      }
     }
+  }
 }

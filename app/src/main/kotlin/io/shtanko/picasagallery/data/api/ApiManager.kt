@@ -26,5 +26,8 @@ import io.shtanko.picasagallery.data.model.UserFeedResponseEntity
 interface ApiManager {
   fun getUser(userId: String): Observable<UserFeedResponseEntity>
   fun getUserAlbums(userId: String): Flowable<List<AlbumEntity>>
-  fun getAlbums(userId: String, albumId: String): Observable<AlbumsResponseEntity>
+  fun getAlbums(
+    userId: String,
+    albumId: String
+  ): Observable<AlbumsResponseEntity>
 }

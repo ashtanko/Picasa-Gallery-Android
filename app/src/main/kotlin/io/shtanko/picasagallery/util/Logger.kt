@@ -30,11 +30,17 @@ object Logger {
     Log.v(TAG, message)
   }
 
-  fun verbose(clazz: Any, message: String?) {
+  fun verbose(
+    clazz: Any,
+    message: String?
+  ) {
     Log.v(clazz.javaClass.simpleName, message)
   }
 
-  fun error(clazz: Any, message: String?) {
+  fun error(
+    clazz: Any,
+    message: String?
+  ) {
     Log.e(clazz.javaClass.simpleName, message)
   }
 

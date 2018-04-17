@@ -27,38 +27,38 @@ import javax.inject.Inject
 
 class LaunchActivity : BaseActivity(), LaunchContract.View {
 
-    @Inject
-    lateinit var presenter: LaunchPresenter
+  @Inject
+  lateinit var presenter: LaunchPresenter
 
-    override fun onDestroy() {
-        super.onDestroy()
-        presenter.dropView()
-    }
+  override fun onDestroy() {
+    super.onDestroy()
+    presenter.dropView()
+  }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        presenter.takeView(this)
-        presenter.isSignIn()
-    }
+  override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
+    presenter.takeView(this)
+    presenter.isSignIn()
+  }
 
-    override fun onSignedIn() {
-        showMainScreen()
-    }
+  override fun onSignedIn() {
+    showMainScreen()
+  }
 
-    override fun onSignedOut() {
-        showSignInScreen()
-    }
+  override fun onSignedOut() {
+    showSignInScreen()
+  }
 
-    private fun showMainScreen() {
-        startActivity(Intent(this, MainActivity::class.java)).also {
-            close()
-        }
+  private fun showMainScreen() {
+    startActivity(Intent(this, MainActivity::class.java)).also {
+      close()
     }
+  }
 
-    private fun showSignInScreen() {
-        startActivity(Intent(this, SignInActivity::class.java)).also {
-            close()
-        }
+  private fun showSignInScreen() {
+    startActivity(Intent(this, SignInActivity::class.java)).also {
+      close()
     }
+  }
 }
 

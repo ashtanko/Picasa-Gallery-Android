@@ -35,7 +35,9 @@ class InternalAlbumsViewHolder(itemView: View?) : BaseViewHolder(itemView), Divi
 
   override fun bind(item: ViewType) {
     if (item is Content) {
-      GlideApp.with(itemView.context).load(item.src).into(image)
+      GlideApp.with(itemView.context)
+          .load(item.src)
+          .into(image)
     }
   }
 }

@@ -28,5 +28,6 @@ abstract class InternalAlbumsDataModule {
   @Singleton
   @Binds
   abstract fun provideInternalAlbumsRepository(
-      albumRepository: MockInternalAlbumsRepositoryImpl): InternalAlbumsRepository
+    albumRepository: MockInternalAlbumsRepositoryImpl
+  ): InternalAlbumsRepository
 }

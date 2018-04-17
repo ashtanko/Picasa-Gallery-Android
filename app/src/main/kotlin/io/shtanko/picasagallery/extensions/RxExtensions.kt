@@ -30,23 +30,23 @@ fun <T> Observable<T>.applyIoScheduler() = applyScheduler(Schedulers.io())
 fun <T> Observable<T>.applyComputationScheduler() = applyScheduler(Schedulers.computation())
 
 private fun <T> Observable<T>.applyScheduler(scheduler: Scheduler) =
-    subscribeOn(scheduler).observeOn(AndroidSchedulers.mainThread())
-
+  subscribeOn(scheduler).observeOn(AndroidSchedulers.mainThread())
 
 //Single
 fun <T> Single<T>.applyIoScheduler() = applyScheduler(Schedulers.io())
 
 fun <T> Single<T>.applyComputationScheduler() = applyScheduler(Schedulers.computation())
 private fun <T> Single<T>.applyScheduler(scheduler: Scheduler) =
-    subscribeOn(scheduler).observeOn(AndroidSchedulers.mainThread())
+  subscribeOn(scheduler).observeOn(AndroidSchedulers.mainThread())
 
 //Flowable
 fun <T> Flowable<T>.applyIoScheduler() = applyScheduler(Schedulers.io())
 
 fun <T> Flowable<T>.applyComputationScheduler(): Flowable<T> = applyScheduler(
-    Schedulers.computation())
+    Schedulers.computation()
+)
 
 private fun <T> Flowable<T>.applyScheduler(scheduler: Scheduler) =
-    subscribeOn(scheduler).observeOn(AndroidSchedulers.mainThread())
+  subscribeOn(scheduler).observeOn(AndroidSchedulers.mainThread())
 
 

@@ -27,11 +27,15 @@ import javax.inject.Singleton
 
 @Singleton
 class MockGetUserRepositoryImpl @Inject constructor(
-    var dataSourceImpl: UserDataSource) : UserRepository {
+  var dataSourceImpl: UserDataSource
+) : UserRepository {
 
   override fun getUserData(): Flowable<User> = Flowable.just(
-      User("Mock Name", "Mock Given Name",
+      User(
+          "Mock Name", "Mock Given Name",
           "Mock Family Name", "mock@mock.com",
-          "${UUID.randomUUID()}"))
+          "${UUID.randomUUID()}"
+      )
+  )
 
 }

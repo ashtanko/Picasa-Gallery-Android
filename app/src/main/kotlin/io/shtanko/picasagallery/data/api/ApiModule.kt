@@ -24,11 +24,13 @@ import dagger.Module
 import dagger.Provides
 import io.shtanko.picasagallery.core.prefs.PreferenceHelper
 import io.shtanko.picasagallery.core.prefs.PreferencesModule
+import javax.inject.Singleton
 
 @Module(includes = [PreferencesModule::class])
 class ApiModule {
 
   @Provides
+  @Singleton
   fun provideGson(): Gson {
     val gsonBuilder = GsonBuilder()
     gsonBuilder.setFieldNamingPolicy(LOWER_CASE_WITH_UNDERSCORES)
@@ -37,5 +39,6 @@ class ApiModule {
   }
 
   @Provides
+  @Singleton
   fun provideApiManagerImpl(helper: PreferenceHelper): ApiManager = ApiManagerImpl(helper)
 }

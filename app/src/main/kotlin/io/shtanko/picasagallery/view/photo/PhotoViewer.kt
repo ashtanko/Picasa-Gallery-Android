@@ -110,22 +110,31 @@ class PhotoViewer : GestureDetector.OnDoubleTapListener, GestureDetector.OnGestu
     windowView = object : FrameLayout(activity) {
 
       override fun onInterceptTouchEvent(ev: MotionEvent?): Boolean =
-          super.onInterceptTouchEvent(ev)
+        super.onInterceptTouchEvent(ev)
 
       override fun onTouchEvent(event: MotionEvent?): Boolean =
-          isVisible && this@PhotoViewer.onTouchEvent(event)
+        isVisible && this@PhotoViewer.onTouchEvent(event)
 
-      override fun drawChild(canvas: Canvas?, child: View?, drawingTime: Long): Boolean {
+      override fun drawChild(
+        canvas: Canvas?,
+        child: View?,
+        drawingTime: Long
+      ): Boolean {
         val result = super.drawChild(canvas, child, drawingTime)
         if (SDK_INT >= LOLLIPOP && lastInsets != null) {
           val insets = lastInsets as WindowInsets
-          canvas?.drawRect(0f, measuredHeight.toFloat(), measuredWidth.toFloat(),
-              (measuredHeight + insets.systemWindowInsetBottom).toFloat(), blackPaint)
+          canvas?.drawRect(
+              0f, measuredHeight.toFloat(), measuredWidth.toFloat(),
+              (measuredHeight + insets.systemWindowInsetBottom).toFloat(), blackPaint
+          )
         }
         return result
       }
 
-      override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
+      override fun onMeasure(
+        widthMeasureSpec: Int,
+        heightMeasureSpec: Int
+      ) {
 
         var widthSize = View.MeasureSpec.getSize(widthMeasureSpec)
         var heightSize = View.MeasureSpec.getSize(heightMeasureSpec)
@@ -154,23 +163,33 @@ class PhotoViewer : GestureDetector.OnDoubleTapListener, GestureDetector.OnGestu
         if (layoutParams != null) {
           animatingImageView?.measure(
               View.MeasureSpec.makeMeasureSpec(layoutParams.width, View.MeasureSpec.AT_MOST),
-              View.MeasureSpec.makeMeasureSpec(layoutParams.height, View.MeasureSpec.AT_MOST))
+              View.MeasureSpec.makeMeasureSpec(layoutParams.height, View.MeasureSpec.AT_MOST)
+          )
         }
 
         containerView?.measure(
             View.MeasureSpec.makeMeasureSpec(widthSize, View.MeasureSpec.EXACTLY),
-            View.MeasureSpec.makeMeasureSpec(heightSize, View.MeasureSpec.EXACTLY))
+            View.MeasureSpec.makeMeasureSpec(heightSize, View.MeasureSpec.EXACTLY)
+        )
       }
 
-      override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
+      override fun onLayout(
+        changed: Boolean,
+        left: Int,
+        top: Int,
+        right: Int,
+        bottom: Int
+      ) {
         var x = 0
 
         if (SDK_INT >= LOLLIPOP && lastInsets != null) {
           x += (lastInsets as WindowInsets).systemWindowInsetLeft
         }
 
-        animatingImageView?.layout(x, 0, x + animatingImageView!!.measuredWidth,
-            animatingImageView?.measuredHeight!!)
+        animatingImageView?.layout(
+            x, 0, x + animatingImageView!!.measuredWidth,
+            animatingImageView?.measuredHeight!!
+        )
 
 
         if (changed) {
@@ -179,8 +198,11 @@ class PhotoViewer : GestureDetector.OnDoubleTapListener, GestureDetector.OnGestu
         }
       }
 
-      override fun startActionModeForChild(originalView: View?, callback: Callback?,
-          type: Int): ActionMode {
+      override fun startActionModeForChild(
+        originalView: View?,
+        callback: Callback?,
+        type: Int
+      ): ActionMode {
         if (SDK_INT >= M) {
           val view = parentActivity?.findViewById<View>(android.R.id.content)
           if (view is ViewGroup) {
@@ -222,7 +244,8 @@ class PhotoViewer : GestureDetector.OnDoubleTapListener, GestureDetector.OnGestu
         }
         insets.consumeSystemWindowInsets()
       })
-      containerView?.systemUiVisibility = SYSTEM_UI_FLAG_LAYOUT_STABLE or SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+      containerView?.systemUiVisibility = SYSTEM_UI_FLAG_LAYOUT_STABLE or
+          SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
     }
 
     windowLayoutParams = WindowManager.LayoutParams()
@@ -257,8 +280,10 @@ class PhotoViewer : GestureDetector.OnDoubleTapListener, GestureDetector.OnGestu
     animatingImageView?.pivotX = 0.0f
     animatingImageView?.pivotY = 0.0f
 
-    val bitmap = BitmapFactory.decodeResource(parentActivity?.resources,
-        R.drawable.image_placeholder)
+    val bitmap = BitmapFactory.decodeResource(
+        parentActivity?.resources,
+        R.drawable.image_placeholder
+    )
 
     val layoutParams = animatingImageView?.layoutParams
     layoutParams?.width = bitmap.width
@@ -268,7 +293,6 @@ class PhotoViewer : GestureDetector.OnDoubleTapListener, GestureDetector.OnGestu
 
 
     animatingImageView?.setImageBitmap(bitmap)
-
 
   }
 
@@ -286,8 +310,10 @@ class PhotoViewer : GestureDetector.OnDoubleTapListener, GestureDetector.OnGestu
     }
 
     if (scale == 1.0f) {
-      val atx = e?.x!! - getContainerViewWidth()!! / 2 - (e.x - getContainerViewWidth()!! / 2 - translationX) * (3.0f / scale)
-      val aty = e.y - getContainerViewHeight() / 2 - (e.y - getContainerViewHeight() / 2 - translationY) * (3.0f / scale)
+      val atx =
+        e?.x!! - getContainerViewWidth()!! / 2 - (e.x - getContainerViewWidth()!! / 2 - translationX) * (3.0f / scale)
+      val aty =
+        e.y - getContainerViewHeight() / 2 - (e.y - getContainerViewHeight() / 2 - translationY) * (3.0f / scale)
 
       animateTo(3.0f, atx, aty, true)
     }
@@ -313,18 +339,27 @@ class PhotoViewer : GestureDetector.OnDoubleTapListener, GestureDetector.OnGestu
     return false
   }
 
-  override fun onFling(p0: MotionEvent?, p1: MotionEvent?, p2: Float, p3: Float): Boolean {
+  override fun onFling(
+    p0: MotionEvent?,
+    p1: MotionEvent?,
+    p2: Float,
+    p3: Float
+  ): Boolean {
     return false
   }
 
-  override fun onScroll(p0: MotionEvent?, p1: MotionEvent?, p2: Float, p3: Float): Boolean {
+  override fun onScroll(
+    p0: MotionEvent?,
+    p1: MotionEvent?,
+    p2: Float,
+    p3: Float
+  ): Boolean {
     return false
   }
 
   override fun onLongPress(p0: MotionEvent?) {
     println("")
   }
-
 
   private fun getContainerViewHeight(): Int {
     var height = AndroidUtils.displaySize.y
@@ -359,12 +394,22 @@ class PhotoViewer : GestureDetector.OnDoubleTapListener, GestureDetector.OnGestu
     windowView = null
   }
 
-  private fun animateTo(newScale: Float, newTx: Float, newTy: Float, isZoom: Boolean) {
+  private fun animateTo(
+    newScale: Float,
+    newTx: Float,
+    newTy: Float,
+    isZoom: Boolean
+  ) {
     animateTo(newScale, newTx, newTy, isZoom, 250)
   }
 
-  private fun animateTo(newScale: Float, newTx: Float, newTy: Float, isZoom: Boolean,
-      duration: Int) {
+  private fun animateTo(
+    newScale: Float,
+    newTx: Float,
+    newTy: Float,
+    isZoom: Boolean,
+    duration: Int
+  ) {
 
     if (scale == newScale && translationX == newTx && translationY == newTy) {
       return
@@ -401,8 +446,10 @@ class PhotoViewer : GestureDetector.OnDoubleTapListener, GestureDetector.OnGestu
   private fun onTouchEvent(ev: MotionEvent?): Boolean {
 
     if (scale == 1.0f) {
-      val atx = ev?.x!! - getContainerViewWidth()!! / 2 - (ev.x - getContainerViewWidth()!! / 2 - translationX) * (3.0f / scale)
-      val aty = ev.y - getContainerViewHeight() / 2 - (ev.y - getContainerViewHeight() / 2 - translationY) * (3.0f / scale)
+      val atx =
+        ev?.x!! - getContainerViewWidth()!! / 2 - (ev.x - getContainerViewWidth()!! / 2 - translationX) * (3.0f / scale)
+      val aty =
+        ev.y - getContainerViewHeight() / 2 - (ev.y - getContainerViewHeight() / 2 - translationY) * (3.0f / scale)
 
       animateTo(3.0f, atx, aty, true)
     }
@@ -478,7 +525,6 @@ class PhotoViewer : GestureDetector.OnDoubleTapListener, GestureDetector.OnGestu
       }
     }
 
-
   }
 
   inner class FrameLayoutDrawer : FrameLayout {
@@ -487,33 +533,57 @@ class PhotoViewer : GestureDetector.OnDoubleTapListener, GestureDetector.OnGestu
 
     constructor(context: Context) : super(context)
 
-    constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
+    constructor(
+      context: Context,
+      attrs: AttributeSet
+    ) : super(context, attrs)
 
-    constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs,
-        defStyleAttr)
+    constructor(
+      context: Context,
+      attrs: AttributeSet,
+      defStyleAttr: Int
+    ) : super(
+        context, attrs,
+        defStyleAttr
+    )
 
     init {
       setWillNotDraw(false)
       paint.color = 0x33000000
     }
 
-    override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
+    override fun onMeasure(
+      widthMeasureSpec: Int,
+      heightMeasureSpec: Int
+    ) {
       super.onMeasure(widthMeasureSpec, heightMeasureSpec)
     }
 
-    override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
+    override fun onLayout(
+      changed: Boolean,
+      left: Int,
+      top: Int,
+      right: Int,
+      bottom: Int
+    ) {
       super.onLayout(changed, left, top, right, bottom)
     }
 
     override fun onDraw(canvas: Canvas?) {
       this@PhotoViewer.onDraw(canvas)
       if (Build.VERSION.SDK_INT >= 21 && statusBarHeight != 0) {
-        canvas?.drawRect(0f, 0f, measuredWidth.toFloat(), statusBarHeight.toFloat(),
-            paint)
+        canvas?.drawRect(
+            0f, 0f, measuredWidth.toFloat(), statusBarHeight.toFloat(),
+            paint
+        )
       }
     }
 
-    override fun drawChild(canvas: Canvas?, child: View?, drawingTime: Long): Boolean {
+    override fun drawChild(
+      canvas: Canvas?,
+      child: View?,
+      drawingTime: Long
+    ): Boolean {
       return super.drawChild(canvas, child, drawingTime)
     }
 

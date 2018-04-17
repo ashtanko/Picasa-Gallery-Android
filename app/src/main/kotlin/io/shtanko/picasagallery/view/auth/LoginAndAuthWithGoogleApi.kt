@@ -30,9 +30,11 @@ import java.lang.ref.WeakReference
 import java.util.ArrayList
 import java.util.Arrays
 
-class LoginAndAuthWithGoogleApi constructor(val activity: Activity,
-    callback: LoginAndAuthListener,
-    val name: String) : LoginAndAuth, GoogleApiClient.ConnectionCallbacks,
+class LoginAndAuthWithGoogleApi constructor(
+  val activity: Activity,
+  callback: LoginAndAuthListener,
+  val name: String
+) : LoginAndAuth, GoogleApiClient.ConnectionCallbacks,
     GoogleApiClient.OnConnectionFailedListener {
 
   // Request codes for the UIs that we show
@@ -42,10 +44,13 @@ class LoginAndAuthWithGoogleApi constructor(val activity: Activity,
   private val REQUEST_PLAY_SERVICES_ERROR_DIALOG = 103
 
   // Auth scopes we need
-  private val AUTH_SCOPES = ArrayList(Arrays.asList(
-      Scopes.PLUS_LOGIN,
-      Scopes.DRIVE_APPFOLDER,
-      "https://www.googleapis.com/auth/plus.profile.emails.read"))
+  private val AUTH_SCOPES = ArrayList(
+      Arrays.asList(
+          Scopes.PLUS_LOGIN,
+          Scopes.DRIVE_APPFOLDER,
+          "https://www.googleapis.com/auth/plus.profile.emails.read"
+      )
+  )
 
   private var AUTH_TOKEN_TYPE: String
 
@@ -69,7 +74,6 @@ class LoginAndAuthWithGoogleApi constructor(val activity: Activity,
   // Name of the account to log in as (e.g. "foo@example.com")
   internal var accountName: String = name
 
-
   init {
     // Initialize oauth scope
     val sb = StringBuilder()
@@ -78,9 +82,9 @@ class LoginAndAuthWithGoogleApi constructor(val activity: Activity,
       sb.append(scope)
       sb.append(" ")
     }
-    AUTH_TOKEN_TYPE = sb.toString().trim()
+    AUTH_TOKEN_TYPE = sb.toString()
+        .trim()
   }
-
 
   // Controls whether or not we can show sign-in UI. Starts as true;
   // when sign-in *fails*, we will show the UI only once and set this flag to false.
@@ -92,7 +96,8 @@ class LoginAndAuthWithGoogleApi constructor(val activity: Activity,
     val activity = activityRef.get()
     if (activity == null) {
       verbose(
-          "Helper lost Activity reference, ignoring ($methodName)")
+          "Helper lost Activity reference, ignoring ($methodName)"
+      )
     }
     return activity
   }
@@ -135,12 +140,15 @@ class LoginAndAuthWithGoogleApi constructor(val activity: Activity,
     //val activity = getActivity("onConnected()") ?: return
   }
 
-
   override fun stop() {
 
   }
 
-  override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent): Boolean {
+  override fun onActivityResult(
+    requestCode: Int,
+    resultCode: Int,
+    data: Intent
+  ): Boolean {
     return false
   }
 

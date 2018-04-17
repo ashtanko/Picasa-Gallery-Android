@@ -18,12 +18,17 @@
 package io.shtanko.picasagallery.data.entity.user
 
 import io.shtanko.picasagallery.Config.USER_VIEW_TYPE_ID
+import io.shtanko.picasagallery.view.delegate.ViewType
 
-data class User(var personName: String? = "",
-        var personGivenName: String? = "",
-        var personFamilyName: String? = "",
-        var personEmail: String? = "",
-        var personId: String? = "") : UserType {
+interface UserType : ViewType
 
-    override fun getViewType() = USER_VIEW_TYPE_ID
+data class User(
+  var personName: String? = "",
+  var personGivenName: String? = "",
+  var personFamilyName: String? = "",
+  var personEmail: String? = "",
+  var personId: String? = ""
+) : UserType {
+
+  override fun getViewType() = USER_VIEW_TYPE_ID
 }

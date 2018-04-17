@@ -23,7 +23,8 @@ import android.view.View
 import io.shtanko.picasagallery.view.delegate.ViewType
 
 abstract class BaseViewHolder(itemView: View?) : ViewHolder(
-    itemView), View.OnClickListener {
+    itemView
+), View.OnClickListener {
 
   init {
     itemView?.setOnClickListener(this)

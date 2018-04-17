@@ -23,15 +23,17 @@ import com.google.gson.annotations.SerializedName
 import java.io.Reader
 
 data class UserFeedResponseEntity(
-    @SerializedName("feed") var feed: UserFeedEntity,
-    @SerializedName("version") var version: String,
-    @SerializedName("encoding") var encoding: String,
-    @SerializedName("gphoto" + "$" + "id") val albumId: SingleStringElementEntity
+  @SerializedName("feed") var feed: UserFeedEntity,
+  @SerializedName("version") var version: String,
+  @SerializedName("encoding") var encoding: String,
+  @SerializedName("gphoto" + "$" + "id") val albumId: SingleStringElementEntity
 ) {
   fun asJson() = Gson().toJson(this)
 
   object Deserializer : ResponseDeserializable<UserFeedResponseEntity> {
-    override fun deserialize(reader: Reader): UserFeedResponseEntity = Gson().fromJson(reader,
-        UserFeedResponseEntity::class.java)
+    override fun deserialize(reader: Reader): UserFeedResponseEntity = Gson().fromJson(
+        reader,
+        UserFeedResponseEntity::class.java
+    )
   }
 }

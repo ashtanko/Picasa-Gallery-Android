@@ -41,7 +41,8 @@ class InternalAlbumsActivity : BaseActivity() {
     val bundle = Bundle()
     bundle.putString(PHOTO_ID_KEY, photoId)
     bundle.putString(ALBUM_ID_KEY, albumId)
-    internalAlbumsFragmentProvider.get().arguments = bundle
+    internalAlbumsFragmentProvider.get()
+        .arguments = bundle
     addFragment(R.id.content_frame, internalAlbumsFragmentProvider)
   }
 }

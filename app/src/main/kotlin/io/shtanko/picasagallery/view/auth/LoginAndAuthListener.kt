@@ -24,7 +24,10 @@ package io.shtanko.picasagallery.view.auth
 interface LoginAndAuthListener {
   abstract fun onPlusInfoLoaded(accountName: String)
 
-  abstract fun onAuthSuccess(accountName: String, newlyAuthenticated: Boolean)
+  abstract fun onAuthSuccess(
+    accountName: String,
+    newlyAuthenticated: Boolean
+  )
 
   abstract fun onAuthFailure(accountName: String)
 }

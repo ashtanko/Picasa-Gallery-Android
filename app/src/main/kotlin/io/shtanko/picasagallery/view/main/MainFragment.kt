@@ -44,87 +44,96 @@ import javax.inject.Inject
 @ActivityScoped
 class MainFragment @Inject constructor() : BaseFragment(), View, OnItemClickListener {
 
-    // region injection
-    @Inject
-    lateinit var presenter: Presenter
-    @Inject
-    lateinit var mainAdapter: MainAdapter
-    // endregion
+  // region injection
+  @Inject
+  lateinit var presenter: Presenter
+  @Inject
+  lateinit var mainAdapter: MainAdapter
+  // endregion
 
-    private lateinit var progressBar: ProgressBar
-    private var albumClickListener: AlbumClickListener? = null
+  private lateinit var progressBar: ProgressBar
+  private var albumClickListener: AlbumClickListener? = null
 
-    override fun onAttach(context: Context?) {
-        super.onAttach(context)
-        if (context is MainActivity) {
-            this.albumClickListener = context
+  override fun onAttach(context: Context?) {
+    super.onAttach(context)
+    if (context is MainActivity) {
+      this.albumClickListener = context
+    }
+  }
+
+  override fun onDetach() {
+    super.onDetach()
+    this.albumClickListener = null
+  }
+
+  override fun onCreateView(
+    inflater: LayoutInflater,
+    container: ViewGroup?,
+    savedInstanceState: Bundle?
+  ): android.view.View? {
+    val rootView = inflater.inflate(R.layout.container_list_test_fragment, container, false)
+    val gridLayoutManager = GridLayoutManager(activity, TWO_COLUMNS_GRID)
+
+    with(rootView) {
+      progressBar = rootView.findViewById(R.id.progress_bar)
+
+      main_content_grid.apply {
+        setHasFixedSize(true)
+        layoutManager = gridLayoutManager
+        adapter = mainAdapter
+
+        activity?.let {
+          addItemDecoration(
+              ItemDividerDecoration(
+                  it.resources.getDimensionPixelSize(R.dimen.divider_height),
+                  ContextCompat.getColor(it, R.color.divider)
+              )
+          )
         }
+      }
+      mainAdapter.onItemClickListener = this@MainFragment
     }
 
-    override fun onDetach() {
-        super.onDetach()
-        this.albumClickListener = null
+    return rootView
+  }
+
+  override fun onViewCreated(
+    view: android.view.View,
+    savedState: Bundle?
+  ) {
+    super.onViewCreated(view, savedState)
+    presenter.takeView(this)
+    presenter.getAlbums()
+  }
+
+  override fun onDestroy() {
+    super.onDestroy()
+    presenter.dropView()
+  }
+
+  override fun showError(message: String) {
+    shortToast(message)
+  }
+
+  override fun onShowAlbums(list: AlbumsList) {
+    mainAdapter.items = list
+  }
+
+  override fun setLoadingIndicator(active: Boolean) {
+    progressBar.visibility = if (active) VISIBLE else GONE
+  }
+
+  override fun <T> onItemClicked(model: T) {
+    if (model is AlbumType) {
+      presenter.onAlbumClick(model)
     }
+  }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-            savedInstanceState: Bundle?): android.view.View? {
-        val rootView = inflater.inflate(R.layout.container_list_test_fragment, container, false)
-        val gridLayoutManager = GridLayoutManager(activity, TWO_COLUMNS_GRID)
+  override fun viewAlbum(model: ViewType) {
+    albumClickListener?.onAlbumClick(model)
+  }
 
-        with(rootView) {
-            progressBar = rootView.findViewById(R.id.progress_bar)
-
-            main_content_grid.apply {
-                setHasFixedSize(true)
-                layoutManager = gridLayoutManager
-                adapter = mainAdapter
-
-                activity?.let {
-                    addItemDecoration(ItemDividerDecoration(
-                            it.resources.getDimensionPixelSize(R.dimen.divider_height),
-                            ContextCompat.getColor(it, R.color.divider)))
-                }
-            }
-            mainAdapter.onItemClickListener = this@MainFragment
-        }
-
-        return rootView
-    }
-
-    override fun onViewCreated(view: android.view.View, savedState: Bundle?) {
-        super.onViewCreated(view, savedState)
-        presenter.takeView(this)
-        presenter.getAlbums()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        presenter.dropView()
-    }
-
-    override fun showError(message: String) {
-        shortToast(message)
-    }
-
-    override fun onShowAlbums(list: AlbumsList) {
-        mainAdapter.items = list
-    }
-
-    override fun setLoadingIndicator(active: Boolean) {
-        progressBar.visibility = if (active) VISIBLE else GONE
-    }
-
-    override fun <T> onItemClicked(model: T) {
-        if (model is AlbumType) {
-            presenter.onAlbumClick(model)
-        }
-    }
-
-    override fun viewAlbum(model: ViewType) {
-        albumClickListener?.onAlbumClick(model)
-    }
-
-    interface AlbumClickListener {
-        fun onAlbumClick(model: ViewType)
-    }
+  interface AlbumClickListener {
+    fun onAlbumClick(model: ViewType)
+  }
 }

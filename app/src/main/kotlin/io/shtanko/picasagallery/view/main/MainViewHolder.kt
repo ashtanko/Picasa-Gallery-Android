@@ -32,33 +32,33 @@ import io.shtanko.picasagallery.view.widget.FourThreeImageView
 
 class MainViewHolder(itemView: View?) : BaseViewHolder(itemView), Divided, OnLongClickListener {
 
-    val image = itemView?.findViewById<FourThreeImageView>(R.id.album)
+  val image = itemView?.findViewById<FourThreeImageView>(R.id.album)
 
-    init {
+  init {
 
+  }
+
+  override fun bind(item: ViewType) {
+    itemView.setOnLongClickListener(this)
+    if (item is Album) {
+      GlideApp.with(itemView.context)
+          .asGif()
+          .load(item.imageUrl)
+          .placeholder(R.drawable.image_placeholder)
+          .error(R.drawable.image_placeholder)
+          .fitCenter()
+          .diskCacheStrategy(DiskCacheStrategy.ALL)
+          .into(image)
+    }
+  }
+
+  override fun onLongClick(view: View?): Boolean {
+
+    view?.let { view ->
+      val vibrator = view.context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+      val pattern = longArrayOf(0, 1000, 0)
     }
 
-    override fun bind(item: ViewType) {
-        itemView.setOnLongClickListener(this)
-        if (item is Album) {
-            GlideApp.with(itemView.context)
-                    .asGif()
-                    .load(item.imageUrl)
-                    .placeholder(R.drawable.image_placeholder)
-                    .error(R.drawable.image_placeholder)
-                    .fitCenter()
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .into(image)
-        }
-    }
-
-    override fun onLongClick(view: View?): Boolean {
-
-        view?.let { view ->
-            val vibrator = view.context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
-            val pattern = longArrayOf(0, 1000, 0)
-        }
-
-        return true
-    }
+    return true
+  }
 }

@@ -26,9 +26,10 @@ import io.reactivex.schedulers.Schedulers
 import io.shtanko.picasagallery.core.executor.PostExecutionThread
 import io.shtanko.picasagallery.core.executor.ThreadExecutor
 
-
-abstract class UseCase<T, in P>(private val threadExecutor: ThreadExecutor,
-    private val postExecutionThread: PostExecutionThread) {
+abstract class UseCase<T, in P>(
+  private val threadExecutor: ThreadExecutor,
+  private val postExecutionThread: PostExecutionThread
+) {
 
   /**
    * Builds an {@link rx.Observable} which will be used when executing the current {@link UseCase}.
@@ -37,8 +38,10 @@ abstract class UseCase<T, in P>(private val threadExecutor: ThreadExecutor,
 
   private var disposables = CompositeDisposable()
 
-
-  fun execute(observer: DisposableObserver<T>, params: P) {
+  fun execute(
+    observer: DisposableObserver<T>,
+    params: P
+  ) {
     Preconditions.checkNotNull(observer)
 
     val observable = this.buildUseCaseObservable(params)

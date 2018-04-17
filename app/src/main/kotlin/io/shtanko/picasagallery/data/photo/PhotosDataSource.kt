@@ -18,8 +18,18 @@
 package io.shtanko.picasagallery.data.photo
 
 import io.reactivex.Flowable
+import io.shtanko.picasagallery.data.api.ApiManager
 import io.shtanko.picasagallery.extensions.PhotosList
+import javax.inject.Inject
+import javax.inject.Singleton
 
 interface PhotosDataSource {
   fun getPhotos(): Flowable<PhotosList>
+}
+
+@Singleton
+class PhotosDataSourceImpl @Inject constructor(val api: ApiManager) : PhotosDataSource {
+  override fun getPhotos(): Flowable<PhotosList> {
+    return Flowable.empty()
+  }
 }
