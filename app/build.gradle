@@ -90,6 +90,10 @@ android {
     versionCode gitCommitCount
     versionName "1.0"
     testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+    def filesAuthorityValue = applicationId + ".shareprovider"
+    buildConfigField "String", "FILES_AUTHORITY", "\"${filesAuthorityValue}\""
+    manifestPlaceholders = [filesAuthority: filesAuthorityValue]
   }
 
   testOptions {

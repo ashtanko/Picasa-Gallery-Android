@@ -32,7 +32,7 @@ class MockAlbumDataSourceImpl @Inject constructor() : AlbumDataSource {
   override fun getAlbums(): Flowable<AlbumsList> {
     val dummyList = ArrayList<AlbumType>()
     return Flowable.just(getImages().mapTo(dummyList) {
-      Album("Item", it, "", "")
+      Album("Item", "", it, "")
     })
   }
 }

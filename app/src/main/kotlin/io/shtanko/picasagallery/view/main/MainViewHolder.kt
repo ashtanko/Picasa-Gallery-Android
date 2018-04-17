@@ -42,7 +42,7 @@ class MainViewHolder(itemView: View?) : BaseViewHolder(itemView), Divided, OnLon
     itemView.setOnLongClickListener(this)
     if (item is Album) {
       GlideApp.with(itemView.context)
-          .asGif()
+          //.asGif()
           .load(item.imageUrl)
           .placeholder(R.drawable.image_placeholder)
           .error(R.drawable.image_placeholder)
