@@ -46,13 +46,13 @@ class LaunchPresenterTest {
     }
 
     @Test
-    fun isSignedInTest() {
+    fun `is signed in`() {
         presenter.isSignIn()
         verify(view, never()).onSignedIn()
     }
 
     @Test
-    fun isSignedOutTest() {
+    fun `is signed out`() {
         presenter.isSignIn()
         verify(view, never()).onSignedOut()
     }

@@ -57,7 +57,7 @@ class InternalAlbumsPresenterTest {
   }
 
   @Test
-  fun onSuccessLoadedContentTest() {
+  fun `on internal albums loaded successfully`() {
     presenter.getContent()
     verify(view, times(1)).setLoadingIndicator(true)
     verify(view, times(1)).showData(fakeContent)
@@ -65,7 +65,7 @@ class InternalAlbumsPresenterTest {
   }
 
   @Test
-  fun onFailureLoadedContentTest() {
+  fun `on internal albums loaded fail`() {
     presenter = InternalAlbumsPresenter(FakeInternalAlbumsRepositoryWithError())
     presenter.takeView(view)
     presenter.getContent()

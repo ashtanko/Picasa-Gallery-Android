@@ -49,19 +49,19 @@ class PhotosPresenterTest {
   }
 
   @Test
-  fun onPhotoItemClickTest() {
+  fun `on photo item click`() {
     presenter.onPhotoClick(getFakePhoto())
     verify(view, times(1)).viewPhoto(getFakePhoto())
   }
 
   @Test
-  fun onSuccessGetPhotosTest() {
+  fun `on success get photos`() {
     presenter.getPhotos()
     verify(view, times(1)).showPhotos(getFakePhotos())
   }
 
   @Test
-  fun onErrorGetPhotosTest() {
+  fun `on error get photos`() {
     presenter = PhotosPresenter(FakePhotosRepositoryWithException())
     presenter.takeView(view)
     presenter.getPhotos()

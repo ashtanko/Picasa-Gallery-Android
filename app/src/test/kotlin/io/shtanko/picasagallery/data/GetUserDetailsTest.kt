@@ -46,7 +46,7 @@ class GetUserDetailsTest {
   }
 
   @Test
-  fun getUserTest() {
+  fun `get user successfully`() {
     `when`(getUserDetails?.userRepository?.getUserData()).thenReturn(
         Flowable.just(MockUser.create()))
     `when`(mockUserRepository.getUserData()).thenReturn(

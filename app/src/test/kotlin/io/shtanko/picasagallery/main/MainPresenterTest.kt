@@ -57,28 +57,28 @@ class MainPresenterTest {
   }
 
   @Test
-  fun onAlbumClickTest() {
+  fun `on dummy album click`() {
     val album = getDummyAlbumsList()[0]
     presenter.onAlbumClick(album)
     verify(view).viewAlbum(album)
   }
 
   @Test
-  fun albumClickTest() {
+  fun `on custom album click`() {
     val dummyModel = Album("", "", "", "")
     presenter.onAlbumClick(dummyModel)
     verify(view, times(1)).viewAlbum(dummyModel)
   }
 
   @Test
-  fun successGetAlbumsTest() {
+  fun `when get albums successful`() {
     presenter.getAlbums()
     verify(view, times(1)).onShowAlbums(getDummyAlbumsList())
     verify(view, times(1)).setLoadingIndicator(false)
   }
 
   @Test
-  fun errorGetAlbumsTest() {
+  fun `when get albums failure`() {
     presenter = MainPresenter(FakeAlbumRepositoryWithException())
     presenter.takeView(view)
     presenter.getAlbums()

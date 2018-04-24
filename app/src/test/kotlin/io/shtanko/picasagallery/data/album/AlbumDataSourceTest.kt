@@ -44,7 +44,7 @@ class AlbumDataSourceTest {
 
   @Test
   @Throws(UnnecessaryStubbingException::class)
-  fun getAlbumsTest() {
+  fun `when get albums successfully`() {
     val fakeUserEntity = mock<UserFeedResponseEntity>()
     val fakeUserObservable = Observable.just(fakeUserEntity)
     given(mockApiManager.getUser(FAKE_USER_ID)).willReturn(fakeUserObservable)
