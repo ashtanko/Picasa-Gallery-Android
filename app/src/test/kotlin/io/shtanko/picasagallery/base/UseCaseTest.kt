@@ -41,7 +41,7 @@ class UseCaseTest {
   }
 
   @Test
-  fun whenExecutingUseCaseTest() {
+  fun `when executing use case`() {
     val subscriber = TestObserver()
     useCase?.execute(subscriber, UseCaseTestClass.Params.createQuery())
     useCase?.unSubscribe()

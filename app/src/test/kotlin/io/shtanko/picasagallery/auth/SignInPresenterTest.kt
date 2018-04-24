@@ -45,20 +45,14 @@ class SignInPresenterTest {
     }
 
     @Test
-    fun notNullTest() {
-        Assert.assertNull(null)
-    }
-
-    @Test
-    fun saveUserDataTest() {
+    fun `indicator is showing when save user data`() {
         presenter.saveUserData(User("", "", "", "", ""))
         verify(view).setLoadingIndicator(false)
     }
 
     @Test
-    fun saveTokenTest() {
+    fun `indicator is showing when save token process is starting`() {
         presenter.saveToken("token")
         verify(view).setLoadingIndicator(false)
     }
-
 }
