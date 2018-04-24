@@ -38,10 +38,7 @@ abstract class BaseAdapter<T : ViewType> : Adapter<ViewHolder>() {
 
   protected var delegateAdapters = SparseArrayCompat<ViewTypeAdapterDelegate>()
 
-  override fun onCreateViewHolder(
-    parent: ViewGroup?,
-    viewType: Int
-  ): ViewHolder =
+  override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder =
     delegateAdapters.get(viewType).onCreateViewHolder(parent)
 
   override fun onBindViewHolder(
