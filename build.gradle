@@ -18,7 +18,7 @@
 apply from: 'ci.gradle'
 
 buildscript {
-  ext.kotlin_version = '1.2.21'
+  ext.kotlin_version = '1.2.40'
   repositories {
     mavenCentral()
     jcenter()
@@ -26,12 +26,14 @@ buildscript {
       url 'https://maven.google.com/'
       name 'Google'
     }
+    google()
   }
   dependencies {
-    classpath 'com.android.tools.build:gradle:3.0.1'
+    classpath 'com.android.tools.build:gradle:3.2.0-alpha12'
     classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     classpath 'com.google.gms:google-services:3.1.1'
     classpath 'com.dicedmelon.gradle:jacoco-android:0.1.2'
+    classpath 'org.codehaus.groovy:groovy-all:2.4.12'
     classpath 'org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.8.1'
     classpath 'net.saliman:gradle-cobertura-plugin:2.2.2'
     classpath 'org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.5'
