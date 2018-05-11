@@ -14,35 +14,37 @@ notifications:
 android:
   components:
   
-    - build-tools-26
-    - android-14
-    - sys-img-armeabi-v7a-android-14
-    - android-15
-    - sys-img-armeabi-v7a-android-15
-    - android-16
-    - sys-img-armeabi-v7a-android-16
-    - android-17
-    - sys-img-armeabi-v7a-android-17
-    - android-18
-    - sys-img-armeabi-v7a-android-18
-    - android-19
-    - sys-img-armeabi-v7a-android-19
-    - android-20
-    - sys-img-armeabi-v7a-android-20
-    - android-21
-    - sys-img-armeabi-v7a-android-21
-    - android-22
-    - sys-img-armeabi-v7a-android-22
-    - android-23
-    - sys-img-armeabi-v7a-android-23
-    - android-24
-    - sys-img-armeabi-v7a-android-24
-    - android-25
-    - sys-img-armeabi-v7a-android-25
-    - android-26
-    - sys-img-armeabi-v7a-android-26
-    - android-27
-    - sys-img-armeabi-v7a-android-27
+#    - build-tools-26
+#    - android-14
+#    - sys-img-armeabi-v7a-android-14
+#    - android-15
+#    - sys-img-armeabi-v7a-android-15
+#    - android-16
+#    - sys-img-armeabi-v7a-android-16
+#    - android-17
+#    - sys-img-armeabi-v7a-android-17
+#    - android-18
+#    - sys-img-armeabi-v7a-android-18
+#    - android-19
+#    - sys-img-armeabi-v7a-android-19
+#    - android-20
+#    - sys-img-armeabi-v7a-android-20
+#    - android-21
+#    - sys-img-armeabi-v7a-android-21
+#    - android-22
+#    - sys-img-armeabi-v7a-android-22
+#    - android-23
+#    - sys-img-armeabi-v7a-android-23
+#    - android-24
+#    - sys-img-armeabi-v7a-android-24
+#    - android-25
+#    - sys-img-armeabi-v7a-android-25
+#    - android-26
+#    - sys-img-armeabi-v7a-android-26
+#    - android-27
+#    - sys-img-armeabi-v7a-android-27
+
+    - android-$SDK_API
 
     - tools
     - platform-tools
@@ -87,8 +89,12 @@ cache:
   - $HOME/.gradle/wrapper/
 
 matrix:
+    - TEST_TYPE=unit
+#    - TEST_TYPE=instrumentation EMULATOR_TAG=android EMULATOR_API=21 ABI=armeabi-v7a
+
   include:
     - env: ANDROID_TARGET=android-27  ANDROID_ABI=armeabi-v7a
+
   allow_failures:
     - env: ANDROID_TARGET=android-14  ANDROID_ABI=armeabi-v7a
     - env: ANDROID_TARGET=android-15  ANDROID_ABI=armeabi-v7a
@@ -108,6 +114,7 @@ matrix:
 
 env:
   global:
+    - SDK_API=P
     - ANDROID_API=27
     - EMULATOR_API_LEVEL=25
     - ANDROID_BUILD_TOOLS=27.0.0
@@ -116,9 +123,13 @@ env:
     - ANDROID_ABI=armeabi-v7a
     - ANDROID_TAG=google_apis
     - CODECOV_TOKEN=c3c594dd-b509-4ca0-9fd0-248dc1af7cf3
+    - TEST_TYPE=unit
+
 
 before_script:
   # Create and start emulator
+  - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+  - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
   - echo PATH $PATH
   - android list target
   - android list sdk
