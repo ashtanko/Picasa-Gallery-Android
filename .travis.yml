@@ -158,8 +158,8 @@ script:
   - adb devices
   - adb shell input keyevent 82 &
   - "./gradlew clean build -Pbuild=dev -PdisablePreDex --stacktrace createDevDebugUnitTestCoverageReport createDevDebugUnitTestCoverageReportKotlin coveralls"
-  - sh ./config/ci-unit-tests.sh
-  - travis_wait sh ./config/ci-setup-emulator.sh
-  - travis_wait sh ./config/ci-instrumentation-tests.sh
+  - bash ./config/ci-unit-tests.sh
+  - travis_wait bash ./config/ci-setup-emulator.sh
+  - travis_wait bash ./config/ci-instrumentation-tests.sh
 after_success:
   - codecov
