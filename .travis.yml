@@ -161,4 +161,4 @@ script:
   - travis_wait bash ./config/ci-setup-emulator.sh
   - travis_wait bash ./config/ci-instrumentation-tests.sh
 after_success:
-  - codecov
+#  - codecov
