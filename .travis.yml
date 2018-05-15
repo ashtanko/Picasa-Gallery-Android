@@ -87,8 +87,8 @@ env:
 
   matrix:
     - TEST_TYPE=unit
-    - TEST_TYPE=instrumentation EMULATOR_TAG=android EMULATOR_API=21 ABI=armeabi-v7a
-    - TEST_TYPE=instrumentation EMULATOR_TAG=android EMULATOR_API=19 ABI=armeabi-v7a
+#    - TEST_TYPE=instrumentation EMULATOR_TAG=android EMULATOR_API=21 ABI=armeabi-v7a
+#    - TEST_TYPE=instrumentation EMULATOR_TAG=android EMULATOR_API=19 ABI=armeabi-v7a
 
   include:
     - env: ANDROID_TARGET=android-27  ANDROID_ABI=armeabi-v7a
