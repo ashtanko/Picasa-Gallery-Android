@@ -17,7 +17,7 @@
 
 dependencies {
   // region CONSTANTS
-  def supportVersion = '27.0.2'
+  def supportVersion = '27.1.1'
   def daggerVersion = '2.14.1'
   def playServicesVersion = '11.8.0'
   def espressoVersion = '3.0.1'
@@ -29,10 +29,10 @@ dependencies {
   // endregion
 
   // region SUPPORT
-  implementation "com.android.support:appcompat-v7:${supportVersion}"
-  implementation "com.android.support:design:${supportVersion}"
-  implementation "com.android.support:cardview-v7:${supportVersion}"
-  implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+  api "com.android.support:appcompat-v7:${supportVersion}"
+  api "com.android.support:design:${supportVersion}"
+  api "com.android.support:cardview-v7:${supportVersion}"
+  api 'com.android.support.constraint:constraint-layout:1.1.0'
   // endregion
 
   // region KOTLIN
@@ -55,7 +55,7 @@ dependencies {
   // endregion
 
   // region PLAY SERVICES
-  implementation "com.google.android.gms:play-services-auth:${playServicesVersion}"
+  api "com.google.android.gms:play-services-auth:${playServicesVersion}"
   // endregion
 
   // region RX
@@ -78,29 +78,29 @@ dependencies {
   // endregion
 
   // region ANDROID TESTING
-  androidTestImplementation "com.android.support.test:runner:$runnerRulesVersion"
-  androidTestImplementation "com.android.support.test:rules:$runnerRulesVersion"
+  androidTestApi "com.android.support.test:runner:$runnerRulesVersion"
+  androidTestApi "com.android.support.test:rules:$runnerRulesVersion"
 
-  androidTestImplementation("com.android.support.test.espresso:espresso-core:$espressoVersion") {
+  androidTestApi("com.android.support.test.espresso:espresso-core:$espressoVersion") {
     exclude group: 'com.android.support', module: 'support-annotations'
     exclude group: 'com.android.support', module: 'appcompat'
     exclude group: 'com.android.support', module: 'support-v4'
     exclude module: 'recyclerview-v7'
   }
 
-  androidTestImplementation "com.android.support.test.espresso:espresso-contrib:$espressoVersion"
-  androidTestImplementation "com.android.support.test.espresso:espresso-intents:$espressoVersion"
-  androidTestImplementation "com.android.support:support-annotations:$supportVersion"
-  androidTestImplementation "com.android.support:design:$supportVersion"
-  androidTestImplementation "com.android.support.test.espresso.idling:idling-concurrent:$espressoVersion"
-  implementation "com.android.support.test.espresso:espresso-idling-resource:$espressoVersion"
-  androidTestImplementation "com.google.code.findbugs:jsr305:3.0.2"
+  androidTestApi "com.android.support.test.espresso:espresso-contrib:$espressoVersion"
+  androidTestApi "com.android.support.test.espresso:espresso-intents:$espressoVersion"
+  androidTestApi "com.android.support:support-annotations:$supportVersion"
+  androidTestApi "com.android.support:design:$supportVersion"
+  androidTestApi "com.android.support.test.espresso.idling:idling-concurrent:$espressoVersion"
+  api "com.android.support.test.espresso:espresso-idling-resource:$espressoVersion"
+  androidTestApi "com.google.code.findbugs:jsr305:3.0.2"
   // endregion
 
   // region UNIT TESTING
-  testCompile "junit:junit:$junitVersion"
-  testCompile 'org.assertj:assertj-core:3.8.0'
-  testCompile('com.nhaarman:mockito-kotlin:1.5.0') {
+  testApi "junit:junit:$junitVersion"
+  testApi 'org.assertj:assertj-core:3.8.0'
+  testApi('com.nhaarman:mockito-kotlin:1.5.0') {
     exclude group: 'org.jetbrains.kotlin'
   }
   // endregion
