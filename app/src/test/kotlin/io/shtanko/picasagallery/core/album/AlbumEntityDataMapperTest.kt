@@ -57,7 +57,7 @@ class AlbumEntityDataMapperTest {
   }
 
   @Test
-  fun transformAlbumEntityTest() {
+  fun `transform AlbumEntity`() {
     val entity = createFakeAlbumEntity()
     val album = albumEntityDataMapper?.transform(entity)
     assertThat(album, `is`(instanceOf(Album::class.java)))
@@ -65,7 +65,7 @@ class AlbumEntityDataMapperTest {
   }
 
   @Test
-  fun transformAlbumEntityCollectionTest() {
+  fun `transform collection of AlbumEntity`() {
     val mockAlbumEntityOne = mock<AlbumEntity>()
     val mockAlbumEntityTwo = mock<AlbumEntity>()
 

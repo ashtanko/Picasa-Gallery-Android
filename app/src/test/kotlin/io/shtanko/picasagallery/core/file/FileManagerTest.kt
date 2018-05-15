@@ -39,12 +39,12 @@ class FileManagerTest {
   }
 
   @Test
-  fun isFileExistsTest() {
+  fun `is file exists`() {
     assertEquals(manager.exists(getTmpFile()), true)
   }
 
   @Test
-  fun writeToFileTest() {
+  fun `write to file`() {
     val file = getTmpFile()
     manager.writeToFile(file, FILE_CONTENT)
     assertEquals(manager.readFileContent(file), FILE_CONTENT)
