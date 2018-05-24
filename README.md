@@ -1,4 +1,4 @@
-# Picasa-Gallery-Android
+# Picasa Gallery Android
 
 | **`Travis`** | **`Codecov`** | **`Codebeat`** | **`Coverage`** | **`Dependenices`** |
 |-----------------|---------------------|------------------|-------------------|---------------|
