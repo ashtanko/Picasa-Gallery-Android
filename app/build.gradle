@@ -29,6 +29,8 @@ apply plugin: 'org.standardout.versioneye'
 final RELEASE = 'release'
 final MOCK = 'mock'
 final DEV = 'dev'
+// please set FLAVOR_TO_KEEP to 'dev', and set 'other' exclude dev
+final FLAVOR_TO_KEEP = 'dev'
 final RELEASE_PROPERTIES_FILE = 'config/release.properties'
 final DEBUG_PROPERTIES_FILE = 'config/debug.properties'
 final COMPILE_SDK_VERSION = 27
@@ -163,12 +165,12 @@ android {
 
     main {
       res.srcDirs = ['src/main/res/main',
-                     'src/main/res/album',
-                     'src/main/res/user',
-                     'src/main/res/about',
-                     'src/main/res/auth',
-                     'src/main/res/resources',
-                     'src/main/res']
+          'src/main/res/album',
+          'src/main/res/user',
+          'src/main/res/about',
+          'src/main/res/auth',
+          'src/main/res/resources',
+          'src/main/res']
     }
   }
 
@@ -177,7 +179,7 @@ android {
   def typeName = ''
   def flavorName = ''
 
-  if (build_param != DEV) {
+  if (build_param != DEV && FLAVOR_TO_KEEP != DEV) {
     //exclude dev
     android.variantFilter { variant ->
 
@@ -226,7 +228,6 @@ kapt {
 kotlin {
   experimental {
     coroutines 'enable'
-    //useBuildCache = true
   }
 }
 
