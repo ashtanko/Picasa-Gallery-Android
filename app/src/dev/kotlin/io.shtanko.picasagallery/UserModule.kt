@@ -27,7 +27,7 @@ import io.shtanko.picasagallery.data.user.GetUserDetails.Params
 import io.shtanko.picasagallery.data.user.GetUserRepositoryImpl
 import io.shtanko.picasagallery.data.user.UserDataSourceImpl
 import io.shtanko.picasagallery.data.user.UserRepository
-import io.shtanko.picasagallery.view.base.UseCase
+import io.shtanko.picasagallery.ui.base.UseCase
 import javax.inject.Named
 import javax.inject.Singleton
 
