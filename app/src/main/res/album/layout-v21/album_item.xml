@@ -16,7 +16,7 @@
   ~
   -->
 
-<io.shtanko.picasagallery.view.widget.FourThreeImageView
+<io.shtanko.picasagallery.ui.widget.FourThreeImageView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/album"
     android:layout_width="match_parent"

@@ -18,7 +18,7 @@
 package io.shtanko.picasagallery.launch
 
 import io.shtanko.picasagallery.util.AcceptanceTest
-import io.shtanko.picasagallery.view.launch.LaunchActivity
+import io.shtanko.picasagallery.ui.launch.LaunchActivity
 import org.junit.Assert
 import org.junit.Test
 

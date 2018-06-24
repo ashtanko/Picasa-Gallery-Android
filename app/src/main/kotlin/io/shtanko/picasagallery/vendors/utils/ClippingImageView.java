@@ -26,7 +26,7 @@ import android.graphics.Paint;
 import android.graphics.RectF;
 import android.graphics.Shader;
 import android.view.View;
-import io.shtanko.picasagallery.view.util.AndroidUtils;
+import io.shtanko.picasagallery.ui.util.AndroidUtils;
 
 public class ClippingImageView extends View {
 

@@ -18,7 +18,7 @@
 package io.shtanko.picasagallery.data.entity.internal
 
 import io.shtanko.picasagallery.Config.CONTENT_VIEW_TYPE_ID
-import io.shtanko.picasagallery.view.delegate.ViewType
+import io.shtanko.picasagallery.ui.delegate.ViewType
 
 interface ContentType : ViewType
 

@@ -23,7 +23,7 @@ import android.content.SharedPreferences
 import dagger.Module
 import dagger.Provides
 import io.shtanko.picasagallery.R
-import io.shtanko.picasagallery.core.app.AppModule
+import io.shtanko.picasagallery.core.di.module.AppModule
 
 @Module(includes = [AppModule::class])
 class PreferencesModule {

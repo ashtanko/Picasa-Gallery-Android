@@ -21,7 +21,7 @@ import android.support.test.espresso.IdlingRegistry
 import android.support.test.rule.ActivityTestRule
 import android.support.test.runner.AndroidJUnit4
 import io.shtanko.picasagallery.util.EspressoIdlingResource
-import io.shtanko.picasagallery.view.main.MainActivity
+import io.shtanko.picasagallery.ui.main.MainActivity
 import org.junit.After
 import org.junit.Assert
 import org.junit.Before

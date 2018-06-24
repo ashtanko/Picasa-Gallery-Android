@@ -26,9 +26,9 @@ import io.shtanko.picasagallery.data.entity.album.Album
 import io.shtanko.picasagallery.data.entity.album.AlbumType
 import io.shtanko.picasagallery.extensions.AlbumsList
 import io.shtanko.picasagallery.utils.TrampolineSchedulerRule
-import io.shtanko.picasagallery.view.main.MainContract.View
-import io.shtanko.picasagallery.view.main.MainPresenter
-import io.shtanko.picasagallery.view.util.getImages
+import io.shtanko.picasagallery.ui.main.MainContract.View
+import io.shtanko.picasagallery.ui.main.MainPresenter
+import io.shtanko.picasagallery.ui.util.getImages
 import org.junit.Before
 import org.junit.FixMethodOrder
 import org.junit.Rule

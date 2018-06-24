@@ -18,7 +18,7 @@
 package io.shtanko.picasagallery.data.entity.user
 
 import io.shtanko.picasagallery.Config.USER_VIEW_TYPE_ID
-import io.shtanko.picasagallery.view.delegate.ViewType
+import io.shtanko.picasagallery.ui.delegate.ViewType
 
 interface UserType : ViewType
 

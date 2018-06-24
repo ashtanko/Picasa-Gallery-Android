@@ -21,7 +21,7 @@ import io.reactivex.Flowable
 import io.shtanko.picasagallery.data.entity.photo.PhotoType
 import io.shtanko.picasagallery.data.photo.PhotosDataSource
 import io.shtanko.picasagallery.extensions.PhotosList
-import io.shtanko.picasagallery.view.util.getPhotosData
+import io.shtanko.picasagallery.ui.util.getPhotosData
 import javax.inject.Inject
 import javax.inject.Singleton
 

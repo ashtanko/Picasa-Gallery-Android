@@ -24,10 +24,10 @@ import io.reactivex.Flowable
 import io.shtanko.picasagallery.data.entity.photo.Photo
 import io.shtanko.picasagallery.data.photo.PhotosRepository
 import io.shtanko.picasagallery.extensions.PhotosList
-import io.shtanko.picasagallery.view.delegate.ViewType
-import io.shtanko.picasagallery.view.photo.PhotosContract.View
-import io.shtanko.picasagallery.view.photo.PhotosPresenter
-import io.shtanko.picasagallery.view.util.getPhotosData
+import io.shtanko.picasagallery.ui.delegate.ViewType
+import io.shtanko.picasagallery.ui.photo.PhotosContract.View
+import io.shtanko.picasagallery.ui.photo.PhotosPresenter
+import io.shtanko.picasagallery.ui.util.getPhotosData
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith

@@ -21,7 +21,7 @@ import android.view.LayoutInflater.from
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout.LayoutParams
-import io.shtanko.picasagallery.view.util.AndroidUtils.dp
+import io.shtanko.picasagallery.ui.util.AndroidUtils.dp
 
 private fun getSize(size: Float): Int = (if (size < 0) size.toInt() else dp(size))
 

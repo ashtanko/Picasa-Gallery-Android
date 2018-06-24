@@ -38,7 +38,7 @@
       tools:targetApi="o">
 
     <activity
-        android:name="io.shtanko.picasagallery.view.launch.LaunchActivity"
+        android:name="io.shtanko.picasagallery.ui.launch.LaunchActivity"
         android:exported="true"
         android:launchMode="standard">
       <intent-filter>
@@ -51,17 +51,17 @@
     </activity>
 
     <activity
-        android:name="io.shtanko.picasagallery.view.auth.SignInActivity"
+        android:name="io.shtanko.picasagallery.ui.auth.SignInActivity"
         android:label="Auth">
     </activity>
 
-    <activity android:name=".view.main.MainActivity"/>
+    <activity android:name=".ui.main.MainActivity"/>
 
-    <activity android:name=".view.profile.ProfileActivity"/>
+    <activity android:name=".ui.profile.ProfileActivity"/>
 
-    <activity android:name=".view.photo.PhotosActivity"/>
+    <activity android:name=".ui.photo.PhotosActivity"/>
 
-    <activity android:name=".view.album.InternalAlbumsActivity"/>
+    <activity android:name=".ui.album.InternalAlbumsActivity"/>
 
     <provider
         android:name="android.support.v4.content.FileProvider"
