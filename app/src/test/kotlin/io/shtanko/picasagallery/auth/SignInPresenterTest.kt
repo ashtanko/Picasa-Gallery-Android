@@ -21,8 +21,8 @@ import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.verify
 import io.shtanko.picasagallery.data.entity.user.User
 import io.shtanko.picasagallery.data.user.UserRepositoryImpl
-import io.shtanko.picasagallery.view.auth.SignInContract.View
-import io.shtanko.picasagallery.view.auth.SignInPresenter
+import io.shtanko.picasagallery.ui.auth.SignInContract.View
+import io.shtanko.picasagallery.ui.auth.SignInPresenter
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test

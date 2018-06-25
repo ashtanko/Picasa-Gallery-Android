@@ -25,7 +25,7 @@ import io.shtanko.picasagallery.core.executor.ThreadExecutor
 import io.shtanko.picasagallery.data.entity.user.User
 import io.shtanko.picasagallery.data.user.UserDataSourceImpl
 import io.shtanko.picasagallery.data.user.UserRepository
-import io.shtanko.picasagallery.view.base.UseCase
+import io.shtanko.picasagallery.ui.base.UseCase
 import javax.inject.Named
 import javax.inject.Singleton
 

@@ -21,7 +21,7 @@ import io.reactivex.Flowable
 import io.shtanko.picasagallery.base.UseCaseTestClass.Params
 import io.shtanko.picasagallery.core.executor.PostExecutionThread
 import io.shtanko.picasagallery.core.executor.ThreadExecutor
-import io.shtanko.picasagallery.view.base.UseCase
+import io.shtanko.picasagallery.ui.base.UseCase
 
 class UseCaseTestClass(threadExecutor: ThreadExecutor,
     postExecutionThread: PostExecutionThread) : UseCase<TestModel, Params>(threadExecutor,

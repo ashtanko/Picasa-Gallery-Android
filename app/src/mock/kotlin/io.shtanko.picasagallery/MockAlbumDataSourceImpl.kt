@@ -22,7 +22,7 @@ import io.shtanko.picasagallery.data.album.AlbumDataSource
 import io.shtanko.picasagallery.data.entity.album.Album
 import io.shtanko.picasagallery.data.entity.album.AlbumType
 import io.shtanko.picasagallery.extensions.AlbumsList
-import io.shtanko.picasagallery.view.util.getImages
+import io.shtanko.picasagallery.ui.util.getImages
 import javax.inject.Inject
 import javax.inject.Singleton
 

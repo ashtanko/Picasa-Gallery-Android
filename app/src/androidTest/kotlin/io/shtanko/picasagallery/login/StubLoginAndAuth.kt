@@ -19,8 +19,8 @@ package io.shtanko.picasagallery.login
 
 import android.content.Intent
 import android.os.Handler
-import io.shtanko.picasagallery.view.auth.LoginAndAuth
-import io.shtanko.picasagallery.view.auth.LoginAndAuthListener
+import io.shtanko.picasagallery.ui.auth.LoginAndAuth
+import io.shtanko.picasagallery.ui.auth.LoginAndAuthListener
 
 class StubLoginAndAuth constructor(val name: String, val success: Boolean,
     val newAuthentication: Boolean) : LoginAndAuth {

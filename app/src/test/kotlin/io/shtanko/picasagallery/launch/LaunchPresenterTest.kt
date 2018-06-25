@@ -22,8 +22,8 @@ import com.nhaarman.mockito_kotlin.never
 import io.shtanko.picasagallery.data.DefaultObserver
 import io.shtanko.picasagallery.data.entity.user.User
 import io.shtanko.picasagallery.data.user.GetUserDetails
-import io.shtanko.picasagallery.view.launch.LaunchContract.View
-import io.shtanko.picasagallery.view.launch.LaunchPresenter
+import io.shtanko.picasagallery.ui.launch.LaunchContract.View
+import io.shtanko.picasagallery.ui.launch.LaunchPresenter
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith

@@ -24,7 +24,7 @@ import android.support.annotation.ColorInt
 import android.support.annotation.Dimension
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.RecyclerView.State
-import io.shtanko.picasagallery.view.util.Divided
+import io.shtanko.picasagallery.ui.util.Divided
 import kotlin.properties.Delegates
 
 class ItemDividerDecoration constructor(

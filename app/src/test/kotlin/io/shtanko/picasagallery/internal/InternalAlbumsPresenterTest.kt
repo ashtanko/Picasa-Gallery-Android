@@ -25,9 +25,9 @@ import io.shtanko.picasagallery.data.internal.InternalAlbumsRepository
 import io.shtanko.picasagallery.extensions.ContentList
 import io.shtanko.picasagallery.extensions.applyComputationScheduler
 import io.shtanko.picasagallery.utils.TrampolineSchedulerRule
-import io.shtanko.picasagallery.view.album.InternalAlbumsContract.View
-import io.shtanko.picasagallery.view.album.InternalAlbumsPresenter
-import io.shtanko.picasagallery.view.util.getContentData
+import io.shtanko.picasagallery.ui.album.InternalAlbumsContract.View
+import io.shtanko.picasagallery.ui.album.InternalAlbumsPresenter
+import io.shtanko.picasagallery.ui.util.getContentData
 import org.junit.Before
 import org.junit.FixMethodOrder
 import org.junit.Rule

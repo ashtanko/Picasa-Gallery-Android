@@ -22,7 +22,7 @@ import io.shtanko.picasagallery.data.entity.internal.ContentType
 import io.shtanko.picasagallery.data.internal.InternalAlbumsRepository
 import io.shtanko.picasagallery.extensions.ContentList
 import io.shtanko.picasagallery.extensions.applyComputationScheduler
-import io.shtanko.picasagallery.view.util.getContentData
+import io.shtanko.picasagallery.ui.util.getContentData
 import javax.inject.Inject
 import javax.inject.Singleton
 

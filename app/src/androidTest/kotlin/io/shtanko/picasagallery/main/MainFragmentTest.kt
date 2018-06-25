@@ -20,8 +20,8 @@ package io.shtanko.picasagallery.main
 import android.support.test.rule.ActivityTestRule
 import android.support.test.runner.AndroidJUnit4
 import io.shtanko.picasagallery.R
-import io.shtanko.picasagallery.view.main.MainActivity
-import io.shtanko.picasagallery.view.main.MainFragment
+import io.shtanko.picasagallery.ui.main.MainActivity
+import io.shtanko.picasagallery.ui.main.MainFragment
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Rule

@@ -22,8 +22,8 @@ import android.support.test.rule.ActivityTestRule
 import android.support.test.runner.AndroidJUnit4
 import android.test.suitebuilder.annotation.LargeTest
 import io.shtanko.picasagallery.util.LoginUtils
-import io.shtanko.picasagallery.view.auth.LoginAndAuthProvider
-import io.shtanko.picasagallery.view.main.MainActivity
+import io.shtanko.picasagallery.ui.auth.LoginAndAuthProvider
+import io.shtanko.picasagallery.ui.main.MainActivity
 import org.junit.After
 import org.junit.Assert
 import org.junit.Rule

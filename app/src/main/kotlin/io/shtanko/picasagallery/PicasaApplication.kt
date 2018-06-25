@@ -23,7 +23,7 @@ import android.os.StrictMode
 import com.squareup.leakcanary.LeakCanary
 import dagger.android.AndroidInjector
 import dagger.android.DaggerApplication
-import io.shtanko.picasagallery.core.app.DaggerAppComponent
+import io.shtanko.picasagallery.core.di.component.DaggerAppComponent
 import kotlin.properties.Delegates
 
 class PicasaApplication : DaggerApplication() {
