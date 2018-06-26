@@ -18,7 +18,7 @@
 dependencies {
   // region CONSTANTS
   def supportVersion      = '27.1.1'
-  def daggerVersion       = '2.14.1'
+  def daggerVersion       = '2.16'
   def playServicesVersion = '11.8.0'
   def espressoVersion     = '3.0.2'
   def runnerRulesVersion  = '1.0.0'
